@@ -1,5 +1,10 @@
+@font-face {
+     font-family: maple;
+     src: url("../font/Maplestory Light.ttf");
+ }
+
 *{
-    font-family: '메이플스토리';
+    font-family: 'maple';
 }
 
 /*네비게이션 바*/
