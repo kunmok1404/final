@@ -1,0 +1,63 @@
+*{
+    font-family: '메이플스토리';
+}
+
+/*네비게이션 바*/
+.navbar{
+    background-color:#9C3D39;
+    height: 100px;
+}
+
+/*로고이미지*/
+.navbar-brand > img{
+    width: 150px;
+}
+
+/*헤더 리스트*/
+.nav-list li{
+    display: inline;
+    font-size: 1.5rem;
+}
+.nav-list li a{
+    text-decoration: none;
+    color: antiquewhite;
+}
+/*헤더리스트 위치*/
+dl, ol, ul{
+    margin-top: 1rem;
+    margin-right: 5rem;
+}
+
+/*헤더메뉴 사이 '|' 표시*/
+#line-wrapper {
+    cursor:pointer;
+    display: inline-block;
+  }
+.line {
+    background:floralwhite;
+    top:3px;
+    width:1px;
+    height:20px; 
+    margin-right: 10px;
+    border-radius:2px;
+    box-shadow:0 1px 3px rgba(0,0,0,.5);
+    position:relative;
+    display: inline-block;
+  }
+
+ /*footer*/ 
+footer{
+    background-color: lightgray;
+}
+.footer-menu ul{
+    list-style: none;
+    vertical-align: middle;
+    display: inline-block;
+    margin-top: 1.5rem;
+}
+.footer-menu ul li{
+    vertical-align: middle;
+    margin-right: 30px;
+    display: inline;
+    font-size: 1.2rem;
+}
