@@ -1,0 +1,79 @@
+@font-face {
+     font-family: maple;
+     src: url("../font/Maplestory Light.ttf");
+ }
+
+*{
+    font-family: 'maple';
+}
+
+a{
+    text-decoration: none;
+    color:black;
+}
+
+/*네비게이션 바*/
+.navbar{
+    background-color:#9C3D39;
+    height: 70px;
+}
+
+/*로고이미지*/
+.navbar-brand > img{
+    width: 150px;
+}
+
+/*헤더리스트 위치*/
+.header-button > .owner{
+    margin-right: 600px;
+}
+.header-button > .owner a{
+    color: whitesmoke;
+}
+.header-button > .loginTime{
+    margin-right: 50px;
+}
+.header-button > .loginTime a{
+    color: whitesmoke;
+}
+
+ /*상단메뉴*/
+.top-menu{
+    height: 46px;
+    vertical-align: middle;
+    margin-top:2px;
+    border-top: 2px solid #9C3D39;
+    border-bottom: 2px solid #9C3D39;
+    background-color:#f1f1f1;
+}
+.top-menu ul li{
+    display: inline-block;
+    font-size:1.3rem;
+    padding:5px 25px;
+}
+
+ /*Left메뉴*/
+ .left{
+     width:150px;
+     min-height:850px;
+     margin-top:1px;
+     background-color:#e0e0e0;
+     position: fixed;
+     padding-left: 0;
+ }
+.left ul li{
+    margin-top: 30px; 
+    list-style: none;
+    font-size:1.2rem;
+    margin-right: 10px; 
+}
+
+/*TOP하이라이트*/
+.active{
+    background-color: darkgray;
+}
+/*LEFT하이라이트*/
+.on{
+    color:#9C3D39;
+    font-size: 1.5rem;
+}
