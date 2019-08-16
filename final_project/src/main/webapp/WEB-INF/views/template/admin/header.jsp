@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/pkmadmin.css" rel="stylesheet">
     <script>
@@ -46,7 +48,7 @@
         <!--상단메뉴 시작-->
         <div class="top-menu">
           <ul>
-            <li class="ml-5 active"><a href="#">공지사항</a></li>
+            <li class="ml-5"><a href="#">공지사항</a></li>
             <li><a href="#">매장관리</a></li>
             <li><a href="#">메뉴관리</a></li>
             <li><a href="#">주문관리</a></li>

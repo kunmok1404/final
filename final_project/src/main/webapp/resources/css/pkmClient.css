@@ -5,6 +5,7 @@
 
 *{
     font-family: 'maple';
+    box-sizing: border-box;
 }
 
 /*네비게이션 바*/
