@@ -5,6 +5,7 @@
 
 *{
     font-family: 'maple';
+    box-sizing: border-box;
 }
 
 a{

@@ -1,10 +1,11 @@
-@font-face {
-     font-family: maple;
-     src: url("../font/Maplestory Light.ttf");
- }
+@font-face{
+	font-family:"maple";
+	src:url("../font/Maplestory Light.ttf");
+}
 
 *{
     font-family: 'maple';
+    box-sizing: border-box;
 }
 @font-face{
 	font-family: 메이플스토리;
@@ -31,13 +32,14 @@
     text-decoration: none;
     color: antiquewhite;
 }
+
 /*헤더리스트 위치*/
 dl, ol, ul{
     margin-top: 1rem;
     margin-right: 5rem;
 }
 
-/*헤더메뉴 사이 '|' 표시*/
+/*헤더메뉴 사이 | 표시*/
 #line-wrapper {
     cursor:pointer;
     display: inline-block;
@@ -53,6 +55,134 @@ dl, ol, ul{
     position:relative;
     display: inline-block;
   }
+
+/*음식 카테고리*/
+.food-category{
+    background-color:whitesmoke;
+    width:100%;
+    height:60px;
+}
+.food-list{
+    margin-top: 0;
+}
+.food-list li{
+    margin-top:1rem;
+    list-style: none;
+    display: inline-block;
+    margin-right: 1rem;
+    font-size:1.2rem;
+}
+.food-list img{
+    width:30px;
+}
+
+/*음식카테고리하이라이트*/
+.active{
+   font-size:1.1rem;
+   color:#9C3D39;
+}
+
+/*매장목록*/
+.shop{
+    min-height: 500px;
+    background-color: lightgrey;
+}
+.shop-list{
+    list-style: none;
+    padding:10px;
+}
+.shop-list > li{
+    border:1px solid gray;
+    padding: 10px;
+    float:left;
+    width:50%;
+    height: 120px;
+    background-color: whitesmoke;
+}
+.shop-list > li > img{
+    height:100px;
+}
+.shop-list::after{
+    content:"";
+    display:block;
+    clear:both;
+}
+
+ /*매장정보shop_detail*/ 
+.shop-info{
+    height: 100px;
+    border:1px solid gray;
+    padding: 10px;
+    background-color: whitesmoke;
+ }
+.menu-detail{
+    height: 100px;
+    border:1px solid gray;
+    padding: 10px;
+    min-height: 500px;
+    background-color: whitesmoke;
+ }
+
+ /*메뉴정보shop_list*/ 
+.shop-list{
+    margin-left:auto;
+}
+.shop-list li{
+    width: 415px;
+    height:100px;
+ }
+.shop-list li .menu-image{
+    height: 100px;
+    width: 30%;
+    display: inline-block;
+    vertical-align: middle;
+}
+.shop-list li .menu-info{
+    height: 100px;
+    width: 65%;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/*메뉴 탭*/
+.nav-tabs{
+    margin-left:70px;
+}
+.nav-tabs > li{
+    text-align: center;
+    width:32.3%;
+    border:1px solid gray;
+}
+.nav-tabs > li > a{
+    text-align: middle;
+}
+.tab-content{
+    margin-left:42px;
+    margin-right:55px;
+}
+
+/*메뉴*/
+.menu{
+    min-height: 400px;
+    background-color: yellow;
+    padding: 20px;
+}
+/*리뷰*/
+.review{
+    min-height: 400px;
+    background-color: yellow;
+    margin-left: 20px;
+    margin-right: 40px;
+    padding: 20px;
+}
+/*정보*/
+.info{
+    min-height: 400px;
+    background-color: yellow;
+    margin-left: 20px;
+    margin-right: 40px;
+    padding: 20px;
+}
 
  /*footer*/ 
 footer{
@@ -70,3 +200,4 @@ footer{
     display: inline;
     font-size: 1.2rem;
 }
+
