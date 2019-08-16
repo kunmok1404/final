@@ -6,5 +6,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	  <!-- 별칭 설정 -->
 	  <typeAliases>
 	  	<typeAlias type="com.kh.spring.entity.ShopDto" alias="shopDto"/>
-	  </typeAliases>
+		  <typeAlias type="com.kh.spring.entity.QnaDto" alias="qnaDto"/>
+	</typeAliases>
 </configuration>
