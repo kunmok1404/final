@@ -6,6 +6,10 @@
 *{
     font-family: 'maple';
 }
+@font-face{
+	font-family: 메이플스토리;
+	src:url("../font/Maplestory Light.ttf");
+}
 
 /*네비게이션 바*/
 .navbar{
