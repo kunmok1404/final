@@ -10,25 +10,15 @@
         $(document).ready(function() {
 
             //[1] 기본값 설정
-
-            $(".region").show(); //region 영역 보이기
-
-            $("#moreRegion").hide(); //more...숨기기
-
+			$("#moreRegion").hide();
+            $(".region").click(function(){
+            	$(this).next().toggle();
+            }); //region 영역 보이기
            
-
-            //[2] more...클릭시 보이기 및 숨기기
-
-            $("th.more").click(function() {
-
-                //3000 : 3초, 'slow', 'normal', 'fast'
-
-                $("#moreRegion").show('3000'); //천천히 보이기
-
-                $(this).hide('fast');//more버튼 숨기기
-
+            $("select[name=category]").change(function(){
+            	var category =  $("select[name=category]").val();
+            	location.href="${pageContext.request.contextPath}/qna/list?category="+category;
             });
-
         });
 
     </script>
@@ -38,14 +28,14 @@
 	<form class="form" action="list" method="get">
 	<input type="hidden" name="page" value="1">
 	<select name="category">
-		<option value="">전      체</option>
-		<option value="order">주문접수</option>
-		<option value="confirm">주문확인</option>
-		<option value="cancel">주문취소/변경</option>
-		<option value="use">서비스이용</option>
-		<option value="pay">결제</option>
-		<option value="join">가맹 및 기타</option>
-		<option value="club">뭐먹지 슈퍼클럽</option>
+		<option value="">전   체</option>
+		<option value=1>주문접수</option>
+		<option value=2>주문확인</option>
+		<option value=3>주문취소/변경</option>
+		<option value=4>서비스이용</option>
+		<option value=5>결제</option>
+		<option value=6>가맹 및 기타</option>
+		<option value=7>뭐먹지 슈퍼클럽</option>
 	</select>
 	</form>
 	
@@ -63,13 +53,35 @@
     	</thead>
     	<!-- 아래  -->
     	<tbody>
-    	<tr>
-    		<td class="region">
-    		<a href ="answer?no=$[qdto.no]">${qdto.question}</a>
-    		</td>
-    		<td id="moreRegion" style="height:100px">${qdto.answer}</td>
-    	</tr>
+    		<c:forEach var ="qdto" items="${list}">
+    		<tr>
+    			<td>${qdto.no}</td>
+    			<td>
+    			<%--말멀리 있을때 []붙여서 출력 --%>
+    			<c:if test ="${not empty qdto.category}">
+    			[${qdto.category}]
+    			</c:if>
+    			</td>
+    			
+    			<%-- 질문/답변 --%>
+	    		<td class="region">${qdto.question}	</td>
+	    		
+	    		<td id="moreRegion" style="height:100px">${qdto.answer}</td>
+    	
+	    		<td>${qdto.writer}</td>
+				<td>${qdto.regist_date}</td>
+		</tr>
+		</c:forEach>
     	</tbody>
+		<!-- 글쓰기 버튼 -->
+		<tfoot>
+			<tr>
+			<td colspan="8" align="right">
+				<a href="write">글쓰기</a>
+			</td>
+		</tr>
+	</tfoot>
+    			
     </table>
 
     
