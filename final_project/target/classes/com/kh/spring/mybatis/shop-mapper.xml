@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+ <mapper namespace="shop">
+ 	
+ 	<!-- 매장목록조회-->
+ 	<select id="list" parameterType="map" resultType="shopDto">
+ 		<choose>
+ 			<when test="#{cat_no == 0}">
+ 				<![CDATA[
+		 		select * from shop 
+		 			where
+		 		no >= #{start} and no <= #{end}
+		 		]]>
+ 			</when>
+ 			<otherwise>
+ 				<![CDATA[
+		 		select * from shop 
+		 			where
+		 		no >= #{start} and no <= #{end} and category=#{cat_no}
+		 		]]>
+ 			</otherwise>
+ 		</choose>
+ 	</select>
+ 	
+ 	<!-- 카테고리 목록 -->
+ 	<select id="category" resultType="categoryDto">
+ 		select * from category where work_type='food_category'
+ 	</select>
+ 	
+ 	<!-- 매장상세 매장정보 -->
+ 	<select id="shop_info" parameterType="int" resultType="shopDto">
+ 		select * from shop where no=#{no}
+ 	</select>
+ 	
+ 	<!--매장상세 메뉴목록 -->
+ 	<select id="menu" parameterType="int" resultType="menu_SubMenuView">
+ 		select * from menu_subMenu where shop_code=#{no}
+ 	</select>
+ </mapper>

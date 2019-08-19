@@ -1,10 +1,11 @@
-@font-face {
-     font-family: maple;
-     src: url("../font/Maplestory Light.ttf");
- }
+@font-face{
+	font-family:"maple";
+	src:url("../font/Maplestory Light.ttf");
+}
 
 *{
     font-family: 'maple';
+    box-sizing: border-box;
 }
 @font-face{
 	font-family: 메이플스토리;
@@ -31,13 +32,14 @@
     text-decoration: none;
     color: antiquewhite;
 }
+
 /*헤더리스트 위치*/
 dl, ol, ul{
     margin-top: 1rem;
     margin-right: 5rem;
 }
 
-/*헤더메뉴 사이 '|' 표시*/
+/*헤더메뉴 사이 | 표시*/
 #line-wrapper {
     cursor:pointer;
     display: inline-block;
@@ -53,6 +55,331 @@ dl, ol, ul{
     position:relative;
     display: inline-block;
   }
+
+/*음식 카테고리*/
+.food-category{
+    background-color:#ffffff;
+    width:100%;
+    height:60px;
+}
+.food-list{
+    margin-top: 0;
+}
+.food-list li{
+    margin-top:0.7rem;
+    list-style: none;
+    display: inline-block;
+    margin-right: 1rem;
+    font-size:1.2rem;
+}
+.food-list img{
+    width:30px;
+}
+
+/*상단음식카테고리하이라이트*/
+.on{
+   background-color:lightgray;
+   padding:5px 25px;
+}
+/*상단음식카테고리*/
+.food-list li a{
+	text-decoration:none;
+	color: #646464;
+}
+.food-list li a:hover{
+	font-size:1.3rem;
+    color:#9C3D39;
+}
+
+/*매장목록 필터영역*/
+.filter-wrap{
+    height:55px;
+}
+.filter{
+    height:50px;
+    margin-top: 0.5rem;
+}
+.shop-number{
+    margin-left: 3%;
+}
+.shop-filter{
+    margin-left:45%;
+}
+.shop-filter > .dropdown > a{
+    width:200px;
+    border:1px solid black;
+    background-color: #ffffff;
+}
+
+/*매장목록*/
+.shop{
+    min-height: 500px;
+    background-color: #fafafa;
+}
+.shop-list{
+	margin-left:100px;
+    list-style: none;
+    padding:10px;
+}
+.shop-list > li{
+	cursor:pointer;
+    border:1px solid lightgray;
+    padding: 5px;
+    float:left;
+    background-color: #ffffff;
+	width: 415px;
+    height:110px;
+    cursor:pointer;
+}
+.shop-list::after{
+    content:"";
+    display:block;
+    clear:both;
+}
+.shop-list li .menu-image{
+    height: 100px;
+    width: 25%;
+    display: inline-block;
+    vertical-align: middle;
+}
+.shop-list li .menu-info{
+    height: 100px;
+    width: 70%;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/*매장목록정보표시*/
+.shop-name{
+	padding-top:7px;
+	height:40px;
+	font-size:1.2rem;
+}
+.shop-score{
+	height:30px;
+	font-size:0.8rem;
+	color:gray;
+}
+.shop-review{
+	height:30px;
+	font-size:0.8rem;
+	color:gray;
+}
+.min-price{
+	height:30px;
+	font-size:0.8rem;
+	color:gray;
+}
+.delivery-time{
+	height:30px;
+	margin-left:100px;
+	font-size:0.8rem;
+	color:gray;
+}
+/*매장목록정보 사이 | 표시*/
+#line-shop{
+	cursor:pointer;
+    display: inline-block;
+  }
+#line-shop > .line {
+    background:lightgray;
+    top:3px;
+    width:1px;
+    height:15px; 
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius:2px;
+    box-shadow:0 1px 3px rgba(0,0,0,.1);
+    position:relative;
+    display: inline-block;
+  }
+
+ /*매장정보shop_detail*/ 
+.shop-info{
+    height: 120px;
+    border:1px solid lightgrey;
+    padding: 10px;
+    background-color: #ffffff;
+ }
+ .shop-info > table{
+     height:100px;
+ }
+.menu-detail{
+	margin-top:15px;
+    background-color: whitesmoke;
+ }
+ .shop-detail-img{
+     height: 100px;
+     width: 20%;
+ }
+ .shop-detail-info{
+     padding-left: 10px;
+     height: 100px;
+     width:78%;
+ }
+ .shop-detail-name{
+     font-size: 1.3rem;
+ }
+ .shop-detail-score{
+     padding-top: 10px;
+     color:gray;
+ }
+ .shop-detail-review{
+ 	padding-left:0px;
+    padding-top: 10px;
+     color:gray;
+ }
+ .shop-detail-minPrice{
+    padding-top: 10px;
+    color:gray;
+    margin-right:100px;
+}
+.shop-detail-delTime{
+    padding-top: 10px;
+    color:gray;
+    margin-left:30%;
+}
+
+/*메뉴 탭*/
+.nav-tabs > li{
+    text-align: center;
+    width:33.3%;
+}
+.nav-tabs > li > a{
+    text-align: middle;
+    text-decoration:none;
+	color:black;
+}
+.nav-tabs > li > a:click{
+	color:red;
+}
+.menu-detail > ul{
+	margin-top:0;
+	margin-right:0;
+}
+
+/*메뉴*/
+.menu{
+    min-height: 400px;
+    background-color:#ffffff;
+}
+.menu-toggle{
+	border:1px solid darkgray;
+    cursor: pointer;
+    height: 50px;
+    background-color:lightgray;
+    padding: 12px 20px;
+}
+.menu-content{
+    cursor: pointer;
+    height: 100px;
+}
+.menu-name{
+    font-size: 1.3rem;
+    padding-top: 20px;
+    padding-left: 25px;
+    height: 50px;
+    width: 80%;
+}
+.menu-price{
+    font-size: 1.1rem;
+    padding: 5px 25px;
+    height: 50px;
+    width: 80%;
+}
+.menu-img{
+    height: 100px;
+    width: 20%;
+    text-align: center;
+}
+table {
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+.table td, .table th {
+    padding: 0px;
+    vertical-align: middle;
+}
+
+/*리뷰*/
+.review{
+    background-color:#ffffff;
+    border:1px solid lightgray;
+}
+.review-img img{
+    padding: 5px;
+    float:left;
+    background-color: #ffffff;
+	width: 50%;
+    height:200px;
+    cursor:pointer;
+}
+.review-img::after{
+    content:"";
+    display:block;
+    clear:both;
+}
+.review-id{
+    font-size: 1.2rem;
+    padding-left:10px;
+    padding-top:8px;
+    height: 40px;
+}
+.review-menu{
+    color: red;
+    padding-left:10px;
+    padding-top:8px;
+    height: 40px;
+}
+.review-content{
+    padding: 5px 25px;
+}
+
+/*정보*/
+.info{
+    min-height: 400px;
+    padding: 20px;
+    background-color:#ffffff;
+}
+
+/*모달 바디*/
+.modal-img{
+    width:466px;
+}
+.modal-menuName{
+    height:50px;
+    padding-top:10px;
+    text-align: center;
+    width:466px;
+}
+.modal-number > span{
+    margin-right: 200px;
+}
+.modal-body table tr td:nth-child(1){
+    padding-right: 200px;
+}
+.modal-totalPrice{
+    padding-top: 10px;
+    padding-left: 10px;
+    height: 50px;
+    font-size: 1.2rem;
+    background-color:#EFEFEF;
+}
+.modal-totalPrice span:nth-child(2){
+    color:red;
+    padding-left: 240px;
+    font-size:1.3rem;
+}
+#go_cart{
+    width:49%;
+    background-color: #7F7F7F;
+    color: white;
+}
+#go_order{
+    width:49%;
+    background-color: red;
+    color: white;
+}
 
  /*footer*/ 
 footer{
@@ -70,3 +397,4 @@ footer{
     display: inline;
     font-size: 1.2rem;
 }
+
