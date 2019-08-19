@@ -6,8 +6,26 @@ PUBLIC "//mybatis.org//DTD Mapper 3.0//EN"
  <mapper namespace="shop">
  	
  	<!-- 매장목록조회-->
- 	<select id="list" resultType="shopDto">
- 		select * from shop order by no desc
+ 	<select id="list" parameterType="map" resultType="shopDto">
+ 		select * from shop
+ 			where no between #{start} and #{end}
+ 			<if test="cat_no > 0">
+ 				and category = #{cat_no}
+ 			</if>
  	</select>
  	
+ 	<!-- 카테고리 목록 -->
+ 	<select id="category" resultType="categoryDto">
+ 		select * from category where work_type='food_category'
+ 	</select>
+ 	
+ 	<!-- 매장상세 매장정보 -->
+ 	<select id="shop_info" parameterType="int" resultType="shopDto">
+ 		select * from shop where no=#{no}
+ 	</select>
+ 	
+ 	<!--매장상세 메뉴목록 -->
+ 	<select id="menu" parameterType="int" resultType="menuDto">
+ 		select * from menu where shop_code=#{no}
+ 	</select>
  </mapper>
