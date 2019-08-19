@@ -41,10 +41,6 @@ public class ShopController {
 		int size = 10;
 		int end = page * size;
 		int start = end - size + 1;
-		System.out.println("페이지="+page);
-		System.out.println("조각start="+ start);
-		System.out.println("조각end="+ start);
-		System.out.println("조각cat_no="+ start);
 		List<ShopDto> shop_list = shopDao.ajaxPaging(start, end, cat_no);	
 		model.addAttribute("shop_list", shop_list);
 		
