@@ -9,5 +9,4 @@
     
     
     
-    
     <jsp:include page="/WEB-INF/views/template/client/footer.jsp"></jsp:include>
