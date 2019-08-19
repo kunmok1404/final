@@ -56,7 +56,7 @@ public class ShopController {
 	public String detail(@RequestParam int no, Model model) {
 		model.addAttribute("cat_list", shopDao.catList()); // 상단 Food카테고리목록조회
 		model.addAttribute("shopDto", shopDao.shopInfo(no)); //매장정보
-		model.addAttribute("menu_list", shopDao.menuList(no)); // 메뉴리스트
+		model.addAttribute("map", shopService.menuList(no)); // 메뉴리스트
 		return "client/shop/shop_detail";
 	}
 }

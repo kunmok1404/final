@@ -12,9 +12,28 @@
         	$(this).next().toggle();
         })
         
+        // 첫번째 토글 열기
+        $(".menu-toggle").first().click();
+        
+        // 메뉴클릭시 서브메뉴 호출
+        $(".border-bottom").click(function(){
+        	var menu_no = $(this).attr("data-menu"); // 메뉴번호
+        	alert("메뉴번호="+menu_no);
+        	
+        	// ajax통신
+        	$.ajax({
+    			url:"${pageContext.request.contextPath}/shop/sub_menu",
+    			data : {
+    				menu_no : menu_no,
+    			},
+    			success:function(response){
+    				alert("성공");
+    			}
+    		})
+        })
+        
 	})
 </script>
-
 <!--매장상세-->
     <div class="shop">
       <div class="container">
@@ -71,28 +90,30 @@
             <div class="tab-pane fade show active" id="qwe">
               <div class="menu">
                 <!--메뉴카테고리-->
-                <c:forEach var="menuView" items="${menu_list}">
+                <c:forEach var="menu_category" items="${map}">
                 <div class="menu-toggle">
-                  ${menuView.menu_category}
+                  ${menu_category.key}
                 </div>
-                <!--메뉴내용-->
-                <table class="table menu-content">
-                  <tbody>
-                    <tr class="border-bottom" data-toggle="modal" data-target="#myModal">
-                      <td>
-                        <div class="menu-name">
-                          ${menuView.menu_name}
-                        </div>
-                        <div class="menu-price">
-                          ${menuView.menu_price}
-                        </div>
-                      </td>
-                      <td class="menu-img">
-                          <img src="https://placeimg.com/100/100/any">
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                 	<!--메뉴내용-->
+                	<c:forEach var="menu" items="${menu_category.value}">
+	                <table class="table menu-content">
+	                  <tbody>
+	                    <tr class="border-bottom" data-toggle="modal" data-target="#myModal" data-menu="${menu.no}">
+	                      <td>
+	                        <div class="menu-name">
+	                          ${menu.name}${menu.no}
+	                        </div>
+	                        <div class="menu-price">
+	                          ${menu.price}
+	                        </div>
+	                      </td>
+	                      <td class="menu-img">
+	                          <img src="https://placeimg.com/100/100/any">
+	                      </td>
+	                    </tr>
+	                  </tbody>
+	                </table>
+	                </c:forEach>
                 </c:forEach>
                 
               </div>
