@@ -12,7 +12,7 @@
             //[1] 기본값 설정
 			$("#moreRegion").hide();
             $(".region").click(function(){
-            	$(this).next().toggle();
+            	$(this).parent().next().children().toggle();
             }); //region 영역 보이기
            
             $("select[name=category]").change(function(){
@@ -20,10 +20,13 @@
             	location.href="${pageContext.request.contextPath}/qna/list?category="+category;
             });
         });
-
     </script>
+<div class="qna">
+<div class="offset-1 col-10">
 
 <h4>자주하는 질문</h4>
+
+<div class="search">
 	<!-- 검색창 -->
 	<form class="form" action="list" method="get">
 	<input type="hidden" name="page" value="1">
@@ -38,17 +41,18 @@
 		<option value=7>뭐먹지 슈퍼클럽</option>
 	</select>
 	</form>
+</div>
 	
 <div class="empty"></div>
 
     <!-- 표 -->
-    <table>
+    <table class="qna-qna">
     	<!-- 위에 -->
     	<thead>
     	<tr>
-    		<th>번호</th>
-    		<th>카테고리</th>
-    		<th>제목</th>
+    		<th class="qna-top">번호</th>
+    		<th class="qna-top">카테고리</th>
+    		<th class="qna-top">제목</th>
     	</tr>
     	</thead>
     	<!-- 아래  -->
@@ -63,15 +67,14 @@
     			</c:if>
     			</td>
     			
-    			<%-- 질문/답변 --%>
+    			<%-- 질문 --%>
 	    		<td class="region">${qdto.question}	</td>
-	    		
+	   		 </tr>
+	    	<tr>
+	    		<%-- 답변 --%>
 	    		<td id="moreRegion" style="height:100px">${qdto.answer}</td>
-    	
-	    		<td>${qdto.writer}</td>
-				<td>${qdto.regist_date}</td>
-		</tr>
-		</c:forEach>
+			</tr>
+			</c:forEach>
     	</tbody>
 		<!-- 글쓰기 버튼 -->
 		<tfoot>
@@ -79,8 +82,8 @@
 			<td colspan="8" align="right">
 				<a href="write">글쓰기</a>
 			</td>
-		</tr>
-	</tfoot>
+			</tr>
+		</tfoot>
     			
     </table>
 
@@ -118,5 +121,7 @@
 		<li><a href="list?${p.getNextBlock()}">&gt;&gt;</a></li>
 	</c:if>
 </ul>
+</div>
+</div>
     
     <jsp:include page="/WEB-INF/views/template/client/footer.jsp"></jsp:include>
