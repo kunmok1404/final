@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-latest.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" ></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/pkmadmin.css" rel="stylesheet">
     <script>
@@ -38,8 +38,8 @@
             <div class="header-button"> 
               <span class="owner"><a href="#">*안녕하세요. 박근목 사장님!</a></span>
               <span class="loginTime"><a href="#">최종접속일자 : 2019.08.10 17:30</a></span>
-              <button class="btn btn-light btn-sm"><a href="#">로그아웃</a></button>
-              <button class="btn btn-light btn-sm"><a href="#">뭐먹지 바로가기</a></button>
+              <a href="#" class="btn btn-light btn-sm">로그아웃</a>
+              <a href="#" class="btn btn-light btn-sm">뭐먹지 바로가기</a>
             </div>
           </div>
         </nav>

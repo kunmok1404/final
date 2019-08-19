@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 
   <!--left 메뉴 시작-->
-  <ul class="left">
+  <div class="left">
     <ul>
       <li><a href="#">메뉴1</a></li>
       <li><a href="#">메뉴2</a></li>
