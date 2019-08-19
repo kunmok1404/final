@@ -12,4 +12,5 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	  	<typeAlias type="com.kh.spring.entity.SubMenuDto" alias="subMenuDto"/>
 	  	<typeAlias type="com.kh.spring.entity.Menu_SubMenuView" alias="menu_SubMenuView"/>
 	  </typeAliases>
+	  
 </configuration>
