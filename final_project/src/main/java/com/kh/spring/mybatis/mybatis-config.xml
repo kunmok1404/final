@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	  <!-- 별칭 설정 -->
+	  <typeAliases>
+	  	<typeAlias type="com.kh.spring.entity.ShopDto" alias="shopDto"/>
+		<typeAlias type="com.kh.spring.entity.QnaDto" alias="qnaDto"/>
+		<typeAlias type="com.kh.spring.entity.MemberDto" alias="memberDto"/>
+		<typeAlias type="com.kh.spring.entity.CategoryDto" alias="categoryDto"/>
+<!-- 		<typeAlias type="com.kh.spring.entity.MenuDto" alias="menuDto"/> -->
+<!-- 		<typeAlias type="com.kh.spring.entity.SubMenuDto" alias="subMenuDto"/> -->
+	</typeAliases>
+</configuration>

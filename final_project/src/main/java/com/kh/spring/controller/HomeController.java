@@ -3,6 +3,7 @@ package com.kh.spring.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+// 메인화면
 @Controller
 public class HomeController {
 
@@ -10,4 +11,5 @@ public class HomeController {
 	public String home() {
 		return "client/home";
 	}
+
 }

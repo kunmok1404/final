@@ -29,9 +29,9 @@
 	<context:component-scan base-package="com.kh.spring" />
 	
 	<!-- tx 모듈의 어노테이션 활성화 -->
-	<tx:annotation-driven/>
-	<beans:bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<beans:property name="dataSource" ref="dataSource"></beans:property>
-	</beans:bean>
+<!-- 	<tx:annotation-driven/> -->
+<!-- 	<beans:bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> -->
+<!-- 		<beans:property name="dataSource" ref="dataSource"></beans:property> -->
+<!-- 	</beans:bean> -->
 	
 </beans:beans>
