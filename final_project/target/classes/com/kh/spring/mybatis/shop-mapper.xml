@@ -7,22 +7,11 @@ PUBLIC "//mybatis.org//DTD Mapper 3.0//EN"
  	
  	<!-- 매장목록조회-->
  	<select id="list" parameterType="map" resultType="shopDto">
- 		<choose>
- 			<when test="#{cat_no == 0}">
- 				<![CDATA[
-		 		select * from shop 
-		 			where
-		 		no >= #{start} and no <= #{end}
-		 		]]>
- 			</when>
- 			<otherwise>
- 				<![CDATA[
-		 		select * from shop 
-		 			where
-		 		no >= #{start} and no <= #{end} and category=#{cat_no}
-		 		]]>
- 			</otherwise>
- 		</choose>
+ 		select * from shop
+ 			where no between #{start} and #{end}
+ 			<if test="cat_no > 0">
+ 				and category = #{cat_no}
+ 			</if>
  	</select>
  	
  	<!-- 카테고리 목록 -->
@@ -36,7 +25,7 @@ PUBLIC "//mybatis.org//DTD Mapper 3.0//EN"
  	</select>
  	
  	<!--매장상세 메뉴목록 -->
- 	<select id="menu" parameterType="int" resultType="menu_SubMenuView">
- 		select * from menu_subMenu where shop_code=#{no}
+ 	<select id="menu" parameterType="int" resultType="menuDto">
+ 		select * from menu where shop_code=#{no}
  	</select>
  </mapper>

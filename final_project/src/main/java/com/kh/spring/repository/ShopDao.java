@@ -12,5 +12,4 @@ public interface ShopDao {
 	List<CategoryDto> catList();
 	ShopDto shopInfo(int no);
 	List<MenuDto> menuList(int no);
-
 }

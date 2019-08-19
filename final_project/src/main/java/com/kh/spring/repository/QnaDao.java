@@ -6,6 +6,15 @@ import com.kh.spring.entity.QnaDto;
 
 public interface QnaDao {
 
-	List<QnaDto> list();
+	List<QnaDto> list(String type);
+
+	int count(String type);
+	
+	void delete(int no);
+
+	void write(QnaDto qnaDto);
+
+
+	
 
 }
