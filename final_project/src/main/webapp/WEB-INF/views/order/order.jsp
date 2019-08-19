@@ -9,17 +9,18 @@
 	<h3>배달정보</h3>
 </div>
 <hr>
-<form action="order">
+<form action="order" method="post">
 <div class="panel-body">
+<input type="hidden" name="order_code" value="전 페이지에서 넘어온 주문상세정보">
 <label for ="address">
 	<h3>주소</h3>
 </label>
 <button>기본주소로 설정</button>
 <button>새 주소</button>
 <div>
-	<input type="text" name="address" readonly="readonly" placeholder="배달주소" disabled="disabled"><br>
-	<input type="text" name="address_detail" readonly="readonly" disabled="disabled"><br>
-	<input type="text" name="address_detail2" placeholder="상세 주소">
+	<input type="text" name="zip-code" readonly="readonly" placeholder="배달주소" disabled="disabled"><br>
+	<input type="text" name="Basic_addr" readonly="readonly" disabled="disabled"><br>
+	<input type="text" name="Detail_addr" placeholder="상세 주소">
 </div>
 <div>
 	<label for ="phone">
