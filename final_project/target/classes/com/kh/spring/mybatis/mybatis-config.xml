@@ -13,6 +13,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	  	<typeAlias type="com.kh.spring.entity.QnaDto" alias="qnaDto"/>
 	  	<typeAlias type="com.kh.spring.entity.Menu_SubMenuView" alias="menu_SubMenuView"/>
 	  	<typeAlias type="com.kh.spring.entity.MemberDto" alias="memberDto"/>
+	  	<typeAlias type="com.kh.spring.entity.NoticeDto" alias="noticeDto"/>
+
 	  </typeAliases>
 	  
 </configuration>
