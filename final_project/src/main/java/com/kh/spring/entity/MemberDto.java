@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 public class MemberDto {
 	private int no; //회원번호
 	private int shop_code; //매장코드
-	private String name; //이름
 	private String id; // 아이디
 	private String pw; // 비밀번호
 	private String email; // 이메일

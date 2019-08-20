@@ -35,6 +35,7 @@ public class MemberController {
 //		memberDto.setPw(encrypt);
 		
 		boolean result = memberDao.regist(memberDto);
+		System.out.println(result);
 		if(result) {
 			return "member/regist_result";
 		}
@@ -42,6 +43,14 @@ public class MemberController {
 			return "member/regist_fail";
 		}
 	}
+	
+	//아이디 중복확인
+	@GetMapping("/id_check")
+	public String id_check(@ModelAttribute MemberDto memberDto) {
+		return null;
+	}
+	
+	
 	
 	
 	
