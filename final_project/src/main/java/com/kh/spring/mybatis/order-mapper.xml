@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="order">
+	<!-- '자기'의 카트에 존재하는 물건을 출력하는 코드  -->
+	<select id="cartlist" parameterType="int" resultType="cartDto">
+		select * from cart where member_code = #{member_code}
+	</select>
+	<!-- '자신'의 카트에 존재하는 물건에 딸린 매장을 검색하는 코드 -->
+	<select id="cartshop" parameterType="int" resultType="shopDto">
+		select * from shop where no = #{shop_code}
+	</select>
+	<!-- 결제가 완료되면 카트를 지움 -->
+	<delete id="delete" parameterType="int">
+		delete cart where member_code = #{member_code}
+	</delete>
+	
+
+</mapper>
