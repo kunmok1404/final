@@ -16,5 +16,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	  	<typeAlias type="com.kh.spring.entity.NoticeDto" alias="noticeDto"/>
 
 	  </typeAliases>
+
 	  
 </configuration>
