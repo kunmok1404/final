@@ -1,11 +1,16 @@
 package com.kh.spring.controller;
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.spring.entity.MemberDto;
 import com.kh.spring.repository.MemberDao;
@@ -37,18 +42,41 @@ public class MemberController {
 		boolean result = memberDao.regist(memberDto);
 		System.out.println(result);
 		if(result) {
-			return "member/regist_result";
+			return "redirect:regist_result";
 		}
 		else {
-			return "member/regist_fail";
+			return "redirect:regist_fail";
 		}
+		//정보를 보내거나 받을때(데이터 받아서 처리할때)는 주소만(포워드)
+		//주소로 보내고싶을때는 redirect(확인용)
+	}
+	
+	//회원가입 성공시 성공페이지로 보내기
+	@GetMapping("/regist_result")
+	public String regist_result() {
+		return "member/regist_result";
+	}
+	
+	//회원가입 실패시 실패페이지로 보내기
+	@GetMapping("/regist_fail")
+	public String regist_fail() {
+		return "member/regist_fail";
 	}
 	
 	//아이디 중복확인
 	@GetMapping("/id_check")
-	public String id_check(@ModelAttribute MemberDto memberDto) {
-		return null;
+	public void id_check(@RequestParam String id, HttpServletResponse resp) throws IOException {
+		resp.setContentType("text/plain");
+		MemberDto mdto = memberDao.get(id);
+		if(mdto == null) {
+			resp.getWriter().print("Y");
+		}
+		else {
+			resp.getWriter().print("N");
+		}
 	}
+	
+	//
 	
 	
 	

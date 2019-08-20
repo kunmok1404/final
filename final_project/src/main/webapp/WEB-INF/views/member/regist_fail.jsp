@@ -5,7 +5,7 @@
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 
 <div align="center">
- 	<form>
+ 	<form action="regist_fail" method="post">
  		<table class="table table-bordered">
  			<tbody>
  				<tr>
@@ -28,6 +28,8 @@
  					<td>
  						<a href = "regist"><input type="button" value="회원가입" name="login"></a>
  					</td>
+ 				</tr>
+ 				<tr>
  					<td>
  						<a href = "${pageContext.request.contextPath}"><input type="button" value="메인으로" name="main"></a>
  					</td>

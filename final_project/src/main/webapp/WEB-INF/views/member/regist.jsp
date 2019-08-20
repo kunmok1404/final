@@ -63,6 +63,26 @@
 		});
 	});
 		
+	//아이디 정규표현식 검사 후 메세지 출력
+	function checkID(){
+		var id = document.querySelector("#id").value;
+		var regex = /^[a-zA-Z0-9!@#$\-_]{8,15}$/;
+		
+		//정규표현식을 id값 검사
+		var result = regex.test(id);
+		var div = document.querySelector(".idD");
+		
+		//형식에 맞으면 중복확인 버튼 활성화
+		if(result){
+			div.innerHTML = ""
+			$("input[name=id_ckeck_btn]").prop("disabled", false)
+		}
+		//형식에 맞지 않으면 메세지 출력 후, 중복확인 버튼 비활성화
+		else{
+			div.innerHTML = "<font color = 'red' size = '2'>8~15자의 영문/숫자로 입력헤주세요.</font>"
+		}
+	}
+	
 	
 	//비밀번호 정규표현식 검사 후 메세지 출력
 	function checkPW(){
@@ -121,11 +141,13 @@
 		}
 	}
 	
-	//주소 입력
+	//주소 입력 기능
+	//주소 찾기 버튼을 누르면 팝업창(?)이 뜬다.
 	$(function(){
 		$("input[name=post_find]").click(findADDRESS);
 	});
 	
+	//팝업창에서의 작업
 	function findADDRESS(){
 		new daum.Postcode({
 			oncomplete: function(data){
@@ -137,7 +159,7 @@
 				var extraAddr = ''; //참고항목 변수
 				
 				//사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-				if(data.userSelectedType ==='R'){ //사용자가 도로명 주소를 선택했을 경우
+				if(data.userSelectedType === 'R'){ //사용자가 도로명 주소를 선택했을 경우
 					addr = data.roadAddress;
 				}
 				else{ //사용자가 지번 주소를 선택했을 경우(J)
@@ -148,16 +170,16 @@
 				if(data.userSelectedType === 'R'){
 					//법정동명이 있을 경우 추가한다. (법정리는 제외)
 					//법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-					if(data.bname !== '' && /[동/로/가]$/g.test(data.bname)){
+					if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
 						extraAddr += data.bname;
 					}
 					//건물명이 있고, 공동주택일 경우 추가한다.
 					if(data.buildingName !== '' && data.apartment === 'Y'){
-						extraAddr += (extraAdd !== '' ? ', ' + data.buildingName : data.buildingName);
+						extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
 					}
 					//표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
 					if(extraAddr !== ''){
-						extraAddr = '(' + extraAddr + ')';
+						extraAddr = ' (' + extraAddr + ')';
 					}
 					//조합된 참고항목을 해다 필드에 넣는다.
 				}
@@ -193,7 +215,7 @@
 				<tr>
 					<td><label for="id">아이디</label></td>
 					<td>
-						<input type="text" name="id" placeholder="아이디" required>
+						<input onblur="checkID();" id="id" type="text" name="id" placeholder="아이디" pattern="^[a-zA-Z0-9!@#$\-_]{8,15}$" required>
 						<!-- 아이디 중복검사 후 메세지 출력, 중복확인 버튼 활성화/비활성화 -->
 						<input type="button" name="id_check_btn" value="중복확인">
 						<div class="idD"></div>
@@ -243,15 +265,13 @@
 					<td><label for="address">주소</label></td>
 					<td>
 						<input type="text" name="post" placeholder="우편번호" required readonly>
-						<input type="button" name="post_find" value="우편번호 찾기"><br>
+						<input type="button" name="post_find" value="주소 찾기"><br>
 						<input type="text" name="basic_addr" placeholder="기본주소" required readonly><br>
 						<input type="text" name="detail_addr" placeholder="상세주소">	
 					</td>
 				</tr>
 			</tbody>
 		</table>
-	</form>
-	<form>
 		<br>
 		<legend>약관동의</legend>
 		<hr><br>

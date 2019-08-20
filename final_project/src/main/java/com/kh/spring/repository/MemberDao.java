@@ -6,4 +6,6 @@ public interface MemberDao {
 
 	boolean regist(MemberDto memberDto);
 
+	MemberDto get(String id);
+	
 }
