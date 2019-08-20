@@ -105,7 +105,7 @@
     	<tr>
     		<th>번    호</th>
     		<th>카	테		고		리</th>
-    		<th>제 					목</th>
+    		<th>제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목</th>
     	</tr>
     	</thead>
     	<!-- 아래  -->
