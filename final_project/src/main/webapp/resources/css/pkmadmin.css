@@ -1,10 +1,11 @@
-@font-face {
-     font-family: maple;
-     src: url("../font/Maplestory Light.ttf");
- }
+@font-face{
+	font-family:maple;
+	src:url("../font/Maplestory Light.ttf");
+}
 
 *{
     font-family: 'maple';
+    box-sizing: border-box;
 }
 
 a{
@@ -25,7 +26,7 @@ a{
 
 /*헤더리스트 위치*/
 .header-button > .owner{
-    margin-right: 600px;
+    margin-right: 500px;
 }
 .header-button > .owner a{
     color: whitesmoke;
