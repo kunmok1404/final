@@ -66,17 +66,22 @@ public class MemberController {
 	//아이디 중복확인
 	@GetMapping("/id_check")
 	public void id_check(@RequestParam String id, HttpServletResponse resp) throws IOException {
+		System.out.println("접속했습니다.");
 		resp.setContentType("text/plain");
 		MemberDto mdto = memberDao.get(id);
+		System.out.println("테스트시작");
 		if(mdto == null) {
 			resp.getWriter().print("Y");
+			System.out.println("Y");
 		}
 		else {
 			resp.getWriter().print("N");
+			System.out.println("N");
 		}
 	}
 	
-	//
+	//로그인 기능(GET)
+	
 	
 	
 	

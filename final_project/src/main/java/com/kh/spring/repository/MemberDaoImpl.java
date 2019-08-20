@@ -27,7 +27,7 @@ public class MemberDaoImpl implements MemberDao{
 	//아이디 중복 확인
 	@Override
 	public MemberDto get(String id) {
-		return sqlSession.selectOne("member", id);
+		return sqlSession.selectOne("member.id_check", id);
 	}
 
 }

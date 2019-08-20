@@ -14,7 +14,7 @@
 		//요청 url : /member/id_check.do
 		$("input[name=id_check_btn]").click(function(){
 			$.ajax({
-				url:"id_ckeck",
+				url:"id_check",
 				data:{id:$("input[name=id]").val()},
 				dataType:"text",
 				success:function(resp){
@@ -280,8 +280,8 @@
 				<tr>
 					<td>
 						<input type="checkbox">전체 동의<br>
-						<input type="checkbox">이용약관(필수)<br>
-						<input type="checkbox">개인정보방침(필수)<br>
+						<input type="checkbox">이용약관(필수)<a href="#">약관보기</a><br>
+						<input type="checkbox">개인정보방침(필수)<a href="#">약관보기</a><br>
 						<input type="checkbox">본인은 만 14세 이상입니다.(필수)<br>
 					</td>
 				</tr>
