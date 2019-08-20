@@ -1,13 +1,64 @@
 /*자주하는 질문 목록*/
-.search{
+.btn btn-default dropdown-toggle{
 	width:100%;
 	text-align:right;
-	
+	white-space: nowrap;
+
 }
 .qna-qna{
 	width:100%;
-	border: 2px solid black;
+	border: solid #9C3D39;
+	border-left-width: 0px;
+    border-bottom-width: 0px;
+    border-right-width: 0px;
+    border-top-width: 4px;
+    text-align: center;
+    padding: 300px;
 }
-.qns-top{
-	
+.qns-button{
+	color:#9C3D39;
+}
+.qna-number{
+	font-size:30px;
+
+}
+.qna-dropdown{
+	float: right;
+	border: 1px solid black;
+	border-radius: .25rem;
+
+}
+.write-btn{
+	margin:auto;
+	color:white;
+	border: 1px solid #9C3D39;
+	background-color: #9C3D39;
+	padding: 15px 50px;
+}
+ table tr{
+	border-top: 2px solid 	#DCDCDC;
+}
+ table tr th{
+	height: 60px;
+}
+ table tr td{
+	height: 60px;
+}
+.navigator {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+    text-align: center;
+}
+
+.navigator > li {
+    display: inline-block;
+    padding: 0.5rem;
+    min-width: 40px;
+    text-align: center;
+}
+
+.navigator > .active {
+    background-color: darkred;
+    color: aliceblue;
 }
