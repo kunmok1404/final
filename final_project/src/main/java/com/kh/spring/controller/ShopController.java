@@ -41,10 +41,6 @@ public class ShopController {
 		int size = 10;
 		int end = page * size;
 		int start = end - size + 1;
-		System.out.println("페이지="+page);
-		System.out.println("조각start="+ start);
-		System.out.println("조각end="+ start);
-		System.out.println("조각cat_no="+ start);
 		List<ShopDto> shop_list = shopDao.ajaxPaging(start, end, cat_no);	
 		model.addAttribute("shop_list", shop_list);
 		
@@ -56,7 +52,7 @@ public class ShopController {
 	public String detail(@RequestParam int no, Model model) {
 		model.addAttribute("cat_list", shopDao.catList()); // 상단 Food카테고리목록조회
 		model.addAttribute("shopDto", shopDao.shopInfo(no)); //매장정보
-		model.addAttribute("menu_list", shopDao.menuList(no)); // 메뉴리스트
+		model.addAttribute("map", shopService.menuList(no)); // 메뉴리스트
 		return "client/shop/shop_detail";
 	}
 }
