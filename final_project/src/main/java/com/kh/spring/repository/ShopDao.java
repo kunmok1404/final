@@ -5,6 +5,7 @@ import java.util.List;
 import com.kh.spring.entity.CategoryDto;
 import com.kh.spring.entity.MenuDto;
 import com.kh.spring.entity.ShopDto;
+import com.kh.spring.entity.SubMenuDto;
 
 public interface ShopDao {
 
@@ -12,4 +13,6 @@ public interface ShopDao {
 	List<CategoryDto> catList();
 	ShopDto shopInfo(int no);
 	List<MenuDto> menuList(int no);
+	List<SubMenuDto> subMenuList(int menu_no);
+	MenuDto menuName(int menu_no);
 }

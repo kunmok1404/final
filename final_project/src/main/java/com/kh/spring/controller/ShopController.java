@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.kh.spring.entity.MenuDto;
 import com.kh.spring.entity.ShopDto;
+import com.kh.spring.entity.SubMenuDto;
 import com.kh.spring.repository.ShopDao;
 import com.kh.spring.service.ShopService;
 
@@ -54,5 +54,14 @@ public class ShopController {
 		model.addAttribute("shopDto", shopDao.shopInfo(no)); //매장정보
 		model.addAttribute("map", shopService.menuList(no)); // 메뉴리스트
 		return "client/shop/shop_detail";
+	}
+	
+	// 메뉴클릭 후 모달창정보
+	@GetMapping("/sub_menu")
+	public String sub_menu(@RequestParam int menu_no,Model model) {
+		model.addAttribute("map", shopService.sub_menu(menu_no));
+		model.addAttribute("menuDto",shopDao.menuName(menu_no));
+		model.addAttribute("list", shopDao.subMenuList(menu_no));
+		return "client/shop/sub_menu";
 	}
 }

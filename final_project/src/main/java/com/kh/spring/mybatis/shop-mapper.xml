@@ -28,4 +28,15 @@ PUBLIC "//mybatis.org//DTD Mapper 3.0//EN"
  	<select id="menu" parameterType="int" resultType="menuDto">
  		select * from menu where shop_code=#{no}
  	</select>
+ 	
+ 	<!-- 서브메뉴 메뉴명 -->
+ 	<select id="menu_name" parameterType="int" resultType="menuDto">
+ 		select * from menu where no=#{menu_no}
+ 	</select>
+ 	
+ 	<!--매장상세 메뉴목록 -->
+ 	<select id="sub_menu" parameterType="int" resultType="subMenuDto">
+ 		select * from sub_menu where menu_code=#{menu_no}
+ 	</select>
+ 
  </mapper>

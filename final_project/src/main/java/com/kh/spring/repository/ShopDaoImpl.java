@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.spring.entity.CategoryDto;
 import com.kh.spring.entity.MenuDto;
 import com.kh.spring.entity.ShopDto;
+import com.kh.spring.entity.SubMenuDto;
 
 @Repository
 public class ShopDaoImpl implements ShopDao {
@@ -22,9 +23,6 @@ public class ShopDaoImpl implements ShopDao {
 	@Override
 	public List<ShopDto> ajaxPaging(int start, int end, int cat_no) {
 		Map<String, Integer> map = new HashMap<>();
-		System.out.println("임플cat_no="+cat_no);
-		System.out.println("임플start=" + start);
-		System.out.println("임플end=" + end);
 		map.put("start", start);
 		map.put("end", end);
 		map.put("cat_no", cat_no);
@@ -48,6 +46,18 @@ public class ShopDaoImpl implements ShopDao {
 	@Override
 	public List<MenuDto> menuList(int no) {
 		return sqlSession.selectList("shop.menu", no);
+	}
+
+	// 서브메뉴 목록
+	@Override
+	public List<SubMenuDto> subMenuList(int menu_no) {
+		return sqlSession.selectList("shop.sub_menu", menu_no);
+	}
+
+	// 서브메뉴 메뉴명
+	@Override
+	public MenuDto menuName(int menu_no) {
+		return sqlSession.selectOne("shop.menu_name",menu_no );
 	}
 
 }

@@ -18,7 +18,6 @@
         // 메뉴클릭시 서브메뉴 호출
         $(".border-bottom").click(function(){
         	var menu_no = $(this).attr("data-menu"); // 메뉴번호
-        	alert("메뉴번호="+menu_no);
         	
         	// ajax통신
         	$.ajax({
@@ -27,7 +26,9 @@
     				menu_no : menu_no,
     			},
     			success:function(response){
-    				alert("성공");
+    				console.log(response);
+    				$(".modal-body").empty();
+    				$(".modal-body").append(response);
     			}
     		})
         })
@@ -204,64 +205,7 @@
           </div>
           <!-- 모달 바디 -->
           <div class="modal-body">
-            <div class="modal-img">
-                <img src="https://placeimg.com/466/250/any">
-            </div>
-            <div class="modal-menuName border-bottom">
-              <h4>후라이드+양념치킨</h4>
-            </div>
-            <form action="#">
-            <div class="modal-choiceNeed mt-3">
-              <h5>소스선택(필수)</h5>
-              <table>
-                <tbody>
-                  <tr>
-                    <td><input name="need" type="radio" checked>후라이드+후라이드</td>
-                    <td>추가비용없음</td>
-                  </tr>
-                  <tr>
-                    <td><input name="need" type="radio">후라이드+양념</td>
-                    <td>+1000</td>
-                  </tr>
-                  <tr>
-                    <td><input name="need" type="radio">후라이드+간장</td>
-                    <td>+2000</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div><hr>
-            <div class="modal-choiceFree">
-              <h5>추가(선택)</h5>
-              <table>
-                <tbody>
-                    <tr>
-                      <td><input type="checkbox">치킨무</td>
-                      <td>+500</td>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox">콜라</td>
-                      <td>+1000</td>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox">양념소스</td>
-                      <td>+500</td>
-                    </tr>
-                  </tbody>
-              </table>
-            </div><hr>
-            <div class="modal-number">
-              <span>수량</span>
-              <input type="number" value="1" class="text-center">
-            </div><hr>
-            <div class="modal-totalPrice">
-              <span>총 주문금액</span>
-              <span>21500원</span>
-            </div>
-            <div>
-              <input type="submit" class="btn" id="go_cart" value="장바구니 추가">
-              <input type="submit" class="btn" id="go_order" value="주문하기">
-            </div>          
-            </form>
+            
           </div>
     
         </div>
