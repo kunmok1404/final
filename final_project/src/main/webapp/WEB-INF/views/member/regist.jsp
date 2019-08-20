@@ -9,8 +9,57 @@
 
 <script>
 	$(function(){
-		//id 입력창에 
+		//id 입력창에 click 이벤트가 발생하면 ajax 통신으로 중복검사 수행
+		//요청 url : /member/id_check.do
+		$("input[name=id_check_btn]").click(function(){
+			$.ajax({
+				url:"id_ckeck.do",
+				data:{id:$("input[name=id]").val()},
+				dataType:"text",
+				success:function(resp){
+					if(resp=="N"){
+						window.alert("이미 사용중인 아이디입니다.");
+						$("input[name=id]").select();
+					}
+					else{
+						window.alert("사용 가능한 아이디입니다.");
+						//중복검사 후 사용가능한 아이디면 가입버튼 활성화
+						//$("input[name=registbtn]").prop("disabled", false)
+					}
+				}
+			});
+		});
+		
+		//email주소 옵션 선택시 입력창에 선택값 표시
+		$("#email_address_option").change(function(){
+			$("#email_address").val($(this).val())
+			//선택 옵션에서 직접 입력을 선택시 입력창 활성화 후 직접 입력
+			if(!$(this).val()){
+				$(this).prev().prop("readonly", false);
+			}
+			//선택 옵션에서 직접입력 이외 선택시 입력창에 선택값 표시 후 입력창 비활성화(수정 불가능하게)
+			else{
+				$(this).prev().prop("readonly", true);
+			}
+		});
 	});
+	
+	//아이디 정규표현식 검사
+	function checkID(){
+		
+	}	
+		
+	//비밀번호 정규표현식 검사
+	
+	//비밀번호 확인
+	
+	//이메일 정규표현식 검사
+	
+	//전화번호 정규표현식 검사
+	
+	//주소 입력
+	
+	
 </script>
 
 
@@ -56,8 +105,8 @@
 					<td>
 						<input type="text" name="email" placeholder="이메일" pattern="^[a-zA-Z0-9!@#$\-_]{8,15}$" required>
 						<span>@</span>
-						<input type="text" name="email_address" pattern="^.*?\..*?$" requried>
-						<select id="email_address">
+						<input type="text" name="email_address" id="email_address" pattern="^.*?\..*?$" requried>
+						<select id="email_address_option">
 							<option>--이메일 선택--</option>
 							<option value="">직접입력</option>
 							<option>naver.com</option>
