@@ -47,7 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				
 				select * from notice
 				<if test="keyword != null ">
-					where keyword=#{keyword}
+					where title like '%' || #{keyword} || '%'
 				</if>
 				order by no desc
 			
@@ -59,7 +59,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="notice_count" parameterType="string" resultType="int">
 		select count(*) from notice
 			<if test="keyword != null">
-				where keyword=#{keyword} 
+				where title like '%' || #{keyword} || '%'
 			</if>
 	</select>
+	
+<!-- 글 상세보기-->	
+	<select id="notice_get" parameterType="int" resultType="noticeDto">
+		select*from notice where no = #{no}
+	</select>
+
+<!-- 조회수 증가-->
+	<update id="notice_read" parameterType="int">
+		update notice set read = read+1 where no = ${no}
+	</update>
+
 </mapper>

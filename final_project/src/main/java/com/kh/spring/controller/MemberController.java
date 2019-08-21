@@ -3,6 +3,7 @@ package com.kh.spring.controller;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -80,7 +81,27 @@ public class MemberController {
 		}
 	}
 	
+	
+	
 	//로그인 기능(GET)
+	@GetMapping("/login")
+	public String login() {
+		return "member/login";
+	}
+	
+	//로그인 기능(POST)
+//	@PostMapping("/login")
+//	public String login(
+//				@ModelAttribute MemberDto memberDto,
+//				@RequestParam(required=false) String remember,
+//				HttpSession session,
+//				HttpServletResponse response
+//			) {
+//		//암호화 적용 전
+//		MmeberDto result = member
+//	}
+	
+	
 	
 	
 	
