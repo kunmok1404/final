@@ -62,3 +62,12 @@
     background-color: darkred;
     color: aliceblue;
 }
+.search{
+	float: right;
+}
+.qna{
+	margin: 70px;
+}
+.search_btn{
+	margin: -5px;
+}

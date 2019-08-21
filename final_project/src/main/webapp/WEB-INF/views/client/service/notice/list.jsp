@@ -20,10 +20,10 @@
 		$("input[name=page]").val(no);
 		$("form").submit();
 		}
-		//select[name=type]인 항목의 값을 선택
-		var type ="${param.keyword}";
-		if(type){
-		$("select[name=keyword]").val(type);
+		//select[name=keyword]인 항목의 값을 선택
+		var keyword ="${param.keyword}";
+		if(keyword){
+		$("select[name=keyword]").val(keyword);
 		}
     		
     	})
@@ -32,38 +32,17 @@
     
 <div class="qna">
 <div class="offset-1 col-10">
-
-<div class="btn btn-default dropdown-toggle">
+<span class="qna-number">공지 사항</span>
+<div class="search">
 	<!-- 검색창-->
 	<form class="form" action="list" method="get">
 	<input type="hidden" name="page" value="1">
 	<input type="search" name="keyword" placeholder="제목 + 내용" required value="${param.keyword}">
-	<input type="submit" value="검색">
+
+	<img class="search_btn" src="${pageContext.request.contextPath}/resources/image/search.png" width="30" height="30">
+
 	</form>
 </div>
-<!-- <div class="border-bottom filter-wrap"> -->
-<!--         <div class="container filter"> -->
-<!--           <div class="offset-0 col-md-12"> -->
-<!--           <span class="qna-number">공지 사항</span> -->
-<!--             <span class="shop-filter"> -->
-<!--               <span class="qna-dropdown"> -->
-<!--                 <a class="btn btn-default dropdown-toggle" href="javascript:selectItem('')" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> -->
-<!--                   전   체 -->
-<!--                 </a> -->
-<!--                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink"> -->
-<!--                   <a class="dropdown-item" href="javascript:selectItem('1')">주문접수</a> -->
-<!--                   <a class="dropdown-item" href="javascript:selectItem('2')">주문확인</a> -->
-<!--                   <a class="dropdown-item" href="#">주문취소/변경</a> -->
-<!--                   <a class="dropdown-item" href="#">서비스이용</a> -->
-<!--                   <a class="dropdown-item" href="#">결제</a> -->
-<!--                   <a class="dropdown-item" href="#">가맹 및 기타</a> -->
-<!--                   <a class="dropdown-item" href="#">뭐먹지 슈퍼클럽</a> -->
-<!--                 </div> -->
-<!--               </span> -->
-<!--             </span> -->
-<!--           </div> -->
-<!--         </div> -->
-<!--       </div> -->
 	
 <div class="empty"></div>
 
@@ -76,35 +55,49 @@
     	<col width="25%">
     	<col width="20%">
     	</colgroup>
-
     	<thead >
     	<tr>
     		<th>번    호</th>
-    		<th>제	목</th>
+    		<th>제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목</th>
     		<th>작 성 일</th>
     		<th>조	회</th>
     	</tr>
     	</thead>
+    	
     	<!-- 아래  -->
     	<tbody>
+    	
+    	<!-- 중요 -->
     		<c:forEach var ="ndto" items="${list}">
     		<tr>
     			<td>${ndto.no}</td>
-    			<td>
-    			<%--말멀리 있을때 []붙여서 출력 --%>
-    			<c:if test ="${not empty ndto.status}">
-    			[${ndto.status}]
+    			<td style="color: red">
+    			<%--말머리 있을때 []붙여서 출력 --%>
+    			<c:if test ="${not empty ndto.type}" >
+    			[${ndto.type}]
     			</c:if>
-    			</td>
     			
-    			<%-- 제목 --%>
-	    		<td class="region">${ndto.title}	</td>
-	   		 </tr>
-	    	<tr>
-	    		<%-- 내용 --%>
-	    		<td class="moreRegion" style="height:230px" colspan="3">${ndto.content}</td>
+    			<%-- content로 가기 위해 no를 첨부한다 --%>
+    			<c:choose>
+    			<c:when test="${not empty ndto.type}">
+				<a href="content?no=${ndto.no}" style="color: red">
+					${ndto.title}
+				</a>
+				</c:when>
+			<c:otherwise>
+				<a href="content?no=${ndto.no}" style="color: black">
+					${ndto.title}
+				</a>
+			</c:otherwise>
+		</c:choose>
+    			</td>
+	    		<%-- 등록일 --%>
+	    		<td>${ndto.regist_date}</td>
+	    		<%-- 조회수 --%>
+	    		<td>${ndto.read}	</td>
 			</tr>
 			</c:forEach>
+		
     	</tbody>
     </table>
 
