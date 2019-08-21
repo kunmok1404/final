@@ -16,5 +16,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete cart where member_code = #{member_code}
 	</delete>
 	
+	<!-- 나의정보 주문내역 -->
+	<select id="my_order_list" parameterType="int" resultType="ordersDto">
+		select * from orders where member_code=#{member_code}
+	</select>
+	
+	<!-- 나의정보 주문메뉴명 1개 -->
+	<select id="menu_name" parameterType="int" resultType="string">
+		select distinct menu_name from order_detail where order_code=#{no}
+	</select>
+	
+	<!-- 나의정보 주문메뉴갯수 -->
+	<select id="menu_count" parameterType="int" resultType="int">
+		select count(menu_name) from order_detail where order_code=#{no}
+	</select>
 
+	<!-- 나의정보 주문상세 -->
+	<select id="my_order_detail" parameterType="map" resultType="orderDetailDto">
+		select * from order_detail 
+			where 
+		member_code=#{member_code} and order_code = #{order_code}
+	</select>
 </mapper>

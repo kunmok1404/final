@@ -35,7 +35,7 @@
                 </div>
               </li>
               <li>
-                <a href="#" class="mr-2">나의정보</a>
+                <a href="${pageContext.request.contextPath}/member/info_order_list" class="mr-2">나의정보</a>
                 <div id="line-wrapper">
                   <div class="line"></div>
                 </div>
