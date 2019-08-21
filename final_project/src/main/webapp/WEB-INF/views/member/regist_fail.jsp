@@ -4,7 +4,17 @@
 
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 
-<div align="center">
+<style>
+	
+	.regist_fail{
+		width: 800px;
+		margin: auto;
+		text-align: center;
+	}
+	
+</style>
+
+<div class="regist_fail">
  	<form action="regist_fail" method="post">
  		<table class="table table-bordered">
  			<tbody>
