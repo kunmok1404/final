@@ -18,7 +18,7 @@ import com.kh.spring.repository.ShopDao;
 import com.kh.spring.service.ShopService;
 
 //留ㅼ옣
-
+@Controller
 @RequestMapping("/shop")
 public class ShopController {
 
