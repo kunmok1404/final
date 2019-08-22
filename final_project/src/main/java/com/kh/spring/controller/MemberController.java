@@ -103,8 +103,10 @@ public class MemberController {
 			session.setAttribute("member_code", result.getId());
 			session.setAttribute("type", result.getType());
 
-			// �븘�씠�뵒 ���옣
-			// 荑좏궎 媛앹껜瑜� 留뚮뱾怨� 泥댄겕 �뿬遺��뿉 �뵲�씪 �떆媛� �꽕�젙 �썑 response�뿉 異붽�
+			System.out.println(result.getId());
+			
+			// 아이디 저장
+			// 쿠키 객체를 만들고 체크 여부에 따라 시간 설정 후 response에 추가
 			Cookie cookie = new Cookie("saveID", memberDto.getId());
 			if (remember == null) {// 泥댄겕 �븞�뻽�쓣 �븣
 				cookie.setMaxAge(0);
@@ -137,7 +139,7 @@ public class MemberController {
 //		MemberDto result = memberDao.get(memberDto.getId());
 //		// 2. BCrypt�쓽 鍮꾧탳 紐낅졊�쓣 �씠�슜�븯�뿬 鍮꾧탳 �썑 泥섎━
 //		if(BCrypt.checkpw(memberDto.getPw(), result.getPw())) {
-//			session.setAttribute("ok", result.getId());
+//			session.setAttribute("member_code", result.getId());
 //			session.setAttribute("type", result.getType());
 //			
 //			//�븘�씠�뵒 ���옣
@@ -158,13 +160,29 @@ public class MemberController {
 //		}
 //	}
 	
-	//濡쒓렇�씤 �떎�뙣 alert
-
+	//로그인 실패 메세지 alert
 	
-	//濡쒓렇�븘�썐 湲곕뒫
-//	@GetMapping("/logout")
-//	public String logout() {
-//		
+	//로그아웃 기능
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {//데이터 받아와서 지우기
+		session.removeAttribute("member_code");
+		session.removeAttribute("type");
+		return "redirect:/";
+	}
+
+	//아이디 찾기 기능(GET)
+	//목표 : 아이디 찾기 위한 정보 입력 페이지로 전달
+	@GetMapping("/find_id")
+	public String findId() {
+		return "member/find_id";
+	}
+	
+	//아이디 찾기 기능(POST)
+	//목표 : 입력받은 이메일정보를 조회하고 일치할 경우 이메일로 아이디 전송
+	//	일치하지 않을 경우 alert으로 실패 메세지 노출
+//	@PostMapping("/find_id")
+//	public String findId(@ModelAttribute MemberDto memberDto) {
+//		boolean exist = memberDao.find
 //	}
 
 	// 나의정보 클릭시 나의주문내역
@@ -176,6 +194,8 @@ public class MemberController {
 		return "client/member/info_order_list";
 	}
 	
+	//비밀번호 찾기 기능
+	//
 	// 주문내역 상세화면
 	@GetMapping("/info_order_detail")
 	public String infoOrderDetail(HttpSession session, Model model,
