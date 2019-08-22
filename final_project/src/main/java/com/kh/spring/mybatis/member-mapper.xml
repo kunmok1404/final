@@ -40,7 +40,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- 찜한매장 등록 -->
  	<insert id="like" parameterType="memberDto">
- 		insert into myshop values(myshop_seq.next,#{member_code},#{shop_code})
+ 		insert into myshop values(myshop_seq.nextval,#{member_code},#{shop_code})
  	</insert>
  	<!-- 찜한매장 제거 -->
  	<delete id="unlike" parameterType="memberDto">

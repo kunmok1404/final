@@ -98,10 +98,9 @@ public class MemberController {
 		// 암호화 적용 전 로그인
 		MemberDto result = memberDao.login(memberDto);
 		if (result != null) {
-			session.setAttribute("member_code", result.getId());
+			session.setAttribute("member_code", result.getNo());
 			session.setAttribute("type", result.getType());
 
-			System.out.println(result.getId());
 			
 			// 아이디 저장
 			// 쿠키 객체를 만들고 체크 여부에 따라 시간 설정 후 response에 추가
@@ -212,14 +211,16 @@ public class MemberController {
 		return "client/member/info_order_detail";
 	}
 
-	@PostMapping("/like")
-	public void like(@ModelAttribute MyshopDto myshopDto) {
-		memberDao.like(myshopDto);
+	@GetMapping("/like")
+	public String like(@RequestParam int shop_code,@RequestParam int member_code) {
+		memberDao.like(MyshopDto.builder().member_code(member_code).shop_code(shop_code).build());
+		return "client/shop/shop_detail";
 	}
 	
 	
-	@PostMapping("/unlike")
-	public void unlike(@ModelAttribute MyshopDto myshopDto) {
-		memberDao.unlike(myshopDto);
+	@GetMapping("/unlike")
+	public String unlike(@RequestParam int shop_code,@RequestParam int member_code) {
+		memberDao.unlike(MyshopDto.builder().member_code(member_code).shop_code(shop_code).build());
+		return "client/shop/shop_detail";
 	}
 }
