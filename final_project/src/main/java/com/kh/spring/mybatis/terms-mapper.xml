@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="terms">
+	<select id="list1" resultType="termsDto">
+		select * from terms where type = 'play'
+	</select>
+	<select id="list2" resultType="termsDto">
+		select * from terms where type = 'only'
+	</select>
+	<delete id=""></delete>
+</mapper>

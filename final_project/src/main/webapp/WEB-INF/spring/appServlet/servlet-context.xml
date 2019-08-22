@@ -29,9 +29,19 @@
 	<context:component-scan base-package="com.kh.spring" />
 	
 	<!-- tx 모듈의 어노테이션 활성화 -->
-<!-- 	<tx:annotation-driven/> -->
-<!-- 	<beans:bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> -->
-<!-- 		<beans:property name="dataSource" ref="dataSource"></beans:property> -->
-<!-- 	</beans:bean> -->
-	
+	<!-- 
+		파일 업로드를 처리하는 bean
+		이름을 multipartResolver로 설정해야 스프링에서 인지하고 구동 
+	-->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="defaultEncoding" value="UTF-8"></beans:property>
+		<beans:property name="maxUploadSize" value="104857600"></beans:property>
+		<beans:property name="maxUploadSizePerFile" value="10485760"></beans:property>
+	</beans:bean>
+
+	<tx:annotation-driven/>
+	<beans:bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<beans:property name="dataSource" ref="dataSource"></beans:property>
+	</beans:bean>
+
 </beans:beans>

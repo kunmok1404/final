@@ -3,7 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/template/client/header.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/template/client/category/food_category.jsp"></jsp:include>
-
+<style>
+.like {
+	text-align: right;
+}
+</style>
 <script>
 	$(function(){
 		// 메뉴토글
@@ -12,9 +16,65 @@
         	$(this).next().toggle();
         })
         
-	})
+        // 첫번째 토글 열기
+        $(".menu-toggle").first().click();
+        
+        // 메뉴클릭시 서브메뉴 호출
+        $(".border-bottom").click(function(){
+        	var menu_no = $(this).attr("data-menu"); // 메뉴번호
+        	// ajax통신
+        	$.ajax({
+    			url:"${pageContext.request.contextPath}/shop/sub_menu",
+    			data : {
+    				menu_no : menu_no,
+    			},
+    			success:function(response){
+    				console.log(response);
+    				$(".modal-body").empty();
+    				$(".modal-body").append(response);
+    			}
+    		});
+        });
+        function on(){
+        	var img = document.querySelector(".like > img");
+            img.src = "${pageContext.request.contextPath}/resources/image/like_on.png";
+            img.width="20"; 
+            img.height="20";
+            $(".like_val").val("on");
+        };
+        function off(){
+            var img = document.querySelector(".like > img");
+            img.src = "${pageContext.request.contextPath}/resources/image/like_off.png";
+            img.width="20"; 
+            img.height="20";
+            $(".like_val").val("off");
+        };
+        $(".like").click(function() {
+			if ($(".like_val").val()=="on") {
+				 off();
+				 $.ajax({
+					 	type : 'POST',
+		    			url:"${pageContext.request.contextPath}/member/like",
+		    			data : {
+		    				"member_code" : member_code,
+		    				"shop_code" : shopDto.no,
+		    			}
+				 }
+			}else {
+				on();
+				$.ajax({
+					type : 'POST',
+	    			url:"${pageContext.request.contextPath}/member/unlike",
+	    			data : {
+	    				"member_code" : member_code,
+	    				"shop_code" : shopDto.no,
+	    			}
+				}
+			}
+		});
+        
+	});
 </script>
-
 <!--매장상세-->
     <div class="shop">
       <div class="container">
@@ -39,7 +99,16 @@
 				              <div class="line"></div>
 				            </div>
                         </td>
-                        <td class="shop-detail-review">리뷰43</td>
+                        <td class="shop-detail-review">리뷰43
+                        	<div id="line-shop">
+				              <div class="line"></div>
+				            </div>
+				        </td>
+				        <td ><div class="like">
+				        	<input type="hidden" value="off" class="like_val">
+				        	<img  src="${pageContext.request.contextPath}/resources/image/like_off.png" width="20" height="20">
+				        	</div>
+				        </td>
                       </tr>
                       <tr>
                         <td class="shop-detail-minPrice">최소주문금액 : ${shopDto.min_price}원</td>
@@ -71,28 +140,30 @@
             <div class="tab-pane fade show active" id="qwe">
               <div class="menu">
                 <!--메뉴카테고리-->
-                <c:forEach var="menuView" items="${menu_list}">
+                <c:forEach var="menu_category" items="${map}">
                 <div class="menu-toggle">
-                  ${menuView.menu_category}
+                  ${menu_category.key}
                 </div>
-                <!--메뉴내용-->
-                <table class="table menu-content">
-                  <tbody>
-                    <tr class="border-bottom" data-toggle="modal" data-target="#myModal">
-                      <td>
-                        <div class="menu-name">
-                          ${menuView.menu_name}
-                        </div>
-                        <div class="menu-price">
-                          ${menuView.menu_price}
-                        </div>
-                      </td>
-                      <td class="menu-img">
-                          <img src="https://placeimg.com/100/100/any">
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                 	<!--메뉴내용-->
+                	<c:forEach var="menu" items="${menu_category.value}">
+	                <table class="table menu-content">
+	                  <tbody>
+	                    <tr class="border-bottom" data-toggle="modal" data-target="#myModal" data-menu="${menu.no}">
+	                      <td>
+	                        <div class="menu-name">
+	                          ${menu.name}${menu.no}
+	                        </div>
+	                        <div class="menu-price">
+	                          ${menu.price}
+	                        </div>
+	                      </td>
+	                      <td class="menu-img">
+	                          <img src="https://placeimg.com/100/100/any">
+	                      </td>
+	                    </tr>
+	                  </tbody>
+	                </table>
+	                </c:forEach>
                 </c:forEach>
                 
               </div>
@@ -183,76 +254,11 @@
           </div>
           <!-- 모달 바디 -->
           <div class="modal-body">
-            <div class="modal-img">
-                <img src="https://placeimg.com/466/250/any">
-            </div>
-            <div class="modal-menuName border-bottom">
-              <h4>후라이드+양념치킨</h4>
-            </div>
-            <form action="#">
-            <div class="modal-choiceNeed mt-3">
-              <h5>소스선택(필수)</h5>
-              <table>
-                <tbody>
-                  <tr>
-                    <td><input name="need" type="radio" checked>후라이드+후라이드</td>
-                    <td>추가비용없음</td>
-                  </tr>
-                  <tr>
-                    <td><input name="need" type="radio">후라이드+양념</td>
-                    <td>+1000</td>
-                  </tr>
-                  <tr>
-                    <td><input name="need" type="radio">후라이드+간장</td>
-                    <td>+2000</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div><hr>
-            <div class="modal-choiceFree">
-              <h5>추가(선택)</h5>
-              <table>
-                <tbody>
-                    <tr>
-                      <td><input type="checkbox">치킨무</td>
-                      <td>+500</td>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox">콜라</td>
-                      <td>+1000</td>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox">양념소스</td>
-                      <td>+500</td>
-                    </tr>
-                  </tbody>
-              </table>
-            </div><hr>
-            <div class="modal-number">
-              <span>수량</span>
-              <input type="number" value="1" class="text-center">
-            </div><hr>
-            <div class="modal-totalPrice">
-              <span>총 주문금액</span>
-              <span>21500원</span>
-            </div>
-            <div>
-              <input type="submit" class="btn" id="go_cart" value="장바구니 추가">
-              <input type="submit" class="btn" id="go_order" value="주문하기">
-            </div>          
-            </form>
+            
           </div>
     
         </div>
       </div>
     </div>
-
-
-
-
-
-
-
-
 
 <jsp:include page="/WEB-INF/views/template/client/footer.jsp"></jsp:include>
