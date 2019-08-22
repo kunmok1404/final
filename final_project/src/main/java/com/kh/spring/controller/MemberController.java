@@ -35,7 +35,7 @@ public class MemberController {
 	// �쉶�썝媛��엯 湲곕뒫(GET)
 	@GetMapping("/regist")
 	public String regist() {
-		return "member/regist";
+		return "client/member/regist";
 	}
 
 	// �쉶�썝媛��엯 湲곕뒫(POST)
@@ -61,22 +61,22 @@ public class MemberController {
 	// �쉶�썝媛��엯 �꽦怨듭떆 �꽦怨듯럹�씠吏�濡� 蹂대궡湲�
 	@GetMapping("/regist_result")
 	public String regist_result() {
-		return "member/regist_result";
+		return "client/member/regist_result";
 	}
 
 	// �쉶�썝媛��엯 �떎�뙣�떆 �떎�뙣�럹�씠吏�濡� 蹂대궡湲�
 	@GetMapping("/regist_fail")
 	public String regist_fail() {
-		return "member/regist_fail";
+		return "client/member/regist_fail";
 	}
 
 	// �븘�씠�뵒 以묐났�솗�씤
 	@GetMapping("/id_check")
 	public void id_check(@RequestParam String id, HttpServletResponse resp) throws IOException {
-		System.out.println("�젒�냽�뻽�뒿�땲�떎.");
+		
 		resp.setContentType("text/plain");
 		MemberDto mdto = memberDao.id_check(id);
-		System.out.println("�뀒�뒪�듃�떆�옉");
+
 		if (mdto == null) {
 			resp.getWriter().print("Y");
 			System.out.println("Y");
@@ -90,7 +90,7 @@ public class MemberController {
 	// 濡쒓렇�씤 湲곕뒫(GET)
 	@GetMapping("/login")
 	public String login() {
-		return "member/login";
+		return "client/member/login";
 	}
 
 	// 濡쒓렇�씤 湲곕뒫(POST)
@@ -100,10 +100,9 @@ public class MemberController {
 		// �븫�샇�솕 �쟻�슜 �쟾
 		MemberDto result = memberDao.login(memberDto);
 		if (result != null) {
-			session.setAttribute("member_code", result.getId());
+			session.setAttribute("member_code", result.getNo());
 			session.setAttribute("type", result.getType());
 
-			System.out.println(result.getId());
 			
 			// 아이디 저장
 			// 쿠키 객체를 만들고 체크 여부에 따라 시간 설정 후 response에 추가
@@ -120,7 +119,7 @@ public class MemberController {
 		} 
 		else {
 			model.addAttribute("fail", "fail");
-			return "member/login";
+			return "client/member/login";
 		}
 	}
 	
@@ -174,7 +173,7 @@ public class MemberController {
 	//목표 : 아이디 찾기 위한 정보 입력 페이지로 전달
 	@GetMapping("/find_id")
 	public String findId() {
-		return "member/find_id";
+		return "client/member/find_id";
 	}
 	
 	//아이디 찾기 기능(POST)
@@ -211,14 +210,16 @@ public class MemberController {
 		return "client/member/info_order_detail";
 	}
 
-	@PostMapping("/like")
-	public void like(@ModelAttribute MyshopDto myshopDto) {
-		memberDao.like(myshopDto);
+	@GetMapping("/like")
+	public String like(@RequestParam int shop_code,@RequestParam int member_code) {
+		memberDao.like(MyshopDto.builder().member_code(member_code).shop_code(shop_code).build());
+		return "client/shop/shop_detail";
 	}
 	
 	
-	@PostMapping("/unlike")
-	public void unlike(@ModelAttribute MyshopDto myshopDto) {
-		memberDao.unlike(myshopDto);
+	@GetMapping("/unlike")
+	public String unlike(@RequestParam int shop_code,@RequestParam int member_code) {
+		memberDao.unlike(MyshopDto.builder().member_code(member_code).shop_code(shop_code).build());
+		return "client/shop/shop_detail";
 	}
 }
