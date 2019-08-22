@@ -3,6 +3,9 @@
 <jsp:include page="/WEB-INF/views/template/client/header.jsp"></jsp:include>
     
 <div align="center">
+	${memberDto}
+	${cartDto}
+	${shopDto}
 	<h2>주문서</h2>
 </div>
 <div align="left">
@@ -18,9 +21,9 @@
 <button>기본주소로 설정</button>
 <button>새 주소</button>
 <div>
-	<input type="text" name="zip-code" readonly="readonly" placeholder="배달주소" disabled="disabled"><br>
-	<input type="text" name="Basic_addr" readonly="readonly" disabled="disabled"><br>
-	<input type="text" name="Detail_addr" placeholder="상세 주소">
+	<input type="text" name="zip-code" readonly="readonly">${memberDto.post}<br>
+	<input type="text" name="Basic_addr" readonly="readonly">${memberDto.basic_addr}<br>
+	<input type="text" name="Detail_addr" placeholder="상세 주소">${memberDto.detail_addr}
 </div>
 <div>
 	<label for ="phone">
@@ -41,8 +44,30 @@
 	<h2>주문정보</h2>
 </div>
 <hr>
-<div>
-	<h2>매장 정보 출력[마크],이름,별점,리뷰갯수</h2>
+<div class="container">
+	<div class="offset-md-2 col-md-8">
+		<table style="border-style: solid">
+			<thead>
+				<tr>
+					<td><img src="http://placehold.it/80x80"></td>
+					<td>
+						<table class="table">
+							<tr>
+								<td>${shopDto.company_name}</td>
+							</tr>
+							<tr>
+								<td>평점</td>
+								<td>리뷰갯수</td>
+							</tr>
+							<tr>
+								<td>배달비: ${shopDto.delivery_price}</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</thead>
+		</table>
+	</div>
 </div>
 <hr>
 <div>

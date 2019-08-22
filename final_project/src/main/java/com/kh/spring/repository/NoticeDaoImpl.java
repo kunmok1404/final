@@ -8,25 +8,14 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.kh.spring.entity.QnaDto;
+import com.kh.spring.entity.NoticeDto;
 
 @Repository
-public class QnaDaoImpl implements QnaDao{
+public class NoticeDaoImpl implements NoticeDao{
 
 	@Autowired
 	private SqlSession sqlSession;
 	
-
-	@Override
-	public void delete(int no) {
-		sqlSession.delete("service.qnd_delete", no);
-	}
-
-	@Override
-	public void write(QnaDto qnaDto) {
-		sqlSession.insert("service.qna_write", qnaDto);
-		
-	}
 
 //	@Override
 //	public List<QnaDto> list(String category, int start, int end) {
@@ -34,22 +23,38 @@ public class QnaDaoImpl implements QnaDao{
 //	}
 
 	@Override
-	public int count(String category) {
-		return sqlSession.selectOne("service.qna_count",category);
+	public int count(String keyword) {
+		return sqlSession.selectOne("service.notice_count",keyword);
 	}
 
 	@Override
-	public List<QnaDto> list(String category, int i, int j) {
+	public List<NoticeDto> list(String keyword, int i, int j) {
 		Map<String, Object> param = new HashMap<>();
-		if(category !=null) {
-			param.put("category", category);
+		if(keyword !=null) {
+			param.put("keyword", keyword);
 		}
 		//검색이든 목록이든 페이징 구간을 전달
 		param.put("start", i);
 		param.put("end", j);
 		
-		return sqlSession.selectList("service.qna_list", param);
+		return sqlSession.selectList("service.notice_list", param);
 	}
+
+
+
+	@Override
+	public NoticeDto get(int no) {
+		return sqlSession.selectOne("service.notice_get", no);
+	}
+
+
+	@Override
+	public void read(int no) {
+		sqlSession.update("service.notice_read", no);
+		
+	}
+
+
 
 	
 }

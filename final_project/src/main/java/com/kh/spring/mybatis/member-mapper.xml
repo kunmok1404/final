@@ -1,13 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper 
-PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" 
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+<!-- 
+	SQL 명령 보관 파일
+	외부에서 접근할 수 있도록 namespace 지정할 것
+ -->
+ 
  <mapper namespace="member">
+ 	
+ 	<!-- 회원가입 regist(등록) -->
+ 	<insert id="regist" parameterType="memberDto">
+ 		insert into member values(member_seq.nextval, null, #{id}, #{pw}, #{email}, #{phone}, #{post}, #{basic_addr}, #{detail_addr}, '일반', '고객','일반', sysdate, sysdate, sysdate, 0, '고객')
+ 	</insert>
+ 	
+ 	<!-- 아이디 중복확인 id_check(조회) -->
+ 	<select id="id_check" parameterType="String" resultType="memberDto">
+ 		select * from member where id=#{id}
+ 	</select>
+ 	
+ 	<!-- 비밀번호 암호화 적용 전 로그인 -->
+ 	<select id="login" parameterType="memberDto" resultType="memberDto">
+ 		select * from member where id = #{id} and pw = #{pw}
+ 	</select>
+ 	
+ 	<!-- 비밀번호 암호화 적용 후 로그인 -->
+ 	<select id="get">
+ 		select * from member where id = #{id}
+ 	</select>
+	<!-- 찜한매장 등록 -->
  	<insert id="like" parameterType="memberDto">
  		insert into myshop values(myshop_seq.next,#{member_code},#{shop_code})
  	</insert>
+ 	<!-- 찜한매장 제거 -->
  	<delete id="unlike" parameterType="memberDto">
  		delete myshop where member_code = #{member_code} and shop_code = #{shop_code}
  	</delete>
  </mapper>
+
