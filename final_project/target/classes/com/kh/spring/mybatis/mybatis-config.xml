@@ -5,8 +5,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 <configuration>
 	<settings>
 		<setting name="defaultExecutorType" value="BATCH"/>
-	</settings>
-
+  </settings>
 
 	  <!-- 별칭 설정 -->
 	  <typeAliases>
@@ -27,6 +26,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	  	<typeAlias type="com.kh.spring.entity.CertDto" alias="certDto"/>
 	  </typeAliases>
 	  
+
 </configuration>
 
 
