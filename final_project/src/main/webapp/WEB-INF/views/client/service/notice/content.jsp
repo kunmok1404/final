@@ -5,6 +5,7 @@
     <jsp:include page="/WEB-INF/views/template/client/header.jsp"></jsp:include>
     <script src="../jQuery/jquery-1.3.2-vsdoc2.js" type="text/javascript"></script>
 	<script src = "https://code.jquery.com/jquery-latest.js"></script>
+	     <link href="${pageContext.request.contextPath}/resources/css/kayClient.css" rel="stylesheet">
 
     
 <div class="qna">
@@ -21,22 +22,22 @@
     	</colgroup>
     	<thead >
     	<tr>
-    		<th>제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목</th>
-    		<th>${ndto.title}</th>
+    		<th class=notice-th>제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목</th>
+    		<th class=notice-th2>${ndto.title}</th>
     	</tr>
     	<tr>
-    		<th>작&nbsp;성&nbsp;일</th>
-    		<th>${ndto.regist_date}</th>
+    		<th class=notice-th>작&nbsp;성&nbsp;일</th>
+    		<th class=notice-th2>${ndto.regist_date}</th>
     	</tr>
     	<tr>
-    		<th>조&nbsp;회&nbsp;수</th>
-    		<th>${ndto.read}</th>
+    		<th class=notice-th>조&nbsp;회&nbsp;수</th>
+    		<th class=notice-th2>${ndto.read}</th>
     	</tr>
     	</thead>
     	
     	<!-- 내용  -->
     	<tbody>
-    		<td colspan="2" style="height:300px">${ndto.content}	</td>
+    		<td class=notice-th3 colspan="2" style="height:300px">${ndto.content}	</td>
     	</tbody>
     	
     	<!-- 목록보기 버튼 -->

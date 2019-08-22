@@ -29,9 +29,11 @@ hs_err_pid*
 ### Java-Web ###
 ## ignoring target file
 /target/
+/bin/
 
 # End of https://www.gitignore.io/api/java,java-web
 /.classpath
 /.project
 /.springBeans
 /.settings/
+/src/test/

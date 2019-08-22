@@ -4,6 +4,7 @@
 
 <jsp:include page="/WEB-INF/views/template/client/header.jsp"></jsp:include>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+     <link href="${pageContext.request.contextPath}/resources/css/kayClient.css" rel="stylesheet">
 <script src="js/ckeditor.js"></script>
 <script>
 	$(function(){
