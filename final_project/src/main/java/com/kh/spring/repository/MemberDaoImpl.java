@@ -43,6 +43,12 @@ public class MemberDaoImpl implements MemberDao {
 		return sqlSession.selectOne("member.get", id);
 	}
 
+	// 회원정보 조회
+	@Override
+	public MemberDto getInfo(int member_code) {
+		return sqlSession.selectOne("member.get_info",member_code);
+	}
+
 	@Override
 	public void like(MyshopDto myshop) {
 		sqlSession.insert("member.like", myshop);
@@ -53,3 +59,4 @@ public class MemberDaoImpl implements MemberDao {
 		sqlSession.delete("member.unlike", myshop);
 	}
 }
+

@@ -5,7 +5,7 @@
 <script>
 	function fn_sum(){
 			 var alltotal = 0;
-			$(".search tr").each(function() {
+		$(".search tr").each(function() {
 	         var price = parseInt($(this).find(".price").text());   
 	         alltotal += price;
 	      });	

@@ -13,13 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kh.spring.entity.MenuDto;
 import com.kh.spring.entity.ShopDto;
 import com.kh.spring.repository.ShopDao;
 import com.kh.spring.service.ShopService;
 
 //留ㅼ옣
-@Controller
+
 @RequestMapping("/shop")
 public class ShopController {
 
@@ -58,6 +57,16 @@ public class ShopController {
 		model.addAttribute("map", shopService.menuList(no)); 
 		return "client/shop/shop_detail";
 	}
+	
+	// 메뉴클릭 후 모달창정보
+	@GetMapping("/sub_menu")
+	public String sub_menu(@RequestParam int menu_no,Model model) {
+		model.addAttribute("map", shopService.sub_menu(menu_no));
+		model.addAttribute("menuDto",shopDao.menuName(menu_no));
+		model.addAttribute("list", shopDao.subMenuList(menu_no));
+		return "client/shop/sub_menu";
+	}
+	
 	@GetMapping("/explan")
 	public String explan() {
 		

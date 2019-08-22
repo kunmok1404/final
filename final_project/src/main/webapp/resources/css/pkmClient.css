@@ -352,8 +352,9 @@ table {
     text-align: center;
     width:466px;
 }
-.modal-number > span{
-    margin-right: 200px;
+.modal-number {
+	font-size:1.3rem;
+    margin-right:55%;
 }
 .modal-body table tr td:nth-child(1){
     padding-right: 200px;
@@ -379,6 +380,108 @@ table {
     width:49%;
     background-color: red;
     color: white;
+}
+#change-number{
+	width:100px;
+}
+
+/*나의정보 헤더*/
+.my-header{
+    border: 3px solid #9C3D39;
+    border-left-color: white;
+    border-right-color: white;
+    margin-top:10px;
+    padding-top:1.5rem;
+    height: 90px;
+}
+.my-header .component{
+    margin-left:130px;
+}
+.my-header .my-title{
+    font-size: 1.5rem;
+    color: #646464;
+}
+.my-header .my-info{
+    font-size: 1.7rem;
+    color: #9C3D39;
+}
+
+/*나의정보헤더 사이 | 표시*/
+#myInfo-wrapper {
+    cursor:pointer;
+    display: inline-block;
+  }
+.myInfo-line {
+    background:#9C3D39;
+    top:3px;
+    width:3px;
+    height:30px; 
+    margin-right: 10px;
+    border-radius:2px;
+    box-shadow:0 1px 3px rgba(0,0,0,.5);
+    position:relative;
+    display: inline-block;
+  }
+
+/*나의정보 left*/
+.myInfo-box{
+    display: inline-block;
+    position: absolute;
+    width: 11%;
+    min-height: 500px;
+    margin-left:20px;
+}
+.myInfo-box .myInfo-left{
+    width:100%;
+    height:300px;
+}
+.myInfo-box .myMenu{
+    cursor: pointer;
+    border:1.5px solid lightgray;
+    height: 50px;
+    text-align: center;
+    padding-top: 10px;
+}
+.myInfo-box .myMenu span{
+    font-size: 1.2rem;
+}
+.myInfo-left{
+    text-align: center;
+}
+.myInfo-left .my-Info{
+    font-size: 1.7rem;
+    margin-bottom: 10px;
+    margin-top:10px;
+}
+.myInfo-box a{
+	text-decoration:none;
+	color:black;
+}
+
+/*나의정보 제목부분*/
+.wrapper{
+	margin-left:200px;
+	width:70%;
+}
+
+/*나의정보 제목부분*/
+.myInfo-title {
+    margin-top: 1rem;
+    font-size: 1.5rem;
+}
+
+/*나의정보 테이블*/
+.myInfo-table tr{
+    height:35px; 
+    cursor:pointer;
+}
+
+.myInfo-table thead tr td{
+    font-size:1.2rem;
+    color:white;
+    background-color: #2C3E50;
+
+
 }
 
  /*footer*/ 

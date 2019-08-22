@@ -9,5 +9,5 @@ import lombok.Data;
 @Data
 public class OrderDetailListVo {
 	
-	private List<Order_Detail> list;
+	private List<OrderDetailDto> list;
 }

@@ -11,7 +11,6 @@
 		var cat_no = $(".shop-list").attr("data-cat"); // 카테고리 번호
 		
 		function load(){
-			
 			request(page++, cat_no);
 		}
 		

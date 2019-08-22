@@ -12,6 +12,7 @@ import com.kh.spring.entity.CategoryDto;
 import com.kh.spring.entity.FilesDto;
 import com.kh.spring.entity.MenuDto;
 import com.kh.spring.entity.ShopDto;
+import com.kh.spring.entity.SubMenuDto;
 
 @Repository
 public class ShopDaoImpl implements ShopDao {
@@ -48,6 +49,18 @@ public class ShopDaoImpl implements ShopDao {
 		return sqlSession.selectList("shop.menu", no);
 	}
 
+	// 서브메뉴 목록
+	@Override
+	public List<SubMenuDto> subMenuList(int menu_no) {
+		return sqlSession.selectList("shop.sub_menu", menu_no);
+	}
+
+	// 서브메뉴 메뉴명
+	@Override
+	public MenuDto menuName(int menu_no) {
+		return sqlSession.selectOne("shop.menu_name",menu_no );
+	}
+
 	@Override
 	public void regist(ShopDto shopDto) {
 		sqlSession.insert("shop.regist", shopDto);
@@ -68,6 +81,4 @@ public class ShopDaoImpl implements ShopDao {
 		sqlSession.insert("shop.sale_regist",filesDto);
 		
 	}
-	
-	
 }

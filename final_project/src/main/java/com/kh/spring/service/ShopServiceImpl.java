@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.spring.entity.FilesDto;
 import com.kh.spring.entity.MenuDto;
 import com.kh.spring.entity.ShopDto;
+import com.kh.spring.entity.SubMenuDto;
 import com.kh.spring.repository.ShopDao;
 
 
@@ -23,11 +24,9 @@ public class ShopServiceImpl implements ShopService {
 	@Autowired
 	private ShopDao shopDao;
 	
-
-	
 	//留ㅼ옣�긽�꽭�젙蹂�
 	@Override
-	public Object menuList(int no) {
+	public Map<String, List<MenuDto>> menuList(int no) {
 		List<MenuDto> menu_list = shopDao.menuList(no);
 		
 		Map<String, List<MenuDto>> map = new TreeMap<>();
@@ -44,6 +43,32 @@ public class ShopServiceImpl implements ShopService {
 		return map;
 	}
 
+	// 모달창정보 불러오기
+	@Override
+	public Map<String, List<SubMenuDto>> sub_menu(int menu_no) {
+		List<SubMenuDto> subMenuList = shopDao.subMenuList(menu_no);
+		
+		Map<String, List<SubMenuDto>> map = new TreeMap<>();
+		
+		// 키 입력, 리스트생성(필수, 선택으로 나눠서 키저장)
+		for(SubMenuDto subMenuDto : subMenuList) {
+			if(subMenuDto.getType().equals("필수")) {
+				map.put(subMenuDto.getTitle(), new ArrayList<>());	
+			} else {
+				map.put(subMenuDto.getTitle(), new ArrayList<>());	
+			}	
+		}
+		
+		// 키에다가 Dto저장
+		for(SubMenuDto subMenuDto : subMenuList) {
+			if(map.get(subMenuDto.getTitle()).equals("필수")) {
+				map.get(subMenuDto.getTitle()).add(subMenuDto);
+			} else {
+				map.get(subMenuDto.getTitle()).add(subMenuDto);
+			}
+		}
+		return map;
+	}
 
 
 	@Override
