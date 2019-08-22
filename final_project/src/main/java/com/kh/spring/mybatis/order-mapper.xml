@@ -64,7 +64,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="detail_regist" parameterType="orderDetailDto">
 		insert into order_detail values(#{order_no}, #{title}, #{menu_name}, #{menu_amount},
 		#{menu_price}, #{sub_name}, #{sub_amount}, #{sub_type}, #{sub_price})
-
 	</insert>
 	
+
 </mapper>
