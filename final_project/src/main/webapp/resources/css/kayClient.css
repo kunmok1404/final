@@ -28,13 +28,26 @@
 	border-radius: .25rem;
 
 }
-.write-btn{
+.write-btn1{
+	font-size:20px;
 	margin:auto;
 	color:white;
 	border: 1px solid #9C3D39;
 	background-color: #9C3D39;
-	padding: 15px 50px;
+	padding: 12px 60px;
+	margin: 15px;
 }
+.write-btn{
+	font-size:20px;
+	margin:auto;
+	color:white;
+	border: 1px solid #9C3D39;
+	background-color: #9C3D39;
+	padding: 16px 60px;
+	margin: 15px;
+}
+
+
  table tr{
 	border-top: 2px solid 	#DCDCDC;
 }
@@ -71,3 +84,17 @@
 .search_btn{
 	margin: -5px;
 }
+.notice-th{
+	background-color:lightgray;
+}
+ .notice-th2{
+ 	text-align: left;
+ 	text-indent: 2em;
+ }
+  .notice-th3{
+ 	text-align: left;
+ 	text-indent: 2em;
+ 	vertical-align: top;
+ }
+
+ 

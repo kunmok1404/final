@@ -5,7 +5,7 @@
     <jsp:include page="/WEB-INF/views/template/client/header.jsp"></jsp:include>
     <script src="../jQuery/jquery-1.3.2-vsdoc2.js" type="text/javascript"></script>
 	<script src = "https://code.jquery.com/jquery-latest.js"></script>
-	 <link href="${pageContext.request.contextPath}/resources/css/kayClient.css" rel="stylesheet">
+	     <link href="${pageContext.request.contextPath}/resources/css/kayClient.css" rel="stylesheet">
     <script>
     
 	$(function(){
@@ -20,31 +20,15 @@
 		//input[name=page]에 no를 설정한 뒤 form을 전송
 		$("input[name=page]").val(no);
 		$("form").submit();
-		}
-		//select[name=keyword]인 항목의 값을 선택
-		var keyword ="${param.keyword}";
-		if(keyword){
-		$("select[name=keyword]").val(keyword);
-		}
-    		
+		}    		
     	})
     
     </script>
     
 <div class="qna">
 <div class="offset-1 col-10">
-<span class="qna-number">공지 사항</span>
-<div class="search">
-	<!-- 검색창-->
-	<form class="form" action="list" method="get">
-	<input type="hidden" name="page" value="1">
-	<input type="search" name="keyword" placeholder="제목 + 내용" required value="${param.keyword}">
+<span class="qna-number">1:1 문의</span>
 
-	<img class="search_btn" src="${pageContext.request.contextPath}/resources/image/search.png" width="30" height="30">
-
-	</form>
-</div>
-	
 <div class="empty"></div>
 
     <!-- 표 -->
@@ -52,54 +36,65 @@
     	<!-- 위에 -->
     	<colgroup>
     	<col width="10%">
-    	<col width="45%">
     	<col width="25%">
-    	<col width="20%">
+    	<col width="35%">
+    	<col width="15%">
+    	<col width="15%">
     	</colgroup>
     	<thead>
     	<tr>
-    		<th>번    호</th>
+    		<th>번&nbsp;&nbsp;호</th>
+    		<th>카테고리</th>
     		<th>제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목</th>
-    		<th>작 성 일</th>
-    		<th>조	회</th>
+    		<th>작&nbsp;성&nbsp;일</th>
+    		<th>답변상태</th>
     	</tr>
     	</thead>
     	
     	<!-- 아래  -->
     	<tbody>
     	
-    	<!-- 중요 -->
-    		<c:forEach var ="ndto" items="${list}">
+    	<c:choose>
+    		<c:when test="${empty list}">
     		<tr>
-    			<td>${ndto.no}</td>
-    			<td style="color: red">
-    			<%--말머리 있을때 []붙여서 출력 --%>
-    			<c:if test ="${not empty ndto.type}" >
-    			[${ndto.type}]
-    			</c:if>
-    			
+    		<td colspan="5" style="height: 400px">
+    		<h3>1:1 문의 내역이 존재 하지 않습니다.</h3>
+    		</td>
+    		</tr>
+    		</c:when>
+    		<c:otherwise>
+    		<c:forEach var ="odto" items="${list}">
+    		<tr>
+    			<td>${odto.no}</td>
+    			<td>
+    			<%-- 말머리는 있을 때에만 [] 를 붙여서 출력한다. --%>
+				<c:if test="${not empty odto.category}">
+				[${odto.category}] 
+				</c:if>
+    			</td>
+    			<td>
     			<%-- content로 가기 위해 no를 첨부한다 --%>
-    			<c:choose>
-    			<c:when test="${not empty ndto.type}">
-				<a href="content?no=${ndto.no}" style="color: red">
-					${ndto.title}
+    			<a href="content?no=${odto.no}">
+					${odto.title}
 				</a>
-				</c:when>
-			<c:otherwise>
-				<a href="content?no=${ndto.no}" style="color: black">
-					${ndto.title}
-				</a>
-			</c:otherwise>
-		</c:choose>
     			</td>
 	    		<%-- 등록일 --%>
-	    		<td>${ndto.regist_date}</td>
-	    		<%-- 조회수 --%>
-	    		<td>${ndto.read}	</td>
+	    		<td>${odto.regist_date}</td>
+	    		<%-- 답변상태 --%>
+	    		<td>${odto.reply_status}	</td>
 			</tr>
 			</c:forEach>
-		
+			</c:otherwise>
+		</c:choose>
     	</tbody>
+    	<!-- 글쓰기 버튼 -->
+		<tfoot>
+			<tr>
+			<td colspan="8" align="center" >
+				<a href="write" class="write-btn">글쓰기</a>
+			</td>
+			</tr>
+		</tfoot>
     </table>
 
 <div class="empty"></div>
