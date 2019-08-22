@@ -12,6 +12,7 @@ import com.kh.spring.entity.CartDto;
 import com.kh.spring.entity.CartListVO;
 import com.kh.spring.entity.MemberDto;
 import com.kh.spring.entity.OrderDetailDto;
+import com.kh.spring.entity.OrderDetailListVo;
 import com.kh.spring.entity.OrdersDto;
 import com.kh.spring.entity.ShopDto;
 //주문 관련 Dao impl
@@ -76,6 +77,31 @@ public class OrdersDaoimpl implements OrdersDao{
 	@Override
 	public List<OrderDetailDto> orderDistinct(int order_code) {
 		return sqlsession.selectList("order.order_distinct", order_code);
+	}
+
+	@Override
+	public void orderinput(OrdersDto ordersDto) {
+		sqlsession.insert("order.order_regist",ordersDto);	
+	}
+
+	@Override
+	public void orderDetailInput(int no,OrderDetailListVo vo) {
+		List<OrderDetailDto> list = vo.getList();
+		for(OrderDetailDto orderDetailDto : list) {
+			orderDetailDto.setOrder_no(no);
+			sqlsession.update("order.detail_regist",orderDetailDto);
+		}
+	}
+
+	@Override
+	public int getseq() {
+		return sqlsession.selectOne("order.order_seq");
+	}
+
+	@Override
+	public void cartDelete(int member_code) {
+		sqlsession.delete("order.delete",member_code);
+		
 	}
 
 }

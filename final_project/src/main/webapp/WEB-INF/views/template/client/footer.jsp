@@ -1,12 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <script >
+	$(function() {		
+		$(".explana").click(function() {
+			$(location).attr("href", "http://localhost:9090/spring/shop/explan");
+		});
+		});
+</script>
 <footer>
       <div class="footer-menu">
           <ul>
             <li class="mt-2"><a href="terms">이용약관</a></li>
             <li>개인정보처리방침</li>
             <li>뭐먹지사장님</li>
-            <li><a href="../shop/explan">입점문의</a></li>
+            <li class="explana">입점문의</li>
           </ul>
       </div><hr>
       <div class="footer-content container-fluid" align="left" >

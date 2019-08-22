@@ -25,7 +25,7 @@ import com.kh.spring.repository.ShopDao;
 import com.kh.spring.service.OrderService;
 
 @Controller
-@RequestMapping("/member")
+@RequestMapping("/client/member")
 public class MemberController {
 
 	@Autowired
@@ -36,16 +36,21 @@ public class MemberController {
 	private OrdersDao ordersDao;
 	@Autowired
 	private ShopDao shopDao;
-
-	// 회원가입(GET)
+	
+	// 회원가입 기능(GET)
 	@GetMapping("/regist")
 	public String regist() {
 		return "client/member/regist";
 	}
 
-	// 회원가입(POST)
+	// 회원가입 기능(POST)
 	@PostMapping("/regist")
 	public String regist(@ModelAttribute MemberDto memberDto) {
+// memberDto 안에 있는 pw를 변경(BCrypt)
+//		String origin = memberDto.getPw();
+//		String encrypt = BCrypt.hashpw(origin, BCrypt.gensalt());
+//		memberDto.setPw(encrypt);
+
 		boolean result = memberDao.regist(memberDto);
 		System.out.println(result);
 		if (result) {
@@ -56,38 +61,42 @@ public class MemberController {
 		}
 	}
 
+	// 회원가입 성공 시 성공페이지로 넘기기
 	@GetMapping("/regist_result")
 	public String regist_result() {
 		return "client/member/regist_result";
 	}
 
+	// 회원가입 실패 시 실패 페이지로 넘기기
 	@GetMapping("/regist_fail")
 	public String regist_fail() {
 		return "client/member/regist_fail";
 	}
 
+	// 아이디 중복확인 체크
 	@GetMapping("/id_check")
 	public void id_check(@RequestParam String id, HttpServletResponse resp) throws IOException {
 		resp.setContentType("text/plain");
 		MemberDto mdto = memberDao.id_check(id);
 		if (mdto == null) {
 			resp.getWriter().print("Y");
-			System.out.println("Y");
 		} 
 		else {
 			resp.getWriter().print("N");
-			System.out.println("N");
 		}
 	}
 
+	// 로그인(GET)
 	@GetMapping("/login")
 	public String login() {
 		return "client/member/login";
 	}
 
+	// 로그인(POST)
 	@PostMapping("/login")
 	public String login(@ModelAttribute MemberDto memberDto, @RequestParam(required = false) String remember,
 			HttpSession session, HttpServletResponse response,Model model) {
+		// 암호화 적용 전 로그인
 		MemberDto result = memberDao.login(memberDto);
 		if (result != null) {
 			session.setAttribute("member_code", result.getNo());
@@ -96,13 +105,12 @@ public class MemberController {
 			// 아이디 저장
 			// 쿠키 객체를 만들고 체크 여부에 따라 시간 설정 후 response에 추가
 			Cookie cookie = new Cookie("saveID", memberDto.getId());
-			if (remember == null) {
+			if (remember == null) {// 체크 안했을때
 				cookie.setMaxAge(0);
 			} 
-			else {
-				cookie.setMaxAge(4 * 7 * 24 * 60 * 60);
+			else {// 체크 했을때
+				cookie.setMaxAge(4 * 7 * 24 * 60 * 60);// 4주
 			}
-
 			response.addCookie(cookie);
 			return "redirect:/";
 		} 
@@ -111,6 +119,42 @@ public class MemberController {
 			return "client/member/login";
 		}
 	}
+
+	// 로그인(POST)
+//	@PostMapping("/login")
+//	public String login(
+//				@ModelAttribute MemberDto memberDto,
+//				@RequestParam(required=false) String remember,
+//				HttpSession session,
+//				HttpServletResponse response
+//			) {
+//		//암호화 적용 후
+//		// 1. id를 DB에서 회원정보를 불러온다.
+//		MemberDto result = memberDao.get(memberDto.getId());
+//		// 2. BCrypt의 비교명령을 이용하여 비교 후 처리
+//		if(BCrypt.checkpw(memberDto.getPw(), result.getPw())) {
+//			session.setAttribute("member_code", result.getId());
+//			session.setAttribute("type", result.getType());
+//			
+//			// 아이디 저장
+	// 쿠키 객체를 만들고 체크 여부에 따라 시간 설정 후 response에 추가
+//			Cookie cookie = new Cookie("saveID", memberDto.getId());
+//			if(remember == null) {//체크 안했을때
+//				cookie.setMaxAge(0);
+//			}
+//			else {//체크 했을때
+//				cookie.setMaxAge(4 * 7 * 24 * 60 * 60);//4주
+//			}
+//			
+//			response.addCookie(cookie);
+//			return "redirect:/";			
+//		}
+//		else {
+//			return "client/member/login_fail";
+//		}
+//	}
+	
+	//로그인 실패 메세지 alert
 	
 	//로그아웃 기능
 	@GetMapping("/logout")
@@ -126,7 +170,7 @@ public class MemberController {
 	public String findId() {
 		return "client/member/find_id";
 	}
-	
+	 
 	//아이디 찾기 기능(POST)
 	//목표 : 입력받은 이메일정보를 조회하고 일치할 경우 이메일로 아이디 전송
 	//	일치하지 않을 경우 alert으로 실패 메세지 노출
@@ -135,6 +179,9 @@ public class MemberController {
 //		boolean exist = memberDao.find
 //	}
 
+	
+	
+	
 	// 나의정보 클릭시 나의주문내역
 	@GetMapping("/info_order_list")
 	public String infoOrderList(HttpSession session, Model model) {
@@ -170,13 +217,20 @@ public class MemberController {
 		return "client/member/info_order_detail";
 	}
 
-	@PostMapping("/like")
-	public void like(@ModelAttribute MyshopDto myshopDto) {
-		memberDao.like(myshopDto);
+	@GetMapping("/like")
+	public String like(@RequestParam int shop_code,@RequestParam int member_code) {
+		memberDao.like(MyshopDto.builder().member_code(member_code).shop_code(shop_code).build());
+		return "client/shop/shop_detail";
 	}
 	
 	@PostMapping("/unlike")
 	public void unlike(@ModelAttribute MyshopDto myshopDto) {
 		memberDao.unlike(myshopDto);
+	}
+	
+	@GetMapping("/unlike")
+	public String unlike(@RequestParam int shop_code,@RequestParam int member_code) {
+		memberDao.unlike(MyshopDto.builder().member_code(member_code).shop_code(shop_code).build());
+		return "client/shop/shop_detail";
 	}
 }
