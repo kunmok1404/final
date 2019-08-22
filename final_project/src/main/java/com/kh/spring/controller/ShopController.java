@@ -1,5 +1,6 @@
 package com.kh.spring.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,15 +8,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.spring.entity.MenuDto;
 import com.kh.spring.entity.ShopDto;
 import com.kh.spring.repository.ShopDao;
 import com.kh.spring.service.ShopService;
 
-//매장
+//留ㅼ옣
 @Controller
 @RequestMapping("/shop")
 public class ShopController {
@@ -26,15 +29,15 @@ public class ShopController {
 	@Autowired
 	private ShopDao shopDao;
 	
-	// 매장목록화면
+	// 留ㅼ옣紐⑸줉�솕硫�
 	@RequestMapping("/list")
 	public String list(Model model,@RequestParam int cat_no) {
 		model.addAttribute("cat_no", cat_no);
-		model.addAttribute("cat_list", shopDao.catList()); // 상단 Food카테고리목록조회
+		model.addAttribute("cat_list", shopDao.catList()); // �긽�떒 Food移댄뀒怨좊━紐⑸줉議고쉶
 		return "client/shop/shop_list";
 	}
 	
-	// 페이지 조각
+	// �럹�씠吏� 議곌컖
 	@GetMapping("/part")
 	public String part(@RequestParam(required = false, defaultValue = "1") int page,
 					int cat_no, Model model) {
@@ -47,12 +50,30 @@ public class ShopController {
 		return "client/shop/part";
 	}
 	
-	// 매장상세화면
+	// 留ㅼ옣�긽�꽭�솕硫�
 	@GetMapping("/detail")
 	public String detail(@RequestParam int no, Model model) {
-		model.addAttribute("cat_list", shopDao.catList()); // 상단 Food카테고리목록조회
-		model.addAttribute("shopDto", shopDao.shopInfo(no)); //매장정보
-		model.addAttribute("map", shopService.menuList(no)); // 메뉴리스트
+		model.addAttribute("cat_list", shopDao.catList()); 
+		model.addAttribute("shopDto", shopDao.shopInfo(no));
+		model.addAttribute("map", shopService.menuList(no)); 
 		return "client/shop/shop_detail";
+	}
+	@GetMapping("/explan")
+	public String explan() {
+		
+		return "order/shop_explan";
+	}
+	@GetMapping("/order_regist")
+	public String order_regist() {
+		return "order/order_regist";
+	}
+	@PostMapping("/order_regist")
+	public String order_regist(
+								@ModelAttribute ShopDto shopDto,
+								@RequestParam MultipartFile business_regist,
+								@RequestParam MultipartFile sale_regist) throws IllegalStateException, IOException {
+		shopService.regist(shopDto,business_regist,sale_regist);
+		return "order/order_regist";
+		
 	}
 }

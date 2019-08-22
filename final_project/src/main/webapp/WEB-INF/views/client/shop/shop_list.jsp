@@ -9,9 +9,9 @@
 		// 목표 : "더보기" 버튼을 누르면 1페이지씩 갱신하여 추가
 		var page = 1;  //페이지번호
 		var cat_no = $(".shop-list").attr("data-cat"); // 카테고리 번호
-		alert("cat_no="+cat_no);
+		
 		function load(){
-			alert("page="+page);
+			
 			request(page++, cat_no);
 		}
 		
