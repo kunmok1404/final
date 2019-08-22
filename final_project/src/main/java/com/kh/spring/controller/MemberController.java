@@ -22,7 +22,7 @@ import com.kh.spring.repository.OrdersDao;
 import com.kh.spring.service.OrderService;
 
 @Controller
-@RequestMapping("/member")
+@RequestMapping("/client/member")
 public class MemberController {
 
 	@Autowired
