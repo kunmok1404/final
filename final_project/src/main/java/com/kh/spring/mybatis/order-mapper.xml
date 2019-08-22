@@ -26,8 +26,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where no = #{no}
 	</update>
 	
-	<insert id="regist">
-		insert into cart values(cart_seq.nextval, 21, 80000, '피자', '치즈피자', 1, 10000, '김치', 1, '반찬', 800, sysdate)
+	<insert id="regist" parameterType="order_Detail">
+		insert into order_detail values(#{order_code}, #{title}, #{menu_name}, #{menu_amount},
+		#{menu_price}, #{sub_name}, #{sub_amount}, #{sub_type}, #{sub_price})
 	</insert>
 	
 </mapper>
