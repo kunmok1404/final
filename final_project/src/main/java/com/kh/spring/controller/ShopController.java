@@ -69,12 +69,12 @@ public class ShopController {
 	
 	@GetMapping("/explan")
 	public String explan() {
-		
-		return "order/shop_explan";
+		System.out.println("aaa");
+		return "client/order/shop_explan";
 	}
 	@GetMapping("/order_regist")
 	public String order_regist() {
-		return "order/order_regist";
+		return "client/order/order_regist";
 	}
 	@PostMapping("/order_regist")
 	public String order_regist(
@@ -82,7 +82,7 @@ public class ShopController {
 								@RequestParam MultipartFile business_regist,
 								@RequestParam MultipartFile sale_regist) throws IllegalStateException, IOException {
 		shopService.regist(shopDto,business_regist,sale_regist);
-		return "order/order_regist";
+		return "client/order/order_regist";
 		
 	}
 }

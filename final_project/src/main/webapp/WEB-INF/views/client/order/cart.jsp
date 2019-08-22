@@ -38,16 +38,15 @@
 						
 						$(parent2.find($(".mp")).val(amount));
 						$(parent3.find($(".mp2")).val(total));
-						
+						$("")
 					}		
 					else{
 						alert("10개 이상은 구매하실수 없습니다");
 						$(this).next(".amount").text(1);					
 					}
-					if($(this).prop("checked")){
 						var ftotal = alltotal +total;
-						$("#alltotal").text(total);							
-					}
+						$("#alltotal").text(ftotal);							
+
 			
 			});
 			
@@ -77,19 +76,19 @@
 				
 			});
 			
-			$(".okcheck").click(function(){
-				var alltotal = parseInt($("#alltotal").text());
-				var parent = $(this).parent().parent();
-				if($(this).prop("checked")){
-					var price = parseInt(parent.find($(".price")).text());
-					$("#alltotal").text(alltotal+price);			
-				}
-					else
-				{
-					var price = parseInt(parent.find($(".price")).text());
-					$("#alltotal").text(alltotal-price);
-				}
-			});
+// 			$(".okcheck").click(function(){
+// 				var alltotal = parseInt($("#alltotal").text());
+// 				var parent = $(this).parent().parent();
+// 				if($(this).prop("checked")){
+// 					var price = parseInt(parent.find($(".price")).text());
+// 					$("#alltotal").text(alltotal+price);			
+// 				}
+// 					else
+// 				{
+// 					var price = parseInt(parent.find($(".price")).text());
+// 					$("#alltotal").text(alltotal-price);
+// 				}
+// 			});
 			
 			
 			
