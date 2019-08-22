@@ -22,7 +22,7 @@ import com.kh.spring.repository.OrdersDao;
 import com.kh.spring.service.OrderService;
 
 @Controller
-@RequestMapping("/member")
+@RequestMapping("/client/member")
 public class MemberController {
 
 	@Autowired
@@ -35,7 +35,7 @@ public class MemberController {
 	// �쉶�썝媛��엯 湲곕뒫(GET)
 	@GetMapping("/regist")
 	public String regist() {
-		return "member/regist";
+		return "client/member/regist";
 	}
 
 	// �쉶�썝媛��엯 湲곕뒫(POST)
@@ -61,13 +61,13 @@ public class MemberController {
 	// �쉶�썝媛��엯 �꽦怨듭떆 �꽦怨듯럹�씠吏�濡� 蹂대궡湲�
 	@GetMapping("/regist_result")
 	public String regist_result() {
-		return "member/regist_result";
+		return "client/member/regist_result";
 	}
 
 	// �쉶�썝媛��엯 �떎�뙣�떆 �떎�뙣�럹�씠吏�濡� 蹂대궡湲�
 	@GetMapping("/regist_fail")
 	public String regist_fail() {
-		return "member/regist_fail";
+		return "client/member/regist_fail";
 	}
 
 	// �븘�씠�뵒 以묐났�솗�씤
@@ -90,7 +90,7 @@ public class MemberController {
 	// 濡쒓렇�씤 湲곕뒫(GET)
 	@GetMapping("/login")
 	public String login() {
-		return "member/login";
+		return "client/member/login";
 	}
 
 	// 濡쒓렇�씤 湲곕뒫(POST)
@@ -120,7 +120,7 @@ public class MemberController {
 		} 
 		else {
 			model.addAttribute("fail", "fail");
-			return "member/login";
+			return "client/member/login";
 		}
 	}
 	
@@ -174,7 +174,7 @@ public class MemberController {
 	//목표 : 아이디 찾기 위한 정보 입력 페이지로 전달
 	@GetMapping("/find_id")
 	public String findId() {
-		return "member/find_id";
+		return "client/member/find_id";
 	}
 	
 	//아이디 찾기 기능(POST)
