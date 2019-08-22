@@ -36,3 +36,4 @@ hs_err_pid*
 /.project
 /.springBeans
 /.settings/
+/src/test/
