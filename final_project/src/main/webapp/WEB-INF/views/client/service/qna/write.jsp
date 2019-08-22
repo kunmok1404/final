@@ -16,6 +16,12 @@
 </script>
 <h4>자주하는 질문</h4>
 <form action="write" method="post">
+
+<div class="form-group">
+	<label>질문</label>
+	<input type="text" name="question" placeholder="제목을 입력하세요" required>
+</div>
+
 <div class="form-group">
 	<label>분류</label>
 	<select name="category">
@@ -29,9 +35,13 @@
 		<option value=7>뭐먹지 슈퍼클럽</option>
 	</select>
 </div>
+
 <div class="form-group">
-	<label>제목</label>
-	<input type="text" name="question" placeholder="제목을 입력하세요" required>
+	<span>등록일</span> 
+	<span>${qnaDto.regist_date}</span>
+
+	<span>수정일</span>
+	<input type="text" name="edit_date" required>
 </div>
 <div class="form-group">
 	<label>내용</label>

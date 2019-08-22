@@ -3,6 +3,10 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="order">
+	<!-- 회원 정보를 확인하는 코드 -->
+	<select id="search" parameterType="int" resultType="memberDto">
+		select * from member where no = #{member_code}
+	</select>
 	<!-- '자기'의 카트에 존재하는 물건을 출력하는 코드  -->
 	<select id="cartlist" parameterType="int" resultType="cartDto">
 		select * from cart where member_code = #{member_code}
@@ -15,6 +19,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="delete" parameterType="int">
 		delete cart where member_code = #{member_code}
 	</delete>
+	<!-- 카트에 있는 정보를 수정해서 주문에 넣음 -->
+	<update id="update" parameterType="cartDto">
+		update cart set menu_amount = #{menu_amount},
+		menu_price = #{menu_price}
+		where no = #{no}
+	</update>
 	
 	<!-- 나의정보 주문내역 -->
 	<select id="my_order_list" parameterType="int" resultType="ordersDto">
@@ -37,4 +47,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			where 
 		member_code=#{member_code} and order_code = #{order_code}
 	</select>
+	<insert id="regist">
+		insert into cart values(cart_seq.nextval, 21, 80000, '피자', '치즈피자', 1, 10000, '김치', 1, '반찬', 800, sysdate)
+	</insert>
+	
 </mapper>

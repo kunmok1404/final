@@ -50,7 +50,7 @@ public class QnaController {
 		model.addAttribute("startBlock", startBlock);
 		model.addAttribute("endBlock", endBlock);
 		
-		List<QnaDto> list = qnaDao.list(category);
+		List<QnaDto> list = qnaDao.list(category, start, end);
 		model.addAttribute("list", list);
 	return "client/service/qna/list";
 	}

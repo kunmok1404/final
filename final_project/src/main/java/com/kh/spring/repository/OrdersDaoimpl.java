@@ -9,14 +9,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.spring.entity.CartDto;
+<<<<<<< HEAD
 import com.kh.spring.entity.Order_Detail;
 import com.kh.spring.entity.Orders;
+=======
+import com.kh.spring.entity.CartListVO;
+import com.kh.spring.entity.MemberDto;
+import com.kh.spring.entity.Order_Detail;
+>>>>>>> refs/remotes/origin/master
 import com.kh.spring.entity.ShopDto;
 //주문 관련 Dao impl
 @Repository
 public class OrdersDaoimpl implements OrdersDao{
 	@Autowired
 	private SqlSession sqlsession;
+
 
 	@Override
 	public List<CartDto> cartlist(int member_code) {
@@ -53,6 +60,18 @@ public class OrdersDaoimpl implements OrdersDao{
 		map.put("member_code", member_code);
 		map.put("order_code", order_code);
 		return sqlsession.selectList("order.my_order_detail",map);
+
+	@Override
+	public void cartinput(CartListVO vo) {
+		List<CartDto> list = vo.getList();
+		for(CartDto cartDto : list) {
+			sqlsession.update("order.update",cartDto);
+		}
+	}
+
+	@Override
+	public MemberDto memberSearch(int member_code) {
+		return sqlsession.selectOne("order.search", member_code);
 	}
 
 }
