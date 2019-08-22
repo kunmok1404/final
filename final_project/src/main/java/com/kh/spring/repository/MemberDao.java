@@ -13,6 +13,10 @@ public interface MemberDao {
 	
 	MemberDto get(String id);
 	
+	boolean findId(MemberDto memberDto);
+	
+	boolean findPw(MemberDto memberDto);
+	
 	
 	
 	MemberDto getInfo(int member_code);
@@ -20,5 +24,7 @@ public interface MemberDao {
 	void like(MyshopDto myshop);
 	
 	void unlike(MyshopDto myshop);
+
+
 
 }

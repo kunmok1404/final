@@ -2,6 +2,7 @@ package com.kh.spring.controller;
 
 import java.io.IOException;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -19,6 +20,7 @@ import com.kh.spring.entity.MemberDto;
 import com.kh.spring.entity.MyshopDto;
 import com.kh.spring.repository.MemberDao;
 import com.kh.spring.repository.OrdersDao;
+import com.kh.spring.service.EmailService;
 import com.kh.spring.service.OrderService;
 
 @Controller
@@ -27,6 +29,9 @@ public class MemberController {
 
 	@Autowired
 	private MemberDao memberDao;
+	
+	@Autowired
+	private EmailService emailService;
 	
 	@Autowired
 	private OrderService oderService;
@@ -136,7 +141,7 @@ public class MemberController {
 //		MemberDto result = memberDao.get(memberDto.getId());
 //		// 2. BCrypt의 비교명령을 이용하여 비교 후 처리
 //		if(BCrypt.checkpw(memberDto.getPw(), result.getPw())) {
-//			session.setAttribute("member_code", result.getId());
+//			session.setAttribute("member_code", result.getNo());
 //			session.setAttribute("type", result.getType());
 //			
 //			// 아이디 저장
@@ -177,10 +182,50 @@ public class MemberController {
 	//아이디 찾기 기능(POST)
 	//목표 : 입력받은 이메일정보를 조회하고 일치할 경우 이메일로 아이디 전송
 	//	일치하지 않을 경우 alert으로 실패 메세지 노출
-//	@PostMapping("/find_id")
-//	public String findId(@ModelAttribute MemberDto memberDto) {
-//		boolean exist = memberDao.find
-//	}
+	@PostMapping("/find_id")
+	public String findId(@ModelAttribute MemberDto memberDto) throws MessagingException {
+		boolean exist = memberDao.findId(memberDto);
+		if(exist) {
+			emailService.sendCertification(memberDto.getEmail());
+			return "redirect:find_id_result";//새로운 기능으로 전송(?이게 뭐야?)
+		}
+		else {
+			return "redirect:find_id?error";//실패시 오류
+		}
+	}
+	
+	//아이디 찾기 결과
+	@GetMapping("/find_id_result")
+	public String findIdResult() {
+		return "client/member/find_id_result";
+	}
+	
+	//비밀번호 찾기 기능(GET)
+	//목표 : 아이디, 이메일 정보 입력 페이지로 전달
+	@GetMapping("/find_pw")
+	public String findPw() {
+		return "client/member/find_pw";
+	}
+	
+	//비밀번호 찾기 기능(POST)
+	//목표 : 전달받은 정보(아이디, 이메일)를 조회하여 일치할 경우 이메일로 아이디 전송
+	@PostMapping("/find_pw")
+	public String findPw(@ModelAttribute MemberDto memberDto) throws MessagingException {
+		boolean exist = memberDao.findPw(memberDto);
+		if(exist) {
+			emailService.sendCertification(memberDto.getEmail());
+			return "redirect:find_pw_result";//새로운 기능으로 전송(?이게 뭐야?)
+		}
+		else {
+			return "redirect:find_pw?error";//실패시 오류
+		}
+	}
+	
+	//비밀번호 찾기 결과
+	@GetMapping("/find_pw_result")
+	public String findPwResult() {
+		return "client/member/find_pw_result";
+	}
 
 	
 	
