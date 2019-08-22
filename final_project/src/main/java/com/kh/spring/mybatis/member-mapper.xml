@@ -12,12 +12,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	
  	<!-- 회원가입 regist(등록) -->
  	<insert id="regist" parameterType="memberDto">
- 		insert into member values(member_seq.nextval, null, #{id}, #{pw}, #{email}, #{phone}, #{post}, '일발', '고객','일반', sysdate, sysdate, sysdate, 0, '고객')
+ 		insert into member values(member_seq.nextval, null, #{id}, #{pw}, #{email}, #{phone}, #{post}, #{basic_addr}, #{detail_addr}, '일반', '고객','일반', sysdate, sysdate, sysdate, 0, '고객')
  	</insert>
  	
  	<!-- 아이디 중복확인 id_check(조회) -->
  	<select id="id_check" parameterType="String" resultType="memberDto">
  		select * from member where id=#{id}
+ 	</select>
+ 	
+ 	<!-- 비밀번호 암호화 적용 전 로그인 -->
+ 	<select id="login" parameterType="memberDto" resultType="memberDto">
+ 		select * from member where id = #{id} and pw = #{pw}
+ 	</select>
+ 	
+ 	<!-- 비밀번호 암호화 적용 후 로그인 -->
+ 	<select id="get">
+ 		select * from member where id = #{id}
  	</select>
  	
  </mapper>

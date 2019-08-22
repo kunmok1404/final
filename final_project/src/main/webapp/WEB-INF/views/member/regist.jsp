@@ -197,20 +197,33 @@
 		}).open();
 	}
 	
+	//약관동의 체크박스 전체동의 누르면 전체 선택하기
+	function checkAll(){
+		if($("#th_AllCheck").is(':checked')){
+			$("input[name=checkRow]").prop("checked", true);
+		}
+		else{
+			$("input[name=checkRow]").prop("checked", false);
+		}
+	}
+	
 </script>
 
 <style>
-
+	.regist{
+		width: 800px;
+		margin: auto;
+	}
 
 
 </style>
 
-<div align="center">
+<div class="regist">
 	<form action="regist" method="post">
 		<br><br><br>
 		<legend>회원가입</legend>
-		<br><hr><br>
-		<table class="table table-bordered">
+		<hr><br>
+		<table class="table table-borderless">
 			<tbody>
 				<tr>
 					<td><label for="id">아이디</label></td>
@@ -276,16 +289,22 @@
 		<legend>약관동의</legend>
 		<hr><br>
 		<table>
+			<thead>
+			<tr>
+				<th>
+					<input type="checkbox" id="th_AllCheck" onclick="checkAll();">전체 동의<br>
+				</th>
+			</tr>			
+			</thead>
 			<tbody>
 				<tr>
 					<td>
-						<input type="checkbox">전체 동의<br>
-						<input type="checkbox">이용약관(필수)<a href="#">약관보기</a><br>
-						<input type="checkbox">개인정보방침(필수)<a href="#">약관보기</a><br>
-						<input type="checkbox">본인은 만 14세 이상입니다.(필수)<br>
+						<input type="checkbox" name="checkRow" value="${content.IDX}">이용약관(필수)<a href="#">&emsp;약관보기</a><br>
+						<input type="checkbox" name="checkRow" value="${content.IDX}">개인정보방침(필수)	<a href="#">&emsp;약관보기</a><br>
+						<input type="checkbox" name="checkRow" value="${content.IDX}">본인은 만 14세 이상입니다.(필수)<br>
 					</td>
 				</tr>
-				<tr>
+				<tr align="center">
 					<td colspan=2>
 						<input type="submit" name="registbtn" value="가입하기">
 						<br><br>

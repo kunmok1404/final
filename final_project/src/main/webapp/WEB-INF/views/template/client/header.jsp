@@ -29,7 +29,7 @@
                 </div>
               </li>
               <li>
-                <a href="#" class="mr-2">로그인</a>
+                <a href="${pageContext.request.contextPath}/member/login" class="mr-2">로그인</a>
                 <div id="line-wrapper">
                   <div class="line"></div>
                 </div>

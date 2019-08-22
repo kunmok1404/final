@@ -42,5 +42,19 @@ public class NoticeDaoImpl implements NoticeDao{
 
 
 
+	@Override
+	public NoticeDto get(int no) {
+		return sqlSession.selectOne("service.notice_get", no);
+	}
+
+
+	@Override
+	public void read(int no) {
+		sqlSession.update("service.notice_read", no);
+		
+	}
+
+
+
 	
 }

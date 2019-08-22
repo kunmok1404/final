@@ -26,8 +26,21 @@ public class MemberDaoImpl implements MemberDao{
 
 	//아이디 중복 확인
 	@Override
-	public MemberDto get(String id) {
+	public MemberDto id_check(String id) {
 		return sqlSession.selectOne("member.id_check", id);
+	}
+	
+	//암호화 적용 전 로그인
+	@Override
+	public MemberDto login(MemberDto memberDto) {
+		MemberDto result = sqlSession.selectOne("member.login", memberDto);
+		return result;
+	}
+
+	//암호화 적용 후 로그인
+	@Override
+	public MemberDto get(String id) {
+		return sqlSession.selectOne("member.get", id);
 	}
 
 }
