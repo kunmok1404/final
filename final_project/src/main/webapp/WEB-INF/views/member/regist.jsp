@@ -299,9 +299,9 @@
 			<tbody>
 				<tr>
 					<td>
-						<input type="checkbox" name="checkRow" value="${content.IDX}">이용약관(필수)<a href="#">&emsp;약관보기</a><br>
-						<input type="checkbox" name="checkRow" value="${content.IDX}">개인정보방침(필수)	<a href="#">&emsp;약관보기</a><br>
-						<input type="checkbox" name="checkRow" value="${content.IDX}">본인은 만 14세 이상입니다.(필수)<br>
+						<input type="checkbox" name="checkRow" value="${content.IDX}" required>이용약관(필수)<a href="#">&emsp;약관보기</a><br>
+						<input type="checkbox" name="checkRow" value="${content.IDX}" required>개인정보방침(필수)	<a href="#">&emsp;약관보기</a><br>
+						<input type="checkbox" name="checkRow" value="${content.IDX}" required>본인은 만 14세 이상입니다.(필수)<br>
 					</td>
 				</tr>
 				<tr align="center">

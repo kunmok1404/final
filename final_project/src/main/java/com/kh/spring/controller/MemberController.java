@@ -93,9 +93,11 @@ public class MemberController {
 		// 암호화 적용 전
 		MemberDto result = memberDao.login(memberDto);
 		if (result != null) {
-			session.setAttribute("ok", result.getId());
+			session.setAttribute("member_code", result.getId());
 			session.setAttribute("type", result.getType());
 
+			System.out.println(result.getId());
+			
 			// 아이디 저장
 			// 쿠키 객체를 만들고 체크 여부에 따라 시간 설정 후 response에 추가
 			Cookie cookie = new Cookie("saveID", memberDto.getId());
@@ -130,7 +132,7 @@ public class MemberController {
 //		MemberDto result = memberDao.get(memberDto.getId());
 //		// 2. BCrypt의 비교 명령을 이용하여 비교 후 처리
 //		if(BCrypt.checkpw(memberDto.getPw(), result.getPw())) {
-//			session.setAttribute("ok", result.getId());
+//			session.setAttribute("member_code", result.getId());
 //			session.setAttribute("type", result.getType());
 //			
 //			//아이디 저장
@@ -151,13 +153,36 @@ public class MemberController {
 //		}
 //	}
 	
-	//로그인 실패 alert
+	//로그인 실패 메세지 alert
 
 	
 	//로그아웃 기능
-//	@GetMapping("/logout")
-//	public String logout() {
-//		
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {//데이터 받아와서 지우기
+		session.removeAttribute("member_code");
+		session.removeAttribute("type");
+		return "redirect:/";
+	}
+
+	//아이디 찾기 기능(GET)
+	//목표 : 아이디 찾기 위한 정보 입력 페이지로 전달
+	@GetMapping("/find_id")
+	public String findId() {
+		return "member/find_id";
+	}
+	
+	//아이디 찾기 기능(POST)
+	//목표 : 입력받은 이메일정보를 조회하고 일치할 경우 이메일로 아이디 전송
+	//	일치하지 않을 경우 alert으로 실패 메세지 노출
+//	@PostMapping("/find_id")
+//	public String findId(@ModelAttribute MemberDto memberDto) {
+//		boolean exist = memberDao.find
 //	}
+	
+	
+	
+	//비밀번호 찾기 기능
+	//
+	
 	
 }
