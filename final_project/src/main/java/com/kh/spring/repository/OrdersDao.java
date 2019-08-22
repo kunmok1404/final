@@ -22,4 +22,5 @@ public interface OrdersDao {
 	void cartinput(CartListVO vo);
 	MemberDto memberSearch(int member_code);
 	OrdersDto orderInfo(int order_code);
+	List<OrderDetailDto> orderDistinct(int order_code);
 }

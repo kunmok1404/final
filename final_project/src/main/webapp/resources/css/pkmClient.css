@@ -480,9 +480,58 @@ table {
     font-size:1.2rem;
     color:white;
     background-color: #2C3E50;
-
-
 }
+
+/*나의정보 주문상세화면*/
+.order-detail-info{
+    margin-top:10px;
+    border-top:2px solid;
+    border-bottom:1px solid;
+    border-top-color: #9C3D39;
+    border-bottom-color: #9C3D39;
+    border-left-color:white;
+    border-right-color:white;
+    padding: 5px 25px;
+    padding-top: 20px;
+}
+.Detail-title{
+    text-align: center;
+    width:15%;
+    height: 50px;
+    background-color: #fafafa;
+    font-size:1.1rem;
+}
+.Detail-content span{
+    padding-left: 20px;
+}
+.Detail-content table td{
+    padding:5px 25px;
+}
+.Detail-menu{
+    margin-top:10px;
+    width:40%;
+    font-size:1.2rem;
+    height: 50px;
+}
+.Detail-menu-price span{
+     font-size:1.3rem;
+}
+.Detail-menu-title span{
+    margin-left:30px;
+    color:cadetblue;
+}
+.Detail-subMenu-name span{
+    margin-left:50px;
+    color:gray;
+}
+.Detail-subMenu-price span{
+    color:gray;
+}
+.detail-btn{
+    width:150px;
+    background-color: #2C3E50;
+}
+
 
  /*footer*/ 
 footer{

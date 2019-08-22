@@ -33,7 +33,7 @@ public class OrderController {
 		model.addAttribute("shopDto",orderDao.shopInfo(shop_code));
 		model.addAttribute("cartDto",orderDao.cartlist(member_code));
 		session.setAttribute("shop_code",shop_code);
-		return "order/cart";
+		return "client/order/cart";
 	}
 	
 	@PostMapping("/orderinput")
@@ -46,12 +46,12 @@ public class OrderController {
 		model.addAttribute("memberDto",orderDao.memberSearch(member_code));
 		model.addAttribute("total_price", total_price);
 		orderDao.cartinput(vo);
-		return "order/order";
+		return "client/order/order";
 	}
 	
 	@PostMapping("/order")
 	public String order(@ModelAttribute OrderDetailListVo vo,
 						HttpSession session) {
-		return "order/order";
+		return "client/order/order";
 	}
 }
