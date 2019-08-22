@@ -9,6 +9,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 
 	  <!-- 별칭 설정 -->
 	  <typeAliases>
+	 	<typeAlias type="com.kh.spring.entity.Order_Detail" alias="order_Detail"/>
 	  	<typeAlias type="com.kh.spring.entity.ShopDto" alias="shopDto"/>
 	  	<typeAlias type="com.kh.spring.entity.CategoryDto" alias="categoryDto"/>
 	  	<typeAlias type="com.kh.spring.entity.MenuDto" alias="menuDto"/>
@@ -19,9 +20,11 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	  	<typeAlias type="com.kh.spring.entity.FilesDto" alias="filesDto"/>
 	  	<typeAlias type="com.kh.spring.entity.MemberDto" alias="memberDto"/>
 	  	<typeAlias type="com.kh.spring.entity.NoticeDto" alias="noticeDto"/>
+
 	  	<typeAlias type="com.kh.spring.entity.CartDto" alias="cartDto"/>
 	  	<typeAlias type="com.kh.spring.entity.Order_Detail" alias="order_Detail"/>
 
 	  </typeAliases>
 	  
 </configuration>
+
