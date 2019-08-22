@@ -1,6 +1,7 @@
 package com.kh.spring.repository;
 
 import com.kh.spring.entity.MemberDto;
+import com.kh.spring.entity.MyshopDto;
 
 public interface MemberDao {
 
@@ -10,4 +11,8 @@ public interface MemberDao {
 	MemberDto get(String id);
 	MemberDto getInfo(int member_code);
 	
+	void like(MyshopDto myshop);
+	
+	void unlike(MyshopDto myshop);
+
 }

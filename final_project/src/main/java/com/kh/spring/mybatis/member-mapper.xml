@@ -34,4 +34,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	<select id="get_info" parameterType="int" resultType="memberDto">
  		select * from member where no=#{member_code}
  	</select>
+
+	<!-- 찜한매장 등록 -->
+ 	<insert id="like" parameterType="memberDto">
+ 		insert into myshop values(myshop_seq.next,#{member_code},#{shop_code})
+ 	</insert>
+ 	<!-- 찜한매장 제거 -->
+ 	<delete id="unlike" parameterType="memberDto">
+ 		delete myshop where member_code = #{member_code} and shop_code = #{shop_code}
+ 	</delete>
+
  </mapper>
+

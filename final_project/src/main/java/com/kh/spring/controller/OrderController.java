@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 //주문 관련 컨트롤러
 
 import com.kh.spring.entity.CartListVO;
+import com.kh.spring.entity.OrderDetailListVo;
 import com.kh.spring.repository.OrdersDao;
 
 @Controller
@@ -25,31 +26,32 @@ public class OrderController {
 	
 	
 	@GetMapping("/cart")
-	public String cart(@RequestParam int member_code,
-					   @RequestParam int shop_code,
+	public String cart(@RequestParam int shop_code,
 					   HttpSession session,
 					   Model model) {
+		int member_code = (int) session.getAttribute("member_code");
 		model.addAttribute("shopDto",orderDao.shopInfo(shop_code));
 		model.addAttribute("cartDto",orderDao.cartlist(member_code));
-		session.setAttribute("member_code",member_code);
 		session.setAttribute("shop_code",shop_code);
 		return "order/cart";
 	}
 	
 	@PostMapping("/orderinput")
-	public String cart(@ModelAttribute CartListVO vo,HttpSession session,Model model) {
+	public String cart(@ModelAttribute CartListVO vo,HttpSession session,Model model,
+					   @RequestParam int total_price) {
 		int member_code = (int) session.getAttribute("member_code");
 		int shop_code = (int) session.getAttribute("shop_code");
 		model.addAttribute("shopDto",orderDao.shopInfo(shop_code));
-		model.addAttribute("cartDto",orderDao.cartlist(member_code));
+		model.addAttribute("cartList",orderDao.cartlist(member_code));
 		model.addAttribute("memberDto",orderDao.memberSearch(member_code));
-		System.out.println(orderDao.memberSearch(member_code));
+		model.addAttribute("total_price", total_price);
 		orderDao.cartinput(vo);
 		return "order/order";
 	}
 	
 	@PostMapping("/order")
-	public String order() {
+	public String order(@ModelAttribute OrderDetailListVo vo,
+						HttpSession session) {
 		return "order/order";
 	}
 }
