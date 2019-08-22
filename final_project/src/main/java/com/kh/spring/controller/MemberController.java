@@ -27,21 +27,24 @@ public class MemberController {
 
 	@Autowired
 	private MemberDao memberDao;
+	
 	@Autowired
 	private OrderService oderService;
+	
 	@Autowired
 	private OrdersDao ordersDao;
+	
 
-	// �쉶�썝媛��엯 湲곕뒫(GET)
+	// 회원가입 기능(GET)
 	@GetMapping("/regist")
 	public String regist() {
 		return "client/member/regist";
 	}
 
-	// �쉶�썝媛��엯 湲곕뒫(POST)
+	// 회원가입 기능(POST)
 	@PostMapping("/regist")
 	public String regist(@ModelAttribute MemberDto memberDto) {
-		// memberDto �븞�뿉 �엳�뒗 pw瑜� 蹂�寃�(BCrypt)
+		// memberDto 안에 있는 pw를 변경(BCrypt)
 //		String origin = memberDto.getPw();
 //		String encrypt = BCrypt.hashpw(origin, BCrypt.gensalt());
 //		memberDto.setPw(encrypt);
@@ -54,50 +57,45 @@ public class MemberController {
 		else {
 			return "redirect:regist_fail";
 		}
-		// �젙蹂대�� 蹂대궡嫄곕굹 諛쏆쓣�븣(�뜲�씠�꽣 諛쏆븘�꽌 泥섎━�븷�븣)�뒗 二쇱냼留�(�룷�썙�뱶)
-		// 二쇱냼濡� 蹂대궡怨좎떢�쓣�븣�뒗 redirect(�솗�씤�슜)
+		
 	}
 
-	// �쉶�썝媛��엯 �꽦怨듭떆 �꽦怨듯럹�씠吏�濡� 蹂대궡湲�
+	// 회원가입 성공 시 성공페이지로 넘기기
 	@GetMapping("/regist_result")
 	public String regist_result() {
 		return "client/member/regist_result";
 	}
 
-	// �쉶�썝媛��엯 �떎�뙣�떆 �떎�뙣�럹�씠吏�濡� 蹂대궡湲�
+	// 회원가입 실패 시 실패 페이지로 넘기기
 	@GetMapping("/regist_fail")
 	public String regist_fail() {
 		return "client/member/regist_fail";
 	}
 
-	// �븘�씠�뵒 以묐났�솗�씤
+	// 아이디 중복확인 체크
 	@GetMapping("/id_check")
 	public void id_check(@RequestParam String id, HttpServletResponse resp) throws IOException {
-		System.out.println("�젒�냽�뻽�뒿�땲�떎.");
 		resp.setContentType("text/plain");
 		MemberDto mdto = memberDao.id_check(id);
-		System.out.println("�뀒�뒪�듃�떆�옉");
 		if (mdto == null) {
 			resp.getWriter().print("Y");
-			System.out.println("Y");
 		} 
 		else {
 			resp.getWriter().print("N");
-			System.out.println("N");
 		}
 	}
 
-	// 濡쒓렇�씤 湲곕뒫(GET)
+	// 로그인(GET)
 	@GetMapping("/login")
 	public String login() {
 		return "client/member/login";
 	}
 
-	// 濡쒓렇�씤 湲곕뒫(POST)
+	// 로그인(POST)
 	@PostMapping("/login")
 	public String login(@ModelAttribute MemberDto memberDto, @RequestParam(required = false) String remember,
 			HttpSession session, HttpServletResponse response,Model model) {
-		// �븫�샇�솕 �쟻�슜 �쟾
+		// 암호화 적용 전 로그인
 		MemberDto result = memberDao.login(memberDto);
 		if (result != null) {
 			session.setAttribute("member_code", result.getId());
@@ -108,10 +106,10 @@ public class MemberController {
 			// 아이디 저장
 			// 쿠키 객체를 만들고 체크 여부에 따라 시간 설정 후 response에 추가
 			Cookie cookie = new Cookie("saveID", memberDto.getId());
-			if (remember == null) {// 泥댄겕 �븞�뻽�쓣 �븣
+			if (remember == null) {// 체크 안했을때
 				cookie.setMaxAge(0);
 			} 
-			else {// 泥댄겕 �뻽�쓣 �븣
+			else {// 체크 했을때
 				cookie.setMaxAge(4 * 7 * 24 * 60 * 60);// 4주
 			}
 
@@ -126,7 +124,7 @@ public class MemberController {
 	
 	// ----------------------------------//
 
-	// 濡쒓렇�씤 湲곕뒫(POST)
+	// 로그인(POST)
 //	@PostMapping("/login")
 //	public String login(
 //				@ModelAttribute MemberDto memberDto,
@@ -134,22 +132,22 @@ public class MemberController {
 //				HttpSession session,
 //				HttpServletResponse response
 //			) {
-//		//�븫�샇�솕 �쟻�슜 �썑
-//		// 1. id濡� DB�뿉�꽌 �쉶�썝�젙蹂대�� 遺덈윭�삩�떎.
+//		//암호화 적용 후
+//		// 1. id를 DB에서 회원정보를 불러온다.
 //		MemberDto result = memberDao.get(memberDto.getId());
-//		// 2. BCrypt�쓽 鍮꾧탳 紐낅졊�쓣 �씠�슜�븯�뿬 鍮꾧탳 �썑 泥섎━
+//		// 2. BCrypt의 비교명령을 이용하여 비교 후 처리
 //		if(BCrypt.checkpw(memberDto.getPw(), result.getPw())) {
 //			session.setAttribute("member_code", result.getId());
 //			session.setAttribute("type", result.getType());
 //			
-//			//�븘�씠�뵒 ���옣
-//			//荑좏궎 媛앹껜瑜� 留뚮뱾怨� 泥댄겕 �뿬遺��뿉 �뵲�씪 �떆媛� �꽕�젙 �썑 response�뿉 異붽�
+//			// 아이디 저장
+	// 쿠키 객체를 만들고 체크 여부에 따라 시간 설정 후 response에 추가
 //			Cookie cookie = new Cookie("saveID", memberDto.getId());
-//			if(remember == null) {//泥댄겕 �븞�뻽�쓣 �븣
+//			if(remember == null) {//체크 안했을때
 //				cookie.setMaxAge(0);
 //			}
-//			else {//泥댄겕 �뻽�쓣 �븣
-//				cookie.setMaxAge(4 * 7 * 24 * 60 * 60);//4二�
+//			else {//체크 했을때
+//				cookie.setMaxAge(4 * 7 * 24 * 60 * 60);//4주
 //			}
 //			
 //			response.addCookie(cookie);
@@ -176,7 +174,7 @@ public class MemberController {
 	public String findId() {
 		return "client/member/find_id";
 	}
-	
+	 
 	//아이디 찾기 기능(POST)
 	//목표 : 입력받은 이메일정보를 조회하고 일치할 경우 이메일로 아이디 전송
 	//	일치하지 않을 경우 alert으로 실패 메세지 노출
@@ -185,6 +183,9 @@ public class MemberController {
 //		boolean exist = memberDao.find
 //	}
 
+	
+	
+	
 	// 나의정보 클릭시 나의주문내역
 	@GetMapping("/info_order_list")
 	public String infoOrderList(HttpSession session, Model model) {
