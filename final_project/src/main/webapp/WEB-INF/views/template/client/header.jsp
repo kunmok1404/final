@@ -23,7 +23,7 @@
             </div>
             <ul class="nav-list">
               <li>
-                <a href="#" class="mr-2">회원가입</a>
+                <a href="${pageContext.request.contextPath}/member/regist" class="mr-2">회원가입</a>
                 <div id="line-wrapper">
                   <div class="line"></div>
                 </div>

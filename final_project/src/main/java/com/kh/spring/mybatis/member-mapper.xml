@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+	SQL 명령 보관 파일
+	외부에서 접근할 수 있도록 namespace 지정할 것
+ -->
+ 
+ <mapper namespace="member">
+ 	
+ 	<!-- 회원가입 regist(등록) -->
+ 	<insert id="regist" parameterType="memberDto">
+ 		insert into member values(member_seq.nextval, null, #{id}, #{pw}, #{email}, #{phone}, #{post}, '일발', '고객','일반', sysdate, sysdate, sysdate, 0, '고객')
+ 	</insert>
+ 	
+ 	<!-- 아이디 중복확인 id_check(조회) -->
+ 	<select id="id_check" parameterType="String" resultType="memberDto">
+ 		select * from member where id=#{id}
+ 	</select>
+ 	
+ </mapper>
