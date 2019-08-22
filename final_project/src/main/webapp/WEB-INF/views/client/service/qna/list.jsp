@@ -5,6 +5,7 @@
     <jsp:include page="/WEB-INF/views/template/client/header.jsp"></jsp:include>
     <script src="../jQuery/jquery-1.3.2-vsdoc2.js" type="text/javascript"></script>
 	<script src = "https://code.jquery.com/jquery-latest.js"></script>
+	     <link href="${pageContext.request.contextPath}/resources/css/kayClient.css" rel="stylesheet">
     
     <script>
     	$(function(){
