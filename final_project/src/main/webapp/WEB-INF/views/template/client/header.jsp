@@ -15,17 +15,19 @@
             /* 테두리를 너비에 포함시켜라 */
             box-sizing: border-box;
         }
-        .gallary{
+        .card-body{
             list-style: none;
             padding:5px;
+            margin: auto;
         }
-        .gallary > li{
-            border:1px dotted black;
+        .card-body > li{
             padding: 5px;
             float:left;
-            width:25%;
+            width:20%;
+            margin: 0.5%;
+       
         }
-        .gallary > li > img{
+        .card-body > li > img{
             width:60%;
             top:25%;
             left:50%;
@@ -33,11 +35,11 @@
             margin-top:15%;
             
         }
-        .gallary > li > h4{
+        .card-body > li > h4{
             width:60%;
         }
 
-        .gallary::after{
+        .card-body::after{
             content:"";
             display:block;
             clear:both;
@@ -50,13 +52,14 @@
         }
 
         @media screen and (max-width:580px){
-            .gallary > li{
+            .card-body > li{
                 width:50%;
             }
         }
-        .wih {
+        .card {
             margin: auto;
             width: 70%;
+            border: none;
         }
 
         .iim {
@@ -91,6 +94,20 @@
             left:50%;
            color: white;
             
+        }
+        .card-body > li:hover {
+			background-color: gray;
+			
+		}
+		.explan{
+			width:70%;
+			margin: auto;
+		}
+		.btns {
+          margin-left: 50%;
+        }
+        .container-fluid {
+        	width: 80%;
         }
     </style>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2c2ba04f24dbd55e914c1d24e55dfaa7&libraries=services"></script>
@@ -137,8 +154,13 @@
                     map.setCenter(coords);
                 } 
             });    
-                 /* ${"#hid"}.hide(); */
+                 
             });
+          
+        		$(".border").click(function(){
+        			
+        			location.href = "shop/list?cat_no="+$(this).attr("data-food");
+        		});
         });
     </script> 
      <link href="${pageContext.request.contextPath}/resources/css/kayClient.css" rel="stylesheet">
@@ -196,6 +218,6 @@
 
 <input class="ygd" type="hidden" name="ygd">
 <input class="xgd" type="hidden" name="xgd">
-<br><br><br><br><br><br>
+<br><br><br><br>
 </div>
 

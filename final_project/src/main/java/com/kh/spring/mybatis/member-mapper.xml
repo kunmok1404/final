@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+ <mapper namespace="member">
+ 	<insert id="like" parameterType="memberDto">
+ 		insert into myshop values(myshop_seq.next,#{member_code},#{shop_code})
+ 	</insert>
+ 	<delete id="unlike" parameterType="memberDto">
+ 		delete myshop where member_code = #{member_code} and shop_code = #{shop_code}
+ 	</delete>
+ </mapper>

@@ -11,7 +11,10 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	  	<typeAlias type="com.kh.spring.entity.MenuDto" alias="menuDto"/>
 	  	<typeAlias type="com.kh.spring.entity.SubMenuDto" alias="subMenuDto"/>
 	  	<typeAlias type="com.kh.spring.entity.QnaDto" alias="qnaDto"/>
+	  	<typeAlias type="com.kh.spring.entity.TermsDto" alias="termsDto"/>
 	  	<typeAlias type="com.kh.spring.entity.Menu_SubMenuView" alias="menu_SubMenuView"/>
+	  	<typeAlias type="com.kh.spring.entity.FilesDto" alias="filesDto"/>
+	  	<typeAlias type="com.kh.spring.entity.MemberDto" alias="memberDto"/>
 	  </typeAliases>
 	  
 </configuration>

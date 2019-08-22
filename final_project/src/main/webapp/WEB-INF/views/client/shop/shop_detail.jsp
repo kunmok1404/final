@@ -3,7 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/template/client/header.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/template/client/category/food_category.jsp"></jsp:include>
-
+<style>
+.like {
+	text-align: right;
+}
+</style>
 <script>
 	$(function(){
 		// 메뉴토글
@@ -18,7 +22,7 @@
         // 메뉴클릭시 서브메뉴 호출
         $(".border-bottom").click(function(){
         	var menu_no = $(this).attr("data-menu"); // 메뉴번호
-        	alert("메뉴번호="+menu_no);
+        	
         	
         	// ajax통신
         	$.ajax({
@@ -27,12 +31,49 @@
     				menu_no : menu_no,
     			},
     			success:function(response){
-    				alert("성공");
+    				
     			}
-    		})
-        })
+    		});
+        });
+        function on(){
+        	var img = document.querySelector(".like > img");
+            img.src = "${pageContext.request.contextPath}/resources/image/like_on.png";
+            img.width="20"; 
+            img.height="20";
+            $(".like_val").val("on");
+        };
+        function off(){
+            var img = document.querySelector(".like > img");
+            img.src = "${pageContext.request.contextPath}/resources/image/like_off.png";
+            img.width="20"; 
+            img.height="20";
+            $(".like_val").val("off");
+        };
+        $(".like").click(function() {
+			if ($(".like_val").val()=="on") {
+				 off();
+				 $.ajax({
+					 	type : 'POST',
+		    			url:"${pageContext.request.contextPath}/member/like",
+		    			data : {
+		    				"member_code" : member_code,
+		    				"shop_code" : shopDto.no,
+		    			}
+				 }
+			}else {
+				on();
+				$.ajax({
+					type : 'POST',
+	    			url:"${pageContext.request.contextPath}/member/unlike",
+	    			data : {
+	    				"member_code" : member_code,
+	    				"shop_code" : shopDto.no,
+	    			}
+				}
+			}
+		});
         
-	})
+	});
 </script>
 <!--매장상세-->
     <div class="shop">
@@ -58,7 +99,16 @@
 				              <div class="line"></div>
 				            </div>
                         </td>
-                        <td class="shop-detail-review">리뷰43</td>
+                        <td class="shop-detail-review">리뷰43
+                        	<div id="line-shop">
+				              <div class="line"></div>
+				            </div>
+				        </td>
+				        <td ><div class="like">
+				        	<input type="hidden" value="off" class="like_val">
+				        	<img  src="${pageContext.request.contextPath}/resources/image/like_off.png" width="20" height="20">
+				        	</div>
+				        </td>
                       </tr>
                       <tr>
                         <td class="shop-detail-minPrice">최소주문금액 : ${shopDto.min_price}원</td>
