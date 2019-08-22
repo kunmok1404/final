@@ -3,6 +3,8 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="order">
+
+
 	<!-- 회원 정보를 확인하는 코드 -->
 	<select id="search" parameterType="int" resultType="memberDto">
 		select * from member where no = #{member_code}
@@ -47,6 +49,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			where 
 			order_code = #{order_code}
 	</select>
+
 	
 	<!-- 주문 번호 미리 구하기 -->
 	<select id="order_seq" resultType="int">
@@ -55,7 +58,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 주문 내용 등록 -->
 	<insert id="order_regist" parameterType="ordersDto">
-		insert into orders values(${no}, #{member_code},#{shop_code},#{total_price},
+		insert into orders values(#{no}, #{member_code},#{shop_code},#{total_price},
 		'접수대기',#{discount_price},#{pay_method},#{request},sysdate)
 	</insert>
 	
@@ -64,5 +67,4 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into order_detail values(#{order_no}, #{title}, #{menu_name}, #{menu_amount},
 		#{menu_price}, #{sub_name}, #{sub_amount}, #{sub_type}, #{sub_price})
 	</insert>
-	
 </mapper>

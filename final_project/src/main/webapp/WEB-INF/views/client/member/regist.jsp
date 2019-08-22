@@ -220,7 +220,7 @@
 
 <div class="regist">
 	<form action="regist" method="post">
-		<br><br><br>
+		<br><br>
 		<legend>회원가입</legend>
 		<hr><br>
 		<table class="table table-borderless">
@@ -287,7 +287,7 @@
 		</table>
 		<br>
 		<legend>약관동의</legend>
-		<hr><br>
+		<hr>
 		<table>
 			<thead>
 			<tr>

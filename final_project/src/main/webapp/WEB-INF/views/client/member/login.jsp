@@ -35,9 +35,9 @@
 
 <div class="login">
  	<form action="login" method="post">
- 	<br><br><br>
+ 	<br>
 	<legend>로그인</legend>
-	<br><hr><br>
+	<hr>
  		<table class="table table-bordered">
  			<tbody>
 				<tr>
