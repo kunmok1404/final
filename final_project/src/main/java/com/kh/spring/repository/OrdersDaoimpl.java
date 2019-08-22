@@ -9,21 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.spring.entity.CartDto;
-<<<<<<< HEAD
-import com.kh.spring.entity.Order_Detail;
-import com.kh.spring.entity.Orders;
-=======
 import com.kh.spring.entity.CartListVO;
 import com.kh.spring.entity.MemberDto;
-import com.kh.spring.entity.Order_Detail;
->>>>>>> refs/remotes/origin/master
+import com.kh.spring.entity.OrderDetailDto;
+import com.kh.spring.entity.OrdersDto;
 import com.kh.spring.entity.ShopDto;
 //주문 관련 Dao impl
 @Repository
 public class OrdersDaoimpl implements OrdersDao{
 	@Autowired
 	private SqlSession sqlsession;
-
 
 	@Override
 	public List<CartDto> cartlist(int member_code) {
@@ -37,7 +32,7 @@ public class OrdersDaoimpl implements OrdersDao{
 
 	// 나의정보 주문내역
 	@Override
-	public List<Orders> myOrderList(int member_code) {
+	public List<OrdersDto> myOrderList(int member_code) {
 		return sqlsession.selectList("order.my_order_list", member_code);
 	}
 
@@ -52,15 +47,13 @@ public class OrdersDaoimpl implements OrdersDao{
 	public int menuCount(int no) {
 		return sqlsession.selectOne("order.menu_count", no);
 	}
-
-	 // 나의정보 주문상세
+	
+	 // 나의정보 주문상세 목록
 	@Override
-	public List<Order_Detail> myOrderDetailList(int member_code, int order_code) {
-		Map<String, Integer> map = new HashMap<>();
-		map.put("member_code", member_code);
-		map.put("order_code", order_code);
-		return sqlsession.selectList("order.my_order_detail",map);
-
+	public List<OrderDetailDto> myOrderDetailList(int order_code) {
+		return sqlsession.selectList("order.my_order_detail",order_code);
+	}
+	
 	@Override
 	public void cartinput(CartListVO vo) {
 		List<CartDto> list = vo.getList();
@@ -72,6 +65,12 @@ public class OrdersDaoimpl implements OrdersDao{
 	@Override
 	public MemberDto memberSearch(int member_code) {
 		return sqlsession.selectOne("order.search", member_code);
+	}
+
+	// 주문정보 조회
+	@Override
+	public OrdersDto orderInfo(int order_code) {
+		return sqlsession.selectOne("order.order_info", order_code);
 	}
 
 }

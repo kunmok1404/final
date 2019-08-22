@@ -3,6 +3,9 @@
 PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+	<settings>
+		<setting name="defaultExecutorType" value="BATCH"/>
+	</settings>
 
 	  <!-- 별칭 설정 -->
 	  <typeAliases>
@@ -13,9 +16,11 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	  	<typeAlias type="com.kh.spring.entity.CategoryDto" alias="categoryDto"/>
 	  	<typeAlias type="com.kh.spring.entity.MenuDto" alias="menuDto"/>
 	  	<typeAlias type="com.kh.spring.entity.SubMenuDto" alias="subMenuDto"/>
-	  	<typeAlias type="com.kh.spring.entity.QnaDto" alias="qnaDto"/>
-	 	<typeAlias type="com.kh.spring.entity.Orders" alias="ordersDto"/>
-	 	<typeAlias type="com.kh.spring.entity.Order_detail" alias="orderDetailDto"/>
+	 	<typeAlias type="com.kh.spring.entity.OrdersDto" alias="ordersDto"/>
+	 	<typeAlias type="com.kh.spring.entity.OrderDetailDto" alias="orderDetailDto"/>
+	  	<typeAlias type="com.kh.spring.entity.Menu_SubMenuView" alias="menu_SubMenuView"/>
+	  	<typeAlias type="com.kh.spring.entity.NoticeDto" alias="noticeDto"/>
+
 	  </typeAliases>
 	  
 </configuration>

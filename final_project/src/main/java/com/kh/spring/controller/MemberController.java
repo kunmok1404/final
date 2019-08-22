@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.spring.entity.MemberDto;
 import com.kh.spring.repository.MemberDao;
+import com.kh.spring.repository.OrdersDao;
+import com.kh.spring.service.OrderService;
 
 @Controller
 @RequestMapping("/member")
@@ -24,6 +26,10 @@ public class MemberController {
 
 	@Autowired
 	private MemberDao memberDao;
+	@Autowired
+	private OrderService oderService;
+	@Autowired
+	private OrdersDao ordersDao;
 
 	// 회원가입 기능(GET)
 	@GetMapping("/regist")
@@ -93,7 +99,7 @@ public class MemberController {
 		// 암호화 적용 전
 		MemberDto result = memberDao.login(memberDto);
 		if (result != null) {
-			session.setAttribute("ok", result.getId());
+			session.setAttribute("member_code", result.getId());
 			session.setAttribute("type", result.getType());
 
 			// 아이디 저장
@@ -114,7 +120,7 @@ public class MemberController {
 			return "member/login";
 		}
 	}
-
+	
 	// ----------------------------------//
 
 	// 로그인 기능(POST)
@@ -160,4 +166,27 @@ public class MemberController {
 //		
 //	}
 	
+	// 나의정보 클릭시 나의주문내역
+	@GetMapping("/info_order_list")
+	public String infoOrderList(HttpSession session, Model model) {
+		//int member_code = (int)session.getAttribute("member_code");
+		int member_code = 1;
+		model.addAttribute("order_list",oderService.myOrderList(member_code));
+		return "client/member/info_order_list";
+	}
+	
+	// 주문내역 상세화면
+	@GetMapping("/info_order_detail")
+	public String infoOrderDetail(HttpSession session, Model model,
+					@RequestParam int order_code) {
+		//int member_code = (int)session.getAttribute("member_code");
+		int member_code = 1;
+		// 주문상세 목록
+		model.addAttribute("order_detail_list",ordersDao.myOrderDetailList(order_code));
+		// 주문정보
+		model.addAttribute("orderDto", ordersDao.orderInfo(order_code));
+		// 회원정보
+		model.addAttribute("memberDto", memberDao.getInfo(member_code));
+		return "client/member/info_order_detail";
+	}
 }

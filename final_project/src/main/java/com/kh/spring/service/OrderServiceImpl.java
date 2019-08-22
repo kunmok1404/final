@@ -8,7 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kh.spring.entity.Orders;
+import com.kh.spring.entity.OrdersDto;
 import com.kh.spring.entity.ShopDto;
 import com.kh.spring.repository.OrdersDao;
 
@@ -22,13 +22,13 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public List<Map<String, Object>> myOrderList(int member_code) {
 		//Order 테이블 내역 
-		List<Orders> order_list = ordersDao.myOrderList(member_code);
+		List<OrdersDto> order_list = ordersDao.myOrderList(member_code);
 		
 		// List추출 후 Map에 세팅
 		List<Map<String, Object>> list = new ArrayList<>();
 		for(int i = 0; i < order_list.size(); i++) {
 			Map<String, Object> map = new HashMap<>();
-			Orders orderDto = order_list.get(i);
+			OrdersDto orderDto = order_list.get(i);
 			map.put("no", orderDto.getNo()); // 주문번호
 			// 매장코드로 매장명 조회후 세팅
 			ShopDto shopDto = ordersDao.shopInfo(orderDto.getShop_code());

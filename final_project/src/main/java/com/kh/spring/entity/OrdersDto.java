@@ -6,10 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 //주문 Dto
 @Data @Builder @NoArgsConstructor @AllArgsConstructor
-public class Orders {
+public class OrdersDto {
 	private int no;//주문번호
 	private int member_code;//member no의 외래키
-	private int cart_code;//cart no 의 외래키
 	private int shop_code;//매장코드
 	private int total_price;//총금액
 	private int discount_price;//할인금액

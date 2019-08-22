@@ -16,8 +16,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	  	<typeAlias type="com.kh.spring.entity.CategoryDto" alias="categoryDto"/>
 	  	<typeAlias type="com.kh.spring.entity.MenuDto" alias="menuDto"/>
 	  	<typeAlias type="com.kh.spring.entity.SubMenuDto" alias="subMenuDto"/>
-	 	<typeAlias type="com.kh.spring.entity.Orders" alias="ordersDto"/>
-	 	<typeAlias type="com.kh.spring.entity.Order_detail" alias="orderDetailDto"/>
+	 	<typeAlias type="com.kh.spring.entity.OrdersDto" alias="ordersDto"/>
+	 	<typeAlias type="com.kh.spring.entity.OrderDetailDto" alias="orderDetailDto"/>
 	  	<typeAlias type="com.kh.spring.entity.Menu_SubMenuView" alias="menu_SubMenuView"/>
 	  	<typeAlias type="com.kh.spring.entity.NoticeDto" alias="noticeDto"/>
 
