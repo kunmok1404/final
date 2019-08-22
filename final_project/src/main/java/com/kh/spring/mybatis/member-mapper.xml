@@ -30,6 +30,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  		select * from member where id = #{id}
  	</select>
  	
+ 	
+ 	
+ 	
  	<!-- 회원정보 조회(회원코드로) -->
  	<select id="get_info" parameterType="int" resultType="memberDto">
  		select * from member where no=#{member_code}
