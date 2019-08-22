@@ -13,7 +13,6 @@ PUBLIC "//mybatis.org//DTD Mapper 3.0//EN"
  				and category = #{cat_no}
  			</if>
  	</select>
- 	
  	<!-- 카테고리 목록 -->
  	<select id="category" resultType="categoryDto">
  		select * from category where work_type='food_category'
@@ -28,4 +27,41 @@ PUBLIC "//mybatis.org//DTD Mapper 3.0//EN"
  	<select id="menu" parameterType="int" resultType="menuDto">
  		select * from menu where shop_code=#{no}
  	</select>
+ 	
+ 	<!-- 서브메뉴 메뉴명 -->
+ 	<select id="menu_name" parameterType="int" resultType="menuDto">
+ 		select * from menu where no=#{menu_no}
+ 	</select>
+ 	
+ 	<!--매장상세 메뉴목록 -->
+ 	<select id="sub_menu" parameterType="int" resultType="subMenuDto">
+ 		select * from sub_menu where menu_code=#{menu_no}
+ 	</select>
+ 
+ 	<insert id="regist" parameterType="shopDto">
+ 		insert into shop values(shop_seq.nextval,#{category},#{company_name},#{company_code},#{ceo},#{ceo_phone},
+ 						#{bank},#{account_number},#{account_name},#{shop_name},#{shop_phone},#{zip_code},
+ 						#{basic_addr},#{detail_addr},#{content},sysdate,null,null,
+ 						null,'대기',#{min_price},#{min_time},#{delivery_price}
+ 						,#{start_time},#{finish_time},null,null,null)
+ 	</insert>
+ 	
+ 	<select id="getno" parameterType="shopDto" resultType="int">
+ 		select no from shop where company_name = #{company_name}
+ 	</select>
+ 	
+ 	<insert id="business_regist" parameterType="filesDto">
+ 		insert into files values(files_seq.nextval,#{shop_code},null,null,null,
+ 								#{file_type},'business_regist',#{upload_name},#{save_name},
+ 								#{size},sysdate,sysdate)
+ 	</insert>
+ 	<insert id="sale_regist" parameterType="filesDto">
+ 		insert into files values(files_seq.nextval,#{shop_code},null,null,null,
+ 								#{file_type},'sale_regist',#{upload_name},#{save_name},
+ 								#{size},sysdate,sysdate)
+ 	</insert>
+ 	<select id="seq" resultType="int">
+		select shop_seq.nextval from dual
+	</select>
+
  </mapper>
