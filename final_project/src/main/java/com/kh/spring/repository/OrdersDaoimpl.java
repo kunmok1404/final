@@ -39,7 +39,7 @@ public class OrdersDaoimpl implements OrdersDao{
 
 	// 메뉴명조회
 	@Override
-	public String menuName(int no) {
+	public OrderDetailDto menuName(int no) {
 		return sqlsession.selectOne("order.menu_name", no);
 	}
 

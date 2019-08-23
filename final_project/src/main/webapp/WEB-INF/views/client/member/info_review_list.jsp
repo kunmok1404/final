@@ -29,15 +29,16 @@
               </tr>
             </thead>
             <tbody>
-<%--               <c:forEach var="order_map" items="${order_list}"> --%>
-<!--               <tr> -->
-<%--                 <td>${order_map.get("no")}</td> --%>
-<%--                 <td>${order_map.get("shop_name")}</td> --%>
-<%--                 <td><a href="${pageContext.request.contextPath}/member/info_order_detail?order_code=${order_map.get('no')}">${order_map.get("menu_name")}&nbsp등&nbsp${order_map.get("menu_count")}개</a></td> --%>
-<%--                 <td>${order_map.get("order_date")}</td> --%>
-<%--                 <td>${order_map.get("order_status")}</td> --%>
-<!--               </tr> -->
-<%--               </c:forEach> --%>
+              <c:forEach var="review_list" items="${list}">
+              <tr>
+                <td>${review_list.no}</td>
+                <td>${review_list.shop_name}</td>
+                <td><a href="${pageContext.request.contextPath}/review/info_review_detail?review_code=${review_list.no}">${review_list.title}</a></td>
+                <td>${review_list.score}</td>
+                <td>${review_list.regist_date}</td>
+                <td>${review_list.read}</td>
+              </tr>
+              </c:forEach>
             </tbody>
           </table>
         </div>

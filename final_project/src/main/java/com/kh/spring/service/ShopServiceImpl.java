@@ -84,9 +84,9 @@ public class ShopServiceImpl implements ShopService {
 		
 		FilesDto filesDto = new FilesDto();
 		filesDto.setSave_name(savename);
-		filesDto.setShop_code(no);
+//		filesDto.setShop_code(no);
 		filesDto.setUpload_name(business_regist.getOriginalFilename());
-		filesDto.setSize(business_regist.getSize());
+//		filesDto.setSize(business_regist.getSize());
 		filesDto.setFile_type(business_regist.getContentType());
 		shopDao.business_regist(filesDto);
 		
@@ -94,9 +94,9 @@ public class ShopServiceImpl implements ShopService {
 		
 		FilesDto filesDto2 = new FilesDto();
 		filesDto2.setSave_name(savename2);
-		filesDto2.setShop_code(no);
+//		filesDto2.setShop_code(no);
 		filesDto2.setUpload_name(sale_regist.getOriginalFilename());
-		filesDto2.setSize(sale_regist.getSize());
+//		filesDto2.setSize(sale_regist.getSize());
 		filesDto2.setFile_type(sale_regist.getContentType());
 		shopDao.sale_regist(filesDto2);
 		
