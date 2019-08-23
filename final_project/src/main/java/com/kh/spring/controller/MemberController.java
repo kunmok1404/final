@@ -261,13 +261,6 @@ public class MemberController {
 		model.addAttribute("final_price",final_price);
 		return "client/member/info_order_detail";
 	}
-
-	//나의 리뷰 목록
-	@GetMapping("/info_review_list")
-	public String my_review() {
-		
-		return "client/member/info_review_list";
-	}
 	
 	@GetMapping("/like")
 	public String like(@RequestParam int shop_code,@RequestParam int member_code) {

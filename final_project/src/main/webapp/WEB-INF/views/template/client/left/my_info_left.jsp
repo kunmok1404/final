@@ -9,7 +9,7 @@
           <span><a href="${pageContext.request.contextPath}/member/info_order_list">주문내역</a></span>
         </div>
         <div class="myMenu">
-          <span><a href="${pageContext.request.contextPath}/member/info_review_list">리뷰관리</a></span>
+          <span><a href="${pageContext.request.contextPath}/review/info_review_list">리뷰관리</a></span>
         </div>
         <div class="myMenu">
           <span>나의쿠폰</span>

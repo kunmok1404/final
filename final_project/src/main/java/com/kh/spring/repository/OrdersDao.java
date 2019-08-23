@@ -17,7 +17,7 @@ public interface OrdersDao {
 	List<CartDto> cartlist(int member_code);
 	ShopDto shopInfo(int shop_code);
 	List<OrdersDto> myOrderList(int member_code);
-	String menuName(int no);
+	OrderDetailDto menuName(int no);
 	int menuCount(int no);
 	List<OrderDetailDto> myOrderDetailList(int order_code);
 	void cartinput(CartListVO vo);

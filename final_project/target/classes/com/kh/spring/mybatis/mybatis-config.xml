@@ -24,6 +24,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	  	<typeAlias type="com.kh.spring.entity.FilesDto" alias="filesDto"/>
 	  	<typeAlias type="com.kh.spring.entity.TermsDto" alias="termsDto"/>
 	  	<typeAlias type="com.kh.spring.entity.ReviewDto" alias="reviewDto"/>
+	  	<typeAlias type="com.kh.spring.entity.ShopReviewVO" alias="shopReviewVO"/>
 	  </typeAliases>
 	  
 </configuration>

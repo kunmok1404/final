@@ -32,8 +32,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 나의정보 주문메뉴명 1개 -->
-	<select id="menu_name" parameterType="int" resultType="string">
-		select distinct menu_name from order_detail where order_code=#{no}
+	<select id="menu_name" parameterType="int" resultType="orderDetailDto">
+		select * from
+		    (select rownum rn, TMP.* from 
+		        (select menu_name from order_detail where order_code=${no})TMP
+		    )
+		where rn=1
 	</select>
 	
 	<!-- 주문정보 distinct -->
