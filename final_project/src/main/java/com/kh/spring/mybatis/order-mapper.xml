@@ -56,6 +56,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			where 
 		order_code = #{order_code}
 	</select>
+
 	
 	<!-- 나의주문정보조회 -->
 	<select id="order_info" parameterType="int" resultType="ordersDto">
@@ -64,6 +65,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		no = #{order_code}
 	</select>
 	
+
 	<insert id="regist" parameterType="orderDetailDto">
 		insert into order_detail values(#{order_code}, #{title}, #{menu_name}, #{menu_amount},
 		#{menu_price}, #{sub_name}, #{sub_amount}, #{sub_type}, #{sub_price})

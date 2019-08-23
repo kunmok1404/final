@@ -53,9 +53,14 @@
 }
  table tr th{
 	height: 60px;
+	text-decoration:none;
 }
  table tr td{
 	height: 60px;
+	text-decoration:none;
+}
+table tr td a{
+	
 }
 .navigator {
     list-style: none;
@@ -95,6 +100,12 @@
  	text-align: left;
  	text-indent: 2em;
  	vertical-align: top;
+ }
+ .notice-th3-1{
+ 	text-align: left;
+ 	text-indent: 2em;
+ 	vertical-align: top;
+ 	color: #6495ED;
  }
 
  

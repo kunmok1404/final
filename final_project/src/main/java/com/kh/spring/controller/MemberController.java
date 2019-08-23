@@ -39,6 +39,7 @@ public class MemberController {
 	private OrderService oderService;
 	@Autowired
 	private OrdersDao ordersDao;
+
 	@Autowired
 	private ShopDao shopDao;
 	

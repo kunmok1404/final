@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.spring.entity.FilesDto;
 import com.kh.spring.entity.OnoDto;
 
 
@@ -38,6 +39,7 @@ public class OnoImpl implements OnoDao{
 
 	@Override
 	public void write(OnoDto onoDto) {
+		System.out.println(onoDto);
 		sqlSession.insert("service.ono_write", onoDto);
 	}
 
@@ -45,6 +47,31 @@ public class OnoImpl implements OnoDao{
 	@Override
 	public OnoDto get(int no) {
 		return sqlSession.selectOne("service.ono_get", no);
+	}
+
+
+	@Override
+	public int getSeq() {
+		return sqlSession.selectOne("service.getno");
+	}
+
+
+
+	@Override
+	public void image(FilesDto filesDto) {
+		sqlSession.insert("service.ono_regist",filesDto);
+	}
+
+
+	@Override
+	public void edit(OnoDto onoDto) {
+		sqlSession.update("service.ono_edit",onoDto);
+	}
+
+
+	@Override
+	public FilesDto getfile(int no) {
+		return sqlSession.selectOne("service.ono_getfile", no);
 	}
 
 
