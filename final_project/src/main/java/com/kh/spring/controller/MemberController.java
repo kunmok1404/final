@@ -24,7 +24,7 @@ import com.kh.spring.service.EmailService;
 import com.kh.spring.service.OrderService;
 
 @Controller
-@RequestMapping("/client/member")
+@RequestMapping("/member")
 public class MemberController {
 
 	@Autowired
