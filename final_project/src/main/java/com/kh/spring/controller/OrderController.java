@@ -19,7 +19,7 @@ import com.kh.spring.entity.OrdersDto;
 import com.kh.spring.repository.OrdersDao;
 
 @Controller
-@RequestMapping("/client/order")
+@RequestMapping("/order")
 public class OrderController {
 	
 	@Autowired
