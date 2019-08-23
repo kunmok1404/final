@@ -27,5 +27,7 @@ public interface OrdersDao {
 	void orderDetailInput(int no, OrderDetailListVo vo);
 	int getseq();
 	void cartDelete(int member_code);
+	int getQuantity(int member_code);
+	OrdersDto orderResult(int no);
 	
 }

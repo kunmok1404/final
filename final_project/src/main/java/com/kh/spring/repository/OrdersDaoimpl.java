@@ -99,4 +99,14 @@ public class OrdersDaoimpl implements OrdersDao{
 		
 	}
 
+	@Override
+	public int getQuantity(int member_code) {
+		return sqlsession.selectOne("order.quantity",member_code);
+	}
+
+	@Override
+	public OrdersDto orderResult(int no) {
+		return sqlsession.selectOne("order.order_result",no);
+	}
+
 }
