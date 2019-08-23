@@ -57,6 +57,7 @@ public class OrderController {
 	public String order(@ModelAttribute OrdersDto ordersDto,
 						@ModelAttribute OrderDetailListVo vo,
 						HttpSession session) {
+		
 		int member_code = (int) session.getAttribute("member_code");
 		int shop_code = (int) session.getAttribute("shop_code");
 		int no = orderDao.getseq();	

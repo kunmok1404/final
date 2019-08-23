@@ -36,6 +36,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select distinct menu_name from order_detail where order_code=#{no}
 	</select>
 	
+	<!-- 주문정보 distinct -->
+	<select id="order_distinct" parameterType="int" resultType="orderDetailDto">
+		select distinct menu_name, menu_amount, menu_price from order_detail where order_code=#{no}
+	</select>
+	
 	<!-- 나의정보 주문메뉴갯수 -->
 	<select id="menu_count" parameterType="int" resultType="int">
 		select count(menu_name) from order_detail where order_code=#{no}
@@ -45,9 +50,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="my_order_detail" parameterType="map" resultType="orderDetailDto">
 		select * from order_detail 
 			where 
-			order_code = #{order_code}
+		order_code = #{order_code}
 	</select>
-
+	
+	<!-- 나의주문정보조회 -->
+	<select id="order_info" parameterType="int" resultType="ordersDto">
+		select * from orders 
+			where 
+		no = #{order_code}
+	</select>
+	
+	<insert id="regist" parameterType="orderDetailDto">
+		insert into order_detail values(#{order_code}, #{title}, #{menu_name}, #{menu_amount},
+		#{menu_price}, #{sub_name}, #{sub_amount}, #{sub_type}, #{sub_price})
+	</insert>
 	
 	<!-- 주문 번호 미리 구하기 -->
 	<select id="order_seq" resultType="int">
@@ -64,7 +80,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="detail_regist" parameterType="orderDetailDto">
 		insert into order_detail values(#{order_no}, #{title}, #{menu_name}, #{menu_amount},
 		#{menu_price}, #{sub_name}, #{sub_amount}, #{sub_type}, #{sub_price})
-	</insert>
-	
+	</insert>	
 
 </mapper>

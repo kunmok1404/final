@@ -55,6 +55,12 @@ public class OrdersDaoimpl implements OrdersDao{
 		return sqlsession.selectList("order.my_order_detail",order_code);
 	}
 	
+	// 주문정보 조회
+	@Override
+	public OrdersDto orderInfo(int order_code) {
+		return sqlsession.selectOne("order.order_info", order_code);
+	}
+		
 	@Override
 	public void cartinput(CartListVO vo) {
 		List<CartDto> list = vo.getList();
@@ -68,10 +74,9 @@ public class OrdersDaoimpl implements OrdersDao{
 		return sqlsession.selectOne("order.search", member_code);
 	}
 
-	// 주문정보 조회
 	@Override
-	public OrdersDto orderInfo(int order_code) {
-		return sqlsession.selectOne("order.order_info", order_code);
+	public List<OrderDetailDto> orderDistinct(int order_code) {
+		return sqlsession.selectList("order.order_distinct", order_code);
 	}
 
 	@Override
