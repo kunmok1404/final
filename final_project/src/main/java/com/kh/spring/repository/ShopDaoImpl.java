@@ -61,24 +61,34 @@ public class ShopDaoImpl implements ShopDao {
 		return sqlSession.selectOne("shop.menu_name",menu_no );
 	}
 
+//	사업자등록신청
 	@Override
 	public void regist(ShopDto shopDto) {
 		sqlSession.insert("shop.regist", shopDto);
 	}
 
+//	shop_seq.nextval출력
 	@Override
 	public int getSeq() {
 		return sqlSession.selectOne("shop.seq");
 	}
-
+	
+//	사업자등록증사본파일등록
 	@Override
 	public void business_regist(FilesDto filesDto) {
 		sqlSession.insert("shop.business_regist",filesDto);
 	}
 
+//	영업등록증사본파일등록
 	@Override
 	public void sale_regist(FilesDto filesDto) {
 		sqlSession.insert("shop.sale_regist",filesDto);
 		
+	}
+
+//	사업자개인정보수정
+	@Override
+	public void edit(ShopDto shopDto) {
+		sqlSession.update("shop.deit", shopDto);
 	}
 }

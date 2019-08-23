@@ -77,12 +77,12 @@
 			</tr>
 			<tr>
 				<th>매장주소</th>
-				<td><input type="text" id="sample4_postcode" placeholder="우편번호">
+				<td><input type="text" id="sample4_postcode" placeholder="우편번호" name="zip_code">
 					<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
-					<input type="text" id="sample4_roadAddress" placeholder="도로명주소"><br>
+					<input type="text" id="sample4_roadAddress" placeholder="도로명주소" name="basic_addr"><br>
 					<input type="text" id="sample4_jibunAddress" placeholder="지번주소"><br>
 					<span id="guide" style="color:#999;display:none"></span>
-					<input type="text" id="sample4_detailAddress" placeholder="상세주소">
+					<input type="text" id="sample4_detailAddress" placeholder="상세주소" name="detail_addr">
 				</td>
 			</tr>
 			<tr>
@@ -103,9 +103,9 @@
 			</tr>
 			<tr>
 				<th>영업시간</th>
-				<td><input type="date" name="start_time" placeholder="시작">
+				<td><input type="time" name="start_time" placeholder="시작">
 				-
-				<input type="date" name="finish_time" placeholder="종료">
+				<input type="time" name="finish_time" placeholder="종료">
 			</tr>
 		</tbody>
 	</table>	

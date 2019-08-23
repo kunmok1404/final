@@ -19,4 +19,5 @@ public interface ShopDao {
 	int getSeq();
 	void business_regist(FilesDto filesDto);
 	void sale_regist(FilesDto filesDto);
+	void edit(ShopDto shopDto);
 }

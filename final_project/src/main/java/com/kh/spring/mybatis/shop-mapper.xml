@@ -63,5 +63,27 @@ PUBLIC "//mybatis.org//DTD Mapper 3.0//EN"
  	<select id="seq" resultType="int">
 		select shop_seq.nextval from dual
 	</select>
-
+	<update id="edit" parameterType="shopDto">
+		update shop
+			set
+				category = #{category},
+				company_name = #{company_name},
+				company_code = #{company_code},
+				ceo = #{ceo},
+				ceo_phone = #{ceo_phone},
+				bank = #{bank},
+				account_number = #{account_number},
+				account_name = #{account_name},
+				shop_name = #{shop_name},
+				shop_phone = #{shop_phone},
+				zip_code = #{zip_code},
+				basic_addr = #{basic_addr},
+				detail_addr = #{detail_addr},
+				min_price = #{min_price},
+				delivery_price = #{delivery_price},
+				start_time = #{start_time},
+				finish_time = #{finish_time}
+			where
+				no = #{no} 
+	</update>
  </mapper>

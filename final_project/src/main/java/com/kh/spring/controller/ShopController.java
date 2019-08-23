@@ -67,15 +67,19 @@ public class ShopController {
 		return "client/shop/sub_menu";
 	}
 	
+//	입점문의 페이지
 	@GetMapping("/explan")
 	public String explan() {
 		System.out.println("aaa");
 		return "client/order/shop_explan";
 	}
+	
+//	입점신청 페이지
 	@GetMapping("/order_regist")
 	public String order_regist() {
 		return "client/order/order_regist";
 	}
+//	입점신청 페이지(post)
 	@PostMapping("/order_regist")
 	public String order_regist(
 								@ModelAttribute ShopDto shopDto,
