@@ -28,8 +28,6 @@ import com.kh.spring.entity.OrderDetailListVo;
 import com.kh.spring.entity.OrdersDto;
 import com.kh.spring.repository.OrdersDao;
 
-
-
 @Controller
 @RequestMapping("/order")
 public class OrderController {
@@ -62,15 +60,16 @@ public class OrderController {
 	}
 
 	@PostMapping("/order")
-	public String order(@ModelAttribute OrdersDto ordersDto, @ModelAttribute OrderDetailListVo vo, HttpSession session,
-			Model model) {
+	public String order(@ModelAttribute OrdersDto ordersDto, @ModelAttribute OrderDetailListVo vo,
+			HttpSession session) {
+
 		int member_code = (int) session.getAttribute("member_code");
 		int shop_code = (int) session.getAttribute("shop_code");
 		int total_price = (int) session.getAttribute("total_price");
 		int no = orderDao.getseq();
 		OrdersDto orderDto = OrdersDto.builder().no(no).member_code(member_code).shop_code(shop_code)
-				.request(ordersDto.getRequest()).discount_price(ordersDto.getDiscount_price())
-				.total_price(total_price).pay_method(ordersDto.getPay_method()).build();
+				.request(ordersDto.getRequest()).discount_price(ordersDto.getDiscount_price()).total_price(total_price)
+				.pay_method(ordersDto.getPay_method()).build();
 		orderDao.orderinput(orderDto);
 		orderDao.orderDetailInput(no, vo);
 		orderDao.cartDelete(member_code);
@@ -82,7 +81,7 @@ public class OrderController {
 	@PostMapping("/kakao")
 	public String kakaopay(@RequestParam String item_name, @RequestParam String partner_user_id,
 			@RequestParam int total_amount, @ModelAttribute OrdersDto ordersDto, @ModelAttribute OrderDetailListVo vo,
-			HttpSession session,Model model) throws URISyntaxException {
+			HttpSession session, Model model) throws URISyntaxException {
 		// 미리 구해 올 정보
 		int total_price = (int) session.getAttribute("total_price");
 		int member_code = (int) session.getAttribute("member_code");
@@ -124,21 +123,21 @@ public class OrderController {
 
 //		vo안에 있는 tid를 결제 최종 승인 요청에서 사용할수 있도록 저장하고
 //		결제 승인시 나머지를 db에 저장 처리
-		session.setAttribute("total_price", total_price);//총액
-		session.setAttribute("shop_code", shop_code);//샵 코드 저장
-		session.setAttribute("member_code", member_code);//멤버 코드 저장
-		session.setAttribute("order_no", no);//주문 번호 저장
-		session.setAttribute("OrderDetailListVo",vo);//주문 상세정보 저장
+		session.setAttribute("total_price", total_price);// 총액
+		session.setAttribute("shop_code", shop_code);// 샵 코드 저장
+		session.setAttribute("member_code", member_code);// 멤버 코드 저장
+		session.setAttribute("order_no", no);// 주문 번호 저장
+		session.setAttribute("OrderDetailListVo", vo);// 주문 상세정보 저장
 		session.setAttribute("ordersDto", ordersDto);
-		session.setAttribute("payInfo",kakaopay);
+		session.setAttribute("payInfo", kakaopay);
 		session.setAttribute("partner_user_id", partner_user_id);
-		
 
 //		결제 페이지로 연동시킴
 
 		return "redirect:" + kakaopay.getNext_redirect_pc_url();
 	}
-	//결제에 성공 했을때,받은 데이터를 처리함
+
+	// 결제에 성공 했을때,받은 데이터를 처리함
 	@GetMapping("/success")
 	public String success(@RequestParam String pg_token, HttpSession session, Model model) throws URISyntaxException {
 		int total_price = (int) session.getAttribute("total_price");
@@ -148,17 +147,17 @@ public class OrderController {
 		OrderDetailListVo vo = (OrderDetailListVo) session.getAttribute("OrderDetailListVo");
 		OrdersDto ordersDto = (OrdersDto) session.getAttribute("ordersDto");
 		OrdersDto orderDto = OrdersDto.builder().no(no).member_code(member_code).shop_code(shop_code)
-				.request(ordersDto.getRequest()).discount_price(ordersDto.getDiscount_price())
-				.total_price(total_price).pay_method(ordersDto.getPay_method()).build();
+				.request(ordersDto.getRequest()).discount_price(ordersDto.getDiscount_price()).total_price(total_price)
+				.pay_method(ordersDto.getPay_method()).build();
 		orderDao.orderinput(orderDto);
 		orderDao.orderDetailInput(no, vo);
 		orderDao.cartDelete(member_code);
-		
-		model.addAttribute("shop_info",orderDao.shopInfo(shop_code));
-		model.addAttribute("orders",orderDao.orderResult(no));
-		model.addAttribute("order_detail",orderDao.myOrderDetailList(no));
-		model.addAttribute("memberDto",orderDao.memberSearch(member_code));
-		
+
+		model.addAttribute("shop_info", orderDao.shopInfo(shop_code));
+		model.addAttribute("orders", orderDao.orderResult(no));
+		model.addAttribute("order_detail", orderDao.myOrderDetailList(no));
+		model.addAttribute("memberDto", orderDao.memberSearch(member_code));
+
 		RestTemplate template = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", "KakaoAK 1f9e84a716e8a4d3402e2206a6efad1e");
@@ -188,7 +187,5 @@ public class OrderController {
 
 		return "/client/order/success";
 	}
-	
-	
 
 }
