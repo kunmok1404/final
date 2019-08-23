@@ -48,7 +48,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		member_code=#{member_code} and order_code = #{order_code}
 	</select>
 
-	<insert id="regist" parameterType="order_Detail">
+	<insert id="regist" parameterType="orderDetailDto">
 		insert into order_detail values(#{order_code}, #{title}, #{menu_name}, #{menu_amount},
 		#{menu_price}, #{sub_name}, #{sub_amount}, #{sub_type}, #{sub_price})
 

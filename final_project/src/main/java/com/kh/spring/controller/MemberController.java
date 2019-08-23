@@ -32,13 +32,13 @@ public class MemberController {
 	@Autowired
 	private OrdersDao ordersDao;
 
-	// �쉶�썝媛��엯 湲곕뒫(GET)
+	// 회원가입(GET)
 	@GetMapping("/regist")
 	public String regist() {
 		return "member/regist";
 	}
 
-	// �쉶�썝媛��엯 湲곕뒫(POST)
+	// 회원가입(POST)
 	@PostMapping("/regist")
 	public String regist(@ModelAttribute MemberDto memberDto) {
 		// memberDto �븞�뿉 �엳�뒗 pw瑜� 蹂�寃�(BCrypt)
