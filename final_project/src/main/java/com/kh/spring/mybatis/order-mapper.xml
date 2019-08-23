@@ -84,6 +84,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="detail_regist" parameterType="orderDetailDto">
 		insert into order_detail values(#{order_no}, #{title}, #{menu_name}, #{menu_amount},
 		#{menu_price}, #{sub_name}, #{sub_amount}, #{sub_type}, #{sub_price})
-	</insert>	
+	</insert>
+	
+	<!-- 장바구니 갯수 확인 -->
+	<select id="quantity" parameterType="int" resultType="int">
+		select count(*) from cart where member_code = #{member_code}
+	</select>
+	<!-- 주문 확인시 보여줄 코드 -->
+	<select id="order_result" parameterType="int" resultType="ordersDto">
+		select * from orders where no = #{no}
+	</select>	
 
 </mapper>
