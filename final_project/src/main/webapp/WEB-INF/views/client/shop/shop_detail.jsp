@@ -35,6 +35,11 @@
     			}
     		});
         });
+        //세션에 저장된 member_code 불러오기
+        var member_code = "<%=session.getAttribute("member_code") %>";
+        
+        // shop_code 불러오기
+        var shop_code = $(".shop_no").val();
         function on(){
         	var img = document.querySelector(".like > img");
             img.src = "${pageContext.request.contextPath}/resources/image/like_on.png";
@@ -53,23 +58,21 @@
 			if ($(".like_val").val()=="on") {
 				 off();
 				 $.ajax({
-					 	type : 'POST',
-		    			url:"${pageContext.request.contextPath}/member/like",
+		    			url:"${pageContext.request.contextPath}/member/unlike",
 		    			data : {
 		    				"member_code" : member_code,
-		    				"shop_code" : shopDto.no,
+		    				"shop_code" : shop_code
 		    			}
-				 }
+				 });
 			}else {
 				on();
 				$.ajax({
-					type : 'POST',
-	    			url:"${pageContext.request.contextPath}/member/unlike",
+	    			url:"${pageContext.request.contextPath}/member/like",
 	    			data : {
 	    				"member_code" : member_code,
-	    				"shop_code" : shopDto.no,
+	    				"shop_code" : shop_code
 	    			}
-				}
+				});
 			}
 		});
         
@@ -90,7 +93,9 @@
                   <table>
                     <tbody>
                       <tr>
-                        <td class="shop-detail-name">${shopDto.shop_name}</td>
+                        <td class="shop-detail-name">${shopDto.shop_name}
+                        <input class="shop_no" type="hidden" value="${shopDto.no }">
+                        </td>
                       </tr>
                       <tr>
                         <td class="shop-detail-score">

@@ -10,23 +10,25 @@
 	<h3>배달정보</h3>
 </div>
 <hr>
-<form action="order" method="post">
+<form action="kakao" method="post">
+<input type="hidden" name="item_name" value="치킨">
+<input type="hidden" name="total_amount" value="${total_price + shopDto.delivery_price}">
+<input type="hidden" name="partner_user_id" value="${shopDto.company_name}">	
 	<div class="panel-body">
-		<input type="hidden" name="order_code" value="전 페이지에서 넘어온 주문상세정보">
 		<label for="address">
 			<h3>주소</h3>
 		</label>
 		<button>기본주소로 설정</button>
 		<button>새 주소</button>
 		<div>
-			<input type="text" readonly="readonly" value="${memberDto.post}"><br>
-			<input type="text" readonly="readonly" value="${memberDto.basic_addr}"><br>
+			<input type="text" readonly="readonly" value="${memberDto.post}" disabled><br>
+			<input type="text" readonly="readonly" value="${memberDto.basic_addr}" disabled><br>
 			<input type="text" placeholder="상세 주소" value="${memberDto.detail_addr}">
 		</div>
 		<div>
 			<label for="phone">
 				<h3>연락처</h3>
-			</label> <input type="text" name="phone" placeholder="전화번호를 입력해주세요." value="${memberDto.phone}">
+			</label> <input type="text" placeholder="전화번호를 입력해주세요." value="${memberDto.phone}">
 		</div>
 	</div>
 	<hr>
@@ -80,10 +82,19 @@
 				</tr>
 			</thead>
 			<tbody>
-			<c:forEach var="cart" items="${cartList}">
+			<c:forEach var="cart" items="${cartList}" varStatus="status">
 				<tr>
 					<td><input type="checkbox"></td>
-					<td><img src="http://placehold.it/100x100"></td>
+					<td>
+						<input type="hidden" name="list[${status.index}].title" value="${cart.title}">
+						<input type="hidden" name="list[${status.index}].menu_name" value="${cart.menu_name}">
+						<input type="hidden" name="list[${status.index}].menu_amount" value="${cart.menu_amount}">
+						<input type="hidden" name="list[${status.index}].menu_price" value="${cart.menu_price}">
+						<input type="hidden" name="list[${status.index}].sub_name" value="${cart.sub_name}">
+						<input type="hidden" name="list[${status.index}].sub_amount" value="${cart.sub_amount}">
+						<input type="hidden" name="list[${status.index}].sub_type" value="${cart.sub_type}">
+						<input type="hidden" name="list[${status.index}].sub_price" value="${cart.sub_price}">
+					<img src="http://placehold.it/100x100"></td>
 					<td>
 					${cart.menu_name}<c:if test="${cart.sub_price!=0}">
 							<br>
@@ -125,7 +136,7 @@
 					<td>5000원<input type="hidden" name="discount_price" value="5000"></td>
 					<td>${shopDto.delivery_price}원</td>
 					<td>${total_price + shopDto.delivery_price}원
-					<input type="hideen" name="total-price" value="${total_price + shopDto.delivery_price}"></td>
+					<input type="hidden" name="total-price" value="${total_price + shopDto.delivery_price}"></td>
 				</tr>
 			</tbody>
 

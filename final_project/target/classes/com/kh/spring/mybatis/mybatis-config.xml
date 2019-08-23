@@ -7,7 +7,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<setting name="defaultExecutorType" value="BATCH"/>
 	</settings>
 
-
 	  <!-- 별칭 설정 -->
 	  <typeAliases>
 	  	<typeAlias type="com.kh.spring.entity.CartDto" alias="cartDto"/>

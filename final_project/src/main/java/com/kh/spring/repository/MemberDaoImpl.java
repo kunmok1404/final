@@ -13,7 +13,7 @@ public class MemberDaoImpl implements MemberDao {
 	@Autowired
 	private SqlSession sqlSession;
 
-	// �쉶�썝媛��엯 湲곕뒫
+	// 회원가입
 	@Override
 	public boolean regist(MemberDto memberDto) {
 		try {
@@ -24,25 +24,44 @@ public class MemberDaoImpl implements MemberDao {
 		}
 	}
 
-	// �븘�씠�뵒 以묐났 �솗�씤
+	// 아이디 중복확인
 	@Override
 	public MemberDto id_check(String id) {
 		return sqlSession.selectOne("member.id_check", id);
 	}
 
-	// �븫�샇�솕 �쟻�슜 �쟾 濡쒓렇�씤
+	// 암호화 적용 전 로그인
 	@Override
 	public MemberDto login(MemberDto memberDto) {
 		MemberDto result = sqlSession.selectOne("member.login", memberDto);
 		return result;
 	}
 
-	// �븫�샇�솕 �쟻�슜 �썑 濡쒓렇�씤
+	// 암호화 적용 후 로그인
 	@Override
 	public MemberDto get(String id) {
 		return sqlSession.selectOne("member.get", id);
 	}
 
+	//아이디 찾기
+	@Override
+	public boolean findId(MemberDto memberDto) {
+		MemberDto result = sqlSession.selectOne("member.findId", memberDto);
+		return result != null;
+	}
+	
+	//비밀번호 찾기
+	@Override
+	public boolean findPw(MemberDto memberDto) {
+		MemberDto result = sqlSession.selectOne("member.findPw", memberDto);
+		return result != null;
+	}
+
+	
+	
+	
+	
+	
 	// 회원정보 조회
 	@Override
 	public MemberDto getInfo(int member_code) {

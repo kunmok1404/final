@@ -17,7 +17,8 @@ import com.kh.spring.entity.ShopDto;
 import com.kh.spring.repository.ShopDao;
 import com.kh.spring.service.ShopService;
 
-//留ㅼ옣
+
+// 매장
 @Controller
 @RequestMapping("/shop")
 public class ShopController {
@@ -28,15 +29,15 @@ public class ShopController {
 	@Autowired
 	private ShopDao shopDao;
 	
-	// 留ㅼ옣紐⑸줉�솕硫�
+	// 매장목록
 	@RequestMapping("/list")
 	public String list(Model model,@RequestParam int cat_no) {
 		model.addAttribute("cat_no", cat_no);
-		model.addAttribute("cat_list", shopDao.catList()); // �긽�떒 Food移댄뀒怨좊━紐⑸줉議고쉶
+		model.addAttribute("cat_list", shopDao.catList()); // 음식카테고리 목록
 		return "client/shop/shop_list";
 	}
 	
-	// �럹�씠吏� 議곌컖
+	// 더보기 기능
 	@GetMapping("/part")
 	public String part(@RequestParam(required = false, defaultValue = "1") int page,
 					int cat_no, Model model) {
@@ -49,7 +50,7 @@ public class ShopController {
 		return "client/shop/part";
 	}
 	
-	// 留ㅼ옣�긽�꽭�솕硫�
+	// 매장상세화면
 	@GetMapping("/detail")
 	public String detail(@RequestParam int no, Model model) {
 		model.addAttribute("cat_list", shopDao.catList()); 
@@ -67,22 +68,26 @@ public class ShopController {
 		return "client/shop/sub_menu";
 	}
 	
+	// 입점문의 페이지
 	@GetMapping("/explan")
 	public String explan() {
-		
-		return "order/shop_explan";
+		return "client/order/shop_explan";
 	}
+	
+	// 입점문의 신청페이지(get)
 	@GetMapping("/order_regist")
 	public String order_regist() {
-		return "order/order_regist";
+		return "client/order/order_regist";
 	}
+	
+	// 입점문의 신청페이지(post)
 	@PostMapping("/order_regist")
 	public String order_regist(
 								@ModelAttribute ShopDto shopDto,
 								@RequestParam MultipartFile business_regist,
 								@RequestParam MultipartFile sale_regist) throws IllegalStateException, IOException {
 		shopService.regist(shopDto,business_regist,sale_regist);
-		return "order/order_regist";
+		return "client/order/order_regist";
 		
 	}
 }
