@@ -25,7 +25,7 @@ import com.kh.spring.repository.ShopDao;
 import com.kh.spring.service.OrderService;
 
 @Controller
-@RequestMapping("/client/member")
+@RequestMapping("/member")
 public class MemberController {
 
 	@Autowired
@@ -217,6 +217,13 @@ public class MemberController {
 		return "client/member/info_order_detail";
 	}
 
+	//나의 리뷰 목록
+	@GetMapping("/info_review_list")
+	public String my_review() {
+		
+		return "client/member/info_review_list";
+	}
+	
 	@GetMapping("/like")
 	public String like(@RequestParam int shop_code,@RequestParam int member_code) {
 		memberDao.like(MyshopDto.builder().member_code(member_code).shop_code(shop_code).build());
