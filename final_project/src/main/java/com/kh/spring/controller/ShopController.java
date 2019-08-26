@@ -83,9 +83,10 @@ public class ShopController {
 	@PostMapping("/order_regist")
 	public String order_regist(
 								@ModelAttribute ShopDto shopDto,
-								@RequestParam MultipartFile business_regist,
-								@RequestParam MultipartFile sale_regist) throws IllegalStateException, IOException {
-		shopService.regist(shopDto,business_regist,sale_regist);
+								@RequestParam MultipartFile business,
+								@RequestParam MultipartFile img,
+								@RequestParam MultipartFile sale) throws IllegalStateException, IOException {
+		shopService.regist(shopDto,business,img,sale);
 		return "client/order/order_regist";
 		
 	}

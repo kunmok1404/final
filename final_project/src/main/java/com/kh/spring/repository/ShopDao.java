@@ -17,7 +17,6 @@ public interface ShopDao {
 	MenuDto menuName(int menu_no);
 	void regist(ShopDto shopDto);
 	int getSeq();
-	void business_regist(FilesDto filesDto);
-	void sale_regist(FilesDto filesDto);
+	void files_regist(FilesDto filesDto);
 	void edit(ShopDto shopDto);
 }

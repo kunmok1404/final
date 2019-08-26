@@ -43,25 +43,19 @@ PUBLIC "//mybatis.org//DTD Mapper 3.0//EN"
  						#{bank},#{account_number},#{account_name},#{shop_name},#{shop_phone},#{zip_code},
  						#{basic_addr},#{detail_addr},#{content},sysdate,null,null,
  						null,'대기',#{min_price},#{min_time},#{delivery_price}
- 						,#{start_time},#{finish_time},null,null,null)
+ 						,TO_DATE(#{start_time},'HH24:MI'),TO_DATE(#{finish_time},'HH24:MI'),null,#{location_y},#{location_x},#{shop_img},#{business_regist},#{sale_regist})
  	</insert>
  	
  	<select id="getno" parameterType="shopDto" resultType="int">
  		select no from shop where company_name = #{company_name}
  	</select>
  	
- 	<insert id="business_regist" parameterType="filesDto">
- 		insert into files values(files_seq.nextval,#{shop_code},null,null,null,
- 								#{file_type},'business_regist',#{upload_name},#{save_name},
- 								#{size},sysdate,sysdate)
- 	</insert>
- 	<insert id="sale_regist" parameterType="filesDto">
- 		insert into files values(files_seq.nextval,#{shop_code},null,null,null,
- 								#{file_type},'sale_regist',#{upload_name},#{save_name},
+ 	<insert id="files_regist" parameterType="filesDto">
+ 		insert into files values(#{no},#{file_type},#{upload_name},#{save_name},
  								#{size},sysdate,sysdate)
  	</insert>
  	<select id="seq" resultType="int">
-		select shop_seq.nextval from dual
+		select files_seq.nextval from dual
 	</select>
 	<update id="edit" parameterType="shopDto">
 		update shop
@@ -81,8 +75,9 @@ PUBLIC "//mybatis.org//DTD Mapper 3.0//EN"
 				detail_addr = #{detail_addr},
 				min_price = #{min_price},
 				delivery_price = #{delivery_price},
-				start_time = #{start_time},
-				finish_time = #{finish_time}
+				start_time = TO_DATE(#{start_time},'HH24:MI'),
+				finish_time = TO_DATE(#{finish_time},'HH24:MI'),
+				shop_img = #{shop_img}
 			where
 				no = #{no} 
 	</update>
