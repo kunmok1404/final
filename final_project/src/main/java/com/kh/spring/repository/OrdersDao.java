@@ -8,6 +8,7 @@ import com.kh.spring.entity.CartDto;
 import com.kh.spring.entity.CartListVO;
 import com.kh.spring.entity.MemberDto;
 import com.kh.spring.entity.OrderDetailDto;
+import com.kh.spring.entity.OrderDetailListVo;
 import com.kh.spring.entity.OrdersDto;
 import com.kh.spring.entity.ShopDto;
 //주문 관련 Dao
@@ -16,10 +17,20 @@ public interface OrdersDao {
 	List<CartDto> cartlist(int member_code);
 	ShopDto shopInfo(int shop_code);
 	List<OrdersDto> myOrderList(int member_code);
-	String menuName(int no);
+	OrderDetailDto menuName(int no);
 	int menuCount(int no);
 	List<OrderDetailDto> myOrderDetailList(int order_code);
 	void cartinput(CartListVO vo);
 	MemberDto memberSearch(int member_code);
 	OrdersDto orderInfo(int order_code);
+	List<OrderDetailDto> orderDistinct(int order_code);
+	void orderinput(OrdersDto ordersDto);
+	void orderDetailInput(int no, OrderDetailListVo vo);
+	int getseq();
+	void cartDelete(int member_code);
+
+	int getQuantity(int member_code);
+	OrdersDto orderResult(int no);
+	
+
 }

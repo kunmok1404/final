@@ -66,6 +66,12 @@
 		var img_id = "#img_id_" + index;
 		$(img_id).remove();
 	}
+	$(function(){
+		//분류 선택시키는 코드
+		var category = "${odto.category}";
+		$("select[name=category]").val(category);
+	});
+	
 	// 	 $(function(){
 	// 		 $("input[name=image]").change(function(e){
 	//             //e에 포함된 이미지를 불러와서 설정
@@ -93,7 +99,9 @@
 	<div class="offset-1 col-10">
 		<h4>1:1 문의</h4>
 		<div class="empty"></div>
-		<form action="write" method="post" enctype="multipart/form-data">
+		<form action="edit" method="post" enctype="multipart/form-data">
+		
+		<input type="hidden" name="no" value="${odto.no}">
 			<!-- 표 -->
 			<table class="qna-qna">
 
@@ -117,12 +125,12 @@
 					<tr>
 						<th class=notice-th>제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목</th>
 						<th><textarea name="title" placeholder="제목을 입력하세요" required
-								cols="108" rows="2"></textarea></th>
+								cols="108" rows="2">${odto.title}</textarea></th>
 					</tr>
 					<tr>
 						<th class=notice-th>내&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;용</th>
 						<th><textarea name="content" placeholder="내용을 입력하세요" required
-								cols="108" rows="6"></textarea></th>
+								cols="108" rows="6">${odto.content}</textarea></th>
 					</tr>
 					<tr>
 						<th class=notice-th rowspan="2">사진첨부</th>
@@ -140,9 +148,9 @@
 				<tfoot>
 					<tr>
 						<td colspan="2" align="center"><input class="write-btn1"
-							onclick="if(!confirm('등록 하시겠습니까?')){return false;}" type="submit"
-							value="등   록"> <a href="list" class="write-btn"
-							onclick="if(!confirm('글 쓰기를 취소 하시겠습니까?')){return false;}">목&nbsp;&nbsp;&nbsp;록</a>
+							onclick="if(!confirm('수정 하시겠습니까?')){return false;}" type="submit"
+							value="수   정"> <a href="list" class="write-btn"
+							onclick="if(!confirm('수정하기를 취소 하시겠습니까?')){return false;}">목&nbsp;&nbsp;&nbsp;록</a>
 						</td>
 					</tr>
 				</tfoot>

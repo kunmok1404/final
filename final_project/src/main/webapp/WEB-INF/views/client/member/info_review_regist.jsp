@@ -13,7 +13,7 @@
          <div id="myInfo-wrapper">
            <div class="myInfo-line"></div>
          </div>
-         <span>주문관리</span>
+         <span>리뷰관리</span>
        </div>
      </div>
      <div class="row mt-3">

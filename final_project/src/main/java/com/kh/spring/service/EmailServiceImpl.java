@@ -6,11 +6,12 @@ import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.kh.spring.entity.CertDto;
 import com.kh.spring.repository.CertDao;
-
+@Service
 public class EmailServiceImpl implements EmailService{
 	
 	//설정파일에 등록해둔 JavaMailSender 객체를 연결

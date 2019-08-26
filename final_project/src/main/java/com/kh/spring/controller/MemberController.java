@@ -18,8 +18,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.spring.entity.MemberDto;
 import com.kh.spring.entity.MyshopDto;
+import com.kh.spring.entity.OrdersDto;
+import com.kh.spring.entity.ShopDto;
 import com.kh.spring.repository.MemberDao;
 import com.kh.spring.repository.OrdersDao;
+import com.kh.spring.repository.ShopDao;
 import com.kh.spring.service.EmailService;
 import com.kh.spring.service.OrderService;
 
@@ -29,17 +32,17 @@ public class MemberController {
 
 	@Autowired
 	private MemberDao memberDao;
-	
 	@Autowired
 	private EmailService emailService;
 	
 	@Autowired
 	private OrderService oderService;
-	
 	@Autowired
 	private OrdersDao ordersDao;
-	
 
+	@Autowired
+	private ShopDao shopDao;
+	
 	// 회원가입 기능(GET)
 	@GetMapping("/regist")
 	public String regist() {
@@ -49,7 +52,7 @@ public class MemberController {
 	// 회원가입 기능(POST)
 	@PostMapping("/regist")
 	public String regist(@ModelAttribute MemberDto memberDto) {
-		// memberDto 안에 있는 pw를 변경(BCrypt)
+// memberDto 안에 있는 pw를 변경(BCrypt)
 //		String origin = memberDto.getPw();
 //		String encrypt = BCrypt.hashpw(origin, BCrypt.gensalt());
 //		memberDto.setPw(encrypt);
@@ -62,7 +65,6 @@ public class MemberController {
 		else {
 			return "redirect:regist_fail";
 		}
-		
 	}
 
 	// 회원가입 성공 시 성공페이지로 넘기기
@@ -105,8 +107,6 @@ public class MemberController {
 		if (result != null) {
 			session.setAttribute("member_code", result.getNo());
 			session.setAttribute("type", result.getType());
-
-			System.out.println(result.getId());
 			
 			// 아이디 저장
 			// 쿠키 객체를 만들고 체크 여부에 따라 시간 설정 후 response에 추가
@@ -117,7 +117,6 @@ public class MemberController {
 			else {// 체크 했을때
 				cookie.setMaxAge(4 * 7 * 24 * 60 * 60);// 4주
 			}
-
 			response.addCookie(cookie);
 			return "redirect:/";
 		} 
@@ -126,8 +125,6 @@ public class MemberController {
 			return "client/member/login";
 		}
 	}
-	
-	// ----------------------------------//
 
 	// 로그인(POST)
 //	@PostMapping("/login")
@@ -241,7 +238,7 @@ public class MemberController {
 	}
 	
 	//비밀번호 찾기 기능
-	//
+	
 	// 주문내역 상세화면
 	@GetMapping("/info_order_detail")
 	public String infoOrderDetail(HttpSession session, Model model,
@@ -251,20 +248,35 @@ public class MemberController {
 		// 주문상세 목록
 		model.addAttribute("order_detail_list",ordersDao.myOrderDetailList(order_code));
 		// 주문정보
-		model.addAttribute("orderDto", ordersDao.orderInfo(order_code));
+		OrdersDto ordersDto = ordersDao.orderInfo(order_code);
+		model.addAttribute("orderDto", ordersDto);
+		// 주문메뉴명
+		model.addAttribute("order_distinct", ordersDao.orderDistinct(order_code));
+		// 매장정보
+		ShopDto shopDto = shopDao.shopInfo(ordersDto.getShop_code());
+		model.addAttribute("shopDto",shopDto);
 		// 회원정보
 		model.addAttribute("memberDto", memberDao.getInfo(member_code));
+		// 총 결제금액
+		int final_price = ordersDto.getTotal_price() - ordersDto.getDiscount_price() + shopDto.getDelivery_price();
+		model.addAttribute("final_price",final_price);
 		return "client/member/info_order_detail";
 	}
-
-	@PostMapping("/like")
-	public void like(@ModelAttribute MyshopDto myshopDto) {
-		memberDao.like(myshopDto);
-	}
 	
+	@GetMapping("/like")
+	public String like(@RequestParam int shop_code,@RequestParam int member_code) {
+		memberDao.like(MyshopDto.builder().member_code(member_code).shop_code(shop_code).build());
+		return "client/shop/shop_detail";
+	}
 	
 	@PostMapping("/unlike")
 	public void unlike(@ModelAttribute MyshopDto myshopDto) {
 		memberDao.unlike(myshopDto);
+	}
+	
+	@GetMapping("/unlike")
+	public String unlike(@RequestParam int shop_code,@RequestParam int member_code) {
+		memberDao.unlike(MyshopDto.builder().member_code(member_code).shop_code(shop_code).build());
+		return "client/shop/shop_detail";
 	}
 }

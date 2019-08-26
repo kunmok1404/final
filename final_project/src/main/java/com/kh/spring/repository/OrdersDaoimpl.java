@@ -12,6 +12,7 @@ import com.kh.spring.entity.CartDto;
 import com.kh.spring.entity.CartListVO;
 import com.kh.spring.entity.MemberDto;
 import com.kh.spring.entity.OrderDetailDto;
+import com.kh.spring.entity.OrderDetailListVo;
 import com.kh.spring.entity.OrdersDto;
 import com.kh.spring.entity.ShopDto;
 //주문 관련 Dao impl
@@ -38,7 +39,7 @@ public class OrdersDaoimpl implements OrdersDao{
 
 	// 메뉴명조회
 	@Override
-	public String menuName(int no) {
+	public OrderDetailDto menuName(int no) {
 		return sqlsession.selectOne("order.menu_name", no);
 	}
 
@@ -54,6 +55,12 @@ public class OrdersDaoimpl implements OrdersDao{
 		return sqlsession.selectList("order.my_order_detail",order_code);
 	}
 	
+	// 주문정보 조회
+	@Override
+	public OrdersDto orderInfo(int order_code) {
+		return sqlsession.selectOne("order.order_info", order_code);
+	}
+		
 	@Override
 	public void cartinput(CartListVO vo) {
 		List<CartDto> list = vo.getList();
@@ -67,10 +74,44 @@ public class OrdersDaoimpl implements OrdersDao{
 		return sqlsession.selectOne("order.search", member_code);
 	}
 
-	// 주문정보 조회
 	@Override
-	public OrdersDto orderInfo(int order_code) {
-		return sqlsession.selectOne("order.order_info", order_code);
+	public List<OrderDetailDto> orderDistinct(int order_code) {
+		return sqlsession.selectList("order.order_distinct", order_code);
+	}
+
+	@Override
+	public void orderinput(OrdersDto ordersDto) {
+		sqlsession.insert("order.order_regist",ordersDto);	
+	}
+
+	@Override
+	public void orderDetailInput(int no,OrderDetailListVo vo) {
+		List<OrderDetailDto> list = vo.getList();
+		for(OrderDetailDto orderDetailDto : list) {
+			orderDetailDto.setOrder_no(no);
+			sqlsession.update("order.detail_regist",orderDetailDto);
+		}
+	}
+
+	@Override
+	public int getseq() {
+		return sqlsession.selectOne("order.order_seq");
+	}
+
+	@Override
+	public void cartDelete(int member_code) {
+		sqlsession.delete("order.delete",member_code);
+		
+	}
+
+	@Override
+	public int getQuantity(int member_code) {
+		return sqlsession.selectOne("order.quantity",member_code);
+	}
+
+	@Override
+	public OrdersDto orderResult(int no) {
+		return sqlsession.selectOne("order.order_result",no);
 	}
 
 }
