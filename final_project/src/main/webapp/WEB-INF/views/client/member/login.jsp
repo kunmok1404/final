@@ -12,11 +12,11 @@
 <script>
 		
 		//로그인 실패 시 alert으로 메세지 노출
-		$(function(){
-			if($(".fail").text()=='faillogin'){
-				alert("로그인에 실패했습니다.")
-			}							
-		});
+// 		$(function(){
+// 			if($(".fail").text()=='faillogin'){
+// 				alert("로그인에 실패했습니다.")
+// 			}							
+// 		});
 		
 </script>
 
@@ -29,8 +29,17 @@
 
 </style>
 
-<c:if test="${fail==fail}">
-	<div class="fail" style="display: none;">faillogin</div>
+<%-- <c:if test="${fail==fail}"> --%>
+<!-- 	<div class="fail" style="display: none;">faillogin</div> -->
+<%-- </c:if> --%>
+
+<!-- error 파라미터 유무에 따라 오류메시지를 출력 -->
+<c:if test="${not empty param.error}">
+	<h4>
+		<font color="red">
+			입력하신 정보에 해당하는 회원이 존재하지 않습니다.
+		</font>
+	</h4>
 </c:if>
 
 <div class="login">
@@ -69,10 +78,10 @@
 				</tr>
 				<tr>
 					<td colspan="2">
-						<a href="#"><input type="button" value="아이디 찾기" name="findID"></a>
+						<a href="find_id"><input type="button" value="아이디 찾기" name="findID"></a>
 					</td>
 					<td colspan="2">
-						<a href="#"><input type="button" value="비밀번호 찾기" name="findPW"></a>
+						<a href="find_pw"><input type="button" value="비밀번호 찾기" name="findPW"></a>
 					</td>
 				</tr>
 				<tr>	
