@@ -1,8 +1,6 @@
 package com.kh.spring.controller;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 

@@ -77,7 +77,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 주문 내용 등록 -->
 	<insert id="order_regist" parameterType="ordersDto">
 		insert into orders values(${no}, #{member_code},#{shop_code},#{total_price},
-		'접수대기',#{discount_price},#{pay_method},#{request},sysdate)
+		'접수대기',#{discount_price},#{pay_method},#{request},sysdate, '미작성')
 	</insert>
 	
 	<!-- 주문 상세 등록 -->

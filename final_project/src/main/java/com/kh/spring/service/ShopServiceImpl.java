@@ -24,7 +24,7 @@ public class ShopServiceImpl implements ShopService {
 	@Autowired
 	private ShopDao shopDao;
 	
-	//留ㅼ옣�긽�꽭�젙蹂�
+	//留매장정보
 	@Override
 	public Map<String, List<MenuDto>> menuList(int no) {
 		List<MenuDto> menu_list = shopDao.menuList(no);

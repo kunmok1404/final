@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.kh.spring.entity.TermsDto;
 import com.kh.spring.repository.ShopDao;
 import com.kh.spring.repository.TermsDao;
 
@@ -18,18 +19,13 @@ public class HomeController {
 	@Autowired
 	ShopDao shopDao;
 	
+	// 메인화면
 	@GetMapping({"","/"})
 	public String home(Model model) {
 		model.addAttribute("category", shopDao.catList());
+		model.addAttribute("terms1", termsDao.terms1());
+		model.addAttribute("terms2", termsDao.terms2());
 		return "client/home";
 	}
-	
-	@GetMapping("/terms")
-	public String terms(Model model) {
-		model.addAttribute("terms1", termsDao.list1());
-		model.addAttribute("terms2", termsDao.list2());
-		return "client/terms";
-	}
-	
 	
 }
