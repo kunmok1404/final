@@ -6,8 +6,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	<settings>
 		<setting name="defaultExecutorType" value="BATCH"/>
 	</settings>
-
-
 	  <!-- 별칭 설정 -->
 	  <typeAliases>
 	  	<typeAlias type="com.kh.spring.entity.CartDto" alias="cartDto"/>
@@ -26,6 +24,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	  	<typeAlias type="com.kh.spring.entity.TermsDto" alias="termsDto"/>
 	  	<typeAlias type="com.kh.spring.entity.ReviewDto" alias="reviewDto"/>
 	  	<typeAlias type="com.kh.spring.entity.ShopReviewVO" alias="shopReviewVO"/>
+	  	<typeAlias type="com.kh.spring.entity.CertDto" alias="certDto"/>
 	  </typeAliases>
 	  
 </configuration>
