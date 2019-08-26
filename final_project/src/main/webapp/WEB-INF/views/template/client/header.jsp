@@ -181,24 +181,7 @@
           </div>
         </nav>
     </header>
-<div class="iim">
 
-	<div class="addd">
-	<h1 class="addr">"어디로</h1>
-	<h1 class="adrr"> 배달해 </h1>
-	<h1 class="addr">드릴까요?"</h1>
-	</div>
-	<h6 class="adr">배달받으실 동 이름으로 검색해 주세요</h6>
 
-<div class="adre">
-    <input type="text" ><button>전송</button>
-</div>
-
-<div id="map" style="width:1px;height:1px;"></div>
-
-<input class="ygd" type="hidden" name="ygd">
-<input class="xgd" type="hidden" name="xgd">
-<br><br><br><br>
-</div>
->>>>>>> branch 'master' of https://github.com/kunmok1404/final
+	
 
