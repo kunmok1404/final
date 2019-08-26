@@ -40,7 +40,7 @@ a{
 
  /*상단메뉴*/
 .top-menu{
-    height: 46px;
+    height: 40px;
     vertical-align: middle;
     margin-top:2px;
     border-top: 2px solid #9C3D39;
@@ -49,7 +49,7 @@ a{
 }
 .top-menu ul li{
     display: inline-block;
-    font-size:1.3rem;
+    font-size:1.1rem;
     padding:5px 25px;
 }
 
@@ -65,16 +65,65 @@ a{
 .left ul li{
     margin-top: 30px; 
     list-style: none;
-    font-size:1.2rem;
     margin-right: 10px; 
 }
 
 /*TOP하이라이트*/
-.active{
-    background-color: darkgray;
-}
+/* .active{ */
+/*     background-color: darkgray; */
+/* } */
 /*LEFT하이라이트*/
 .on{
     color:#9C3D39;
-    font-size: 1.5rem;
+    font-size: 1.1rem;
+}
+
+/* | 표시*/
+#terms-wrapper {
+    cursor:pointer;
+    display: inline-block;
+  }
+.terms-line {
+    background-color:#9C3D39;
+    top:3px;
+    width:3px;
+    height:25px; 
+    margin-right: 10px;
+    border-radius:2px;
+    box-shadow:0 1px 3px rgba(0,0,0,.5);
+    position:relative;
+    display: inline-block;
+  }
+  
+ /*전체 래퍼*/
+.wrapper{
+	margin-left:180px;
+	width:70%;
+}
+
+/*top-title*/
+.top-title{
+	margin-top:10px;
+	vertical-align:middle;
+}
+
+/*약관관리*/
+.tab-pane{
+	background-color:white;
+}
+.tab-pane table .terms-title{
+	text-align:center;
+	vertical-align:middle;
+	width:10%;
+	background-color:#a4d7e1;
+}
+.save-btn{
+	margin-top:0px;
+	padding-top:0px;
+	text-align:center;
+	background-color:white;
+}
+.save-btn a{
+	width:200px;
+	color:white;
 }

@@ -532,6 +532,81 @@ table {
     background-color: #2C3E50;
 }
 
+/*리뷰 작성*/
+.review-top{
+    background-color: #9C3D39;
+    height: 2px;
+}
+.review-title{
+    font-size: 1.2rem;
+    text-align: center;
+    width:15%;
+    height:110px;
+    background-color: #fafafa;
+}
+.review-content img{
+    margin-left: 25px;
+}
+.review-content span{
+    margin-left: 10px;
+    text-align: left;
+    font-size: 1.2rem;
+    width:85%;
+    padding: 5px 25px;
+}
+.review-content input{
+    padding: 5px 25px;
+    margin-left: 10px;
+}
+.review-content textarea{
+    padding: 5px 25px;
+    margin-left: 10px;
+}
+#choice-img > img{
+	margin-left:20px;
+	height:100px;
+	width:100px;
+    border-image: none;
+}
+.review-text{
+    font-size: 1.2rem;
+    text-align: center;
+    width:15%;
+    height:70px;
+    background-color: #fafafa;
+}
+.review-img{
+	cursor:pointer;
+    border:1px solid lightgray;
+    padding: 5px;
+    float:left;
+    background-color: #ffffff;
+	width: 403px;
+    height:200px;
+    cursor:pointer;
+}
+.review-img::after{
+    content:"";
+    display:block;
+    clear:both;
+}
+
+ /*약관*/
+.terms-nav{
+   width:230px;
+}
+.terms-nav a{
+	width:230px;
+}
+.terms-modal{
+	width:800px;
+	min-height:600px;
+}
+.terms-modal-wrap{
+	text-align:center;
+	margin-left:300px;
+	min-height:800px;
+}
 
  /*footer*/ 
 footer{
@@ -544,9 +619,14 @@ footer{
     margin-top: 1.5rem;
 }
 .footer-menu ul li{
+	cursor:pointer;
     vertical-align: middle;
     margin-right: 30px;
     display: inline;
     font-size: 1.2rem;
 }
+.footer-menu ul li a{
+	color:black;
+	text-decoration:none;
+} 
 

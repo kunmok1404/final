@@ -224,9 +224,6 @@ public class MemberController {
 	public String findPwResult() {
 		return "client/member/find_pw_result";
 	}
-
-	
-	
 	
 	// 나의정보 클릭시 나의주문내역
 	@GetMapping("/info_order_list")

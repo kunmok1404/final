@@ -7,14 +7,66 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 리뷰 등록 -->
 	<insert id="regist" parameterType="reviewDto">
 		insert into review values(
-			review_seq.nextval, #{member_code}, #{order_code},
-			#{title}, #{content}, 0, #{score},'작성완료', '답변대기','찾아주셔서 감사합니다 고객님',
+			#{no}, #{member_code}, #{order_code},
+			#{title}, #{content}, 0, #{score},'작성완료', '답변대기',null,
 			sysdate, sysdate
 		)
 	</insert>
 
 	<!-- 리뷰 목록 -->
-	<select id="list" resultType="shopReviewVO">
-		select * from shop_orders_review order by no desc
+	<select id="list" parameterType="int" resultType="shopReviewVO">
+		select * from shop_orders_review
+		where member_code=#{member_code}
+		order by no desc
+	</select>
+	
+	<!--리뷰테이블 시퀀스 구하기 -->
+	<select id="review_seq" resultType="int">
+		select review_seq.nextval from dual
+	</select>
+	
+	<!--파일테이블 시퀀스 구하기 -->
+	<select id="files_seq" resultType="int">
+		select files_seq.nextval from dual
+	</select>
+	
+	<!--파일테이블에 리뷰이미지 정보 등록 -->
+	<insert id="files_regist" parameterType="filesDto">
+		insert into files values(
+			#{no}, #{file_type}, #{upload_name}, #{save_name},
+			#{file_size}, sysdate, sysdate
+		)
+	</insert>
+	
+	<!-- 리뷰+이미지 테이블에 정보등록 -->
+	<insert id="review_img" parameterType="int">
+		insert into review_img values(
+			#{review_no}, #{files_no}
+		)
+	</insert>
+	
+	<!-- order테이블에 review_status 상태변경 -->
+	<update id="review_status" parameterType="int">
+		update orders set review_status='작성완료' where no=#{order_code}
+	</update>
+	
+	<!-- 리뷰테이블에서 리뷰정보조회 -->
+	<select id="review_info" parameterType="int" resultType="reviewDto">
+		select * from review where no=#{review_code} order by no desc
+	</select>
+	
+	<!-- 리뷰조회수 증가 -->
+	<update id="read" parameterType="int">
+		update review set read=read+1 where no=#{review_code}
+	</update>
+	
+	<!-- 리뷰이미지코드 조회 -->
+	<select id="review_img_code" parameterType="int" resultType="reviewImgDto">
+		select * from review_img where review_no=#{review_code}
+	</select>
+	
+	<!-- 파일정보조회 -->
+	<select id="filesDto" parameterType="int" resultType="filesDto">
+		select * from files where no=#{files_code}
 	</select>
 </mapper>
