@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.spring.entity.OrderDetailDto;
 import com.kh.spring.entity.OrdersDto;
 import com.kh.spring.entity.ShopDto;
 import com.kh.spring.repository.OrdersDao;
@@ -35,9 +36,9 @@ public class OrderServiceImpl implements OrderService {
 			map.put("shop_name", shopDto.getShop_name()); 
 			
 			// 주문번호로 메뉴명1개, 총메뉴갯수 구한후 세팅
-			String menu_name = ordersDao.menuName(orderDto.getNo());
+			OrderDetailDto menu_name = ordersDao.menuName(orderDto.getNo());
 			int menu_count = ordersDao.menuCount(orderDto.getNo());
-			map.put("menu_name",menu_name);
+			map.put("menu_name",menu_name.getMenu_name());
 			map.put("menu_count",menu_count);
 			
 			map.put("order_date",orderDto.getOrder_date()); // 주문일시

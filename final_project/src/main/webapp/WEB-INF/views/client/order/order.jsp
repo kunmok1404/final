@@ -10,7 +10,10 @@
 	<h3>배달정보</h3>
 </div>
 <hr>
-<form action="order" method="post">
+<form action="kakao" method="post">
+<input type="hidden" name="item_name" value="치킨">
+<input type="hidden" name="total_amount" value="${total_price + shopDto.delivery_price}">
+<input type="hidden" name="partner_user_id" value="${shopDto.company_name}">	
 	<div class="panel-body">
 		<label for="address">
 			<h3>주소</h3>

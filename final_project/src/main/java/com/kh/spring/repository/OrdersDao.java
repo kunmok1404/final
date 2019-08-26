@@ -17,15 +17,20 @@ public interface OrdersDao {
 	List<CartDto> cartlist(int member_code);
 	ShopDto shopInfo(int shop_code);
 	List<OrdersDto> myOrderList(int member_code);
-	String menuName(int no);
+	OrderDetailDto menuName(int no);
 	int menuCount(int no);
 	List<OrderDetailDto> myOrderDetailList(int order_code);
 	void cartinput(CartListVO vo);
 	MemberDto memberSearch(int member_code);
 	OrdersDto orderInfo(int order_code);
+	List<OrderDetailDto> orderDistinct(int order_code);
 	void orderinput(OrdersDto ordersDto);
 	void orderDetailInput(int no, OrderDetailListVo vo);
 	int getseq();
 	void cartDelete(int member_code);
+
+	int getQuantity(int member_code);
+	OrdersDto orderResult(int no);
 	
+
 }
