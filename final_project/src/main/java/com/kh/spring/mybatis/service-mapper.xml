@@ -91,9 +91,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 <!-- 1:1 문의 글쓰기 기능 -->
 	<insert id="ono_write" parameterType="onoDto">
+<!-- 		insert into OneAndOne  -->
+<!-- 			values( -->
+<!-- 				#[no],  -->
+<!-- 				#{member_code},  -->
+<!-- 				#{shop_code},  -->
+<!-- 				#{title},  -->
+<!-- 				#{content},  -->
+<!-- 				sysdate,  -->
+<!-- 				sysdate,  -->
+<!-- 				'답변대기',  -->
+<!-- 				'고객님 빠른시일내에 답변드리겠습니다.', -->
+<!-- 				'고객',  -->
+<!-- 				#{category} -->
+<!-- 			) -->
 		insert into OneAndOne values(
-			oneandone_seq.nextval, #{member_code}, #{shop_code}, 
-			#{title}, #{content}, sysdate, sysdate, '답변대기', '빠른시일내에 답변드리겠습니다.',
+			#{no}, #{member_code}, #{shop_code},
+			#{title}, #{content}, sysdate, sysdate, '답변대기', '고객님 빠른시일내에 답변드리겠습니다.',
 			'고객', #{category})
 	</insert>
 	
@@ -101,5 +115,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="ono_get" parameterType="int" resultType="onoDto">
 		select*from OneAndOne where no = #{no}
 	</select>
+	
+<!-- 1:1문의 파일 업로드 전 번호 받아오기	 -->
+ 	<select id="getno" resultType="int">
+ 		select oneandone_seq.nextval from dual
+ 	</select>
+ 	
+ <!-- 1:1문의 파일 업로드 하기	 -->	
+ 	<insert id="ono_regist" parameterType="filesDto">
+ 		insert into files values(files_seq.nextval,
+ 								#{file_type},#{upload_name},#{save_name},
+ 								#{file_size},sysdate,sysdate)
+ 	</insert>
+ 	
+<!-- 1:1문의 파일 번호 받기 	 --> 
+ 	 <select id="ono_getfile" parameterType="int" resultType="filesDto">
+ 	 	select*from files where no = #{no}
+ 	 </select>
+ 	 
+ <!-- 1:1문의 파일 다운로드 하기	 --> 	
+ 	<select id="ono_download" parameterType="String" resultType="filesDto">
+ 		select * from files where save_name=#{save_name}
+ 	</select>
 
+ <!-- 1:1문의 글 수정 하기	 --> 	
+ 	<update id="ono_edit" parameterType="onoDto">
+ 		update OneAndOne
+ 			set
+ 				category = #{category},
+ 				title = #{title},
+ 				content = #{content}
+ 			where
+ 				no = #{no}
+ 	</update>
+ 	
+ 	
 </mapper>

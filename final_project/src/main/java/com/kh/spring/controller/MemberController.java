@@ -39,6 +39,7 @@ public class MemberController {
 	private OrderService oderService;
 	@Autowired
 	private OrdersDao ordersDao;
+
 	@Autowired
 	private ShopDao shopDao;
 	
@@ -233,7 +234,6 @@ public class MemberController {
 		return "client/member/info_order_list";
 	}
 	
-	//비밀번호 찾기 기능
 	
 	// 주문내역 상세화면
 	@GetMapping("/info_order_detail")

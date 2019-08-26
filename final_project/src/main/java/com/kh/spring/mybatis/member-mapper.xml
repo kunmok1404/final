@@ -2,6 +2,11 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+	SQL 명령 보관 파일
+	외부에서 접근할 수 있도록 namespace 지정할 것
+ -->
  
  <mapper namespace="member">
  	
@@ -25,6 +30,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  		select * from member where id = #{id}
  	</select>
  	
+ 	<!-- 아이디 찾기 -->
+ 	<select id="findID">
+ 		select * form member where email = #{email}
+ 	</select>
+ 	
+ 	<!-- 비밀번호 찾기 -->
+ 	<select id="findPW">
+ 		select * from member where id = #{id} and email = #{email}
+ 	</select>
+ 	
+ 	
+ 	
  	<!-- 회원정보 조회(회원코드로) -->
  	<select id="get_info" parameterType="int" resultType="memberDto">
  		select * from member where no=#{member_code}
@@ -40,4 +57,3 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	</delete>
 
  </mapper>
-
