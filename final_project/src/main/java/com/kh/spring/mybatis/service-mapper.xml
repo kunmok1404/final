@@ -51,7 +51,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					and  title like '%' || #{keyword} || '%'
 				</if>
 				<![CDATA[
-					and type <> '중요'
+					and type is null
 					]]>
 				order by no desc
 				
@@ -161,5 +161,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  				no = #{no}
  	</update>
  	
- 	
+	<!--ono테이블 시퀀스 구하기 -->
+	<select id="ono_seq" resultType="int">
+		select oneandone_seq.nextval from dual
+	</select>
+	
+	<!--파일테이블 시퀀스 구하기 -->
+	<select id="files_seq" resultType="int">
+		select files_seq.nextval from dual
+	</select>
+	
+	<!--파일테이블에 리뷰이미지 정보 등록 -->
+	<insert id="files_regist" parameterType="filesDto">
+		insert into files values(
+			#{no}, #{file_type}, #{upload_name}, #{save_name},
+			#{file_size}, sysdate, sysdate
+		)
+	</insert>
+	
+ 		<!-- 리뷰+이미지 테이블에 정보등록 -->
+	<insert id="ono_img" parameterType="int">
+		insert into ono_img values(
+			#{ono_img}, #{files_no}
+		)
+	</insert>
+	
+ 		<!-- 리뷰이미지코드 조회 -->
+	<select id="ono_img_code" parameterType="int" resultType="onoImgDto">
+		select * from ono_img where ono_img=#{ono_code}
+	</select>
+	
+	<!-- 파일정보조회 -->
+	<select id="filesDto" parameterType="int" resultType="filesDto">
+		select * from files where no=#{files_code}
+	</select>
 </mapper>

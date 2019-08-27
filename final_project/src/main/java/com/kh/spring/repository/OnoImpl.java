@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.spring.entity.FilesDto;
 import com.kh.spring.entity.OnoDto;
+import com.kh.spring.entity.OnoImgDto;
 
 
 @Repository
@@ -39,7 +40,7 @@ public class OnoImpl implements OnoDao{
 
 	@Override
 	public void write(OnoDto onoDto) {
-		System.out.println(onoDto);
+//		System.out.println(onoDto);
 		sqlSession.insert("service.ono_write", onoDto);
 	}
 
@@ -72,6 +73,33 @@ public class OnoImpl implements OnoDao{
 	@Override
 	public FilesDto getfile(int no) {
 		return sqlSession.selectOne("service.ono_getfile", no);
+	}
+
+
+	@Override
+	public void onoStatus(int shop_code) {
+		sqlSession.update("service.ono_status", shop_code);
+	}
+
+
+	@Override
+	public void fileRegist(FilesDto filesDto) {
+		sqlSession.insert("service.files_regist", filesDto);
+	}
+
+//ono+이미지 중간테이블 등록
+	@Override
+	public void writeOnoImg(int no, int files_no) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("ono_img", no);
+		map.put("files_no", files_no);
+		sqlSession.insert("service.ono_img", map);
+	}
+
+
+	@Override
+	public List<OnoImgDto> onoImg(int ono_code) {
+		return sqlSession.selectList("serivice.ono_img_code", ono_code);
 	}
 
 

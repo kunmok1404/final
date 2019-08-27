@@ -2,6 +2,7 @@ package com.kh.spring.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
 
@@ -73,40 +74,61 @@ public class OnoController {
 		return "client/service/ono/write";
 	}
 	
+//	@PostMapping("/write")
+//	public String write(HttpSession session,
+//								@ModelAttribute OnoDto onoDto,
+//								@RequestParam List<MultipartFile> images,
+//								Model model) throws IllegalStateException, IOException {
+////		String id = (String)session.getAttribute("ok");
+//		int member_code = 1;
+//		int shop_code = 1;
+//		onoDto.setMember_code(member_code);
+//		onoDto.setShop_code(shop_code);
+//		int no = onoDao.getSeq();
+//		onoDto.setNo(no);
+//		
+//		model.addAttribute("no", no);
+//		onoDao.write(onoDto);
+//		//파일 업로드
+//		for(MultipartFile image : images) {
+//			if(image.isEmpty()) {
+//				break;
+//			}
+//			else {
+//				serviceService.regist(no, image);
+//			}
+//		}
+////		return "client/service/ono/content";//forward : 화면만 바꾸는것(데이터를 첨부해야함)
+//		return "redirect:content";
+//	}
+	
 	@PostMapping("/write")
-	public String write(HttpSession session,
-								@ModelAttribute OnoDto onoDto,
+	public String write(@ModelAttribute OnoDto onoDto,
 								@RequestParam List<MultipartFile> images,
-								Model model) throws IllegalStateException, IOException {
-//		String id = (String)session.getAttribute("ok");
+								@RequestParam int shop_code,
+								HttpSession session, Model model) throws IllegalStateException, IOException {
 		int member_code = 1;
-		int shop_code = 1;
 		onoDto.setMember_code(member_code);
 		onoDto.setShop_code(shop_code);
-		int no = onoDao.getSeq();
+		//글등록
+		int no = serviceService.OnoRegist(onoDto);
 		onoDto.setNo(no);
-		
-		model.addAttribute("no", no);
-		onoDao.write(onoDto);
-		//파일 업로드
-		for(MultipartFile image : images) {
-			if(image.isEmpty()) {
-				break;
-			}
-			else {
-				serviceService.regist(no, image);
-			}
+		//이미지 등록(이미지가 여러장이니깐)
+		for(MultipartFile file : images) {
+			serviceService.fileRegist(file,onoDto);
 		}
-//		return "client/service/ono/content";//forward : 화면만 바꾸는것(데이터를 첨부해야함)
+		model.addAttribute("no", no);
 		return "redirect:content";
+		
 	}
 	
 	//[3] 글 상세보기
 	@GetMapping("/content")
-	public String content(Model model, @RequestParam int no) {
+	public String content(Model model, @RequestParam int no, @RequestParam int ono_code) {
 			model.addAttribute("odto", onoDao.get(no));
-			FilesDto fielsDto = onoDao.getfile(no);
-			model.addAttribute("filesDto", onoDao.getfile(no));
+//			FilesDto fielsDto = onoDao.getfile(no);
+//			model.addAttribute("filesDto", onoDao.getfile(no));
+			model.addAttribute("img_list", onoDao.onoImg(ono_code));
 		return "client/service/ono/content";
 	}
 	
@@ -125,29 +147,37 @@ public class OnoController {
 	}
 	
 	//[5]파일 다운로드(상세보기에 띄우기)
+	@GetMapping("/ono_img")
+	public ResponseEntity<ByteArrayResource> onoImg(
+			@RequestParam int files_code) throws UnsupportedEncodingException, IOException{
+		return serviceService.onoImg(files_code)
+	;}
 	
-	@GetMapping("/download")
-	public ResponseEntity<ByteArrayResource> download(@RequestParam String save_name) throws IOException {
-		FilesDto filesDto = serviceService.get(save_name);
-//		System.out.println(filesDto);
-		
-		if(filesDto == null) {
-			return ResponseEntity.notFound().build();
-		}
-		
-		File target = new File("D:/upload/kh15", filesDto.getSave_name());
-//		System.out.println(target.getAbsolutePath());
-//		System.out.println(target.exists());
-		byte[]data = FileUtils.readFileToByteArray(target);
-		ByteArrayResource resource = new ByteArrayResource(data);
-		
-		return ResponseEntity.ok()
-											.contentType(MediaType.APPLICATION_OCTET_STREAM)
-											.header(HttpHeaders.CONTENT_DISPOSITION,
-													"attachment; filename="+URLEncoder.encode(filesDto.getUpload_name(), "UTF-8"))
-											.contentLength(data.length)
-											.body(resource);
-		
-	}
+	
+	
+	
+	
+//	@GetMapping("/download")
+//	public ResponseEntity<ByteArrayResource> download(@RequestParam String save_name) throws IOException {
+//		FilesDto filesDto = serviceService.get(save_name);
+////		System.out.println(filesDto);
+//		
+//		if(filesDto == null) {
+//			return ResponseEntity.notFound().build();
+//		}
+//		
+//		File target = new File("D:/upload/kh15", filesDto.getSave_name());
+////		System.out.println(target.getAbsolutePath());
+////		System.out.println(target.exists());
+//		byte[]data = FileUtils.readFileToByteArray(target);
+//		ByteArrayResource resource = new ByteArrayResource(data);
+//		
+//		return ResponseEntity.ok()
+//											.contentType(MediaType.APPLICATION_OCTET_STREAM)
+//											.header(HttpHeaders.CONTENT_DISPOSITION,
+//													"attachment; filename="+URLEncoder.encode(filesDto.getUpload_name(), "UTF-8"))
+//											.contentLength(data.length)
+//											.body(resource);
+//	}
 
 }
