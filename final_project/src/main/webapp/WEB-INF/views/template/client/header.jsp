@@ -196,7 +196,7 @@
                 </div>
               </li>
               <li>
-                <a href="#" class="mr-2">고객센터</a>
+                <a href="${pageContext.request.contextPath}/notice/list" class="mr-2">고객센터</a>
               </li>
               <li><img src="${pageContext.request.contextPath}/resources/image/shopping-cart.png"></li>
             </ul>
