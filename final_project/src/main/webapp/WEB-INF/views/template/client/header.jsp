@@ -13,6 +13,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/pkmClient.css" rel="stylesheet">
+
     <style>
         *{
             /* 테두리를 너비에 포함시켜라 */
@@ -168,6 +169,8 @@
     </script> 
 </head>
 <body>
+<!-- 로그인 여부에 따라 메뉴를 구분하여 출력-->
+<c:set var="login" value="${not empty sessionScope.member_code}"></c:set>
     <header>
         <nav class="navbar navbar-default">
           <div class="container-fluid">
@@ -176,14 +179,11 @@
                 <img alt="Brand" src="${pageContext.request.contextPath}/resources/image/logo.jpg">
               </a>
             </div>
-          <!-- 로그인 여부에 따라 메뉴를 구분하여 출력-->
-          <c:set var="login" value="${not empty sessionScope.member_code}"></c:set>
-          <c:set var="admin" value="${sessionScope.type == '일반'}"></c:set>
           <c:choose>
           	<c:when test="${login}">
 	            <ul class="nav-list">
 	              <li>
-	                <a href="${pageContext.request.contextPath}" class="mr-2">로그아웃</a>
+	                <a href="${pageContext.request.contextPath}/member/logout" class="mr-2">로그아웃</a>
 	                <div id="line-wrapper">
 	                  <div class="line"></div>
 	                </div>

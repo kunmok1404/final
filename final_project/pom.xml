@@ -51,6 +51,13 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
+		
+		<!-- BCrypt를 쓰기 위해서 추가함 -->
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-core</artifactId>
+		    <version>5.1.6.RELEASE</version>
+		</dependency>
 				
 		<!-- AspectJ -->
 		<dependency>

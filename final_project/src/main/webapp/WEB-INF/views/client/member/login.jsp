@@ -72,7 +72,7 @@
 				<!-- 아이디 저장 checkbox -->
 				<tr align="center">
 					<td colspan="4">
-						<input type="checkbox" name="saveID" ${not empty cookie.saveID?"checked":""}>
+						<input type="checkbox" name="remember" ${not empty cookie.saveID?"checked":""}>
 						<label for="saveID">아이디 저장하기</label>
 					</td>
 				</tr>

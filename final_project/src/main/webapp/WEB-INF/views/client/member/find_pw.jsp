@@ -5,7 +5,7 @@
 
 <style>
 
-	.find_id{
+	.find_pw{
 		width: 800px;
 		margin: auto;
 	}
@@ -23,11 +23,11 @@
 
 <!-- 비밀번호 찾기 -->
 <div class="find_pw">
-	<form action="find_id" method="post">
+	<form action="find_pw" method="post">
 		<br><br>
 		<legend>아이디 찾기</legend>
 		<hr><br>
-		<table class="table table-borderless">
+		<table class="table table-bordered">
 			<tbody>
 				<tr>
 					<td><label>아이디</label></td>
@@ -43,7 +43,7 @@
 					
 				</tr>
 				<tr>
-					<td>
+					<td colspan="2" align="center">
 						<input type="submit" value="확인">
 					</td>
 				</tr>
@@ -52,7 +52,7 @@
 						<a href="${pageContext.request.contextPath}"><input type="button" value="홈으로" name="main"></a>
 					</td>
 					<td>
-						<a href="find_pw"><input type="button" value="비밀번호 찾기" name="find_pw"></a>
+						<a href="find_id"><input type="button" value="아이디 찾기" name="find_id"></a>
 					</td>
 				</tr>
 			</tbody>

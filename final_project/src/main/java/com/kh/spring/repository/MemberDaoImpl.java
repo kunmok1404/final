@@ -57,6 +57,12 @@ public class MemberDaoImpl implements MemberDao {
 		return result != null;
 	}
 
+	//비밀번호 변경 처리
+	@Override
+	public void changePw(MemberDto memberDto) {
+		sqlSession.update("member.changePw", memberDto);
+		
+	}
 	
 	
 	
@@ -77,5 +83,6 @@ public class MemberDaoImpl implements MemberDao {
 	public void unlike(MyshopDto myshop) {
 		sqlSession.delete("member.unlike", myshop);
 	}
+
 }
 
