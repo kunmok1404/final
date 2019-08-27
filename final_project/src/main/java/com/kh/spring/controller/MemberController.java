@@ -224,9 +224,6 @@ public class MemberController {
 	public String findPwResult() {
 		return "client/member/find_pw_result";
 	}
-
-	
-	
 	
 	// 나의정보 클릭시 나의주문내역
 	@GetMapping("/info_order_list")
@@ -237,7 +234,6 @@ public class MemberController {
 		return "client/member/info_order_list";
 	}
 	
-	//비밀번호 찾기 기능
 	
 	// 주문내역 상세화면
 	@GetMapping("/info_order_detail")

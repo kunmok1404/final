@@ -7,4 +7,6 @@ public interface OrderService {
 
 	List<Map<String, Object>> myOrderList(int member_code);
 
+	Object orderInfo(int order_code);
+
 }

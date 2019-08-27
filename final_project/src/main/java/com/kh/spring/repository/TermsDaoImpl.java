@@ -15,13 +15,25 @@ public class TermsDaoImpl implements TermsDao{
 	SqlSession sqlSession;
 
 	@Override
-	public List<TermsDto> list1() {
-		return sqlSession.selectList("terms.list1");
+	public TermsDto terms1() {
+		return sqlSession.selectOne("terms.terms1");
 	}
 
 	@Override
-	public List<TermsDto> list2() {
-		return sqlSession.selectList("terms.list2");
+	public TermsDto terms2() {
+		return sqlSession.selectOne("terms.terms2");
+	}
+
+	// 이용약관 수정
+	@Override
+	public void update1(String terms_content1) {
+		sqlSession.update("terms.update1",terms_content1);
+	}
+
+	// 개인정보처리방침 수정
+	@Override
+	public void update2(String terms_content2) {
+		sqlSession.update("terms.update2",terms_content2);
 	}
 
 }

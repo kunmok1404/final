@@ -11,6 +11,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.kh.spring.entity.CertDto;
 import com.kh.spring.repository.CertDao;
+
 @Service
 public class EmailServiceImpl implements EmailService{
 	
@@ -42,7 +43,7 @@ public class EmailServiceImpl implements EmailService{
 		helper.setSubject("비밀번호 변경 메일입니다");
 		String address = ServletUriComponentsBuilder
 										.fromCurrentContextPath()
-										.port(8080)
+										.port(9090)
 										.path("/member/new_pw")
 										.queryParam("email",  email)
 										.queryParam("no", no)

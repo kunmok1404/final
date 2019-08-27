@@ -56,11 +56,6 @@ public class MemberDaoImpl implements MemberDao {
 		MemberDto result = sqlSession.selectOne("member.findPw", memberDto);
 		return result != null;
 	}
-
-	
-	
-	
-	
 	
 	// 회원정보 조회
 	@Override
