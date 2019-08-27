@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 
     <jsp:include page="/WEB-INF/views/template/admin/super/header.jsp"></jsp:include>
-    <jsp:include page="/WEB-INF/views/template/admin/super/left/left_notice.jsp"></jsp:include>    
     
     
     

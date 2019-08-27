@@ -17,5 +17,6 @@ public class OrdersDto {
 	private String pay_method;//결제방법
 	private String request;//요청사항
 	private String order_date;//주문일시
+	private String review_status;//리뷰작성상태
 
 }

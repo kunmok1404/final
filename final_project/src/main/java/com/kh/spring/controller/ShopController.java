@@ -17,6 +17,7 @@ import com.kh.spring.entity.ShopDto;
 import com.kh.spring.repository.ShopDao;
 import com.kh.spring.service.ShopService;
 
+
 // 매장
 @Controller
 @RequestMapping("/shop")
@@ -67,25 +68,30 @@ public class ShopController {
 		return "client/shop/sub_menu";
 	}
 	
+
 	// 입점문의 페이지
+
 	@GetMapping("/explan")
 	public String explan() {
 		return "client/order/shop_explan";
 	}
 	
+
 	// 입점문의 신청페이지(get)
+
 	@GetMapping("/order_regist")
 	public String order_regist() {
 		return "client/order/order_regist";
 	}
-	
+
 	// 입점문의 신청페이지(post)
 	@PostMapping("/order_regist")
 	public String order_regist(
 								@ModelAttribute ShopDto shopDto,
-								@RequestParam MultipartFile business_regist,
-								@RequestParam MultipartFile sale_regist) throws IllegalStateException, IOException {
-		shopService.regist(shopDto,business_regist,sale_regist);
+								@RequestParam MultipartFile business,
+								@RequestParam MultipartFile img,
+								@RequestParam MultipartFile sale) throws IllegalStateException, IOException {
+		shopService.regist(shopDto,business,img,sale);
 		return "client/order/order_regist";
 		
 	}

@@ -7,6 +7,7 @@
     <script src="https://code.jquery.com/jquery-latest.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" ></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.tiny.cloud/1/6ftday8a7jg29iewicngy31mxruhwuo468au005jb6npig7g/tinymce/5/tinymce.min.js"></script>
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/pkmadmin.css" rel="stylesheet">
     <script>
@@ -22,6 +23,12 @@
           $(".left ul li a").removeClass("on");
           $(this).addClass("on");
         })
+        
+        // 뭐먹지 바로가기 클릭
+        $("#client-site").click(function(){
+        	window.open("${pageContext.request.contextPath}/");
+        })
+        
       })
     </script>
 </head>
@@ -31,15 +38,15 @@
         <nav class="navbar navbar-default">
           <div class="container-fluid">
             <div class="navbar-header">
-              <a class="navbar-brand" href="#">
+              <a class="navbar-brand" href="${pageContext.request.contextPath}/shop_admin">
                 <img alt="Brand" src="${pageContext.request.contextPath}/resources/image/logo.jpg">
               </a>
             </div>
             <div class="header-button"> 
-              <span class="owner"><a href="#">*안녕하세요. 박근목 사장님!</a></span>
-              <span class="loginTime"><a href="#">최종접속일자 : 2019.08.10 17:30</a></span>
+              <span class="owner">*안녕하세요. 박근목 사장님!</span>
+              <span class="loginTime">최종접속일자 : 2019.08.10 17:30</span>
               <a href="#" class="btn btn-light btn-sm">로그아웃</a>
-              <a href="#" class="btn btn-light btn-sm">뭐먹지 바로가기</a>
+              <button class="btn btn-light btn-sm" id="client-site">뭐먹지 바로가기</button>
             </div>
           </div>
         </nav>
