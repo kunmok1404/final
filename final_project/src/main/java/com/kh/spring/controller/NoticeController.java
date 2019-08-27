@@ -54,9 +54,18 @@ public class NoticeController {
 		model.addAttribute("startBlock", startBlock);
 		model.addAttribute("endBlock", endBlock);
 		
-		
+		/*
+		 * 1.중요 공지사항만 조회 하도록 추가
+		 * 2.중요 공지사항을 제외한 글목록 조회
+		 * 3.model 에 list 다른명칭으로 추가
+		 * 
+		 */
 		List<NoticeDto> list = noticeDao.list(keyword, start, end);
 		model.addAttribute("list", list);
+		
+		List<NoticeDto> list2 = noticeDao.list2();
+		System.out.println("list2"+list2.size());
+		model.addAttribute("list2", list2);
 		
 	return "client/service/notice/list";
 	}

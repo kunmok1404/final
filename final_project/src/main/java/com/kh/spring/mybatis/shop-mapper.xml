@@ -7,11 +7,16 @@ PUBLIC "//mybatis.org//DTD Mapper 3.0//EN"
  	
  	<!-- 매장목록조회-->
  	<select id="list" parameterType="map" resultType="shopDto">
- 		select * from shop
+		select * from
+	    (select rownum rn, TMP.* from 
+	        (select * from shop
  			where no between #{start} and #{end}
  			<if test="cat_no > 0">
  				and category = #{cat_no}
- 			</if>
+ 			</if>)TMP
+	    )
+		where rn between 1 and 10
+		
  	</select>
  	<!-- 카테고리 목록 -->
  	<select id="category" resultType="categoryDto">

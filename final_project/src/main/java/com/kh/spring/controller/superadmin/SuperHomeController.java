@@ -1,12 +1,12 @@
-package com.kh.spring.controller;
+package com.kh.spring.controller.superadmin;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 // 슈퍼관리자
 @Controller
-@RequestMapping("/admin")
-public class SuperAdminController {
+@RequestMapping("/super_admin")
+public class SuperHomeController {
 
 	// 메인
 	@RequestMapping({"","/"})

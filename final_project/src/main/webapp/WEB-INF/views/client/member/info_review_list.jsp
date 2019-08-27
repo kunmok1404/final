@@ -19,24 +19,27 @@
         <div class="col-md-12">
           <table class="table table-bordered text-center myInfo-table">
             <thead>
-              <tr class="">
-                <td style="width: 10%">번호</td>
-                <td style="width: 20%">매장</td>
-                <td style="width: 30%">제목</td>
-                <td style="width: 20%">점수</td>
-                <td style="width: 10%">작성일</td>
+              <tr>
+                <td style="width: 5%">번호</td>
+                <td style="width: 25%">매장</td>
+                <td style="width: 35%">제목</td>
+                <td style="width: 10%">별점</td>
+                <td style="width: 15%">작성일</td>
                 <td style="width: 10%">조회수</td>
               </tr>
             </thead>
             <tbody>
               <c:forEach var="review_list" items="${list}">
               <tr>
-                <td>${review_list.no}</td>
-                <td>${review_list.shop_name}</td>
-                <td><a href="${pageContext.request.contextPath}/review/info_review_detail?review_code=${review_list.no}">${review_list.title}</a></td>
-                <td>${review_list.score}</td>
-                <td>${review_list.regist_date}</td>
-                <td>${review_list.read}</td>
+                <td width="5%">${review_list.no}</td>
+                <td width="25%">
+<!--                 <img src="https://placeimg.com/100/100/any"> -->
+                ${review_list.shop_name}
+                </td>
+                <td width="30%"><a href="${pageContext.request.contextPath}/review/content?review_code=${review_list.no}">리뷰작성</a></td>
+                <td width="10%">${review_list.score}</td>
+                <td width="20%">${review_list.regist_date}</td>
+                <td width="10%">${review_list.read}</td>
               </tr>
               </c:forEach>
             </tbody>

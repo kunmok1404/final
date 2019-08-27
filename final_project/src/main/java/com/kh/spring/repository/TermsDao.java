@@ -5,8 +5,9 @@ import java.util.List;
 import com.kh.spring.entity.TermsDto;
 
 public interface TermsDao {
-	List<TermsDto> list1();
-
-	List<TermsDto> list2();
+	TermsDto terms1();
+	TermsDto terms2();
+	void update1(String terms_content1);
+	void update2(String terms_content2);
 	
 }

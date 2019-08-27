@@ -1,19 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <script >
-	$(function() {		
-		$(".explana").click(function() {
-			$(location).attr("href", "http://localhost:9090/spring/shop/explan");
-		});
-		});
-</script>
+    
 <footer>
       <div class="footer-menu">
           <ul>
-            <li class="mt-2"><a href="terms">이용약관</a></li>
-            <li>개인정보처리방침</li>
+            <li class="mt-2"><a data-toggle="modal" data-target="#myModal">약관</a></li>
             <li>뭐먹지사장님</li>
-            <li class="explana">입점문의</li>
+            <li><a href="${pageContext.request.contextPath}/shop/explan">입점문의</a></li>
           </ul>
       </div><hr>
       <div class="footer-content container-fluid" align="left" >
@@ -29,5 +22,48 @@
 				<h6>상품 및 거래에 관하여 보다 정확한 정보는 해당 판매자에게 직접 확인하여 주시기 바랍니다. Copyright YOGIYO. All Rights Reserved.</h6>
       </div>
     </footer>
+    
+    <!-- 모달 -->
+	<!-- The Modal -->
+	<div class="modal" id="myModal">
+	  <div class="modal-dialog terms-modal-wrap">
+	    <div class="modal-content terms-modal">
+	
+	      <!-- Modal Header -->
+	      <div class="modal-header">
+	        <h4 class="modal-title">약관</h4>
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	      </div>
+	
+	      <!-- Modal body -->
+	      <div class="modal-body">
+	        
+	        <ul class="nav nav-tabs">
+			  <li class="nav-item terms-nav">
+			    <a class="nav-link active" data-toggle="tab" href="#qwe">이용약관</a>
+			  </li>
+			  <li class="nav-item terms-nav">
+			    <a class="nav-link" data-toggle="tab" href="#asd">개인정보처리방침</a>
+			  </li>
+			</ul>
+			<div class="tab-content">
+			  <div class="tab-pane fade show active" id="qwe">
+			    <p>${terms1.content}</p>
+			  </div>
+			  <div class="tab-pane fade" id="asd">
+			    <p>${terms2.content}</p>
+			  </div>
+			</div>
+	        
+	      </div>
+	
+	      <!-- Modal footer -->
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+	      </div>
+	
+	    </div>
+	  </div>
+	</div>
 </body>
 </html>

@@ -8,6 +8,8 @@ public interface NoticeDao {
 
 	List<NoticeDto> list(String keyword,int i, int j);
 	
+	List<NoticeDto> list2();
+	
 	int count(String type);
 
 	NoticeDto get(int no);
