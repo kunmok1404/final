@@ -4,9 +4,10 @@
 
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-<%-- <script src="${pageContext.request.contextPath}/js/cryptojs/components/core-min.js"></script> --%>
-<%-- <script src="${pageContext.request.contextPath}/js/cryptojs/components/sha256-min.js"></script> --%>
-<%-- <script src="${pageContext.request.contextPath}/js/password-encoder.js"></script> --%>
+<script src="${pageContext.request.contextPath}/js/cryptojs/components/core-min.js"></script>
+<script src="${pageContext.request.contextPath}/js/cryptojs/components/sha256-min.js"></script>
+<script src="${pageContext.request.contextPath}/js/password-encoder.js"></script>
+
 
 <script>
 	$(function(){

@@ -32,10 +32,20 @@
 				<tr>
 					<td><label>이메일</label></td>
 					<td>
-						<input type="text" name="email" placeholder="이메일을 입력해주세요." required>
+						<input type="text" name="email" placeholder="이메일" pattern="^[a-zA-Z0-9!@#$\-_]{8,15}$" required>
+						<span>@</span>
+						<input type="text" name="email_address" id="email_address" pattern="^.*?\..*?$" requried>
+						<select id="email_address_option">
+							<option>--이메일 선택--</option>
+							<option value="">직접입력</option>
+							<option>naver.com</option>
+							<option>gmail.com</option>
+							<option>daum.net</option>
+							<option>nate.com</option>
+							<option>yahoo.com</option>
+						</select>
+						<div class="emailD"></div>
 					</td>
-				</tr>
-				<tr>
 					<td>
 						<input type="submit" value="이메일 발송">
 					</td>
