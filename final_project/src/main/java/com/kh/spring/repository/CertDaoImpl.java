@@ -16,6 +16,17 @@ public class CertDaoImpl implements CertDao{
 	public void insert(CertDto certDto) {
 		sqlSession.insert("cert.insert", certDto);
 	}
+
+	@Override
+	public boolean validate(CertDto certDto) {
+		int count = sqlSession.selectOne("cert.validate", certDto);
+		return count > 0;
+	}
+
+	@Override
+	public void delete(CertDto certDto) {
+		sqlSession.delete("cert.delete", certDto);
+	}
 	
 	
 	

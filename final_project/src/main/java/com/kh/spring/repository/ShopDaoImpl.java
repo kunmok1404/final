@@ -38,7 +38,7 @@ public class ShopDaoImpl implements ShopDao {
 		return sqlSession.selectList("shop.category");
 	}
 
-	// 留ㅼ옣�긽�꽭Info
+	// 留매장정보 구하기
 	@Override
 	public ShopDto shopInfo(int no) {
 		return sqlSession.selectOne("shop.shop_info", no);

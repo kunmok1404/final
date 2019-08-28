@@ -39,7 +39,11 @@ public class NoticeDaoImpl implements NoticeDao{
 		
 		return sqlSession.selectList("service.notice_list", param);
 	}
-
+	
+	@Override
+	public List<NoticeDto> list2() {
+		return sqlSession.selectList("service.notice_list2");
+	}
 
 
 	@Override

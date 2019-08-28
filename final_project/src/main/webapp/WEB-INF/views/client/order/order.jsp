@@ -1,6 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
+<script>
+
+
+
+//카드 결제시 수정되는 값
+function change_pay_c(){
+	document.querySelector("form").action='order';
+	document.querySelector(".pay_method").value='credit';
+}
+//현금 결제시 수정되는 값
+function change_pay_m(){
+	document.querySelector("form").action='order';
+	document.querySelector(".pay_method").value='money';
+}
+//카카오페이 결제시 변경되는 값
+function change_pay_kakao(){
+	document.querySelector("form").action='kakao';
+	document.querySelector(".pay_method").value='kakao_pay';
+}
+//신용카드 결제시 변경되는 값
+function change_pay_credit(){
+	document.querySelector("form").action='online_credit';
+	document.querySelector(".pay_method").value='card';
+}
+</script>
 <jsp:include page="/WEB-INF/views/template/client/header.jsp"></jsp:include>
 <div class="container">
 <div align="center">
@@ -10,10 +35,10 @@
 	<h3>배달정보</h3>
 </div>
 <hr>
-<form action="kakao" method="post">
-<input type="hidden" name="item_name" value="치킨">
-<input type="hidden" name="total_amount" value="${total_price + shopDto.delivery_price}">
-<input type="hidden" name="partner_user_id" value="${shopDto.company_name}">	
+<form id="form" action="kakao" method="post">
+<input type="hidden" id="item_name" name="item_name" value="치킨">
+<input type="hidden" id="amount" name="total_amount" value="${total_price + shopDto.delivery_price}">
+<input type="hidden" id="partner" name="partner_user_id" value="${shopDto.company_name}">	
 	<div class="panel-body">
 		<label for="address">
 			<h3>주소</h3>
@@ -34,7 +59,7 @@
 	<hr>
 	<div>
 		<label for="request">
-			<h3>요청 사항</h3>
+			요청 사항
 		</label>
 		<textarea name="request" rows="3" maxlength="100" cols="50"
 			placeholder="주문시 요청사항이 있으시면 남겨주세요" class="request"></textarea>
@@ -153,14 +178,15 @@
 		</table>
 	</div>
 	<hr>
-	<input type="hidden" name="pay_method" value="credit">
+	<!-- 토글로 이미지 변경하여 표시 -->
+	<input type="hidden" class="pay_method" name="pay_method" value="pay">
 	<h3>현장결제</h3>
-	<button id="credit">신용카드</button>
-	<button id="money">현금</button>
+	<button type="button" id="credit" onclick="change_pay_c();">신용카드</button>
+	<button type="button" id="money" onclick="change_pay_m();">현금</button>
 	<br>
 	<h3>미리 결제</h3>
-	<button id="kakaopay">카카오페이</button>
-	<button id="credit_card">신용카드</button>
+	<button type="button" id="kakaopay" onclick="change_pay_kakao();">카카오페이</button>
+	<button type="button" id="credit_card" onclick="change_pay_credit();">신용카드</button>
 	<hr>
 	<div>
 		<input type="checkbox">

@@ -12,12 +12,15 @@ import com.kh.spring.entity.OrderDetailDto;
 import com.kh.spring.entity.OrdersDto;
 import com.kh.spring.entity.ShopDto;
 import com.kh.spring.repository.OrdersDao;
+import com.kh.spring.repository.ShopDao;
 
 @Service
 public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private OrdersDao ordersDao;
+	@Autowired
+	private ShopDao shopDao;
 	
 	// 나의정보 주문내역
 	@Override
@@ -43,9 +46,17 @@ public class OrderServiceImpl implements OrderService {
 			
 			map.put("order_date",orderDto.getOrder_date()); // 주문일시
 			map.put("order_status",orderDto.getOrder_status()); //주문상태
+			map.put("review_status",orderDto.getReview_status()); //주문상태
 			list.add(map);
 		}
 		return list;
+	}
+
+	// 매장정보
+	@Override
+	public ShopDto orderInfo(int order_code) {
+		OrdersDto ordersDto = ordersDao.orderInfo(order_code);
+		return shopDao.shopInfo(ordersDto.getShop_code());
 	}
 
 }
