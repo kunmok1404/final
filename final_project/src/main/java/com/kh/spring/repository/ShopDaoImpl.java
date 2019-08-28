@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.spring.entity.CategoryDto;
 import com.kh.spring.entity.FilesDto;
+import com.kh.spring.entity.Food_categoryDto;
 import com.kh.spring.entity.MenuDto;
 import com.kh.spring.entity.ShopDto;
 import com.kh.spring.entity.SubMenuDto;
@@ -83,6 +84,38 @@ public class ShopDaoImpl implements ShopDao {
 	@Override
 	public void edit(ShopDto shopDto) {
 		sqlSession.update("shop.edit", shopDto);
+	}
+
+
+	@Override
+	public List<ShopDto> listAll(int start, int end, String searchOption, String keyword) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("searchOption", searchOption);
+		map.put("keyword", keyword);
+		map.put("start", start);
+		map.put("end", end);
+		return sqlSession.selectList("shop.listAll",map);
+	}
+
+	@Override
+	public List<ShopDto> countArticle(String searchOption, String keyword) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("searchOption", searchOption);
+		map.put("keyword", keyword);
+		return sqlSession.selectList("shop.list_shop",map);
+		
+	}
+
+	@Override
+	public List<Food_categoryDto> categoryno() {
+		return sqlSession.selectList("shop.category_no");
+	}
+
+	@Override
+	public Food_categoryDto categoryname(String keyword) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("name", keyword);
+		return sqlSession.selectOne("shop.category_name", keyword);
 	}
 
 }

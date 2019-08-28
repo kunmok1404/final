@@ -42,7 +42,7 @@ public class ServiceServiceImpl implements ServiceService {
 		filesDto.setSave_name(savename);
 //		filesDto.setOneandone_code(no);
 		filesDto.setUpload_name(image.getOriginalFilename());
-		filesDto.setFile_size(image.getSize());
+		filesDto.setSize(image.getSize());
 		filesDto.setFile_type(image.getContentType());
 		onoDao.image(filesDto);
 		

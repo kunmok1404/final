@@ -15,7 +15,7 @@ PUBLIC "//mybatis.org//DTD Mapper 3.0//EN"
  	</select>
  	<!-- 카테고리 목록 -->
  	<select id="category" resultType="categoryDto">
- 		select * from category where work_type='food_category'
+ 		select * from food_category 
  	</select>
  	
  	<!-- 매장상세 매장정보 -->
@@ -81,4 +81,52 @@ PUBLIC "//mybatis.org//DTD Mapper 3.0//EN"
 			where
 				no = #{no} 
 	</update>
+	
+	<select id="list_shop" resultType="shopDto" parameterType="map">
+		select * from shop
+		<include refid="search"></include>	
+	</select>
+	
+	
+	
+	
+	<select id="listAll" resultType="shopDto" parameterType="map">
+	<include refid="pagingHeader"></include>
+		select * from shop
+		<include refid="search"></include>
+		order by no desc
+		<include refid="pagingFooter"></include>
+	</select>
+	
+	<!-- 검색 조건 sql -->
+	<sql id="search">
+		<choose>
+		<!-- 검색조건이 전제 검색일 때 -->
+			<when test="searchOption == 'all'">
+				where category like '%'||#{keyword}||'%'
+				or COMPANY_NAME like '%'||#{keyword}||'%'
+				or reason like '%'||#{keyword}||'%'
+			</when>
+		<!-- 검색조건이 전제 검색이 아닐 때 -->	
+			<otherwise>
+				where ${searchOption} like '%'||#{keyword}||'%'
+			</otherwise>
+		</choose>
+	
+	</sql>
+	<!-- 페이징 sql -->
+	<sql id="pagingHeader">
+		select * from (select rownum as rn,A.* from(
+	</sql>
+	
+	<sql id="pagingFooter">
+		)A
+	)where rn between #{start} and #{end}
+	</sql>
+	<select id="category_no" resultType="food_categoryDto">
+		select * from food_category
+	</select>
+	<select id="category_name" resultType="Food_categoryDto" parameterType="map">
+		select * from food_category where name = #{name}
+	</select>
  </mapper>

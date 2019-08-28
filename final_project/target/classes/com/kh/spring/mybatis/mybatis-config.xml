@@ -6,28 +6,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	<settings>
 		<setting name="defaultExecutorType" value="BATCH"/>
 	</settings>
-
-<<<<<<< HEAD
-	  <!-- 별칭 설정 -->
-	  <typeAliases>
-	  	<typeAlias type="com.kh.spring.entity.CartDto" alias="cartDto"/>
-	  	<typeAlias type="com.kh.spring.entity.MemberDto" alias="memberDto"/>
-	  	<typeAlias type="com.kh.spring.entity.QnaDto" alias="qnaDto"/>
-	  	<typeAlias type="com.kh.spring.entity.ShopDto" alias="shopDto"/>
-	  	<typeAlias type="com.kh.spring.entity.CategoryDto" alias="categoryDto"/>
-	  	<typeAlias type="com.kh.spring.entity.MenuDto" alias="menuDto"/>
-	  	<typeAlias type="com.kh.spring.entity.SubMenuDto" alias="subMenuDto"/>
-	 	<typeAlias type="com.kh.spring.entity.OrdersDto" alias="ordersDto"/>
-	 	<typeAlias type="com.kh.spring.entity.OrderDetailDto" alias="orderDetailDto"/>
-	  	<typeAlias type="com.kh.spring.entity.Menu_SubMenuView" alias="menu_SubMenuView"/>
-	  	<typeAlias type="com.kh.spring.entity.NoticeDto" alias="noticeDto"/>
-	  	<typeAlias type="com.kh.spring.entity.FilesDto" alias="filesDto"/>
-	  	<typeAlias type="com.kh.spring.entity.TermsDto" alias="termsDto"/>
-	  	<typeAlias type="com.kh.spring.entity.OnoDto" alias="onoDto"/>
-	  	<typeAlias type="com.kh.spring.entity.FilesDto" alias="filesDto"/>  	
-	  	<typeAlias type="com.kh.spring.entity.TermsDto" alias="termsDto"/>
-	  	<typeAlias type="com.kh.spring.entity.CertDto" alias="certDto"/>
-=======
 	  <!-- 별칭 설정 -->
 	  <typeAliases>
 	  	<typeAlias type="com.kh.spring.entity.CartDto" alias="cartDto"/>
@@ -46,7 +24,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	  	<typeAlias type="com.kh.spring.entity.TermsDto" alias="termsDto"/>
 	  	<typeAlias type="com.kh.spring.entity.ReviewDto" alias="reviewDto"/>
 	  	<typeAlias type="com.kh.spring.entity.ShopReviewVO" alias="shopReviewVO"/>
->>>>>>> branch 'master' of https://github.com/kunmok1404/final
+	  	<typeAlias type="com.kh.spring.entity.CertDto" alias="certDto"/>
+	  	<typeAlias type="com.kh.spring.entity.Food_categoryDto" alias="food_categoryDto"/>
 	  </typeAliases>
 	  
 </configuration>
