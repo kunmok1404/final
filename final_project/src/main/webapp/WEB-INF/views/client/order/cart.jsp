@@ -212,7 +212,7 @@
 			</div>
 			<div align="right">
 				합계:<span id="alltotal">0</span> 원
-				<input type="hidden" id="total_price" name="total_price" value="50000">
+				<input type="hidden" id="total_price" name="total_price" value="${shopDto.min_price}">
 			</div>
 		</div>
 	</div>
