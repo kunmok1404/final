@@ -36,11 +36,12 @@ public class OrderController {
 	private OrdersDao orderDao;
 	
 	@GetMapping("/cart")
-	public String cart(HttpSession session, Model model) {
+	public String cart(@RequestParam int shop_code,HttpSession session, Model model) {
 		int member_code = (int) session.getAttribute("member_code");
-		int shop_code = (int) session.getAttribute("shop_code");
+//		int shop_code = (int) session.getAttribute("shop_code");
 		model.addAttribute("shopDto", orderDao.shopInfo(shop_code));
 		model.addAttribute("cartDto", orderDao.cartlist(member_code));
+		session.setAttribute("shop_code", shop_code);
 		return "client/order/cart";
 	}
 
