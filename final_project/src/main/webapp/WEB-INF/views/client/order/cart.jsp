@@ -23,7 +23,7 @@
 				var parent = $(this).parent();
 				var parent2 = $(this).parent().parent().parent();
 				var parent3 = $(this).parent().parent();
-				var alltotal = parseInt($("#alltotal").text());
+// 				var alltotal = parseInt($("#alltotal").text());
 				
 				var amount = parseInt(parent.find($(".amount")).text());
 
@@ -34,18 +34,17 @@
 						amount++;
 						$(this).next(".amount").text(amount);
 						var total = amount*priceb;
-						$(parent2.find($(".price")).text(total));
-						
+						$(parent2.find($(".price")).text(total));			
 						$(parent2.find($(".mp")).val(amount));
 						$(parent3.find($(".mp2")).val(total));
-						$("")
+						
 					}		
 					else{
 						alert("10개 이상은 구매하실수 없습니다");
 						$(this).next(".amount").text(1);					
 					}
-						var ftotal = alltotal +total;
-						$("#alltotal").text(ftotal);							
+						$("#alltotal").text(total);	
+						$("#total_price").val(total);
 
 			
 			});
@@ -71,10 +70,14 @@
 					alert("정확한 값을 입력해 주세요");
 					$(this).prev(".amount").text(1);					
 				}
-				var total = amount2*priceb;
-				$(parent2.find($(".price")).text(total));
+				$("#alltotal").text(total);	
+				$("#total_price").val(total);
 				
 			});
+			
+// 			$(".okcheck").click(function({
+// 				$("input[name=total_price]").value();
+// 			});
 			
 // 			$(".okcheck").click(function(){
 // 				var alltotal = parseInt($("#alltotal").text());
@@ -209,7 +212,7 @@
 			</div>
 			<div align="right">
 				합계:<span id="alltotal">0</span> 원
-				<input type="hidden" name="total_price" value="50000">
+				<input type="hidden" id="total_price" name="total_price" value="50000">
 			</div>
 		</div>
 	</div>
