@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+	SQL 명령 보관 파일
+	외부에서 접근할 수 있도록 namespace 지정할 것
+ -->
+<mapper namespace="cert">
+
+	<insert id="insert" parameterType="certDto">
+		insert into cert values(#{who}, #{no}, sysdate)
+	</insert>
+	
+	<select id="validate" parameterType="certDto" resultType="int"><!-- 인증번호 유효시간 : 5분 -->
+		select count (*) from cert where who = #{who} and no = #{no}
+			and when between sysdate - 5 / 24 / 60 and sysdate
+	</select>
+	
+	<delete id="delete" parameterType="certDto">
+		delete cert where who = #{who} and no = #{no}
+	</delete>
+	
+	<!-- 유효시간(5분)이 지난 인증번호 기록을 모두 삭제 -->
+	<delete id="clear">
+		<![CDATA[
+		delete cert where when < sysdate -5/24/60
+		]]>
+	</delete>
+	
+</mapper>
+ 
+ 

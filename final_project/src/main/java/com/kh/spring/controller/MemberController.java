@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,10 +17,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.spring.entity.CertDto;
 import com.kh.spring.entity.MemberDto;
 import com.kh.spring.entity.MyshopDto;
 import com.kh.spring.entity.OrdersDto;
 import com.kh.spring.entity.ShopDto;
+import com.kh.spring.repository.CertDao;
 import com.kh.spring.repository.MemberDao;
 import com.kh.spring.repository.OrdersDao;
 import com.kh.spring.repository.ShopDao;
@@ -52,10 +55,10 @@ public class MemberController {
 	// 회원가입 기능(POST)
 	@PostMapping("/regist")
 	public String regist(@ModelAttribute MemberDto memberDto) {
-// memberDto 안에 있는 pw를 변경(BCrypt)
-//		String origin = memberDto.getPw();
-//		String encrypt = BCrypt.hashpw(origin, BCrypt.gensalt());
-//		memberDto.setPw(encrypt);
+		//memberDto 안에 있는 pw를 변경(BCrypt)
+		String origin = memberDto.getPw();
+		String encrypt = BCrypt.hashpw(origin, BCrypt.gensalt());
+		memberDto.setPw(encrypt);
 
 		boolean result = memberDao.regist(memberDto);
 		System.out.println(result);
@@ -99,74 +102,73 @@ public class MemberController {
 	}
 
 	// 로그인(POST)
-	@PostMapping("/login")
-	public String login(@ModelAttribute MemberDto memberDto, @RequestParam(required = false) String remember,
-			HttpSession session, HttpServletResponse response,Model model) {
-		// 암호화 적용 전 로그인
-		MemberDto result = memberDao.login(memberDto);
-		if (result != null) {
-			session.setAttribute("member_code", result.getNo());
-			session.setAttribute("type", result.getType());
-			
-			// 아이디 저장
-			// 쿠키 객체를 만들고 체크 여부에 따라 시간 설정 후 response에 추가
-			Cookie cookie = new Cookie("saveID", memberDto.getId());
-			if (remember == null) {// 체크 안했을때
-				cookie.setMaxAge(0);
-			} 
-			else {// 체크 했을때
-				cookie.setMaxAge(4 * 7 * 24 * 60 * 60);// 4주
-			}
-			response.addCookie(cookie);
-			return "redirect:/";
-		} 
-		else {
-			model.addAttribute("fail", "fail");
-			return "client/member/login";
-		}
-	}
-
-	// 로그인(POST)
 //	@PostMapping("/login")
-//	public String login(
-//				@ModelAttribute MemberDto memberDto,
-//				@RequestParam(required=false) String remember,
-//				HttpSession session,
-//				HttpServletResponse response
-//			) {
-//		//암호화 적용 후
-//		// 1. id를 DB에서 회원정보를 불러온다.
-//		MemberDto result = memberDao.get(memberDto.getId());
-//		// 2. BCrypt의 비교명령을 이용하여 비교 후 처리
-//		if(BCrypt.checkpw(memberDto.getPw(), result.getPw())) {
+//	public String login(@ModelAttribute MemberDto memberDto, @RequestParam(required = false) String remember,
+//			HttpSession session, HttpServletResponse response,Model model) {
+//		// 암호화 적용 전 로그인
+//		MemberDto result = memberDao.login(memberDto);
+//		if (result != null) {
 //			session.setAttribute("member_code", result.getNo());
 //			session.setAttribute("type", result.getType());
 //			
 //			// 아이디 저장
-	// 쿠키 객체를 만들고 체크 여부에 따라 시간 설정 후 response에 추가
+//			// 쿠키 객체를 만들고 체크 여부에 따라 시간 설정 후 response에 추가
 //			Cookie cookie = new Cookie("saveID", memberDto.getId());
-//			if(remember == null) {//체크 안했을때
+//			if (remember == null) {// 체크 안했을때
 //				cookie.setMaxAge(0);
+//			} 
+//			else {// 체크 했을때
+//				cookie.setMaxAge(4 * 7 * 24 * 60 * 60);// 4주
 //			}
-//			else {//체크 했을때
-//				cookie.setMaxAge(4 * 7 * 24 * 60 * 60);//4주
-//			}
-//			
 //			response.addCookie(cookie);
-//			return "redirect:/";			
-//		}
+//			return "redirect:/";
+//		} 
 //		else {
-//			return "client/member/login_fail";
+//			model.addAttribute("fail", "fail");
+//			return "client/member/login";
 //		}
 //	}
+
+	// 로그인(POST)
+	@PostMapping("/login")
+	public String login(
+				@ModelAttribute MemberDto memberDto,
+				@RequestParam(required=false) String remember,
+				HttpSession session,
+				HttpServletResponse response
+			) {
+		//암호화 적용 후
+		// 1. id를 DB에서 회원정보를 불러온다.
+		MemberDto result = memberDao.get(memberDto.getId());
+		// 2. BCrypt의 비교명령을 이용하여 비교 후 처리
+		System.out.println(memberDto.getPw());
+		System.out.println(result.getPw());
+		if(BCrypt.checkpw(memberDto.getPw(), result.getPw())) {
+			session.setAttribute("member_code", result.getNo());
+			
+			// 아이디 저장
+			//쿠키 객체를 만들고 체크 여부에 따라 시간 설정 후 response에 추가
+			Cookie cookie = new Cookie("saveID", memberDto.getId());
+			if(remember == null) {//체크 안했을때
+				cookie.setMaxAge(0);
+			}
+			else {//체크 했을때
+				cookie.setMaxAge(4 * 7 * 24 * 60 * 60);//4주
+			}
+			
+			response.addCookie(cookie);
+			return "redirect:/";			
+		}
+		else {
+			return "client/member/login";
+		}
+	}
 	
-	//로그인 실패 메세지 alert
-	
+
 	//로그아웃 기능
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {//데이터 받아와서 지우기
 		session.removeAttribute("member_code");
-		session.removeAttribute("type");
 		return "redirect:/";
 	}
 
@@ -198,6 +200,8 @@ public class MemberController {
 		return "client/member/find_id_result";
 	}
 	
+	
+	
 	//비밀번호 찾기 기능(GET)
 	//목표 : 아이디, 이메일 정보 입력 페이지로 전달
 	@GetMapping("/find_pw")
@@ -224,6 +228,54 @@ public class MemberController {
 	public String findPwResult() {
 		return "client/member/find_pw_result";
 	}
+	
+	@Autowired
+	private CertDao certDao;
+	
+	//비밀번호 변경 처리(GET)
+	//목표 : 입력페이지로 전달
+	@GetMapping("/new_pw")
+	public String newPw(
+				@RequestParam String email, 
+				@RequestParam String no, 
+				Model model, 
+				HttpServletResponse response
+			) throws IOException {
+		//검증
+		CertDto certDto = CertDto.builder()
+									.who(email)
+									.no(no)
+								.build();
+		boolean result = certDao.validate(certDto);
+		certDao.delete(certDto);
+		
+		if(result) {
+			model.addAttribute("email", email);
+			return "member/new_pw";
+		}
+		else {
+			response.sendError(401);
+			return null;
+		}
+	}
+	
+	//비밀번호 변경 처리(POST)
+	//목표 : 변경 처리 수행
+	@PostMapping("/new_pw")
+	public String newPw(
+				@ModelAttribute MemberDto memberDto
+			) {
+		//비밀번호 암호화 처리(bcrypt)
+		String origin = memberDto.getPw();
+		String encrypt = BCrypt.hashpw(origin, BCrypt.gensalt());
+		memberDto.setPw(encrypt);
+		
+		memberDao.changePw(memberDto);
+		return "member/new_pw_result";
+	}
+
+	
+	
 	
 	// 나의정보 클릭시 나의주문내역
 	@GetMapping("/info_order_list")
