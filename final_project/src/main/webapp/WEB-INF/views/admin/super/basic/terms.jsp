@@ -4,9 +4,7 @@
 <jsp:include page="/WEB-INF/views/template/admin/super/left/left_basic.jsp"></jsp:include>
 
 <script>
-	
 	$(function(){
-		
 		var options = {
 				toolbar:[
 					{ name: 'paragraph', items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language' ] },
@@ -15,18 +13,8 @@
 					{ name: 'colors', items: [ 'TextColor', 'BGColor' ] },
 				]
 			};
-
 		CKEDITOR.replace( 'terms_content1', options);
 		CKEDITOR.replace( 'terms_content2', options);
-		
-		// 이용약관 저장버튼 클릭시
-// 		$(".save-btn1").click(function(e){
-// 			e.preventDefault();
-// 			var result = confirm("저장하시겠습니까?");
-// 			if(result){
-// 				$(".save-btn1").submit();
-// 			}
-// 		})
 	})
 </script>
 

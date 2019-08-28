@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.spring.entity.FilesDto;
 import com.kh.spring.entity.ReviewDto;
+import com.kh.spring.entity.ReviewDto.ReviewDtoBuilder;
 import com.kh.spring.entity.ReviewImgDto;
 import com.kh.spring.entity.ShopReviewVO;
 
@@ -85,8 +86,31 @@ public class ReviewDaoImpl implements ReviewDao {
 	// 파일정보 조회
 	@Override
 	public FilesDto getFileInfo(int files_code) {
-		System.out.println("files_code="+files_code);
 		return sqlSession.selectOne("review.filesDto",files_code);
+	}
+
+	// super관리자 리뷰목록 조회
+	@Override
+	public List<ShopReviewVO> superList() {
+		return sqlSession.selectList("review.super_review_list");
+	}
+
+	// super관리자 리뷰목록 갯수
+	@Override
+	public int searchNumber() {
+		return sqlSession.selectOne("review.super_review_number");
+	}
+
+	// super관리자 답변등록
+	@Override
+	public void replyRegist(ReviewDto reviewDto) {
+		sqlSession.insert("review.super_reply",reviewDto);
+	}
+
+	// super관리자 답변상태 변경
+	@Override
+	public void updateReplyStatus(ReviewDto reviewDto) {
+		sqlSession.update("review.super_reply_status",reviewDto);
 	}
 
 }

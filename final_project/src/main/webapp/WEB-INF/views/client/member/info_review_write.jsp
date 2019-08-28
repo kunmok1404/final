@@ -61,14 +61,14 @@
           <table class="table table-hamburg">
             <tbody>
               <tr>
-                <td class="review-title">매장</td>
+                <td class="review-title">매&nbsp장</td>
                 <td class="review-content">
                   <img src="https://placeimg.com/100/100/any">
                   <span>${shopDto.shop_name}</span>
                 </td>
               </tr>
               <tr>
-                <td class="review-title">메뉴</td>
+                <td class="review-title">메&nbsp뉴</td>
                 <td class="review-content">
                   <table class="table table-borderless">
 	                  <tbody>
@@ -138,25 +138,25 @@
                 </td>
               </tr>
               <tr>
-                <td class="review-text">별점</td>
+                <td class="review-text">별&nbsp점</td>
                 <td class="review-content">
                   <input type="number" name="score" class="form-control" required>
                 </td>
               </tr>
               <tr>
-                <td class="review-text">제목</td>
+                <td class="review-text">제&nbsp목</td>
                 <td class="review-content">
                   <input type="text" name="title" class="form-control" placeholder="제목을 입력하세요" required>
                 </td>
               </tr>
               <tr>
-                <td class="review-title">내용</td>
+                <td class="review-title">내&nbsp용</td>
                 <td class="review-content">
                   <textarea id="mytextarea" name="content" rows="15" class="form-control" placeholder="내용을 입력하세요."></textarea>
                 </td>
               </tr>
               <tr>
-                <td class="review-title" rowspan="2">사진첨부</td>
+                <td class="review-title" rowspan="2">사진&nbsp첨부</td>
                 <td class="review-content">
                   <input type="file" name="images" multiple>
                 </td>
