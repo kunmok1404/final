@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
 <script>
-
-
 
 //카드 결제시 수정되는 값
 function change_pay_c(){
@@ -17,14 +17,66 @@ function change_pay_m(){
 }
 //카카오페이 결제시 변경되는 값
 function change_pay_kakao(){
+	$(".button").attr("id","kakao").attr('disabled', false);
 	document.querySelector("form").action='kakao';
 	document.querySelector(".pay_method").value='kakao_pay';
+	
+
 }
-//신용카드 결제시 변경되는 값
 function change_pay_credit(){
+	$(".button").attr("id","online_credit").attr('disabled', false);
 	document.querySelector("form").action='online_credit';
 	document.querySelector(".pay_method").value='card';
+	
 }
+
+$(function(){
+	$(".button").click(function(e){
+		var check = $(".button").attr("id");
+		e.preventDefault();
+		if(check=="kakao"){
+			console.log(check);
+			$('form').submit();
+		}
+		else{
+			var IMP = window.IMP;
+
+			IMP.init('imp47420056');
+
+			IMP.request_pay({
+			    pg : 'inicis', // version 1.1.0부터 지원.
+			    pay_method : 'card',
+			    merchant_uid : 'merchant_' + new Date().getTime(),
+			    name : '치킨',
+			    amount : '${total_price}',
+			    buyer_email : '${memberDto.email}',
+			    buyer_name : '${memberDto.id}',
+			    buyer_tel : '${memberDto.phone}',
+			    buyer_addr : '${memberDto.detail_addr}',
+			    buyer_postcode : '${memberDto.post}',
+			    m_redirect_url : 'http://localhost:8082/spring/order/card_success'
+			}, function(rsp) {
+			    if ( rsp.success ) {
+			        var msg = '결제가 완료되었습니다.';
+			        msg += '고유ID : ' + rsp.imp_uid;
+			        msg += '상점 거래ID : ' + rsp.merchant_uid;
+			        msg += '결제 금액 : ' + rsp.paid_amount;
+			        msg += '카드 승인번호 : ' + rsp.apply_num;
+			        $(location).attr("href", "card_success");
+			        
+			    } else {
+			        var msg = '결제에 실패하였습니다.';
+			        msg += '에러내용 : ' + rsp.error_msg;
+			    }
+			    alert(msg);
+				})
+		}
+		
+	})
+});
+
+//신용카드 결제시 변경되는 값
+
 </script>
 <jsp:include page="/WEB-INF/views/template/client/header.jsp"></jsp:include>
 <div class="container">
@@ -199,7 +251,7 @@ function change_pay_credit(){
 		<h4>개인정보 제3자 제공 동의(필수)</h4>
 		<a href="#">(내용보기)</a>
 	</div>
-	<br> <input type="submit" value="주문완료">
+	<br> <button type="button" class="button" id="check" disabled="">주문완료</button>
 </form>
 </div>
 <jsp:include page="/WEB-INF/views/template/client/footer.jsp"></jsp:include>
