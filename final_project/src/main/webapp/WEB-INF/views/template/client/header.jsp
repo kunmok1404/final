@@ -119,15 +119,6 @@
     </style>
 
 <body>
-    <header>
-        <nav class="navbar navbar-default">
-          <div class="container-fluid">
-            <div class="navbar-header">
-              <a class="navbar-brand" href="${pageContext.request.contextPath}">
-                <img alt="Brand" src="${pageContext.request.contextPath}/resources/image/logo.jpg">
-              </a>
-            </div>
-            
           <!-- 로그인 여부에 따라 메뉴를 구분하여 출력-->
           <c:set var="login" value="${not empty sessionScope.member_code}"></c:set>
           <c:choose>

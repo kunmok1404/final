@@ -70,6 +70,40 @@
     	<tbody>
     	
     	<!-- 중요 -->
+    		<c:forEach var ="ndto" items="${list2}">
+    		<tr>
+    			
+    			<%--[중요]일 경우 번호없애고 [공지]로 바꾸기--%>
+    				<td style="color: red">[공지]</td>
+ 
+    			<td style="color: red">
+    			<%--말머리 있을때 []붙여서 출력 --%>
+    			<c:if test ="${not empty ndto.type}" >
+    			[${ndto.type}]
+    			</c:if>
+    			
+    			<%-- content로 가기 위해 no를 첨부한다 --%>
+    			<c:choose>
+    			<c:when test="${not empty ndto.type}">
+				<a href="content?no=${ndto.no}" style="color: red">
+					${ndto.title}
+				</a>
+				</c:when>
+			<c:otherwise>
+				<a href="content?no=${ndto.no}" style="color: black">
+					${ndto.title}
+				</a>
+			</c:otherwise>
+		</c:choose>
+    			</td>
+	    		<%-- 등록일 --%>
+	    		<td>${ndto.regist_date}</td>
+	    		<%-- 조회수 --%>
+	    		<td>${ndto.read}	</td>
+			</tr>
+			</c:forEach>
+			
+			<!-- 일반 -->
     		<c:forEach var ="ndto" items="${list}">
     		<tr>
     			<td>${ndto.no}</td>

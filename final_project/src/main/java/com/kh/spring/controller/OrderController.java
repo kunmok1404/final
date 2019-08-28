@@ -34,6 +34,11 @@ public class OrderController {
 
 	@Autowired
 	private OrdersDao orderDao;
+	
+	@GetMapping("/carttest")
+	public String card() {
+		return "client/order/credit_card";
+	}
 
 	@GetMapping("/cart")
 	public String cart(@RequestParam int member_code, @RequestParam int shop_code, HttpSession session, Model model) {
@@ -53,15 +58,13 @@ public class OrderController {
 		model.addAttribute("memberDto", orderDao.memberSearch(member_code));
 		model.addAttribute("total_price", total_price);
 		orderDao.cartinput(vo);
-		session.setAttribute("shop_code", shop_code);
-		session.setAttribute("member_code", member_code);
 		session.setAttribute("total_price", total_price);
 		return "client/order/order";
 	}
 
-	@PostMapping("/order")
+	@PostMapping("/credit_order")
 	public String order(@ModelAttribute OrdersDto ordersDto, @ModelAttribute OrderDetailListVo vo,
-			HttpSession session) {
+			HttpSession session,Model model) {
 
 		int member_code = (int) session.getAttribute("member_code");
 		int shop_code = (int) session.getAttribute("shop_code");
@@ -73,8 +76,13 @@ public class OrderController {
 		orderDao.orderinput(orderDto);
 		orderDao.orderDetailInput(no, vo);
 		orderDao.cartDelete(member_code);
+		
+		model.addAttribute("shop_info", orderDao.shopInfo(shop_code));
+		model.addAttribute("orders", orderDao.orderResult(no));
+		model.addAttribute("order_detail", orderDao.myOrderDetailList(no));
+		model.addAttribute("memberDto", orderDao.memberSearch(member_code));
 
-		return "redirect:/";
+		return "/client/order/success";
 	}
 
 	// 카카오 페이로 결제를 요청 할 경우

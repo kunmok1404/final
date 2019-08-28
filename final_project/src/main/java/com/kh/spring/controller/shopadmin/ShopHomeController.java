@@ -27,7 +27,7 @@ public class ShopHomeController {
 	private ShopService shopService;
 
 	//메인화면
-	@RequestMapping({"","/"})
+	@GetMapping({"","/"})
 	public String home() {
 		return "admin/shop/home";
 	}
