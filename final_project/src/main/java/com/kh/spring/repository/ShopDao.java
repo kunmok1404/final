@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kh.spring.entity.CategoryDto;
 import com.kh.spring.entity.FilesDto;
+import com.kh.spring.entity.Food_categoryDto;
 import com.kh.spring.entity.MenuDto;
 import com.kh.spring.entity.ShopDto;
 import com.kh.spring.entity.SubMenuDto;
@@ -19,4 +20,8 @@ public interface ShopDao {
 	int getSeq();
 	void files_regist(FilesDto filesDto);
 	void edit(ShopDto shopDto);
+	List<ShopDto> listAll(int start, int end, String searchop, String keyword);
+	List<ShopDto> countArticle(String searchOption, String keyword);
+	List<Food_categoryDto> categoryno();
+	Food_categoryDto categoryname(String keyword);
 }
