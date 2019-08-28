@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.spring.entity.ReviewDto;
+import com.kh.spring.entity.ReviewDto.ReviewDtoBuilder;
 import com.kh.spring.entity.ShopReviewVO;
 
 public interface ReviewService {
@@ -17,5 +18,7 @@ public interface ReviewService {
 	ReviewDto reviewInfo(int review_code);
 	List<ShopReviewVO> list(int member_code);
 	ResponseEntity<ByteArrayResource> reviewImg(int files_code) throws IOException;
+	List<ShopReviewVO> superList();
+	void replyRegist(ReviewDto reply_content);
 
 }

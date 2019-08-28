@@ -87,18 +87,18 @@
         }
            .addd > .adrr{
            color: yellow;
-            display: inline-block;
+           display: inline-block;
         }
            .addd{
           margin: auto;
-            margin-left:35%;
-            left:50%;
+          margin-left:35%;
+          left:50%;
             
         }
            .adr{
            margin: auto;
-            margin-left:40%;
-            left:50%;
+           margin-left:40%;
+           left:50%;
            color: white;
             
         }
@@ -134,6 +134,7 @@
           	<c:when test="${login}">
 	            <ul class="nav-list">
 	              <li>
+	              
 	                <a href="${pageContext.request.contextPath}/member/logout" class="mr-2">로그아웃</a>
 	                <div id="line-wrapper">
 	                  <div class="line"></div>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kh.spring.entity.FilesDto;
 import com.kh.spring.entity.ReviewDto;
+import com.kh.spring.entity.ReviewDto.ReviewDtoBuilder;
 import com.kh.spring.entity.ReviewImgDto;
 import com.kh.spring.entity.ShopReviewVO;
 
@@ -20,5 +21,9 @@ public interface ReviewDao {
 	void read(int review_code);
 	List<ReviewImgDto> reviewImg(int review_code);
 	FilesDto getFileInfo(int files_code);
+	List<ShopReviewVO> superList();
+	int searchNumber();
+	void replyRegist(ReviewDto reply_content);
+	void updateReplyStatus(ReviewDto reviewDto);
 
 }
