@@ -538,7 +538,6 @@ table {
     height: 2px;
 }
 .review-title{
-    font-size: 1.2rem;
     text-align: center;
     width:15%;
     height:110px;
@@ -550,7 +549,6 @@ table {
 .review-content span{
     margin-left: 10px;
     text-align: left;
-    font-size: 1.2rem;
     width:85%;
     padding: 5px 25px;
 }
@@ -569,7 +567,6 @@ table {
     border-image: none;
 }
 .review-text{
-    font-size: 1.2rem;
     text-align: center;
     width:15%;
     height:70px;
@@ -589,6 +586,9 @@ table {
     content:"";
     display:block;
     clear:both;
+}
+.table td, .table th {
+    vertical-align: middle;
 }
 
  /*약관*/

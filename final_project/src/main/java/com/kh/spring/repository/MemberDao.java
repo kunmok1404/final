@@ -17,6 +17,9 @@ public interface MemberDao {
 	
 	boolean findPw(MemberDto memberDto);
 	
+	void changePw(MemberDto memberDto);
+	
+	
 	
 	
 	MemberDto getInfo(int member_code);
@@ -24,6 +27,7 @@ public interface MemberDao {
 	void like(MyshopDto myshop);
 	
 	void unlike(MyshopDto myshop);
+
 
 
 

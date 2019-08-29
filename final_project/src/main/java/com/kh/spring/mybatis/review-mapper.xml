@@ -69,4 +69,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="filesDto" parameterType="int" resultType="filesDto">
 		select * from files where no=#{files_code}
 	</select>
+	
+	<!-- super관리자 리뷰목록조회 -->
+	<select id="super_review_list" resultType="shopReviewVO">
+		select * from shop_orders_review order by regist_date desc
+	</select>
+	
+	<!-- super관리자 리뷰목록갯수 -->
+	<select id="super_review_number" resultType="int">
+		select count(*) from review
+	</select>
+	
+	<!-- super관리자 답변등록 -->
+	<update id="super_reply" parameterType="reviewDto">
+		update review set reply_content=#{reply_content} where no=#{no}
+	</update>
+	
+	<!-- super관리자 답변상태변경 -->
+	<update id="super_reply_status" parameterType="reviewDto">
+		update review set reply_status='답변완료' where no=#{no}
+	</update>
 </mapper>

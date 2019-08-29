@@ -34,13 +34,13 @@ public class OrderController {
 
 	@Autowired
 	private OrdersDao orderDao;
-
+	
 	@GetMapping("/cart")
-	public String cart(@RequestParam int member_code, @RequestParam int shop_code, HttpSession session, Model model) {
+	public String cart(HttpSession session, Model model) {
+		int member_code = (int) session.getAttribute("member_code");
+		int shop_code = (int) session.getAttribute("shop_code");
 		model.addAttribute("shopDto", orderDao.shopInfo(shop_code));
 		model.addAttribute("cartDto", orderDao.cartlist(member_code));
-		session.setAttribute("shop_code", shop_code);
-		session.setAttribute("member_code", member_code);
 		return "client/order/cart";
 	}
 
@@ -53,15 +53,13 @@ public class OrderController {
 		model.addAttribute("memberDto", orderDao.memberSearch(member_code));
 		model.addAttribute("total_price", total_price);
 		orderDao.cartinput(vo);
-		session.setAttribute("shop_code", shop_code);
-		session.setAttribute("member_code", member_code);
 		session.setAttribute("total_price", total_price);
 		return "client/order/order";
 	}
 
-	@PostMapping("/order")
+	@PostMapping("/credit_order")
 	public String order(@ModelAttribute OrdersDto ordersDto, @ModelAttribute OrderDetailListVo vo,
-			HttpSession session) {
+			HttpSession session,Model model) {
 
 		int member_code = (int) session.getAttribute("member_code");
 		int shop_code = (int) session.getAttribute("shop_code");
@@ -73,8 +71,13 @@ public class OrderController {
 		orderDao.orderinput(orderDto);
 		orderDao.orderDetailInput(no, vo);
 		orderDao.cartDelete(member_code);
+		
+		model.addAttribute("shop_info", orderDao.shopInfo(shop_code));
+		model.addAttribute("orders", orderDao.orderResult(no));
+		model.addAttribute("order_detail", orderDao.myOrderDetailList(no));
+		model.addAttribute("memberDto", orderDao.memberSearch(member_code));
 
-		return "redirect:/";
+		return "/client/order/success";
 	}
 
 	// 카카오 페이로 결제를 요청 할 경우
@@ -185,6 +188,29 @@ public class OrderController {
 
 		model.addAttribute("success", success);
 
+		return "/client/order/success";
+	}
+	
+	@GetMapping("card_success")
+	public String card_success(HttpSession session, Model model) {
+		int total_price = (int) session.getAttribute("total_price");
+		int shop_code = (int) session.getAttribute("shop_code");
+		int no = (int) session.getAttribute("order_no");
+		int member_code = (int) session.getAttribute("member_code");
+		OrderDetailListVo vo = (OrderDetailListVo) session.getAttribute("OrderDetailListVo");
+		OrdersDto ordersDto = (OrdersDto) session.getAttribute("ordersDto");
+		OrdersDto orderDto = OrdersDto.builder().no(no).member_code(member_code).shop_code(shop_code)
+				.request(ordersDto.getRequest()).discount_price(ordersDto.getDiscount_price()).total_price(total_price)
+				.pay_method(ordersDto.getPay_method()).build();
+		orderDao.orderinput(orderDto);
+		orderDao.orderDetailInput(no, vo);
+		orderDao.cartDelete(member_code);
+		
+		model.addAttribute("shop_info", orderDao.shopInfo(shop_code));
+		model.addAttribute("orders", orderDao.orderResult(no));
+		model.addAttribute("order_detail", orderDao.myOrderDetailList(no));
+		model.addAttribute("memberDto", orderDao.memberSearch(member_code));
+		
 		return "/client/order/success";
 	}
 

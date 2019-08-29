@@ -40,7 +40,9 @@ public class OnoImpl implements OnoDao{
 
 	@Override
 	public void write(OnoDto onoDto) {
+
 //		System.out.println(onoDto);
+
 		sqlSession.insert("service.ono_write", onoDto);
 	}
 
