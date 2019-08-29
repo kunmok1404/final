@@ -10,7 +10,7 @@
 		<div id="terms-wrapper">
           <div class="terms-line"></div>
         </div>
-	    <span>리뷰관리</span>
+	    <span>주문관리</span>
       </div>
      
 	  <!-- 검색목록창 시작 -->
@@ -19,22 +19,22 @@
 	  	<table class="table table-sm">
 	  		<tbody>
 	  			<tr>
-	  				<td width="10%" class="table-active">답변상태</td>
+	  				<td width="10%" class="table-active">주문상태</td>
 	  				<td width="40%">
 	  					<select name="reply_status" class="form-control">
 	  						<option value="">전체</option>
-	  						<option value="">미답변</option>
-	  						<option value="">답변완료</option>
-	  						<option value=""></option>
+	  						<option value="">접수대기</option>
+	  						<option value="">조리중</option>
+	  						<option value="">배달완료</option>
+	  						<option value="">취소완료</option>
 	  					</select>
 	  				</td>
 	  				<td width="10%" class="table-active">키워드검색</td>
 	  				<td width="40%">
 	  					<select name="keyword" class="form-control">
 	  						<option value="">선택</option>
-	  						<option value="">메뉴명</option>
-	  						<option value="">작성자</option>
 	  						<option value="">매장명</option>
+	  						<option value="">주문자</option>
 	  					</select>
 	  				</td>
 	  			</tr>
@@ -68,47 +68,38 @@
 	  <!-- 리뷰목록 시작 -->
 	  <div class="list-wrapper table-responsive">
 	  <div class="search-number">
-	  	<p>총 ${search_number}건</p>
+	  	<p>총 ${ordersCount}건</p>
 	  </div>
 	  	<table class="table table-hamburg table-hover">
 	  		<tbody>
 	  			<tr class="table-primary text-center">
 	  				<td>번호</td>
-	  				<td>제목</td>
 	  				<td>매장명</td>
-	  				<td>조회수</td>
-	  				<td>평점</td>
-	  				<td>작성일</td>
-	  				<td>답변상태</td>
-	  				<td>편집</td>
-	  			</tr>
-	  			
-	  			<c:forEach var="reviewVO" items="${list}">
+	  				<td>음식카테고리</td>
+	  				<td>주문메뉴</td>
+	  				<td>결제방법</td>
+	  				<td>결제금액</td>
+	  				<td>주문자</td>
+	  				<td>주문일시</td> 
+	  				<td>주문상태</td>
+	  			</tr>  			
+	  			<c:forEach var="list" items="${ordersList}">
 	  			<tr class="text-center">
-	  				<td>${reviewVO.no}</td>
-	  				<td class="over-text"><a href="${pageContext.request.contextPath}/super_admin/review/detail?review_code=${reviewVO.no}" class="text-primary">${reviewVO.title}</a></td>
-	  				<td>${reviewVO.shop_name}</td>
-	  				<td>${reviewVO.read}</td>
-	  				<td>${reviewVO.score}</td>
-	  				<td>${reviewVO.regist_date}</td>
-	  				<c:choose>
-	  					<c:when test="${reviewVO.reply_status eq '답변대기'}">
-	  						<td class="text-danger">${reviewVO.reply_status}</td>
-	  					</c:when>
-	  					<c:otherwise>
-	  						<td class="text-primary">${reviewVO.reply_status}</td>
-	  					</c:otherwise>
-	  				
-	  				</c:choose>
-	  				<td><button class="btn btn-sm btn-danger">삭제</button></td>
+	  				<td>${list.no}</td>
+	  				<td>${list.company_name}</td>
+	  				<td>${list.name}</td>
+	  				<td class="over-text"><a href="${pageContext.request.contextPath}/super_admin/order/detail?no=${list.no}" class="text-primary">${list.title}</a></td>
+	  				<td>${list.pay_method}</td>
+	  				<td>${list.total_price}</td>
+	  				<td>${list.id}</td>
+	  				<td>${list.order_date}</td>
+	  				<td>${list.order_status}</td>
 	  			</tr>
 	  			</c:forEach>
 	  		</tbody>
 	  	</table>
 	  </div>
-	  <!-- 리뷰목록 끝 -->
 	</div>
-	<!-- 전체 끝 -->
 
 
 

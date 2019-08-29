@@ -8,6 +8,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	</settings>
 	  <!-- 별칭 설정 -->
 	  <typeAliases>
+	  	<typeAlias type="com.kh.spring.entity.OrdersListVo" alias="orderListVo"/>
 	  	<typeAlias type="com.kh.spring.entity.CartDto" alias="cartDto"/>
 	  	<typeAlias type="com.kh.spring.entity.CertDto" alias="certDto"/>
 	  	<typeAlias type="com.kh.spring.entity.MemberDto" alias="memberDto"/>
@@ -30,6 +31,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	  	<typeAlias type="com.kh.spring.entity.PointDetailDto" alias="pointDetailDto"/>
 	  	<typeAlias type="com.kh.spring.entity.CouponDto" alias="couponDto"/>
 	  	<typeAlias type="com.kh.spring.entity.IssueDto" alias="issueDto"/>
+	  	
 	  </typeAliases>
 	  
 </configuration>

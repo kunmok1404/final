@@ -96,5 +96,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="order_result" parameterType="int" resultType="ordersDto">
 		select * from orders where no = #{no}
 	</select>	
-
+	
+	<!-- 이 밑으로 슈퍼 관리자용 -->
+	<!-- 주문 리스트를 불러오는 코드 -->
+	<select id="ordersList" resultType="orderListVo">
+		select DISTINCT * from order_list order by no desc
+	</select>
+	<!-- 주문 갯수를 불러오는 코드 -->
+	<select id="ordersCount" resultType="int">
+		select count(*) from orders_list
+	</select>
+	<!-- 주문 정보를 개별로 불러오는 코드 -->
+	<select id="orderDetail" parameterType="int" resultType="ordersDto">
+		select * from orders where no = #{no}
+	</select>
+	
 </mapper>

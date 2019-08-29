@@ -31,6 +31,8 @@ public interface OrdersDao {
 
 	int getQuantity(int member_code);
 	OrdersDto orderResult(int no);
-	
+	List<OrdersDto> orderslist();
+	int ordersCount();
+	OrdersDto orderDetail(int no);
 
 }

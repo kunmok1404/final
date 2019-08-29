@@ -114,4 +114,19 @@ public class OrdersDaoimpl implements OrdersDao{
 		return sqlsession.selectOne("order.order_result",no);
 	}
 
+	@Override
+	public List<OrdersDto> orderslist() {
+		return sqlsession.selectList("order.ordersList");
+	}
+
+	@Override
+	public int ordersCount() {
+		return sqlsession.selectOne("order.ordersCount");
+	}
+
+	@Override
+	public OrdersDto orderDetail(int no) {
+		return sqlsession.selectOne("order.ordersDetail",no);
+	}
+
 }
