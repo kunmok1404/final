@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 public class FilesDto {
 	private int no;
 	private String file_type,upload_name,save_name;
-	private long size;
+	private long file_size;
 	private String regist_date,edit_date;
 }

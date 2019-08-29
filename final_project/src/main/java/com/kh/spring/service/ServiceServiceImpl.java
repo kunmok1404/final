@@ -2,7 +2,6 @@ package com.kh.spring.service;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import org.apache.commons.io.FileUtils;
@@ -19,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.spring.entity.FilesDto;
 import com.kh.spring.entity.NoticeDto;
 import com.kh.spring.entity.OnoDto;
+import com.kh.spring.entity.OnoImgDto;
 import com.kh.spring.repository.NoticeDao;
 import com.kh.spring.repository.OnoDao;
 
@@ -40,80 +40,84 @@ public class ServiceServiceImpl implements ServiceService {
 		noticeDao.read(no);
 		return noticeDao.get(no);
 	}
-
-	@Override
-	public void regist(int no, MultipartFile image) throws IllegalStateException, IOException {
-
-		String savename = image.getOriginalFilename() + "-" + System.currentTimeMillis()/* +"-"+UUID.randomUUID() */;
-		
-		FilesDto filesDto = new FilesDto();
-		filesDto.setSave_name(savename);
-//		filesDto.setOneandone_code(no);
-		filesDto.setUpload_name(image.getOriginalFilename());
-		filesDto.setSize(image.getSize());
-		filesDto.setFile_type(image.getContentType());
-		onoDao.image(filesDto);
-		
-		
-		File dir = new File("D:\\upload\\kh15");
-		File target = new File(dir, savename);
-		image.transferTo(target);
-		
-	}
-
-	@Override
-	public FilesDto get(String save_name) {
-		return sqlSession.selectOne("service.ono_download",save_name);
-	}
-
+	// ono 테이블에 글정보 등록 후 시퀀스 반환
 	@Override
 	public int OnoRegist(OnoDto onoDto) {
 		
-		int no = onoDao.getSeq();
-		onoDto.setNo(no);
+		// ono 시퀀스 생성 및 설정
+		int ono_no = onoDao.getOnoSeq();
+		onoDto.setNo(ono_no);
 		
+		// ono테이블에 글정보 등록
 		onoDao.write(onoDto);
-
-		return no;
+		
+		return ono_no;
 	}
-
+	
+	// 파일등록
 	@Override
 	public void fileRegist(MultipartFile file, OnoDto onoDto) throws IllegalStateException, IOException {
+		// 파일 시퀀스 생성
+		int files_no = onoDao.getFilesSeq();
 		
-		int files_no = onoDao.getSeq();
-		
+		//파일테이블에  이미지정보 등록
 		String save_name = file.getOriginalFilename() + "-" + System.currentTimeMillis();
 		onoDao.fileRegist(FilesDto.builder()
 										.no(files_no)
 										.file_type(file.getContentType())
 										.upload_name(file.getOriginalFilename())
 										.save_name(save_name)
-										.size(file.getSize()).build()
-												);
-		//실제파일 저장코드
-		File target = new File("D:upload/kh15",save_name);
-		file.transferTo(target);
+										.file_size(file.getSize()).build()
+				);
+		// 실제 파일 저장 코드
+		File target = new File("D:/upload/kh15", save_name);
+		file.transferTo(target); //물리적 위치에 저장하는 명령
 		
+		// 이미지 테이블에 등록
 		onoDao.writeOnoImg(onoDto.getNo(),files_no);
-					
+		
 	}
+	@Override
+	public OnoDto onoInfo(int ono_code) {
 
+		OnoDto onoDto = onoDao.onoInfo(ono_code);
+		// 시간 자르기
+		String time = onoDto.getRegist_date().substring(0, 16);
+		onoDto.setRegist_date(time);
+		return onoDto;
+	}
+	
+	//이미지 불러오기
 	@Override
 	public ResponseEntity<ByteArrayResource> onoImg(int files_code) throws IOException {
-		FilesDto filesDto = onoDao.getfile(files_code);
+//		 이미지 코드조회
+//		2. 1번에서 불러온 정보에서 해당하는 파일정보를 다시 불러온다.
 		
+		FilesDto filesDto = onoDao.getFileInfo(files_code);
+		System.out.println(filesDto);
+		
+		//만약 파일이 없다면(null) 404에러 전송(not found)
 		if(filesDto == null) {
 			return ResponseEntity.notFound().build();
 		}
 		
-		File target = new File("D:upload/kh15", filesDto.getSave_name());
-		byte[] data = FileUtils.readFileToByteArray(target);
+		//filesDto의 정보를 가지고 "실제 파일"을 불러온다.
+		File target = new File("D:/upload/kh15", filesDto.getSave_name());
+		byte[] data = FileUtils.readFileToByteArray(target); //common.io에 있는 라이브러리
 		ByteArrayResource resource = new ByteArrayResource(data);
 		
 		return ResponseEntity.ok()
-				.contentType(MediaType.parseMediaType(filesDto.getFile_type()))
-				.contentLength(data.length)
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename="+URLEncoder.encode(filesDto.getUpload_name(), "UTF-8"))
-				.body(resource);
+											.contentType(MediaType.parseMediaType(filesDto.getFile_type()))
+											.contentLength(data.length)
+											.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename="+URLEncoder.encode(filesDto.getUpload_name(), "UTF-8"))
+											.body(resource);
 	}
+
+
+
+
+
+
+
+
 }

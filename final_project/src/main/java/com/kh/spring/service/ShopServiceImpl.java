@@ -83,7 +83,7 @@ public class ShopServiceImpl implements ShopService {
 		filesDto.setNo(no1);
 		filesDto.setSave_name(savename);
 		filesDto.setUpload_name(img.getOriginalFilename());
-		filesDto.setSize(img.getSize());
+		filesDto.setFile_size(img.getSize());
 		filesDto.setFile_type(img.getContentType());
 		shopDao.files_regist(filesDto);
 		
@@ -95,7 +95,7 @@ public class ShopServiceImpl implements ShopService {
 		filesDto2.setNo(no2);
 		filesDto2.setSave_name(savename2);
 		filesDto2.setUpload_name(business.getOriginalFilename());
-		filesDto2.setSize(business.getSize());
+		filesDto2.setFile_size(business.getSize());
 		filesDto2.setFile_type(business.getContentType());
 		shopDao.files_regist(filesDto2);
 		
@@ -107,7 +107,7 @@ public class ShopServiceImpl implements ShopService {
 		filesDto3.setNo(no3);
 		filesDto3.setSave_name(savename3);
 		filesDto3.setUpload_name(sale.getOriginalFilename());
-		filesDto3.setSize(sale.getSize());
+		filesDto3.setFile_size(sale.getSize());
 		filesDto3.setFile_type(sale.getContentType());
 		shopDao.files_regist(filesDto3);
 		
@@ -140,7 +140,7 @@ public class ShopServiceImpl implements ShopService {
 		filesDto.setNo(no1);
 		filesDto.setSave_name(savename);
 		filesDto.setUpload_name(img.getOriginalFilename());
-		filesDto.setSize(img.getSize());
+		filesDto.setFile_size(img.getSize());
 		filesDto.setFile_type(img.getContentType());
 		shopDao.files_regist(filesDto);
 		

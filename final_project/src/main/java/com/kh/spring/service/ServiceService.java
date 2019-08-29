@@ -15,14 +15,12 @@ public interface ServiceService {
 
 	NoticeDto read(int no);
 
-	void regist(int no, MultipartFile image) throws IllegalStateException, IOException;
-
-	FilesDto get(String save_name);
-
+	void fileRegist(MultipartFile file, OnoDto onoDto) throws IllegalStateException, IOException;
+	
 	int OnoRegist(OnoDto onoDto);
 
-	void fileRegist(MultipartFile file, OnoDto onoDto) throws IllegalStateException, IOException;
+	OnoDto onoInfo(int ono_code);
 
-	ResponseEntity<ByteArrayResource> onoImg(int files_code) throws UnsupportedEncodingException, IOException;
+	ResponseEntity<ByteArrayResource> onoImg(int files_code) throws IOException;
 
 }

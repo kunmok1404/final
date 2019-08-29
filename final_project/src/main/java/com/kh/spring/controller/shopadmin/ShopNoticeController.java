@@ -1,4 +1,4 @@
-package com.kh.spring.controller;
+package com.kh.spring.controller.shopadmin;
 
 import java.util.HashSet;
 import java.util.List;
@@ -20,8 +20,8 @@ import com.kh.spring.service.ServiceService;
 
 //공지사항
 @Controller
-@RequestMapping("/notice")
-public class NoticeController {
+@RequestMapping("/shop_admin/notice")
+public class ShopNoticeController {
 	
 	@Autowired
 	private SqlSession sqlSession;
@@ -60,15 +60,15 @@ public class NoticeController {
 		 * 3.model 에 list 다른명칭으로 추가
 		 * 
 		 */
-		String status="고객";
-		List<NoticeDto> list = noticeDao.list(keyword, status, start, end);
-		model.addAttribute("list", list);
+		String status="업주";
+		List<NoticeDto> list3 = noticeDao.list3(keyword, status, start, end );
+		model.addAttribute("list3", list3);
 		
-		List<NoticeDto> list2 = noticeDao.list2();
-//		System.out.println("list2"+list2.size());
-		model.addAttribute("list2", list2);
+		List<NoticeDto> list4 = noticeDao.list4();
+//		System.out.println("list4"+list4.size());
+		model.addAttribute("list4", list4);
 		
-	return "client/service/notice/list";
+	return "admin/shop/service/notice/list";
 	}
 
 	@GetMapping("/content")
@@ -88,7 +88,7 @@ public class NoticeController {
 		else
 			model.addAttribute("ndto", noticeDao.get(no));
 		
-		return "client/service/notice/content";
+		return "admin/shop/service/notice/content";
 		
 	}
 	

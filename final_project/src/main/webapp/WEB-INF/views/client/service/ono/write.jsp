@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <jsp:include page="/WEB-INF/views/template/client/header.jsp"></jsp:include>
-<%-- <jsp:include page="/WEB-INF/views/template/client/left/service_left.jsp"></jsp:include> --%>
+<jsp:include page="/WEB-INF/views/template/client/left/service_left.jsp"></jsp:include>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="jQuery.MultiFile.min.js"></script>
 <link
@@ -41,6 +41,7 @@
 						return;
 					}
 
+
 					sel_files.push(f);
 
 					var reader = new FileReader();
@@ -49,12 +50,17 @@
 								+ index
 								+ ")\" id=\"img_id_"
 								+ index
-								+ "\"><img src=\"" + e.target.result + "\" data-file='"+f.name+"' class='selProductFile' title='Click to remove'></a>";
+								+ "\"><img src=\"" + e.target.result + "\" data-file='"+f.name+"' class='selProductFile' title='Click to remove' width=150></a>";
 						$(".imgs_wrap").append(html);
 						index++;
+						if (index > 5) {
+							alert("파일은 최대 5장까지만 첨부가능 합니다.");
+						}
 					}
 					reader.readAsDataURL(f);
 				});
+
+		
 	}
 	//다중 파일 중 특정 이미지만 삭제
 	function deleteImageAction(index) {
@@ -90,7 +96,7 @@
 </script>
 
 <div class="qna">
-	<div class="offset-1 col-10">
+	<div class="offset-2 col-8">
 		<h4>1:1 문의</h4>
 		<div class="empty"></div>
 		<form action="write" method="post" enctype="multipart/form-data">
@@ -128,13 +134,13 @@
 						<th class=notice-th rowspan="2">사진첨부</th>
 						<th class="input_wrap"><a href="javascript:"
 							onclick="fileUploadAction();" class="my_button"></a><input type="file" id="input_imgs" name="images"
-							accept=".jpg, .png" multiple><span>(Jpg, Png파일 최대
+							accept=".jpg, .png" multiple	><span>(Jpg, Png파일 최대
 								5장까지 첨부가 가능합니다.)</span></th>
 							
 						<th></th>
 					</tr>
 					<tr>
-						<th class="imgs_wrap"><img class="image-preview" src=""></th>
+						<th class="imgs_wrap"  width="200" height="200"><img class="image-preview" src=""></th>
 					</tr>
 					<!-- 버튼 -->
 				<tfoot>

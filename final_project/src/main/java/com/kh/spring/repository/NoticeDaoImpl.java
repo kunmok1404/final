@@ -28,11 +28,13 @@ public class NoticeDaoImpl implements NoticeDao{
 	}
 
 	@Override
-	public List<NoticeDto> list(String keyword, int i, int j) {
+	public List<NoticeDto> list(String keyword, String status,  int i, int j) {
 		Map<String, Object> param = new HashMap<>();
 		if(keyword !=null) {
 			param.put("keyword", keyword);
 		}
+		
+		param.put("status", status);
 		//검색이든 목록이든 페이징 구간을 전달
 		param.put("start", i);
 		param.put("end", j);
@@ -45,6 +47,25 @@ public class NoticeDaoImpl implements NoticeDao{
 		return sqlSession.selectList("service.notice_list2");
 	}
 
+	@Override
+	public List<NoticeDto> list3(String keyword, String status,  int i, int j) {
+		Map<String, Object> param = new HashMap<>();
+		if(keyword !=null) {
+			param.put("keyword", keyword);
+		}
+		
+		param.put("status", status);
+		//검색이든 목록이든 페이징 구간을 전달
+		param.put("start", i);
+		param.put("end", j);
+		
+		return sqlSession.selectList("service.notice_list3", param);
+	}
+	
+	@Override
+	public List<NoticeDto> list4() {
+		return sqlSession.selectList("service.notice_list4");
+	}
 
 	@Override
 	public NoticeDto get(int no) {

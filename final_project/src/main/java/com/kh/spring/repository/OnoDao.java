@@ -17,22 +17,28 @@ public interface OnoDao {
 
 	OnoDto get(int no);
 
-	int getSeq();
-
-
-	void image(FilesDto filesDto);
-
 	void edit(OnoDto onoDto);
 
-	FilesDto getfile(int no);
-
-	void onoStatus(int shop_code);
+	
+	
+	int getOnoSeq();
 
 	void fileRegist(FilesDto build);
 
-	void writeOnoImg(int no, int files_no);
+	int getFilesSeq();
 
-	List<OnoImgDto>onoImg(int ono_code);
+	void writeOnoImg(int ono_no, int files_no);
+
+	OnoDto onoInfo(int ono_code);
+
+	List<OnoImgDto> onoImg(int ono_code);
+
+	FilesDto getFileInfo(int files_code);
+
+//	void read(int ono_code);
+
+
+
 
 
 

@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <jsp:include page="/WEB-INF/views/template/client/header.jsp"></jsp:include>
-<%-- <jsp:include page="/WEB-INF/views/template/client/left/service_left.jsp"></jsp:include> --%>
+<jsp:include page="/WEB-INF/views/template/client/left/service_left.jsp"></jsp:include>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="jQuery.MultiFile.min.js"></script>
 <link
@@ -96,7 +96,7 @@
 </script>
 
 <div class="qna">
-	<div class="offset-1 col-10">
+	<div class="offset-2 col-8">
 		<h4>1:1 문의</h4>
 		<div class="empty"></div>
 		<form action="edit" method="post" enctype="multipart/form-data">
@@ -142,7 +142,7 @@
 						<th></th>
 					</tr>
 					<tr>
-						<th class="imgs_wrap"><img class="image-preview" src=""></th>
+						<th class="imgs_wrap"  width="200" height="200"><img class="image-preview" src=""></th>
 					</tr>
 					<!-- 버튼 -->
 				<tfoot>

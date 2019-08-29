@@ -105,53 +105,56 @@ public class OnoController {
 	@PostMapping("/write")
 	public String write(@ModelAttribute OnoDto onoDto,
 								@RequestParam List<MultipartFile> images,
-								@RequestParam int shop_code,
+								
 								HttpSession session, Model model) throws IllegalStateException, IOException {
 		int member_code = 1;
+		int shop_code = 1;
 		onoDto.setMember_code(member_code);
 		onoDto.setShop_code(shop_code);
 		//글등록
-		int no = serviceService.OnoRegist(onoDto);
-		onoDto.setNo(no);
+		int ono_no = serviceService.OnoRegist(onoDto);
+		onoDto.setNo(ono_no);
 		//이미지 등록(이미지가 여러장이니깐)
 		for(MultipartFile file : images) {
 			serviceService.fileRegist(file,onoDto);
 		}
-		model.addAttribute("no", no);
+		model.addAttribute("ono_code", ono_no);
 		return "redirect:content";
-		
 	}
 	
-	//[3] 글 상세보기
 	@GetMapping("/content")
-	public String content(Model model, @RequestParam int no, @RequestParam int ono_code) {
-			model.addAttribute("odto", onoDao.get(no));
-//			FilesDto fielsDto = onoDao.getfile(no);
-//			model.addAttribute("filesDto", onoDao.getfile(no));
-			model.addAttribute("img_list", onoDao.onoImg(ono_code));
+	public String ono_detail(@RequestParam int ono_code, Model model) {
+		//글정보 조회
+		OnoDto onoDto = serviceService.onoInfo(ono_code);
+		model.addAttribute("onoDto", onoDto);
+		
+		//이미지코드 조회
+		model.addAttribute("img_list", onoDao.onoImg(ono_code));
 		return "client/service/ono/content";
+	}
+	
+	//이미지 불러오기
+	@GetMapping("/ono_img")
+	public ResponseEntity<ByteArrayResource> onoImg(
+				@RequestParam int files_code) throws IOException{
+		return serviceService.onoImg(files_code);
 	}
 	
 	//[4] 글 수정하기
 	@GetMapping("/edit")
-	public String edit(@RequestParam int no, Model model) {
-		model.addAttribute("odto",onoDao.get(no));
+	public String edit(@RequestParam int ono_code, Model model) {
+		model.addAttribute("odto",onoDao.onoInfo(ono_code));
 		return "client/service/ono/edit";
 	}
 	
 	@PostMapping("/edit")
 	public String edit(@ModelAttribute OnoDto onoDto, RedirectAttributes model) {
 		onoDao.edit(onoDto);
-		model.addAttribute("no",onoDto.getNo());
+		model.addAttribute("ono_code",onoDto.getNo());
 		return "redirect:content";
 	}
 	
-	//[5]파일 다운로드(상세보기에 띄우기)
-	@GetMapping("/ono_img")
-	public ResponseEntity<ByteArrayResource> onoImg(
-			@RequestParam int files_code) throws UnsupportedEncodingException, IOException{
-		return serviceService.onoImg(files_code)
-	;}
+
 	
 	
 	
