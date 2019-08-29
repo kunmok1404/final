@@ -61,7 +61,7 @@ public class ReviewServiceImpl implements ReviewService {
 										.file_type(file.getContentType())
 										.upload_name(file.getOriginalFilename())
 										.save_name(save_name)
-										.size(file.getSize()).build()
+										.file_size(file.getSize()).build()
 				);
 		// 실제 파일 저장 코드
 		File target = new File("D:/upload/kh15", save_name);

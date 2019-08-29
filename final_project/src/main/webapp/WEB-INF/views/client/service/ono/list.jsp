@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
     <jsp:include page="/WEB-INF/views/template/client/header.jsp"></jsp:include>
-<%--     <jsp:include page="/WEB-INF/views/template/client/left/service_left.jsp"></jsp:include> --%>
+     <jsp:include page="/WEB-INF/views/template/client/left/service_left.jsp"></jsp:include>
     <script src="../jQuery/jquery-1.3.2-vsdoc2.js" type="text/javascript"></script>
 	<script src = "https://code.jquery.com/jquery-latest.js"></script>
 	     <link href="${pageContext.request.contextPath}/resources/css/kayClient.css" rel="stylesheet">
@@ -27,7 +27,7 @@
     </script>
     
 <div class="qna">
-<div class="offset-1 col-10">
+<div class="offset-2 col-8">
 <span class="qna-number">1:1 문의</span>
 
 <div class="empty"></div>
@@ -75,7 +75,7 @@
     			</td>
     			<td>
     			<%-- content로 가기 위해 no를 첨부한다 --%>
-    			<a href="content?no=${odto.no}">
+    			<a href="content?ono_code=${odto.no}">
 					${odto.title}
 				</a>
     			</td>

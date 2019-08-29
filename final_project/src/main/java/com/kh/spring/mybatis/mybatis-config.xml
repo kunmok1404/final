@@ -30,6 +30,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	  	<typeAlias type="com.kh.spring.entity.PointDetailDto" alias="pointDetailDto"/>
 	  	<typeAlias type="com.kh.spring.entity.CouponDto" alias="couponDto"/>
 	  	<typeAlias type="com.kh.spring.entity.IssueDto" alias="issueDto"/>
+	  	<typeAlias type="com.kh.spring.entity.OnoImgDto" alias="onoImgDto"/>
 	  </typeAliases>
 	  
 </configuration>
