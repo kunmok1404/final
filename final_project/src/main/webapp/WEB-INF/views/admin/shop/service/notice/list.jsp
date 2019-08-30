@@ -2,8 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-    <jsp:include page="/WEB-INF/views/template/client/header.jsp"></jsp:include>
-    <jsp:include page="/WEB-INF/views/template/client/left/service_left.jsp"></jsp:include>
+    <jsp:include page="/WEB-INF/views/template/admin/shop/header.jsp"></jsp:include>
+    <jsp:include page="/WEB-INF/views/template/admin/shop/left/left_notice.jsp"></jsp:include>
     <script src="../jQuery/jquery-1.3.2-vsdoc2.js" type="text/javascript"></script>
 	<script src = "https://code.jquery.com/jquery-latest.js"></script>
 	 <link href="${pageContext.request.contextPath}/resources/css/kayClient.css" rel="stylesheet">
@@ -33,13 +33,12 @@
     </script>
     
 <div class="qna">
-<div class="offset-2 col-8">
+<div class="offset-1 col-10">
 <span class="qna-number">공지 사항</span>
 <div class="search">
 	<!-- 검색창-->
-	<form class="form" action="list" method="get">
+	<form class="form" action="list" method="get" name="${status}" >
 	<input type="hidden" name="page" value="1">
-	<input type="hidden" name="status" value="1">
 	<input type="search" name="keyword" placeholder="제목 + 내용" required value="${param.keyword}">
 
 	<img class="search_btn" src="${pageContext.request.contextPath}/resources/image/search.png" width="30" height="30">
@@ -47,8 +46,8 @@
 	</form>
 </div>
 	
-
 <div class="empty"></div>
+
     <!-- 표 -->
     <table class="qna-qna">
     	<!-- 위에 -->
@@ -71,7 +70,7 @@
     	<tbody>
     	
     	<!-- 중요 -->
-    		<c:forEach var ="ndto" items="${list2}">
+    		<c:forEach var ="ndto" items="${list4}">
     		<tr>
     			
     			<%--[중요]일 경우 번호없애고 [공지]로 바꾸기--%>
@@ -105,7 +104,7 @@
 			</c:forEach>
 			
 			<!-- 일반 -->
-    		<c:forEach var ="ndto" items="${list}">
+    		<c:forEach var ="ndto" items="${list3}">
     		<tr>
     			<td>${ndto.no}</td>
     			<td style="color: red">
@@ -175,4 +174,4 @@
 </div>
 </div>
     
-    <jsp:include page="/WEB-INF/views/template/client/footer.jsp"></jsp:include>
+    <jsp:include page="/WEB-INF/views/template/admin/shop/footer.jsp"></jsp:include>

@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.kh.spring.entity.FilesDto;
 import com.kh.spring.entity.OnoDto;
+import com.kh.spring.entity.OnoImgDto;
+import com.kh.spring.entity.ReviewImgDto;
 
 public interface OnoDao {
 
@@ -15,14 +17,28 @@ public interface OnoDao {
 
 	OnoDto get(int no);
 
-	int getSeq();
-
-
-	void image(FilesDto filesDto);
-
 	void edit(OnoDto onoDto);
 
-	FilesDto getfile(int no);
+	
+	
+	int getOnoSeq();
+
+	void fileRegist(FilesDto build);
+
+	int getFilesSeq();
+
+	void writeOnoImg(int ono_no, int files_no);
+
+	OnoDto onoInfo(int ono_code);
+
+	List<OnoImgDto> onoImg(int ono_code);
+
+	FilesDto getFileInfo(int files_code);
+
+//	void read(int ono_code);
+
+
+
 
 
 
