@@ -115,18 +115,58 @@ public class OrdersDaoimpl implements OrdersDao{
 	}
 
 	@Override
-	public List<OrdersDto> orderslist() {
-		return sqlsession.selectList("order.ordersList");
+	public List<OrdersDto> orderslist(String status,String type,String keyword,int i, int j) {
+		Map<String, Object> param = new HashMap<>();
+		//검색일경우 검색어를 mybatis에 전달
+		if(status!=null) {
+		param.put("status", status);			
+		}
+		if(type!=null && keyword!=null) {
+		param.put("type", type);
+		param.put("keyword", keyword);
+		}	
+		param.put("start", i);
+		param.put("end", j);
+		return sqlsession.selectList("order.ordersList",param);
 	}
 
 	@Override
-	public int ordersCount() {
-		return sqlsession.selectOne("order.ordersCount");
+	public int ordersCount(String status,String type,String keyword) {
+		Map<String, Object> param = new HashMap<>();
+		if(status!=null) {
+		param.put("status", status);			
+		}
+		if(type!=null && keyword!=null) {
+		param.put("type", type);
+		param.put("keyword", keyword);
+		}	
+		return sqlsession.selectOne("order.ordersCount",param);
 	}
 
 	@Override
-	public OrdersDto orderDetail(int no) {
-		return sqlsession.selectOne("order.ordersDetail",no);
+	public List<OrderDetailDto> orderDetail(int no) {
+		return sqlsession.selectList("order.orderDetail",no);
 	}
+
+	@Override
+	public MemberDto orderMember(int no) {
+		return sqlsession.selectOne("order.orderMember",no);
+	}
+
+	@Override
+	public ShopDto orderDelivery(int no) {
+		return sqlsession.selectOne("order.shopDelivery",no);
+	}
+
+	@Override
+	public void setStatus(int no, String order_status) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("no", no);
+		map.put("order_status", order_status);
+		sqlsession.update("order.setStatus",map);
+		
+	}
+
+
 
 }

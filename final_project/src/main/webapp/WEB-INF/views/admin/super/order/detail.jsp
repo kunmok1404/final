@@ -6,105 +6,131 @@
 <jsp:include page="/WEB-INF/views/template/admin/super/left/left_review.jsp"></jsp:include>
 
 <script>
-// 	$(function(){
-// 		var options = {
-// 				toolbar:[
-// 					{ name: 'paragraph', items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language' ] },
-// 					'/',
-// 					{ name: 'styles', items: [ 'Styles', 'Format', 'Font', 'FontSize' ] },
-// 					{ name: 'colors', items: [ 'TextColor', 'BGColor' ] },
-// 				]
-// 			};
-// 		CKEDITOR.replace( 'review_content', options);
+$(function(){
+// 	$("select").change(function(){
+// 		$("select option:selected").each(function(){
+// 			$('form').submit();
+// 		});
+// 	});
+
+	$("input[type=button]").click(function(){
+		$('form').submit();
+	});
+
+// 	$("input[type=button]").click(function(){
+// 		var no = ${orderNo};
+// 		var status = $("select[name=order_status]").val("${orders.order_status}");
 		
-// 		// 답변저장 클릭시s
-// 		$("form[name=replyForm]").submit(function(e){
-// 			e.preventDefault();
-// 			var result = confirm("저장하시겠습니까?");
-			
-// 			if(result){
-// 				var desc = CKEDITOR.instances['review_content'].getData();
-// 				$("textarea[name=review_content]").val(desc);
-// 				var queryString = $("form[name=replyForm]").serialize();
-				
-// 				$.ajax({
-// 					type : "post",
-// 					url : "${pageContext.request.contextPath}/super_admin/review/reply",
-// 					data : queryString,
-// 					success : function(data){
-// 						alert("저장이 완료되었습니다.");
-// // 						CKEDITOR.instances['review_content'].setData(data);
-// 						$("textarea[name=review_content]").val(data);
-// 					}
-					
-// 				});
-// 			}
+// 		$.ajax({
+// 			type : "post",
+// 			url : "${pageContext.request.contextPath}/super_admin/order/detail",
+// 			data : {
+// 				no : no,
+// 				status : status			
+// 			},
 			
 // 		})
 // 	})
+	
+	//처음에 주문상태 선택시키는 코드
+	$("select[name=order_status]").val("${orders.order_status}");
+	
+	
+});
 </script>
 
 <div class="container">
 	<h2>주문 정보</h2>
+	<form action="detail" method="post">
+	<input type="hidden" name="no" value="${orderNo}">
 	<div class="offset-md-2 col-md-8">
 		<table class="table table-hambuger">
 			<thead>
 				<tr>
-					<th>주문정보</th>
-					<th colspan="3">정보찍히는란</th>
+					<th>주문번호</th>
+					<th colspan="3">${orderNo}</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
 					<td>주문 메뉴</td>
-					<td colspan="3">메뉴 상세 찍히는 테이블
-					<br>
-					<br>
-					<br>
-					<br>
+					<td colspan="3">
+						<c:forEach var="order_list" items="${orderDetail}">
+						<table class="table">
+								<tr>
+									<td>${order_list.menu_name}</td>
+									<td>X ${order_list.menu_amount}</td>
+									<td>${order_list.menu_price}원</td>
+								</tr>
+								<c:choose>
+									<c:when test="${order_list.sub_name !=null}">
+									<tr> 
+										<td>${order_list.sub_name}</td>
+										<td>X ${order_list.sub_amount}</td>
+										<td>+ ${order_list.sub_price}원</td>	
+									</tr>
+									</c:when>
+									<c:otherwise>
+									</c:otherwise>
+								</c:choose>
+						</table>
+					</c:forEach>
 					</td>
 				</tr>
 				<tr>
 					<td>배송비</td>
-					<td>배송비찍히는란</td>
+					<td>${shop_del.delivery_price}</td>
 					<td>결제금액</td>
-					<td>결제금액 찍히는란</td>
+					<td>${orders.total_price - orders.discount_price -shop_del.delivery_price}원</td>
 				</tr>
 				<tr>
 					<td>할인금액</td>
-					<td>할인금액 찍히는란[글자 빨강]</td>
+					<td>${orders.discount_price}</td>
 					<td>총 결제 금액</td>
-					<td>결제금액-결제금액</td>
+					<td>${orders.total_price}</td>
 				</tr>
+					
 				<tr>
 					<td>결제방법</td>
-					<td>결제방법 찍히는 란</td>
+					<td>${orders.pay_method}</td>
 					<td>주문상태</td>
-					<td>주문상태 찍히는 란</td>
+					<td>
+						<select name="order_status">
+  							<option>접수대기</option>
+  							<option>조리중</option>
+  							<option>주문확인</option>
+ 							<option>배달완료</option>
+ 						</select>
+ 						<input type="button" value="변경하기"> 
+					</td>
 				</tr>
 			</tbody>
 		</table>
+		
 	</div>
 		<h2>주문자 정보</h2>
 	<div class="offset-md-2 col-md-8">
 		<table class="table table-hambuger">
 			<tr>
 				<td>주문자</td>
-				<td  colspan="10%">주문자 이름 찍히는곳</td>
+				<td  colspan="10%">${orderMember.id}</td>
 			</tr>
 			<tr>
 				<td>주소</td>
-				<td>주소 찍히는곳</td>
+				<td>${orderMember.detail_addr}</td>
 			</tr>
 			<tr>
 				<td>전화번호</td>
-				<td>전화번호 찍히는곳</td>
+				<td>${orderMember.phone}</td>
 			</tr>
 			<tr>
 				<td>요청사항</td>
-				<td>리퀘스트 찍히는곳</td>
+				<td>${orders.request}</td>
 			</tr>
 		</table>
 	</div>
-	<button>닫 기</button>
+	<div align="center">
+		<button>닫 기</button>	
+	</div>
+	</form>
 </div>

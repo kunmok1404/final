@@ -99,16 +99,67 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 이 밑으로 슈퍼 관리자용 -->
 	<!-- 주문 리스트를 불러오는 코드 -->
-	<select id="ordersList" resultType="orderListVo">
-		select DISTINCT * from order_list order by no desc
+	<select id="ordersList" parameterType="map" resultType="orderListVo">
+		<![CDATA[
+		select * from 
+		(select rownum rn,A.*from(
+		select DISTINCT * from order_list
+		]]>
+		<if test="status !='all'">
+		<choose>
+			<when test="type !=null and keyword != null and status ==''">
+				where ${type} like '%'||#{keyword}||'%'
+			</when>
+			<when test="status !=null and type =='' and keyword == ''">
+				where order_status = #{status}
+			</when>
+			<when test="status !=null and type !=null and keyword != null">
+				where ${type} like '%'||#{keyword}||'%' and order_status = #{status}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+		</if>
+		<![CDATA[
+		order by no desc
+		)A)where rn >= #{start} and rn <=#{end}
+		]]> 
 	</select>
 	<!-- 주문 갯수를 불러오는 코드 -->
 	<select id="ordersCount" resultType="int">
-		select count(*) from orders_list
+		<![CDATA[
+		select count(*) from order_list	
+		]]>
+			<if test="status !='all'">
+			<choose>
+			<when test="type !=null and keyword != null and status ==''">
+				where ${type} like '%'||#{keyword}||'%'
+			</when>
+			<when test="status !=null and type =='' and keyword == ''">
+				where order_status = #{status}
+			</when>
+			<when test="status !=null and type != null and keyword != null">
+				where ${type} like '%'||#{keyword}||'%' and order_status = #{status}
+			</when>
+			<otherwise> 
+			</otherwise>
+		</choose>
+			</if>
 	</select>
-	<!-- 주문 정보를 개별로 불러오는 코드 -->
-	<select id="orderDetail" parameterType="int" resultType="ordersDto">
-		select * from orders where no = #{no}
+	<!-- 관리자가 주문 정보를 개별로 불러오는 코드 -->
+	<select id="orderDetail" parameterType="int" resultType="orderDetailDto">
+		select * from order_detail where order_code = #{no}
 	</select>
-	
+	<!-- 주문 번호에 딸린 멤버 정보를 불러오는 코드 -->
+	<select id="orderMember" parameterType="int" resultType="memberDto">
+		select * from member where no = (select member_code from orders where no = #{no})
+	</select>
+	<!-- 주문 번호로 샵의 배달비를 불러오는 코드 -->
+	<select id="shopDelivery" parameterType="int" resultType="ShopDto">
+		select delivery_price from shop where no = (select member_code from orders where no = #{no})
+	</select>
+	<!--  주문 상태 변경 -->
+	<update id="setStatus" parameterType="map">
+		update orders set order_status = #{order_status} where no = #{no}
+	</update>
 </mapper>
