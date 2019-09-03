@@ -16,6 +16,7 @@ public class MemberDto {
 	private String id; // 아이디
 	private String pw; // 비밀번호
 	private String email; // 이메일
+	private String email_address; //이메일 주소
 	private String phone; // 전화번호
 	private String post; //우편번호
 	private String basic_addr; //기본주소

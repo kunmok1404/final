@@ -4,7 +4,7 @@
 
 <style>
 
-	.find_pw_result{
+	.new_pw_result{
 		width: 800px;
 		margin: auto;
 	}
@@ -13,23 +13,23 @@
 		text-align: center;
 	}
 	
-	.find_pw_result_textbox{
+	.new_pw_result_textbox{
 		text-align: center;
 		background-color: lightgray;
 	}
 
 </style>
 
-<!-- 비밀번호 찾기 결과 -->
-<div class="find_pw_result">
-	<form action="find_pw_result" method="post">
+<!-- 비밀번호 재설정 결과 -->
+<div>
+	<form action="new_pw_result" method="post">
 		<br><br>
-		<legend class="legend">비밀번호 찾기</legend>
+		<legend class="legend">비밀번호 변경완료</legend>
 		<hr><br>
-		<div class="find_pw_result_textbox">
-			이메일이 발송되었습니다.
+		<div class="new_pw_result_textbox">
+			비밀번호 변경이 완료되었습니다.
 			<br>
-			해당 이메일에서 인증해주세요.
+			변경된 비밀번호로 로그인하실 수 있습니다.
 		</div>
 		<table class="table table-bordered">
 			<tr>
@@ -43,5 +43,7 @@
 		</table>
 	</form>
 </div>
+
+
 
 <jsp:include page="/WEB-INF/views/template/client/footer.jsp"></jsp:include>
