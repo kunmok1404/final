@@ -53,9 +53,20 @@
                 <td>${order_map.get("shop_name")}</td>
                 <td><a href="${pageContext.request.contextPath}/member/info_order_detail?order_code=${order_map.get('no')}">${order_map.get("menu_name")}&nbsp등&nbsp${order_map.get("menu_count")}개</a></td>
                 <td>${order_map.get("order_date")}</td>
-                <td>${order_map.get("order_status")}</td>
+				<c:if test="${order_map.get('order_status') eq '배달완료'}">
+					<td>${order_map.get("order_status")}</td>
+				</c:if>
+				<c:if test="${order_map.get('order_status') eq '조리중'}">
+					<td class="text-primary">${order_map.get("order_status")}</td>
+				</c:if>
+				<c:if test="${order_map.get('order_status') eq '접수대기'}">
+					<td class="text-warning">${order_map.get("order_status")}</td>
+				</c:if>
+				<c:if test="${order_map.get('order_status') eq '취소완료'}">
+					<td class="text-danger">${order_map.get("order_status")}</td>
+				</c:if>
                 <td>
-                	<c:if test="${order_map.get('review_status') eq '미작성' && order_map.get('order_status') eq '주문완료'}">
+                	<c:if test="${order_map.get('review_status') eq '미작성' && order_map.get('order_status') eq '배달완료'}">
                 		<a href="${pageContext.request.contextPath}/review/write?order_code=${order_map.get('no')}" class="btn btn-sm btn-primary">리뷰작성</a>
                 	</c:if>
                 	<c:if test="${order_map.get('order_status') eq '접수대기'}">

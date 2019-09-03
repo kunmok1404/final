@@ -16,11 +16,11 @@ PUBLIC "//mybatis.org//DTD Mapper 3.0//EN"
  			</if>)TMP
 	    )
 		where rn between 1 and 10
-		
  	</select>
+ 	
  	<!-- 카테고리 목록 -->
- 	<select id="category" resultType="categoryDto">
- 		select * from food_category 
+ 	<select id="category" resultType="foodCategoryDto">
+ 		select * from food_category order by sort_seq
  	</select>
  	
  	<!-- 매장상세 매장정보 -->
@@ -128,10 +128,28 @@ PUBLIC "//mybatis.org//DTD Mapper 3.0//EN"
 		)A
 	)where rn between #{start} and #{end}
 	</sql>
-	<select id="category_no" resultType="food_categoryDto">
+	<select id="category_no" resultType="foodCategoryDto">
 		select * from food_category
 	</select>
-	<select id="category_name" resultType="Food_categoryDto" parameterType="map">
+	<select id="category_name" resultType="foodCategoryDto" parameterType="map">
 		select * from food_category where name = #{name}
 	</select>
+	
+	
+	<select id="myshop" resultType="shopDto" parameterType="map">
+		select * from shop where no = #{no}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
  </mapper>

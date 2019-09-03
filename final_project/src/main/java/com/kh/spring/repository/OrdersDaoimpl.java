@@ -13,6 +13,7 @@ import com.kh.spring.entity.CartListVO;
 import com.kh.spring.entity.MemberDto;
 import com.kh.spring.entity.OrderDetailDto;
 import com.kh.spring.entity.OrderDetailListVo;
+import com.kh.spring.entity.OrderVo;
 import com.kh.spring.entity.OrdersDto;
 import com.kh.spring.entity.ShopDto;
 //주문 관련 Dao impl
@@ -113,5 +114,88 @@ public class OrdersDaoimpl implements OrdersDao{
 	public OrdersDto orderResult(int no) {
 		return sqlsession.selectOne("order.order_result",no);
 	}
+
+	@Override
+
+	public List<OrderVo> order_data() {
+		return sqlsession.selectList("order.order_data");
+	}
+
+	@Override
+	public int cancel(String t1) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("order_date", t1);
+		return sqlsession.selectOne("order.cancel_data", map);
+	}
+
+	@Override
+	public int sussce(String t1) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("order_date", t1);
+		return sqlsession.selectOne("order.sussce_data", map);
+	}
+
+	@Override
+	public List<OrderVo> date_day(String start, String end) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("start", start);
+		map.put("end", end);
+		return sqlsession.selectList("order.date_day", map);
+	}
+	@Override
+	public List<OrdersDto> orderslist(String status,String type,String keyword,int i, int j) {
+		Map<String, Object> param = new HashMap<>();
+		//검색일경우 검색어를 mybatis에 전달
+		if(status!=null) {
+		param.put("status", status);			
+		}
+		if(type!=null && keyword!=null) {
+		param.put("type", type);
+		param.put("keyword", keyword);
+		}	
+		param.put("start", i);
+		param.put("end", j);
+		return sqlsession.selectList("order.ordersList",param);
+	}
+
+	@Override
+	public int ordersCount(String status,String type,String keyword) {
+		Map<String, Object> param = new HashMap<>();
+		if(status!=null) {
+		param.put("status", status);			
+		}
+		if(type!=null && keyword!=null) {
+		param.put("type", type);
+		param.put("keyword", keyword);
+		}	
+		return sqlsession.selectOne("order.ordersCount",param);
+	}
+
+	@Override
+	public List<OrderDetailDto> orderDetail(int no) {
+		return sqlsession.selectList("order.orderDetail",no);
+	}
+
+	@Override
+	public MemberDto orderMember(int no) {
+		return sqlsession.selectOne("order.orderMember",no);
+	}
+
+	@Override
+	public ShopDto orderDelivery(int no) {
+		return sqlsession.selectOne("order.shopDelivery",no);
+	}
+
+	@Override
+	public void setStatus(int no, String order_status) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("no", no);
+		map.put("order_status", order_status);
+		sqlsession.update("order.setStatus",map);
+		
+	}
+
+
+
 
 }

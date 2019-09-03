@@ -3,11 +3,34 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/template/client/header.jsp"></jsp:include>
 
+<script>
+
+	$(function(){
+		//email주소 옵션 선택시 입력창에 선택값 표시
+		$("#email_address_option").change(function(){
+			$("#email_address").val($(this).val())
+			//선택 옵션에서 직접 입력을 선택시 입력창 활성화 후 직접 입력
+			if(!$(this).val()){
+				$(this).prev().prop("readonly", false);
+			}
+			//선택 옵션에서 직접입력 이외 선택시 입력창에 선택값 표시 후 입력창 비활성화(수정 불가능하게)
+			else{
+				$(this).prev().prop("readonly", true);
+			}
+		});
+	});
+
+</script>
+
 <style>
 
 	.find_id{
 		width: 800px;
 		margin: auto;
+	}
+	
+	.legend{
+		text-align: center;
 	}
 
 </style>
@@ -25,14 +48,14 @@
 <div class="find_id">
 	<form action="find_id" method="post">
 		<br><br>
-		<legend>아이디 찾기</legend>
+		<legend class="legend">아이디 찾기</legend>
 		<hr><br>
 		<table class="table table-bordered">
 			<tbody>
 				<tr>
 					<td><label>이메일</label></td>
 					<td>
-						<input type="text" name="email" placeholder="이메일" pattern="^[a-zA-Z0-9!@#$\-_]{8,15}$" required>
+						<input type="text" name="email" placeholder="이메일" pattern="^[a-zA-Z0-9!@#$\-_.]{8,16}$" required>
 						<span>@</span>
 						<input type="text" name="email_address" id="email_address" pattern="^.*?\..*?$" requried>
 						<select id="email_address_option">

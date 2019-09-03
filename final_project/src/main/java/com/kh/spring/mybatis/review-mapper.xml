@@ -34,7 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="files_regist" parameterType="filesDto">
 		insert into files values(
 			#{no}, #{file_type}, #{upload_name}, #{save_name},
-			#{file_size}, sysdate, sysdate
+			#{size}, sysdate, sysdate
 		)
 	</insert>
 	
