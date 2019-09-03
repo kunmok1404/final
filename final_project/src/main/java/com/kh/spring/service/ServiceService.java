@@ -23,4 +23,9 @@ public interface ServiceService {
 
 	ResponseEntity<ByteArrayResource> onoImg(int files_code) throws IOException;
 
+	int write(NoticeDto noticeDto);
+
+
+
+
 }

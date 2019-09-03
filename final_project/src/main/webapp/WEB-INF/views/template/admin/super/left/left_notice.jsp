@@ -4,8 +4,8 @@
   <!--left 메뉴 시작-->
   <div class="left">
     <ul>
-      <li><a href="#">고객 공지사항</a></li>
-      <li><a href="#">매장 공지사항</a></li>
+      <li><a href="${pageContext.request.contextPath}/super_admin/notice/list?status=고객">고객 공지사항</a></li>
+      <li><a href="${pageContext.request.contextPath}/super_admin/notice/list?status=업주">업주 공지사항</a></li>
     </ul>
   </div>  
   <!--left 메뉴 끝--> 

@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.spring.entity.FilesDto;
 import com.kh.spring.entity.NoticeDto;
 import com.kh.spring.entity.OnoDto;
-import com.kh.spring.entity.OnoImgDto;
 import com.kh.spring.repository.NoticeDao;
 import com.kh.spring.repository.OnoDao;
 
@@ -112,12 +111,14 @@ public class ServiceServiceImpl implements ServiceService {
 											.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename="+URLEncoder.encode(filesDto.getUpload_name(), "UTF-8"))
 											.body(resource);
 	}
-
-
-
-
-
-
+	@Override
+	@Transactional
+	public int write(NoticeDto noticeDto) {
+		int no = noticeDao.getSequenceNumber();
+		noticeDto.setNo(no);
+		noticeDao.insert(noticeDto);
+		return no;
+	}
 
 
 }
