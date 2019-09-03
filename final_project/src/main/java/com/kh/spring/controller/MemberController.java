@@ -1,6 +1,11 @@
 package com.kh.spring.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.Cookie;
@@ -8,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +35,7 @@ import com.kh.spring.repository.OrdersDao;
 import com.kh.spring.repository.ShopDao;
 import com.kh.spring.service.EmailService;
 import com.kh.spring.service.OrderService;
+import com.kh.spring.service.ReviewService;
 
 @Controller
 @RequestMapping("/member")
@@ -45,6 +53,9 @@ public class MemberController {
 
 	@Autowired
 	private ShopDao shopDao;
+	
+	@Autowired
+	private ReviewService reviewService;
 	
 	// 회원가입 기능(GET)
 	@GetMapping("/regist")
@@ -327,4 +338,42 @@ public class MemberController {
 		memberDao.unlike(MyshopDto.builder().member_code(member_code).shop_code(shop_code).build());
 		return "client/shop/shop_detail";
 	}
+	
+//	찜한매장 목록 불러오기
+	@GetMapping("/myshop")
+	public String myshop(Model model,HttpSession session) {
+	int member_code = (int) session.getAttribute("member_code");
+		
+	List<MyshopDto> list = memberDao.myshop(member_code);
+	List<Integer> shop_code = new ArrayList<>();
+	List<ShopDto> shop = new ArrayList<>();
+	for (int i = 0; i < list.size(); i++) {
+		shop_code.add(list.get(i).getShop_code());
+	for (int j = 0; i < shop_code.size(); j++) {
+		shop.add(shopDao.myshop(shop_code.get(j)));
+	}
+	}
+	model.addAttribute("list", list);
+		model.addAttribute("shop", shop);
+
+		return "client/member/myshop";
+	}
+	
+//	메장이미지 불러오기
+	@GetMapping("/shop_img")
+	public ResponseEntity<ByteArrayResource> shopImg(
+					@RequestParam int files_code) throws IOException{
+		return reviewService.shopimg(files_code);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

@@ -144,4 +144,28 @@ public class ReviewServiceImpl implements ReviewService {
 		// 답변 등록
 		reviewDao.replyRegist(reviewDto);
 	}
+
+	@Override
+	public ResponseEntity<ByteArrayResource> shopimg(int files_code) throws IOException {
+		// 이미지코드 조회
+					// 파일정보 조회
+					FilesDto filesDto = reviewDao.getFileInfo(files_code);
+					
+					// 만약 파일이 없다면(null) 404에러 전송(not found)
+					if(filesDto == null) {
+						return ResponseEntity.notFound().build();
+					}
+					
+					// filesDto의 정보를 가지고 "실제 파일"을 불러온다.
+					File target = new File("D:/upload/kh15", filesDto.getSave_name());
+					byte[] data = FileUtils.readFileToByteArray(target); // common.io에 있는 라이브러리
+					ByteArrayResource resource = new ByteArrayResource(data);
+					
+					return ResponseEntity.ok()
+														.contentType(MediaType.parseMediaType(filesDto.getFile_type()))
+														.contentLength(data.length)
+														.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename="+URLEncoder.encode(filesDto.getUpload_name(), "UTF-8"))
+														.body(resource);
+				
+	}
 }

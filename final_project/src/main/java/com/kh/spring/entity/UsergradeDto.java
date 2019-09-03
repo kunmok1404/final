@@ -5,8 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data@Builder@NoArgsConstructor@AllArgsConstructor
-public class MyshopDto {
-	private int no,member_code,shop_code;
-	private String regist_date;
+@Data @Builder @NoArgsConstructor @AllArgsConstructor
+public class UsergradeDto {
+	String name;
+	String grade;
+	int min_order;
+	int max_order; 
 }

@@ -9,6 +9,7 @@ import com.kh.spring.entity.CartListVO;
 import com.kh.spring.entity.MemberDto;
 import com.kh.spring.entity.OrderDetailDto;
 import com.kh.spring.entity.OrderDetailListVo;
+import com.kh.spring.entity.OrderVo;
 import com.kh.spring.entity.OrdersDto;
 import com.kh.spring.entity.ShopDto;
 //주문 관련 Dao
@@ -31,6 +32,10 @@ public interface OrdersDao {
 
 	int getQuantity(int member_code);
 	OrdersDto orderResult(int no);
+	List<OrderVo> order_data();
+	int cancel(String t1);
+	int sussce(String t1);
+	List<OrderVo> date_day(String start, String end);
 	
 
 }
