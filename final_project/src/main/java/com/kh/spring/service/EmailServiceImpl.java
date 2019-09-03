@@ -24,9 +24,28 @@ public class EmailServiceImpl implements EmailService{
 	
 	@Autowired
 	private CertDao certDao;
-
+	
+	//아이디 찾기 이메일로 아이디 전송
 	@Override
-	public void sendCertification(String email) throws MessagingException {
+	public void sendCertificationid(String email) throws MessagingException {
+		//member테이블 DB에서 id 가져오기
+		//가져온 id 이메일로 보내기
+		//이메일 전송
+		MimeMessage mail = sender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(mail, false, "UTF-8");
+		helper.setFrom("뭐먹지?");
+		helper.setTo(email);
+		helper.setSubject("뭐먹지 아이디 찾기 메일입니다.");
+		helper.setText("${memberDto.id}", true);
+		sender.send(mail);
+		
+		
+	}
+	
+
+	//비밀번호 찾기 이메일로 인증번호+링크 전송
+	@Override
+	public void sendCertificationpw(String email) throws MessagingException {
 		//인증번호 생성(128자리)
 		String no = randomStringService.generate(128);
 		
@@ -52,5 +71,6 @@ public class EmailServiceImpl implements EmailService{
 		sender.send(mail);
 		
 	}
+
 
 }

@@ -26,8 +26,7 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="com.kh.spring" />
-	
+	<context:component-scan base-package="com.kh.spring.controller"></context:component-scan>
 	<!-- tx 모듈의 어노테이션 활성화 -->
 	<!-- 
 		파일 업로드를 처리하는 bean

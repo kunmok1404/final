@@ -5,16 +5,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <script src="https://code.jquery.com/jquery-latest.js"></script>
-<script src="${pageContext.request.contextPath}/js/cryptojs/components/core-min.js"></script>
-<script src="${pageContext.request.contextPath}/js/cryptojs/components/sha256-min.js"></script>
-<script src="${pageContext.request.contextPath}/js/password-encoder.js"></script>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/cryptojs/components/core-min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/cryptojs/components/sha256-min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/password-encoder.js"></script>
 
 <script>
 		
 		//로그인 실패 시 alert으로 메세지 노출
 // 		$(function(){
 // 			if($(".fail").text()=='faillogin'){
-// 				alert("로그인에 실패했습니다.")
+// 				alert("아이디 또는 비밀번호가 일치하지 않습니다. 다시 입력해주세요")
 // 			}							
 // 		});
 		
@@ -25,6 +26,10 @@
 	.login{
 		width: 400px;
 		margin: auto;
+	}
+	
+	.legend{
+		text-align: center;
 	}
 
 </style>
@@ -45,7 +50,7 @@
 <div class="login">
  	<form action="login" method="post">
  	<br>
-	<legend>로그인</legend>
+	<legend class="legend">로그인</legend>
 	<hr>
  		<table class="table table-bordered">
  			<tbody>

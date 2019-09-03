@@ -12,7 +12,7 @@
           <span><a href="${pageContext.request.contextPath}/qna/list">자주하는 질문</a></span>
         </div>
         <div class="myMenu">
-          <span><a href="${pageContext.request.contextPath}/ono/list">1:1 문의</span>
+          <span><a href="${pageContext.request.contextPath}/ono/list">1:1 문의</a></span>
         </div>
       </div>
     </div>

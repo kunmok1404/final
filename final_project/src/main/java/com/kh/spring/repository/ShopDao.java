@@ -24,4 +24,5 @@ public interface ShopDao {
 	List<ShopDto> countArticle(String searchOption, String keyword);
 	List<FoodCategoryDto> categoryno();
 	FoodCategoryDto categoryname(String keyword);
+	ShopDto myshop(int shop_code);
 }

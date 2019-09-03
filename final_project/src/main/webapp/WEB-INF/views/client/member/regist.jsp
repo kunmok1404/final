@@ -4,12 +4,19 @@
 
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-<script src="${pageContext.request.contextPath}/js/cryptojs/components/core-min.js"></script>
-<script src="${pageContext.request.contextPath}/js/cryptojs/components/sha256-min.js"></script>
-<script src="${pageContext.request.contextPath}/js/password-encoder.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/cryptojs/components/core-min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/cryptojs/components/sha256-min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/password-encoder.js"></script>
 
 
 <script>
+	
+	//가입버튼 비활성화
+	$(function(){
+		$("input[name=registbtn]").prop("disabled", true);
+// 		$("input[name=id_check_btn]").prop("disabled",false);
+	});
+	
 	$(function(){
 		//id 입력창에 click 이벤트가 발생하면 ajax 통신으로 중복검사 수행
 		//요청 url : /member/id_check.do
@@ -24,9 +31,10 @@
 						$("input[name=id]").select();
 					}
 					else{
-						window.alert("사용 가능한 아이디입니다.").css("background-color", "red");
+						window.alert("사용 가능한 아이디입니다.");
+						//alert에서 확인버튼을 누르면 가입버튼을 활성화한다.
 						//중복검사 후 사용가능한 아이디면 가입버튼 활성화
-						//$("input[name=registbtn]").prop("disabled", false)
+						$("input[name=registbtn]").prop('disabled', false);
 					}
 				}
 			});
@@ -215,14 +223,21 @@
 		width: 800px;
 		margin: auto;
 	}
-
+	
+	.legend{
+		text-align: center;
+	}
+	
+	#email_address{
+		text-align: center;
+	}
 
 </style>
 
 <div class="regist">
 	<form action="regist" method="post">
 		<br><br>
-		<legend>회원가입</legend>
+		<legend class="legend">회원가입</legend>
 		<hr><br>
 		<table class="table table-borderless">
 			<tbody>
@@ -253,9 +268,9 @@
 				<tr>
 					<td><label for="email">이메일</label></td>
 					<td>
-						<input type="text" name="email" placeholder="이메일" pattern="^[a-zA-Z0-9!@#$\-_]{8,15}$" required>
+						<input type="text" name="email" placeholder="이메일" pattern="^[a-zA-Z0-9!@#$\-_.]{8,16}$" required>
 						<span>@</span>
-						<input type="text" name="email_address" id="email_address" pattern="^.*?\..*?$" requried>
+						<input type="text" name="email_address" id="email_address" placeholder="-----이메일 선택-----" pattern="^.*?\..*?$" requried>
 						<select id="email_address_option">
 							<option>--이메일 선택--</option>
 							<option value="">직접입력</option>
@@ -281,7 +296,7 @@
 						<input type="text" name="post" placeholder="우편번호" required readonly>
 						<input type="button" name="post_find" value="주소 찾기"><br>
 						<input type="text" name="basic_addr" placeholder="기본주소" required readonly><br>
-						<input type="text" name="detail_addr" placeholder="상세주소">	
+						<input type="text" name="detail_addr" placeholder="상세주소" required>	
 					</td>
 				</tr>
 			</tbody>
@@ -300,8 +315,8 @@
 			<tbody>
 				<tr>
 					<td>
-						<input type="checkbox" name="checkRow" value="${content.IDX}" required>이용약관(필수)<a href="#">&emsp;약관보기</a><br>
-						<input type="checkbox" name="checkRow" value="${content.IDX}" required>개인정보방침(필수)	<a href="#">&emsp;약관보기</a><br>
+						<input type="checkbox" name="checkRow" value="${content.IDX}" required>이용약관(필수)<a data-toggle="modal" data-target="#myModal" class="text-primary">&emsp;약관보기</a><br>
+						<input type="checkbox" name="checkRow" value="${content.IDX}" required>개인정보방침(필수)	<a data-toggle="modal" data-target="#myModal" class="text-primary">&emsp;약관보기</a><br>
 						<input type="checkbox" name="checkRow" value="${content.IDX}" required>본인은 만 14세 이상입니다.(필수)<br>
 					</td>
 				</tr>
@@ -314,6 +329,46 @@
 			</tbody>
 		</table>
 	</form>
+</div>
+
+<!-- 모달 -->
+<!-- The Modal -->
+<div class="modal" id="myModal">
+	<div class="modal-dialog terms-modal-wrap">
+		<div class="modal-content terms-modal">
+		
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">약관</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>	
+			
+			<!-- Modal body -->
+			<div class="modal-body">	        
+				<ul class="nav nav-tabs">
+					<li class="nav-item terms-nav">
+						<a class="nav-link active" data-toggle="tab" href="#qwe">이용약관</a>
+					</li>
+					<li class="nav-item terms-nav">
+						<a class="nav-link" data-toggle="tab" href="#asd">개인정보처리방침</a>
+					</li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane fade show active" id="qwe">
+						<p>${terms1.content}</p>
+					</div>
+					<div class="tab-pane fade" id="asd">
+						<p>${terms2.content}</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+			</div>
+		</div>
+	</div>
 </div>
 
 <jsp:include page="/WEB-INF/views/template/client/footer.jsp"></jsp:include>

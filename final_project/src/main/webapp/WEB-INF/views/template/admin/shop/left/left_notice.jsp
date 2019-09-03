@@ -4,11 +4,8 @@
   <!--left 메뉴 시작-->
   <div class="left">
     <ul>
-      <li><a href="#">메뉴1</a></li>
-      <li><a href="#">메뉴2</a></li>
-      <li><a href="#">메뉴3</a></li>
-      <li><a href="#">메뉴4</a></li>
-      <li><a href="#">메뉴5</a></li>
+      <li><a href="${pageContext.request.contextPath}/shop_admin/notice/list">공지사항</a></li>
+
     </ul>
   </div>  
   <!--left 메뉴 끝--> 

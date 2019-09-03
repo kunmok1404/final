@@ -118,4 +118,11 @@ public class ShopDaoImpl implements ShopDao {
 		return sqlSession.selectOne("shop.category_name", keyword);
 	}
 
+	@Override
+	public ShopDto myshop(int shop_code) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("no", shop_code);
+		return sqlSession.selectOne("shop.myshop",map);
+	}
+
 }
