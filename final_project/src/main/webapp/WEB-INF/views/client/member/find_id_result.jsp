@@ -4,7 +4,7 @@
 
 <style>
 
-	.find_pw_result{
+	.find_id_result{
 		width: 800px;
 		margin: auto;
 	}
@@ -13,23 +13,23 @@
 		text-align: center;
 	}
 	
-	.find_pw_result_textbox{
+	.find_id_result_textbox{
 		text-align: center;
 		background-color: lightgray;
 	}
 
 </style>
 
-<!-- 비밀번호 찾기 결과 -->
-<div class="find_pw_result">
-	<form action="find_pw_result" method="post">
+<!-- 아이디 찾기 결과 -->
+<div class="find_id_result">
+	<form action="find_id_result" method="post">
 		<br><br>
-		<legend class="legend">비밀번호 찾기</legend>
+		<legend class="legend">아이디 찾기</legend>
 		<hr><br>
-		<div class="find_pw_result_textbox">
+		<div class="find_id_result_textbox">
 			이메일이 발송되었습니다.
 			<br>
-			해당 이메일에서 인증해주세요.
+			해당 이메일에서 아이디를 확인해주세요.
 		</div>
 		<table class="table table-bordered">
 			<tr>

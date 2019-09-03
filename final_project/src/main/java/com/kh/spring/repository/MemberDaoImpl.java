@@ -1,3 +1,4 @@
+
 package com.kh.spring.repository;
 
 import org.apache.ibatis.session.SqlSession;
@@ -64,6 +65,27 @@ public class MemberDaoImpl implements MemberDao {
 		
 	}
 	
+	//회원 정보 수정할때 입력되어있는 정보를 가져오기
+	@Override
+	public MemberDto take(int member_code) {
+		return sqlSession.selectOne("member.take", member_code);
+	}
+		
+	//회원정보 수정
+	@Override
+	public void change(MemberDto memberDto) {
+		System.out.println(memberDto);
+		sqlSession.update("member.change", memberDto);
+		
+	}
+	
+	//회원 탈퇴
+	@Override
+	public void delete(int member_code) {
+		sqlSession.delete("member.delete", member_code);
+		
+	}
+	
 	
 	
 	
@@ -83,6 +105,9 @@ public class MemberDaoImpl implements MemberDao {
 	public void unlike(MyshopDto myshop) {
 		sqlSession.delete("member.unlike", myshop);
 	}
+
+
+
 
 }
 

@@ -7,6 +7,11 @@ import org.springframework.stereotype.Service;
 @Service
 public interface EmailService {
 	
-	void sendCertification(String email) throws MessagingException;
+	//아이디 찾기
+	void sendCertificationid(String email) throws MessagingException;
+
+	//비밀번호 찾기
+	void sendCertificationpw(String email) throws MessagingException;
+
 	
 }
