@@ -41,8 +41,9 @@ public class ShopHomeController {
 		List<Integer> cancel =new ArrayList<>();
 		List<Integer> sussce =new ArrayList<>();
 		for (int i = 0; i < list.size(); i++) {
-			cancel.add(i, orderDao.cancel(list.get(i).getT1()));
-			sussce.add(i, orderDao.sussce(list.get(i).getT1()));
+			String day = list.get(i).getT1()+"/"+list.get(i).getT2()+"/"+list.get(i).getT3();
+			cancel.add(i, orderDao.cancel(day));
+			sussce.add(i, orderDao.sussce(day));
 		}
 		model.addAttribute("order_date",list);
 		model.addAttribute("cancel",cancel);

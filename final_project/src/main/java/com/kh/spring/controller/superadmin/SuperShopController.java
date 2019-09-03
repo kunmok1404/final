@@ -113,9 +113,4 @@ public class SuperShopController {
 		return  "admin/super/shop/detail";
 	}
 	
-	
-	
-	
-	
-	
 }

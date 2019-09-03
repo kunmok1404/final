@@ -36,6 +36,11 @@ public interface OrdersDao {
 	int cancel(String t1);
 	int sussce(String t1);
 	List<OrderVo> date_day(String start, String end);
-	
+	List<OrdersDto> orderslist(String status,String type,String keyword,int i, int j);
+	int ordersCount(String status,String type,String keyword);
+	List<OrderDetailDto> orderDetail(int no);
+	MemberDto orderMember(int no);
+	ShopDto orderDelivery(int no);
+	void setStatus(int no, String order_status);
 
 }

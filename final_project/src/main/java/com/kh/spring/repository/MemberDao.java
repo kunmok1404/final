@@ -23,6 +23,11 @@ public interface MemberDao {
 	
 	void changePw(MemberDto memberDto);
 	
+	void change(MemberDto memberDto);
+
+	MemberDto take(int member_code);
+
+	void delete(int member_code);
 	
 	
 	
@@ -43,6 +48,10 @@ public interface MemberDao {
 	List<MyshopDto> myshop(int member_code);
 
 	
+
+
+
+
 
 
 }

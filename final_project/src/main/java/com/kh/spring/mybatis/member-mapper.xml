@@ -12,7 +12,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	
  	<!-- 회원가입 regist(등록) -->
  	<insert id="regist" parameterType="memberDto">
- 		insert into member values(member_seq.nextval, null, #{id}, #{pw}, #{email}, #{phone}, #{post}, #{basic_addr}, #{detail_addr}, '일반', '고객','일반', sysdate, sysdate, sysdate, 0, '고객')
+ 		insert into member values(member_seq.nextval, null, #{id}, #{pw}, #{email}, #{phone}, 
+ 				#{post}, #{basic_addr}, #{detail_addr}, '일반', '고객','일반', sysdate, sysdate, sysdate, 0, '고객', #{email_address})
  	</insert>
  	
  	<!-- 아이디 중복확인 id_check(조회) -->
@@ -31,19 +32,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	</select>
  	
  	<!-- 아이디 찾기 -->
- 	<select id="findId">
- 		select * form member where email = #{email}
+ 	<select id="findId" parameterType="memberDto" resultType="memberdto">
+ 		select * from member where email = #{email} and email_address = #{email_address}
  	</select>
  	
  	<!-- 비밀번호 찾기 -->
  	<select id="findPw" parameterType="memberDto" resultType="memberDto">
- 		select * from member where id = #{id} and email = #{email}
+ 		select * from member where id = #{id} and email = #{email} and email_address = #{email_address}
  	</select>
  	
  	<!-- 비밀번호 변경 -->
  	<update id="changPw" parameterType="memberDto">
  		update member set pw = #{pw} where id = #{id}
  	</update>
+ 	
+ 	<!-- 회원정보 수정 전 신원확인 -->
+ 	<select id="take" parameterType="int" resultType="memberDto">
+ 		select * from member where no = #{no}
+ 	</select>
+ 	
+ 	<!-- 회원 정보 수정 -->
+ 	<update id="change" parameterType="memberDto">
+ 		update member set 
+ 		<if test="pw != null">
+ 		pw = #{pw},
+ 		</if>
+ 		email = #{email}, phone = #{phone}, post = #{post}, 
+ 				basic_addr = #{basic_addr}, detail_addr = #{detail_addr} where no = #{no}
+ 	</update>
+ 	
+ 	<!-- 회원 탈퇴 -->
+ 	<delete id="delete" parameterType="memberDto">
+ 		delete member where no = #{no}
+ 	</delete>
  	
  	
  	
