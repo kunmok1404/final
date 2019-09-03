@@ -31,6 +31,11 @@ public interface OrdersDao {
 
 	int getQuantity(int member_code);
 	OrdersDto orderResult(int no);
-	
+	List<OrdersDto> orderslist(String status,String type,String keyword,int i, int j);
+	int ordersCount(String status,String type,String keyword);
+	List<OrderDetailDto> orderDetail(int no);
+	MemberDto orderMember(int no);
+	ShopDto orderDelivery(int no);
+	void setStatus(int no, String order_status);
 
 }

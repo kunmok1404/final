@@ -18,8 +18,8 @@ import com.kh.spring.service.AdminService;
 
 
 @Controller
-@RequestMapping("/super_admin")
-public class SuperAdminController {
+@RequestMapping("/super_admin/shop")
+public class SuperShopController {
 
 	@Autowired
 	AdminService adminService;
