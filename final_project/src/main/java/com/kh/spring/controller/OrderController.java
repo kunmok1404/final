@@ -36,13 +36,20 @@ public class OrderController {
 	private OrdersDao orderDao;
 	
 	@GetMapping("/cart")
-	public String cart(
-			@RequestParam int member_code,
-			@RequestParam int shop_code,HttpSession session, Model model) {
-//		int member_code = (int) session.getAttribute("member_code");
+	public String cart(@RequestParam int shop_code,HttpSession session, Model model) {
 //		int shop_code = (int) session.getAttribute("shop_code");
-		model.addAttribute("shopDto", orderDao.shopInfo(shop_code));
+		int no = 5;
+		
+		//>>자신<<의 카트에 있는
+		int member_code = (int) session.getAttribute("member_code");
+		
+		//주 메뉴의 정보를 전부 출력하고,
 		model.addAttribute("cartDto", orderDao.cartlist(member_code));
+		//주 메뉴의 번호를 전부 불러다가
+		
+		//추가 메뉴를 출력
+		model.addAttribute("shopDto", orderDao.shopInfo(shop_code));
+		model.addAttribute("cartsubDto",orderDao.cartsublist(no));
 		session.setAttribute("shop_code", shop_code);
 		return "client/order/cart";
 	}

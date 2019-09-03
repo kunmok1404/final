@@ -148,6 +148,8 @@
 	</div>
 </div>
 <form action="orderinput" method="post">
+
+
 	<div class="container">
 		<div class="offset-md-2 col-md-8">
 			<table class="table" id="ta">
@@ -170,38 +172,22 @@
 							<!-- 주문 상세에 들어갈 정보 -->
 							<input type="hidden" name="list[${status.index}].no" value="${cart.no}">
 							<input type="hidden" name="list[${status.index}].menu_name" value="${cart.menu_name}">
-							<input type="hidden" name="list[${status.index}].sub_type" value="${cart.sub_type}">
-							<input type="hidden" name="list[${status.index}].sub_name" value="${cart.sub_name}">
-								<c:if test="${cart.sub_price!=0}">
-									<br>
-									<span style="font: small-caption;">${cart.sub_type}</span>
-									<br>
-									<span style="font: small-caption;">${cart.sub_name}${cart.sub_amount}개</span>
-								</c:if>
 							</td>
 							<td>
-								<c:choose>
-									<c:when test="${cart.sub_name==null}">
-										<div class="wrap">
-											<input type="hidden" class="mp" name="list[${status.index}].menu_amount" value="${cart.menu_amount}">
-											<button type="button" class="up">+</button>
-												<span class="amount">
-												${cart.menu_amount}
-												</span> 
-											<button type="button" class="dw">-</button>
-										</div>
-									</c:when>
-									<c:otherwise>
+								<div class="wrap">
+									<input type="hidden" class="mp" name="list[${status.index}].menu_amount" value="${cart.menu_amount}">
+									<button type="button" class="up">+</button>
+										<span class="amount">
 										${cart.menu_amount}
-									</c:otherwise>
-								</c:choose>
+										</span>											
+									<button type="button" class="dw">-</button>
+								</div>
 								<input type="hidden" value="${cart.menu_price}" class="priceb" readonly>
-								<input type="hidden" class="mp2" value="${cart.menu_price}" name="list[${status.index}].menu_price">	
-								<input type="hidden" value="${cart.sub_price}" name="list[${status.index}].sub_price">	
+								<input type="hidden" class="mp2" value="${cart.menu_price}" name="list[${status.index}].menu_price">		
 							</td>
 							<!--갯수에 맞춘 금액,  -->
 							<td class="price" style="text-align: right">
-							${cart.menu_price + cart.sub_price}
+							${cart.menu_price}
 							</td>
 						</tr>
 					</c:forEach>

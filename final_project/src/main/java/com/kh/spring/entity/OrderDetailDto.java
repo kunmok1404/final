@@ -12,10 +12,5 @@ public class OrderDetailDto {
 	private String menu_name;//메뉴이름
 	private int menu_amount;//메뉴수량
 	private int menu_price;//메뉴가격
-	
-	private String sub_name;//추가메뉴이름	
-	private String sub_type;//추가메뉴제목
-	private int sub_amount;//추가메뉴수량
-	private int sub_price;//추가메뉴가격
 
 }

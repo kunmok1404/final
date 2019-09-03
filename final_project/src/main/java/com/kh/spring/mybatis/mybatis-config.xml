@@ -9,6 +9,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	  <!-- 별칭 설정 -->
 	  <typeAliases>
 	  	<typeAlias type="com.kh.spring.entity.OrdersListVo" alias="orderListVo"/>
+	  	<typeAlias type="com.kh.spring.entity.CartSubDto" alias="cartSubDto"/>
 	  	<typeAlias type="com.kh.spring.entity.CartDto" alias="cartDto"/>
 	  	<typeAlias type="com.kh.spring.entity.CertDto" alias="certDto"/>
 	  	<typeAlias type="com.kh.spring.entity.MemberDto" alias="memberDto"/>

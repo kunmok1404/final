@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.spring.entity.CartDto;
 import com.kh.spring.entity.CartListVO;
+import com.kh.spring.entity.CartSubDto;
 import com.kh.spring.entity.MemberDto;
 import com.kh.spring.entity.OrderDetailDto;
 import com.kh.spring.entity.OrderDetailListVo;
@@ -193,6 +194,11 @@ public class OrdersDaoimpl implements OrdersDao{
 		map.put("order_status", order_status);
 		sqlsession.update("order.setStatus",map);
 		
+	}
+
+	@Override
+	public List<CartSubDto> cartsublist(int no) {
+		return sqlsession.selectList("order.cartSubList",no);
 	}
 
 

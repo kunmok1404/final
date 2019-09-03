@@ -11,6 +11,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="cartlist" parameterType="int" resultType="cartDto">
 		select * from cart where member_code = #{member_code}
 	</select>
+	<!-- '자신'의 카트에 존재하는 물건의 추가메뉴를 출력하는 코드 -->
+	<select id="cartSubList" parameterType="int" resultType="cartSubDto">
+		select * from cart_sub_menu where no = #{no}
+	</select>
 	<!-- '자신'의 카트에 존재하는 물건에 딸린 매장을 검색하는 코드 -->
 	<select id="cartshop" parameterType="int" resultType="shopDto">
 		select * from shop where no = #{shop_code}
