@@ -392,9 +392,6 @@ public class MemberController {
 		return "client/member/delete";
 	}
 	
-	
-	
-	
 	// 나의정보 클릭시 나의주문내역
 	@GetMapping("/info_order_list")
 	public String infoOrderList(HttpSession session, Model model) {

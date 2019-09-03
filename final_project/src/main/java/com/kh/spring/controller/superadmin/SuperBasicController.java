@@ -1,11 +1,9 @@
 package com.kh.spring.controller.superadmin;
 
-import java.awt.List;
-
+import java.io.IOException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
@@ -18,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.spring.entity.MemberDto;
 import com.kh.spring.repository.MemberDao;
+import com.kh.spring.repository.ShopDao;
 import com.kh.spring.repository.TermsDao;
+import com.kh.spring.service.CategoryService;
+import com.kh.spring.vo.FoodCategoryList;
 
 @Controller
 @RequestMapping("/super_admin/basic")
@@ -26,6 +27,10 @@ public class SuperBasicController {
 
 	@Autowired
 	private TermsDao termsDao;
+	@Autowired
+	private ShopDao shopDao;
+	@Autowired
+	private CategoryService categoryService;
 	
 	@Autowired
 	private MemberDao memberDao;
@@ -52,6 +57,23 @@ public class SuperBasicController {
 		return "redirect:terms";
 	}
 	
+	// Food_category 이동
+	@GetMapping("/food_category")
+	public String category(Model model) {
+		// 카테고리 정보 조회
+		model.addAttribute("cat_list", shopDao.categoryno());
+		return "admin/super/basic/food_category";
+	}
+	
+	// Food_category 등록
+	@PostMapping("/food_category")
+	public String categoryRegist(Model model, 
+					@ModelAttribute FoodCategoryList food_list) throws IllegalStateException, IOException {
+		// 카테고리 정보 등록
+		System.out.println("컨트롤러"+food_list);
+		categoryService.updateFoodCategory(food_list);
+		return "redirect:food_category";
+	}
 	//로그인(GET)
 	@GetMapping("/login")
 	public String login() {
@@ -113,7 +135,5 @@ public class SuperBasicController {
 	//회원 탈퇴 기능
 	
 	//회원 정보 수정 기능
-	
-	
 	
 }

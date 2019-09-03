@@ -12,13 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kh.spring.entity.Food_categoryDto;
+import com.kh.spring.entity.FoodCategoryDto;
 import com.kh.spring.entity.Pageing;
 import com.kh.spring.entity.ShopDto;
 import com.kh.spring.repository.ShopDao;
 import com.kh.spring.service.AdminService;
 import com.kh.spring.service.ShopService;
-
 
 @Controller
 @RequestMapping("/super_admin/shop")
@@ -48,7 +47,7 @@ public class SuperShopController {
         int start = pageing.getPageBegin();
         int end = pageing.getPageEnd();
         List<ShopDto> list = adminService.listAll(start, end, searchOption, keyword);
-        List<Food_categoryDto> name = shopDao.categoryno();
+        List<FoodCategoryDto> name = shopDao.categoryno();
         
         //데이터를 전달
         model.addAttribute("list", list);
@@ -75,7 +74,7 @@ public class SuperShopController {
         int start = pageing.getPageBegin();
         int end = pageing.getPageEnd();
         List<ShopDto> list = adminService.listAll(start, end, searchOption, keyword);
-        List<Food_categoryDto> name = shopDao.categoryno();
+        List<FoodCategoryDto> name = shopDao.categoryno();
         
         
         

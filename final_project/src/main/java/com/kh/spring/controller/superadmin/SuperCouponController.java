@@ -20,4 +20,11 @@ public class SuperCouponController {
 		couponDao.regist(couponDto);
 		return "";
 	}
+	
+	// 쿠폰 목록
+	@GetMapping("/list")
+	public String list() {
+		
+		return "admin/super/promotion/coupon_list";
+	}
 }

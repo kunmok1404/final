@@ -113,9 +113,7 @@
 		.btns {
           margin-left: 50%;
         }
-        .container-fluid {
-        	width: 80%;
-        }
+       
     </style>
 
 <body>
