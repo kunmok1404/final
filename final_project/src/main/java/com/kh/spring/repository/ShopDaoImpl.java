@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.spring.entity.CategoryDto;
 import com.kh.spring.entity.FilesDto;
-import com.kh.spring.entity.Food_categoryDto;
+import com.kh.spring.entity.FoodCategoryDto;
 import com.kh.spring.entity.MenuDto;
 import com.kh.spring.entity.ShopDto;
 import com.kh.spring.entity.SubMenuDto;
@@ -34,7 +34,7 @@ public class ShopDaoImpl implements ShopDao {
 
 	// 移댄뀒怨좊━ 紐⑸줉議고쉶
 	@Override
-	public List<CategoryDto> catList() {
+	public List<FoodCategoryDto> catList() {
 		return sqlSession.selectList("shop.category");
 	}
 
@@ -107,12 +107,12 @@ public class ShopDaoImpl implements ShopDao {
 	}
 
 	@Override
-	public List<Food_categoryDto> categoryno() {
+	public List<FoodCategoryDto> categoryno() {
 		return sqlSession.selectList("shop.category_no");
 	}
 
 	@Override
-	public Food_categoryDto categoryname(String keyword) {
+	public FoodCategoryDto categoryname(String keyword) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("name", keyword);
 		return sqlSession.selectOne("shop.category_name", keyword);

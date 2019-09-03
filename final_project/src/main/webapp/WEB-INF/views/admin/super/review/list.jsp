@@ -30,12 +30,22 @@
 	  				</td>
 	  				<td width="10%" class="table-active">키워드검색</td>
 	  				<td width="40%">
-	  					<select name="keyword" class="form-control">
-	  						<option value="">선택</option>
-	  						<option value="">메뉴명</option>
-	  						<option value="">작성자</option>
-	  						<option value="">매장명</option>
-	  					</select>
+	  					<table>
+		  					<tbody>
+		  						<tr>
+					  				<td width="40%">
+					  					<select name="keyword_type" class="form-control">
+					  						<option value="">메뉴명</option>
+					  						<option value="">작성자</option>
+					  						<option value="">매장명</option>
+					  					</select>
+					  				</td>
+					  				<td>
+					  					<input type="text" name="keyword" class="form-control">
+					  				</td>
+		  						</tr>
+		  					</tbody>
+	  					</table>
 	  				</td>
 	  			</tr>
 	  			<tr>
@@ -98,7 +108,6 @@
 	  					<c:otherwise>
 	  						<td class="text-primary">${reviewVO.reply_status}</td>
 	  					</c:otherwise>
-	  				
 	  				</c:choose>
 	  				<td><button class="btn btn-sm btn-danger">삭제</button></td>
 	  			</tr>

@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>뭐먹지?</title>
     <script src="https://code.jquery.com/jquery-latest.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" ></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -59,9 +59,9 @@
             <li><a href="#">공지사항</a></li>
             <li><a href="#">회원관리</a></li>
             <li><a href="#">매장관리</a></li>
-            <li><a href="#">메뉴관리</a></li>
+            <li><a href="${pageContext.request.contextPath}/super_admin/menu/list">메뉴관리</a></li>
             <li><a href="#">주문관리</a></li>
-            <li><a href="#">프로모션</a></li>
+            <li><a href="${pageContext.request.contextPath}/super_admin/coupon/list">프로모션</a></li>
             <li><a href="#">통계</a></li>
             <li><a href="#">정산관리</a></li>
             <li><a href="${pageContext.request.contextPath}/super_admin/review/list">리뷰관리</a></li>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+	SQL 명령 보관 파일
+	외부에서 접근할 수 있도록 namespace 지정할 것
+ -->
+<mapper namespace="menu">
+	
+	<!-- super_admin 메뉴관리 목록  -->
+	<select id="list" resultType="menuDto">
+		select * from menu order by no desc
+	</select>
+	
+	<!-- super_admin 메뉴카테고리 조회  -->
+	<select id="menu_category" parameterType="menuDto" resultType="categoryDto">
+		select * from category where shop_code=#{shop_code} and no=#{menu_category} 
+	</select>
+	
+</mapper>
+ 
+ 

@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kh.spring.entity.Food_categoryDto;
+import com.kh.spring.entity.FoodCategoryDto;
 import com.kh.spring.entity.ShopDto;
 import com.kh.spring.repository.ShopDao;
 
@@ -24,7 +24,7 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public List<ShopDto> listAll(int start, int end, String searchOption, String keyword) {
 		if (searchOption.equals("category")) {
-			Food_categoryDto category = shopDao.categoryname(keyword);
+			FoodCategoryDto category = shopDao.categoryname(keyword);
 			 keyword = Integer.toString(category.getNo());
 	}
 		return shopDao.listAll(start,end,searchOption,keyword);
