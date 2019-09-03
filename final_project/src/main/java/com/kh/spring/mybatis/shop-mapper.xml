@@ -19,7 +19,7 @@ PUBLIC "//mybatis.org//DTD Mapper 3.0//EN"
 		
  	</select>
  	<!-- 카테고리 목록 -->
- 	<select id="category" resultType="categoryDto">
+ 	<select id="category" resultType="food_categoryDto">
  		select * from food_category 
  	</select>
  	
@@ -134,4 +134,22 @@ PUBLIC "//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="category_name" resultType="Food_categoryDto" parameterType="map">
 		select * from food_category where name = #{name}
 	</select>
+	
+	
+	<select id="myshop" resultType="shopDto" parameterType="map">
+		select * from shop where no = #{no}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
  </mapper>

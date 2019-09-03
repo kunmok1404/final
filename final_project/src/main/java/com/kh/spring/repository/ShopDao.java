@@ -11,7 +11,7 @@ import com.kh.spring.entity.SubMenuDto;
 
 public interface ShopDao {
 	List<ShopDto> ajaxPaging(int start, int end, int cat_no);
-	List<CategoryDto> catList();
+	List<Food_categoryDto> catList();
 	ShopDto shopInfo(int no);
 	List<MenuDto> menuList(int no);
 	List<SubMenuDto> subMenuList(int menu_no);
@@ -24,4 +24,5 @@ public interface ShopDao {
 	List<ShopDto> countArticle(String searchOption, String keyword);
 	List<Food_categoryDto> categoryno();
 	Food_categoryDto categoryname(String keyword);
+	ShopDto myshop(int shop_code);
 }

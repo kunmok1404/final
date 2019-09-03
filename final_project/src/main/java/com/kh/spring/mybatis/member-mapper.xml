@@ -75,11 +75,50 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- 찜한매장 등록 -->
  	<insert id="like" parameterType="memberDto">
- 		insert into myshop values(myshop_seq.next,#{member_code},#{shop_code})
+ 		insert into myshop values(myshop_seq.next,#{member_code},#{shop_code},sysdate)
  	</insert>
  	<!-- 찜한매장 제거 -->
  	<delete id="unlike" parameterType="memberDto">
  		delete myshop where member_code = #{member_code} and shop_code = #{shop_code}
  	</delete>
-
+	
+	<!-- 회원등급 정보 -->
+	<select id="usergrade" resultType="usergradeDto">
+		select * from usergrade
+	</select>
+	
+	<!-- 회원등급 내용 변경 -->
+	<update id="usergrade_edit1" parameterType="map">
+		update usergrade set 
+		name = #{name},
+		min_order = #{min_order}
+		where grade = #{grade}
+	</update>
+	<update id="usergrade_edit2" parameterType="map">
+		update usergrade set 
+		name = #{name},
+		min_order = #{min_order},
+		max_order = #{max_order}
+		where grade = #{grade}
+	</update>
+	<update id="usergrade_edit3" parameterType="map">
+		update usergrade set 
+		name = #{name},
+		max_order = #{max_order}
+		where grade = #{grade}
+	</update>
+	
+	<!-- 회원등급 변경 -->
+	<update id="update" parameterType="map">
+		update member set grade = #{grade} where no=#{no}
+	</update>
+	<!-- 회원번호 조회 -->
+	<select id="member_code" resultType="memberDto">
+		select no from member
+	</select>
+	
+	<select id="myshop" resultType="myshopDto" parameterType="map">
+		select * from myshop where member_code = #{member_code}
+	</select>
+	
  </mapper>

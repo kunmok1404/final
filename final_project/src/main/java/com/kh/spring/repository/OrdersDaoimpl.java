@@ -13,6 +13,7 @@ import com.kh.spring.entity.CartListVO;
 import com.kh.spring.entity.MemberDto;
 import com.kh.spring.entity.OrderDetailDto;
 import com.kh.spring.entity.OrderDetailListVo;
+import com.kh.spring.entity.OrderVo;
 import com.kh.spring.entity.OrdersDto;
 import com.kh.spring.entity.ShopDto;
 //주문 관련 Dao impl
@@ -115,6 +116,33 @@ public class OrdersDaoimpl implements OrdersDao{
 	}
 
 	@Override
+
+	public List<OrderVo> order_data() {
+		return sqlsession.selectList("order.order_data");
+	}
+
+	@Override
+	public int cancel(String t1) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("order_date", t1);
+		return sqlsession.selectOne("order.cancel_data", map);
+	}
+
+	@Override
+	public int sussce(String t1) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("order_date", t1);
+		return sqlsession.selectOne("order.sussce_data", map);
+	}
+
+	@Override
+	public List<OrderVo> date_day(String start, String end) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("start", start);
+		map.put("end", end);
+		return sqlsession.selectList("order.date_day", map);
+	}
+	@Override
 	public List<OrdersDto> orderslist(String status,String type,String keyword,int i, int j) {
 		Map<String, Object> param = new HashMap<>();
 		//검색일경우 검색어를 mybatis에 전달
@@ -166,6 +194,7 @@ public class OrdersDaoimpl implements OrdersDao{
 		sqlsession.update("order.setStatus",map);
 		
 	}
+
 
 
 

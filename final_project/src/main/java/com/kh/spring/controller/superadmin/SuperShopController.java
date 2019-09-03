@@ -1,5 +1,6 @@
 package com.kh.spring.controller.superadmin;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +10,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.spring.entity.Food_categoryDto;
 import com.kh.spring.entity.Pageing;
 import com.kh.spring.entity.ShopDto;
 import com.kh.spring.repository.ShopDao;
 import com.kh.spring.service.AdminService;
+import com.kh.spring.service.ShopService;
 
 
 @Controller
@@ -26,6 +29,9 @@ public class SuperShopController {
 	
 	@Autowired
 	ShopDao shopDao;
+	
+	@Autowired
+	private ShopService shopService;
 	
 //	매장목록페이지
 	@GetMapping("/shop_info")
@@ -52,7 +58,7 @@ public class SuperShopController {
         model.addAttribute("keyword", keyword);
         model.addAttribute("pageing", pageing);
         
-		return "super_admin/super/shop_info";
+		return "admin/super/shop/shop_info";
 	}
 	
 	@PostMapping("/shop_info")
@@ -81,7 +87,30 @@ public class SuperShopController {
         model.addAttribute("keyword", keyword);
         model.addAttribute("pageing", pageing);
         
-		return "super_admin/super/shop_info";
+		return "admin/super/shop/shop_info";
+	}
+	
+	
+	@GetMapping("/detail")
+	public String detail(
+					@RequestParam int no,
+					Model model	) {
+		model.addAttribute("shop", shopDao.shopInfo(no));
+		
+		return "admin/super/shop/detail";
+	}
+	
+//	매장정보수정확인
+	@PostMapping("/detail")
+	public String shop_info(
+				ShopDto shopDto,
+				@RequestParam MultipartFile img,
+				Model model
+			) throws IllegalStateException, IOException {
+		shopService.edit(shopDto,img);
+		
+		model.addAttribute("shop",shopDao.shopInfo(shopDto.getNo()));
+		return  "admin/super/shop/detail";
 	}
 	
 }

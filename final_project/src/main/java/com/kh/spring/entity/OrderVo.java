@@ -5,8 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data@Builder@NoArgsConstructor@AllArgsConstructor
-public class MyshopDto {
-	private int no,member_code,shop_code;
-	private String regist_date;
+@Data @Builder @NoArgsConstructor @AllArgsConstructor
+public class OrderVo {
+	private int rownum;
+	private String t1,t2,t3;
+	private int cut;
 }

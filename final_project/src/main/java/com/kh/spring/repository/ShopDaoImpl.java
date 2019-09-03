@@ -34,7 +34,7 @@ public class ShopDaoImpl implements ShopDao {
 
 	// 移댄뀒怨좊━ 紐⑸줉議고쉶
 	@Override
-	public List<CategoryDto> catList() {
+	public List<Food_categoryDto> catList() {
 		return sqlSession.selectList("shop.category");
 	}
 
@@ -116,6 +116,13 @@ public class ShopDaoImpl implements ShopDao {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("name", keyword);
 		return sqlSession.selectOne("shop.category_name", keyword);
+	}
+
+	@Override
+	public ShopDto myshop(int shop_code) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("no", shop_code);
+		return sqlSession.selectOne("shop.myshop",map);
 	}
 
 }

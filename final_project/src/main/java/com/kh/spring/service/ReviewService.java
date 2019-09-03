@@ -20,5 +20,6 @@ public interface ReviewService {
 	ResponseEntity<ByteArrayResource> reviewImg(int files_code) throws IOException;
 	List<ShopReviewVO> superList();
 	void replyRegist(ReviewDto reply_content);
+	ResponseEntity<ByteArrayResource> shopimg(int files_code) throws IOException;
 
 }
