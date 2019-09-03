@@ -87,18 +87,18 @@
         }
            .addd > .adrr{
            color: yellow;
-            display: inline-block;
+           display: inline-block;
         }
            .addd{
           margin: auto;
-            margin-left:35%;
-            left:50%;
+          margin-left:35%;
+          left:50%;
             
         }
            .adr{
            margin: auto;
-            margin-left:40%;
-            left:50%;
+           margin-left:40%;
+           left:50%;
            color: white;
             
         }
@@ -180,8 +180,3 @@
 			</div>
 		</nav>
 	</header>
-
-
-
-	
-

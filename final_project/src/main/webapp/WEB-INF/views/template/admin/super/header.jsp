@@ -56,15 +56,15 @@
         <div class="top-menu">
           <ul>
             <li class="ml-5"><a href="${pageContext.request.contextPath}/super_admin/basic/terms">기본설정</a></li>
-            <li><a href="#">공지사항</a></li>
-            <li><a href="${pageContext.request.contextPath}/super_admin/basic/list">회원관리</a></li>
+            <li><a href="${pageContext.request.contextPath}/super_admin/notice/list?status=고객">공지사항</a></li>
+            <li><a href="#">회원관리</a></li>
             <li><a href="#">매장관리</a></li>
             <li><a href="#">메뉴관리</a></li>
             <li><a href="#">주문관리</a></li>
             <li><a href="#">프로모션</a></li>
             <li><a href="#">통계</a></li>
             <li><a href="#">정산관리</a></li>
-            <li><a href="#">리뷰관리</a></li>
+            <li><a href="${pageContext.request.contextPath}/super_admin/review/list">리뷰관리</a></li>
             <li><a href="#">고객센터</a></li>
           </ul>
         </div>

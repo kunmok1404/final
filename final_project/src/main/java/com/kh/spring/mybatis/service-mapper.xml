@@ -38,7 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	delete qna where no = #{no}
 	</delete>
 
-
+<!-- "고객" 공지사항 -->
 <!-- 공지사항 목록기능-->
 	<select id="notice_list" parameterType="map" resultType="noticeDto">
 		<!-- 부등호 등 태그 형식에서 사용 불가한 글자를 허용하는 지역 생성 -->
@@ -46,13 +46,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			select rownum rn, A.* from (
 				
 				select * from notice
-				   where 1=1
+				   where type is null
 				<if test="keyword != null ">
-					and  title like '%' || #{keyword} || '%'
+					and title like '%' || #{keyword} || '%'
 				</if>
-				<![CDATA[
-					and type <> '중요'
-					]]>
+				<if test="status=='고객'">
+					and status='고객'
+				</if>
 				order by no desc
 				
 			)A
@@ -62,7 +62,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 공지사항 [중요]만 위에표시-->	
 	<select id="notice_list2"  resultType="noticeDto">
 				select * from notice
-					where type like '%' ||'중요' || '%'
+					where type like '%' ||'중요' || '%' and status='고객'
+				order by no desc
+	</select>
+	
+	<!-- "업주" 공지사항 -->
+<!-- 공지사항 목록기능-->
+	<select id="notice_list3" parameterType="map" resultType="noticeDto">
+		<!-- 부등호 등 태그 형식에서 사용 불가한 글자를 허용하는 지역 생성 -->
+		select * from(
+			select rownum rn, A.* from (
+				
+				select * from notice
+				   where type is null
+				<if test="keyword != null ">
+					and title like '%' || #{keyword} || '%'
+				</if>
+				<if test="status=='업주'">
+					and status='업주'
+				</if>
+				order by no desc
+				
+			)A
+		) where rn between #{start} and #{end}
+	</select>
+	
+<!-- "업주" 공지사항 [중요]만 위에표시-->	
+	<select id="notice_list4"  resultType="noticeDto">
+				select * from notice
+					where type like '%' ||'중요' || '%' and status='업주'
 				order by no desc
 	</select>
 	
@@ -84,6 +112,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update notice set read = read+1 where no = ${no}
 	</update>
 	
+
 	
 	
 <!-- 1:1문의 목록기능-->
@@ -123,32 +152,57 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			'고객', #{category})
 	</insert>
 	
-<!-- 1:1문의 글 상세보기	 -->
-	<select id="ono_get" parameterType="int" resultType="onoDto">
-		select*from OneAndOne where no = #{no}
+	<!-- 글 수정 -->
+	<select id="get" parameterType="int" resultType="onoDto">
+		select * from oneandone where no = #{no}
 	</select>
 	
-<!-- 1:1문의 파일 업로드 전 번호 받아오기	 -->
- 	<select id="getno" resultType="int">
- 		select oneandone_seq.nextval from dual
- 	</select>
+<!-- ono테이블 시쿼스 구하기 -->
+<select id="ono_seq" resultType="int">
+	select oneandone_seq.nextval from dual
+</select>
+
+<!--파일테이블 시퀀스 구하기 -->
+	<select id="files_seq" resultType="int">
+		select files_seq.nextval from dual
+	</select>
+	
+<!--파일테이블에 ono이미지 정보 등록 -->
+	<insert id="files_regist" parameterType="filesDto">
+		insert into files values(
+			#{no}, #{file_type}, #{upload_name}, #{save_name},
+			#{file_size}, sysdate, sysdate
+		)
+	</insert>
+	
+<!-- 글+이미지 테이블에 정보등록 -->	
+	<insert id="ono_img" parameterType="int">
+		insert into ono_img values(
+			#{ono_img}, #{files_no})
+	</insert>
+	
+<!-- 테이블에서 리뷰정보조회 -->
+	<select id="ono_info" parameterType="int" resultType="onoDto">
+		select * from OneAndOne where no = #{ono_code} order by no desc
+	</select>
+	
+<!-- 이미지코드 조회 -->
+	<select id="ono_img_code" parameterType="int" resultType="onoImgDto">
+		select*from ono_img where ono_img=#{ono_code}
+	</select>
+	
  	
  <!-- 1:1문의 파일 업로드 하기	 -->	
- 	<insert id="ono_regist" parameterType="filesDto">
- 		insert into files values(files_seq.nextval,
- 								#{file_type},#{upload_name},#{save_name},
- 								#{file_size},sysdate,sysdate)
- 	</insert>
+<!--  	<insert id="ono_regist" parameterType="filesDto"> -->
+<!--  		insert into files values(files_seq.nextval, -->
+<!--  								#{file_type},#{upload_name},#{save_name}, -->
+<!--  								#{file_size},sysdate,sysdate) -->
+<!--  	</insert> -->
  	
-<!-- 1:1문의 파일 번호 받기 	 --> 
- 	 <select id="ono_getfile" parameterType="int" resultType="filesDto">
- 	 	select*from files where no = #{no}
- 	 </select>
- 	 
- <!-- 1:1문의 파일 다운로드 하기	 --> 	
- 	<select id="ono_download" parameterType="String" resultType="filesDto">
- 		select * from files where save_name=#{save_name}
- 	</select>
+<!-- 파일정보 조회 -->
+	<select id="filesDto" parameterType="int" resultType="filesDto">
+		select * from files where no = #{files_code}
+	</select>
 
  <!-- 1:1문의 글 수정 하기	 --> 	
  	<update id="ono_edit" parameterType="onoDto">
@@ -161,5 +215,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  				no = #{no}
  	</update>
  	
+ <!-- 조회수 증가 -->
+<!--  	<update id="read" parameterType="int"> -->
+<!--  		update review set read = read+1 where no=#{ono_code} -->
+<!--  	</update> -->
  	
+
 </mapper>

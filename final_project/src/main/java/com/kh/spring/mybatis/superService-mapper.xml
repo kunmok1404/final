@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="superservice">
+<!-- notice시쿼스 번호 생성 -->
+	<select id="notice_seq" resultType="int">
+		select notice_seq.nextval from dual
+	</select>
+	
+<!-- 글 등록 -->
+	<insert id="notice_insert" parameterType="noticeDto">
+		insert into notice values(
+			#{no}, #{title}, #{content}, #{status}, #{type}, sysdate, sysdate, 0, #{writer}, 'admin'
+		)
+	</insert>
+
+	
+<!-- notice글 삭제 -->
+	<delete id="notice_delete" parameterType="int">
+		delete notice where no = #{no}
+	</delete>
+</mapper>

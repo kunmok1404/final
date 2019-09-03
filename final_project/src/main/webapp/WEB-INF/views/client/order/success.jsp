@@ -36,14 +36,18 @@
 						<td>${order_detail.menu_name} x ${order_detail.menu_amount}</td>
 						<td>${order_detail.menu_price}</td>
 					</tr>
+						<c:choose>
+							<c:when test="${order_detail.sub_name!=null }">
 					<tr>
 						<td>  -${order_detail.sub_name}</td>
 						<td>${order_detail.sub_price}</td>
 					</tr>
+							</c:when>
+					</c:choose>
 				</c:forEach>
 					<tr>
 						<td>주문합계</td>
-						<td>${orders.total_price - shop_info.delivery_price}</td>
+						<td>${orders.total_price}</td>
 					</tr>
 					
 					<tr>
@@ -52,7 +56,7 @@
 					</tr>
 					<tr>
 						<td><font color="red">결제금액</font></td>
-						<td>${orders.total_price}</td>
+						<td>${orders.total_price + shop_info.delivery_price}</td>
 					</tr>
 					<tr>
 						<td>결제방식</td>

@@ -17,15 +17,18 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.spring.entity.FilesDto;
 import com.kh.spring.entity.ReviewDto;
-import com.kh.spring.entity.ReviewImgDto;
+import com.kh.spring.entity.ReviewDto.ReviewDtoBuilder;
 import com.kh.spring.entity.ShopReviewVO;
 import com.kh.spring.repository.ReviewDao;
+import com.kh.spring.repository.ShopDao;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
 
 	@Autowired
 	private ReviewDao reviewDao;
+	@Autowired
+	private ShopDao shopDao;
 	
 	// 리뷰 테이블에 글정보 등록 후 시퀀스 반환
 	@Override
@@ -58,7 +61,7 @@ public class ReviewServiceImpl implements ReviewService {
 										.file_type(file.getContentType())
 										.upload_name(file.getOriginalFilename())
 										.save_name(save_name)
-										.size(file.getSize()).build()
+										.file_size(file.getSize()).build()
 				);
 		// 실제 파일 저장 코드
 		File target = new File("D:/upload/kh15", save_name);
@@ -117,4 +120,28 @@ public class ReviewServiceImpl implements ReviewService {
 												.body(resource);
 		
 		}
+
+	// super관리자 리뷰목록 조회
+	@Override
+	public List<ShopReviewVO> superList() {
+		List<ShopReviewVO> list = reviewDao.superList();
+		List<ShopReviewVO> review_list = new ArrayList<>();
+		for(ShopReviewVO reviewDto : list) {
+			// 시간 자르기
+			String time = reviewDto.getRegist_date().substring(0, 16);
+			reviewDto.setRegist_date(time);
+			review_list.add(reviewDto);
+		}
+		return review_list;
+	}
+
+	// super관리자 리뷰답변등록
+	@Override
+	public void replyRegist(ReviewDto reviewDto) {
+		// 답변상태 변경
+		reviewDao.updateReplyStatus(reviewDto);
+		
+		// 답변 등록
+		reviewDao.replyRegist(reviewDto);
+	}
 }

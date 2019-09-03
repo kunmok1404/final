@@ -55,13 +55,13 @@
         <!--상단메뉴 시작-->
         <div class="top-menu">
           <ul>
-            <li class="ml-5"><a href="#">공지사항</a></li>
+            <li class="ml-5"><a href="${pageContext.request.contextPath}/shop_admin/notice/list">공지사항</a></li>
             <li><a href="#">매장관리</a></li>
             <li><a href="#">메뉴관리</a></li>
             <li><a href="#">주문관리</a></li>
             <li><a href="#">통계</a></li>
             <li><a href="#">리뷰관리</a></li>
-            <li><a href="#">고객센터</a></li>
+            <li><a href="${pageContext.request.contextPath}/shop_admin/ono/list">고객센터</a></li>
           </ul>
         </div>
         <!--상단메뉴 끝-->

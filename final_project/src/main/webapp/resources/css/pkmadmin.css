@@ -98,7 +98,7 @@ a{
  /*전체 래퍼*/
 .wrapper{
 	margin-left:180px;
-	width:70%;
+	width:85%;
 }
 
 /*top-title*/
@@ -126,4 +126,128 @@ a{
 .save-btn a{
 	width:200px;
 	color:white;
+}
+
+/*검색창*/
+.search-wrapper{
+	width:80%;
+	margin-top:20px;
+	text-align:center;
+	vertical-align:middle;
+	height:100px;
+}
+.search-wrapper table{
+	height:100px;
+}
+.search-wrapper table tr td{
+	vertical-align:middle;
+	text-align:center;
+}
+.search-btn{
+	width:100px;
+	margin-left:88%;
+}
+
+/*목록창*/
+.list-wrapper{
+	margin-top:50px;
+}
+.over-text{
+	overflow:hidden;white-space;text-overflow:ellipsis;
+}
+.list-wrapper table tr{
+	height:10px;
+}
+
+/*리뷰*/
+.review{
+    background-color:#ffffff;
+    border:1px solid lightgray;
+}
+.review-img img{
+    padding: 5px;
+    float:left;
+    background-color: #ffffff;
+	width: 50%;
+    height:200px;
+    cursor:pointer;
+}
+.review-img::after{
+    content:"";
+    display:block;
+    clear:both;
+}
+.review-id{
+    font-size: 1.2rem;
+    padding-left:10px;
+    padding-top:8px;
+    height: 40px;
+}
+.review-menu{
+    color: red;
+    padding-left:10px;
+    padding-top:8px;
+    height: 40px;
+}
+.review-content{
+    padding: 5px 25px;
+}
+
+/*리뷰 작성*/
+.review-top{
+    background-color: #9C3D39;
+    height: 2px;
+}
+.review-title{
+    text-align: center;
+    width:15%;
+    height:110px;
+    background-color: #fafafa;
+}
+.review-content img{
+    margin-left: 25px;
+}
+.review-content span{
+    margin-left: 10px;
+    text-align: left;
+    width:85%;
+    padding: 5px 25px;
+}
+.review-content input{
+    padding: 5px 25px;
+    margin-left: 10px;
+}
+.review-content textarea{
+    padding: 5px 25px;
+    margin-left: 10px;
+}
+#choice-img > img{
+	margin-left:20px;
+	height:100px;
+	width:100px;
+    border-image: none;
+}
+.review-text{
+    text-align: center;
+    width:15%;
+    height:70px;
+    background-color: #fafafa;
+}
+.review-img{
+	cursor:pointer;
+    border:1px solid lightgray;
+    padding: 5px;
+    float:left;
+    background-color: #ffffff;
+	width: 403px;
+    height:200px;
+    cursor:pointer;
+}
+.review-img::after{
+    content:"";
+    display:block;
+    clear:both;
+}
+.table td, .table th {
+    vertical-align: middle;
 }

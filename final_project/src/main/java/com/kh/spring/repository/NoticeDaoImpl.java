@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.spring.entity.FilesDto;
 import com.kh.spring.entity.NoticeDto;
 
 @Repository
@@ -28,11 +29,13 @@ public class NoticeDaoImpl implements NoticeDao{
 	}
 
 	@Override
-	public List<NoticeDto> list(String keyword, int i, int j) {
+	public List<NoticeDto> list(String keyword, String status,  int i, int j) {
 		Map<String, Object> param = new HashMap<>();
 		if(keyword !=null) {
 			param.put("keyword", keyword);
 		}
+		
+		param.put("status", status);
 		//검색이든 목록이든 페이징 구간을 전달
 		param.put("start", i);
 		param.put("end", j);
@@ -45,6 +48,25 @@ public class NoticeDaoImpl implements NoticeDao{
 		return sqlSession.selectList("service.notice_list2");
 	}
 
+	@Override
+	public List<NoticeDto> list3(String keyword, String status2,  int i, int j) {
+		Map<String, Object> param = new HashMap<>();
+		if(keyword !=null) {
+			param.put("keyword", keyword);
+		}
+		
+		param.put("status", status2);
+		//검색이든 목록이든 페이징 구간을 전달
+		param.put("start", i);
+		param.put("end", j);
+		
+		return sqlSession.selectList("service.notice_list3", param);
+	}
+	
+	@Override
+	public List<NoticeDto> list4() {
+		return sqlSession.selectList("service.notice_list4");
+	}
 
 	@Override
 	public NoticeDto get(int no) {
@@ -57,6 +79,32 @@ public class NoticeDaoImpl implements NoticeDao{
 		sqlSession.update("service.notice_read", no);
 		
 	}
+
+
+
+	@Override
+	public void write(NoticeDto noticeDto) {
+		sqlSession.insert("superservice.notice_write", noticeDto);
+		
+	}
+
+	@Override
+	public void delete(int no) {
+		sqlSession.delete("superservice.notice_delete", no);
+		
+	}
+
+	@Override
+	public int getSequenceNumber() {
+		return sqlSession.selectOne("superservice.notice_seq");
+	}
+
+	@Override
+	public void insert(NoticeDto noticeDto) {
+		sqlSession.insert("superservice.notice_insert", noticeDto);
+	}
+
+
 
 
 

@@ -65,7 +65,7 @@ public class QnaController {
 	public String write(HttpSession session,
 								@ModelAttribute QnaDto qnaDto,
 								Model model) {
-//		String id = (String)session.getAttribute("ok");
+//		int member_code = (int)session.getAttribute("member_code");
 		String id = "test1";
 		qnaDto.setWriter(id);
 		qnaDao.write(qnaDto); 

@@ -50,9 +50,9 @@ public class NoticeController {
 		if(endBlock > pageCount) {
 			endBlock = pageCount;
 		}
-		model.addAttribute("page", page);
-		model.addAttribute("startBlock", startBlock);
-		model.addAttribute("endBlock", endBlock);
+		model.addAttribute("page", page);  //model 객체 이용해서, view로  data 전달
+		model.addAttribute("startBlock", startBlock);//model.addAttribute(변수이름, 변수에 넣을 데이터값);
+		model.addAttribute("endBlock", endBlock); // 스피링은 데이터값을 뷰쪽으로 넘겨준다 -> 뷰(.jsp파일)에서는 ${}를 이용해서 값을 가져온다 
 		
 		/*
 		 * 1.중요 공지사항만 조회 하도록 추가
@@ -60,16 +60,19 @@ public class NoticeController {
 		 * 3.model 에 list 다른명칭으로 추가
 		 * 
 		 */
-		List<NoticeDto> list = noticeDao.list(keyword, start, end);
+		
+		String status="고객";
+		List<NoticeDto> list = noticeDao.list(keyword, status, start, end);
 		model.addAttribute("list", list);
 		
 		List<NoticeDto> list2 = noticeDao.list2();
-		System.out.println("list2"+list2.size());
+//		System.out.println("list2"+list2.size());
 		model.addAttribute("list2", list2);
 		
-	return "client/service/notice/list";
+	return "client/service/notice/list"; //뷰 파일 리턴
 	}
 
+	//@RequestParam [데이터타입] [뷰에서 가져온데이터를 담을 변수, jsp랑 이름이 같아야함]->model객체 이용해서 뷰로 값을 넘겨준다
 	@GetMapping("/content")
 	public String content(HttpSession session, Model model, @RequestParam int no) {
 		//조회수 중복 방지
