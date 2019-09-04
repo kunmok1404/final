@@ -35,6 +35,17 @@ public interface OnoDao {
 
 	FilesDto getFileInfo(int files_code);
 
+	int supercount(String apply_status, String keyword_type, String keyword);
+
+	List<OnoDto> superlist(String apply_status, String keyword_type, String keyword, int i, int j);
+
+	void superedit(OnoDto onoDto);
+
+	void updateReplyStatus(OnoDto onoDto);
+
+
+
+
 //	void read(int ono_code);
 
 

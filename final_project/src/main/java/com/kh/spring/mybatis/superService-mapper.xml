@@ -20,4 +20,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="notice_delete" parameterType="int">
 		delete notice where no = #{no}
 	</delete>
+	
+<!-- notice글 수정 -->
+	<update id="notice_edit" parameterType="noticeDto">
+		update notice set title=#{title}, content=#{content}, status=#{status}, type=#{type} where no = #{no}
+	</update>
 </mapper>

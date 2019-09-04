@@ -19,7 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		) where rn between #{start} and #{end}
 	</select>
 	
-	<!-- 자주하는 질문 검색기능 -->
+	<!-- 자주하는 질문 목록과 검색일 경우 각각의 게시글 수를 구하는 SQL명령 -->
 	<select id="qna_count" parameterType="string" resultType="int">
 		select count(*) from qna
 			<if test="category != null">
@@ -215,6 +215,54 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  				no = #{no}
  	</update>
  	
+<!-- 1:1문의 관리자 목록과 검색일 경우 각각의 게시글 수를 구하는 SQL명령 --> 	
+ 	<select id="super_ono_count" parameterType="map" resultType="int">
+ 		select count(*) from oneandone
+ 			<if test="apply_status != null">
+				where apply_status=#{apply_status} 
+			</if>
+ 			<if test="keyword_type !=null and keyword !=null">
+ 			where ${keyword_type} like '%'|| #{keyword} ||'%'
+ 			</if>
+ 	</select>
+ 	
+<!-- 1:1문의 관리자 목록 -->
+ 	<select id="super_ono_list" parameterType="map" resultType="onoDto">
+		<!-- 부등호 등 태그 형식에서 사용 불가한 글자를 허용하는 지역 생성 -->
+		select * from(
+			select rownum rn, A.* from (
+				
+				select * from oneandone
+				   where 1=1
+				<if test="apply_status !=null">
+					and apply_status =#{apply_status}
+				</if>
+				<if test="keyword_type !=null and keyword != null ">
+					and ${keyword_type} like '%' || #{keyword} || '%'
+				</if>
+				
+				order by no desc
+				
+			)A
+		) where rn between #{start} and #{end}
+	</select>
+
+<!-- 1:1문의 관리자 글 상세보고 답글달기 -->	
+
+	 	<update id="super_ono_edit" parameterType="onoDto">
+ 		update OneAndOne
+ 			set
+ 				reply_content = #{reply_content}
+ 			where
+ 				no = #{no}
+ 	</update>
+ 	
+<!-- 답변 상태 변경 -->
+	<update id="super_reply_status" parameterType="onoDto">
+		update oneandone set reply_status='답변완료' where no = #{no}
+	</update>
+	
+	
  <!-- 조회수 증가 -->
 <!--  	<update id="read" parameterType="int"> -->
 <!--  		update review set read = read+1 where no=#{ono_code} -->

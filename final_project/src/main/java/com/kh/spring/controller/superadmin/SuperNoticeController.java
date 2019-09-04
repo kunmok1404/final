@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.spring.entity.NoticeDto;
 import com.kh.spring.repository.NoticeDao;
@@ -36,7 +37,7 @@ public class SuperNoticeController {
 	//목록
 	@GetMapping("/list")
 	public String list(Model model,
-			@RequestParam(required = false) String keyword,
+			@RequestParam(required = false) String keyword, @RequestParam(required = false) String status,
 			@RequestParam(required = false, defaultValue ="1") int page) {
 		
 		int pagesize = 10;
@@ -57,7 +58,7 @@ public class SuperNoticeController {
 		model.addAttribute("startBlock", startBlock);
 		model.addAttribute("endBlock", endBlock);
 		
-		String status ="고객";
+		String status1 ="고객";
 		List<NoticeDto> list = noticeDao.list(keyword, status, start, end);
 		model.addAttribute("list", list);
 		
@@ -120,11 +121,23 @@ public class SuperNoticeController {
 	//글 삭제
 		@GetMapping("/delete")
 		public String delete(@RequestParam int no, Model model, @RequestParam String status) {
+			model.addAttribute("status", status);
 			noticeDao.delete(no);
-			
-			return "list?status=${param.status}";
+			return "redirect:list";
 		}
 		
 
-		
+	//글 수정
+	@GetMapping("/edit")
+	public String edit(@RequestParam int no, Model model) {
+		model.addAttribute("sndto", noticeDao.get(no));
+		return "admin/super/service/notice/edit";
+	}
+	
+	@PostMapping("/edit")
+	public String edit(@ModelAttribute NoticeDto noticeDto, RedirectAttributes model) {
+		noticeDao.edit(noticeDto);
+		model.addAttribute("no", noticeDto.getNo());
+		return "redirect:content";
+	}
 }

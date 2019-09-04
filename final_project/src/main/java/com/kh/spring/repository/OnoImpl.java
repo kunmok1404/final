@@ -104,6 +104,63 @@ public class OnoImpl implements OnoDao{
 		return sqlSession.selectOne("service.filesDto", files_code);
 	}
 
+
+	@Override
+	public int supercount(String apply_status, String keyword_type, String keyword) {
+		Map<String, String> param = new HashMap<>();
+		if(apply_status != null) {
+			param.put("apply_status", apply_status);
+		}
+		if(keyword_type !=null && keyword !=null) {
+			param.put("keyword_type", keyword_type.replace("+", "||"));
+			param.put("keyword", keyword);
+		}
+		return sqlSession.selectOne("service.super_ono_count", param);
+	}
+
+
+	@Override
+	public List<OnoDto> superlist(String apply_status, String keyword_type, String keyword, int i, int j) {
+		Map<String, Object> param = new HashMap<>();
+		
+		if(apply_status != null) {
+			param.put("apply_status", apply_status);
+		}
+		
+		if(keyword_type !=null && keyword !=null) {
+			param.put("keyword_type", keyword_type.replace("+", "||"));
+			param.put("keyword", keyword);
+		}
+
+		//검색이든 목록이든 페이징 구간을 전달
+		param.put("start", i);
+		param.put("end", j);
+		
+		return sqlSession.selectList("service.super_ono_list", param);
+	}
+
+
+	@Override
+	public void superedit(OnoDto onoDto) {
+		sqlSession.update("service.super_ono_edit",onoDto);
+		
+	}
+
+
+	@Override
+	public void updateReplyStatus(OnoDto onoDto) {
+		sqlSession.update("service.super_reply_status", onoDto);
+		
+	}
+
+
+
+
+
+
+
+
+
 //조회수 증가
 //	@Override
 //	public void read(int ono_code) {

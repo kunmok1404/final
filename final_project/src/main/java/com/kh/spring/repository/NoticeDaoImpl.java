@@ -104,6 +104,13 @@ public class NoticeDaoImpl implements NoticeDao{
 		sqlSession.insert("superservice.notice_insert", noticeDto);
 	}
 
+	@Override
+	public void edit(NoticeDto noticeDto) {
+		sqlSession.update("superservice.notice_edit", noticeDto);
+	}
+
+
+
 
 
 
