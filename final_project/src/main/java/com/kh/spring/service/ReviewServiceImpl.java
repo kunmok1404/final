@@ -18,9 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.spring.entity.FilesDto;
 import com.kh.spring.entity.ReviewDto;
 import com.kh.spring.entity.ReviewDto.ReviewDtoBuilder;
-import com.kh.spring.entity.ShopReviewVO;
 import com.kh.spring.repository.ReviewDao;
 import com.kh.spring.repository.ShopDao;
+import com.kh.spring.vo.ShopReviewVO;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="url" value="${requestScope['javax.servlet.forward.servlet_path']}"/>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -55,16 +57,16 @@
         <!--상단메뉴 시작-->
         <div class="top-menu">
           <ul>
-            <li class="ml-5"><a href="${pageContext.request.contextPath}/super_admin/basic/terms">기본설정</a></li>
-            <li><a href="${pageContext.request.contextPath}/super_admin/notice/list?status=고객">공지사항</a></li>
+            <li ${url == '/super_admin/basic/terms' ? 'class="active"' : ''}><a href="${pageContext.request.contextPath}/super_admin/basic/terms">기본설정</a></li>
+            <li ${url == '/super_admin/notice/list' ? 'class="active"' : ''}><a href="${pageContext.request.contextPath}/super_admin/notice/list?status=고객">공지사항</a></li>
             <li><a href="#">회원관리</a></li>
             <li><a href="#">매장관리</a></li>
-            <li><a href="${pageContext.request.contextPath}/super_admin/menu/list">메뉴관리</a></li>
+            <li ${url == '/super_admin/menu/list' ? 'class="active"' : ''}><a href="${pageContext.request.contextPath}/super_admin/menu/list">메뉴관리</a></li>
             <li><a href="#">주문관리</a></li>
-            <li><a href="${pageContext.request.contextPath}/super_admin/coupon/list">프로모션</a></li>
+            <li ${url == '/super_admin/coupon/list' ? 'class="active"' : ''}><a href="${pageContext.request.contextPath}/super_admin/coupon/list">프로모션</a></li>
             <li><a href="#">통계</a></li>
             <li><a href="#">정산관리</a></li>
-            <li><a href="${pageContext.request.contextPath}/super_admin/review/list">리뷰관리</a></li>
+            <li ${url == '/super_admin/review/list' ? 'class="active"' : ''}><a href="${pageContext.request.contextPath}/super_admin/review/list">리뷰관리</a></li>
             <li><a href="#">고객센터</a></li>
           </ul>
         </div>

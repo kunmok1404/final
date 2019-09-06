@@ -12,7 +12,7 @@ import com.kh.spring.entity.SubMenuDto;
 
 public interface ShopService {
 
-	Map<String, List<MenuDto>> menuList(int no);
+	Map<Integer, List<MenuDto>> menuList(int no);
 	Map<String, List<SubMenuDto>> sub_menu(int menu_no);
 	void regist(ShopDto shopDto, MultipartFile business,MultipartFile img, MultipartFile sale) throws IllegalStateException, IOException;
 	void edit(ShopDto shopDto, MultipartFile img) throws IllegalStateException, IOException;

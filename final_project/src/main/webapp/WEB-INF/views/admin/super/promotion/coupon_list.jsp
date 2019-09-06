@@ -51,32 +51,6 @@
 	  					</select>
 	  				</td>
 	  			</tr>
-	  			<tr>
-	  				<td width="10%" class="table-active">키워드 검색</td>
-	  				<td>
-	  					<table class="table table-sm">
-		  					<tbody>
-		  						<tr>
-					  				<td width="40%">
-					  					<select name="keyword_type" class="form-control">
-					  						<option value="">쿠폰번호</option>
-					  						<option value="">쿠폰명</option>
-					  						<option value="">발급방식</option>
-					  						<option value="">할인구분</option>
-					  						<option value="">할인</option>
-					  						<option value="">사용기간</option>
-					  						<option value="">발급시기</option>
-					  						<option value="">발급상태</option>
-					  					</select>
-					  				</td>
-					  				<td>
-					  					<input type="text" name="keyword" class="form-control">
-					  				</td>
-		  						</tr>
-		  					</tbody>
-	  					</table>
-	  				</td>
-	  			</tr>
 	  		</tbody>
 	  	</table>
 	  	<div style="width:100%;">
@@ -94,16 +68,15 @@
 	  	<table class="table table-hamburg table-hover">
 	  		<tbody>
 	  			<tr class="table-primary text-center">
-	  				<td>번호</td>
-	  				<td>메뉴명</td>
-	  				<td>메뉴카테고리</td>
-	  				<td>매장명</td>
-	  				<td>승인상태</td>
-	  				<td>판매상태</td>
-	  				<td>등록일</td>
-	  				<td>편집</td>
+	  				<td>쿠폰번호</td>
+	  				<td>쿠폰명</td>
+	  				<td>발급방식</td>
+	  				<td>할인방식</td>
+	  				<td>할인금액</td>
+	  				<td>사용기간</td>
+	  				<td>발급시기</td>
+	  				<td>발급상태</td>
 	  			</tr>
-	  			
 <%-- 	  			<c:forEach var="menuVO" items="${list}"> --%>
 <!-- 	  			<tr class="text-center"> -->
 <%-- 	  				<td>${menuVO.no}</td> --%>

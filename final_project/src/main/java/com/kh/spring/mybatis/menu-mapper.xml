@@ -3,10 +3,6 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- 
-	SQL 명령 보관 파일
-	외부에서 접근할 수 있도록 namespace 지정할 것
- -->
 <mapper namespace="menu">
 	
 	<!-- super_admin 메뉴관리 목록  -->
@@ -15,10 +11,114 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- super_admin 메뉴카테고리 조회  -->
-	<select id="menu_category" parameterType="menuDto" resultType="categoryDto">
-		select * from category where shop_code=#{shop_code} and no=#{menu_category} 
+	<select id="menu_category" parameterType="int" resultType="categoryDto">
+		select * from category where no=#{menu_category} 
 	</select>
 	
+	<!-- super_admin 메뉴관리 목록  -->
+	<select id="shopList" parameterType="int" resultType="menuDto">
+		select * from menu where shop_code=#{shop_code} order by no desc
+	</select>
+	
+	<!-- 메뉴 승인버튼 클릭시 -->
+	<update id="apply_menu" parameterType="int">
+		update menu set apply_status='승인완료' where no=#{menu_code}
+	</update>
+	
+	<!-- 메뉴 삭제버튼 클릭시 -->
+	<delete id="delete_menu" parameterType="int">
+		delete menu where no = #{menu_code}
+	</delete>
+	
+	<!-- 메뉴 시퀀스 구하기 -->
+	<select id="menu_seq" resultType="int">
+		select menu_seq.nextval from dual
+	</select>
+	
+	<!-- 메뉴카테고리 코드 구하기 -->
+	<select id="getMenuCatCode" parameterType="menuRegistVO" resultType="int">
+		select no from category where name=#{menu_category} and shop_code=#{shop_code}
+	</select>
+	
+	<!-- 메뉴기본정보 등록 -->
+	<insert id="registMenuInfo" parameterType="menuDto">
+		insert into menu values(
+			#{no}, #{shop_code}, #{menu_category}, #{name}, #{price}, 
+			sysdate, sysdate, '승인대기', '판매중지', null, null
+		)
+	</insert>
+	
+	<!-- 메뉴테이블에 목록이미지코드 저장 -->
+	<update id="updateListImg" parameterType="map">
+		update menu set basic_img=#{files_seq} where no=#{menu_code}
+	</update>
+	
+	<!-- 메뉴테이블에 상세이미지코드 저장 -->
+	<update id="updateDetailImg" parameterType="map">
+		update menu set Detail_img=#{files_seq} where no=#{menu_code}
+	</update>
+	
+	<!-- 서브메뉴 테이블에 필수메뉴 등록 -->
+	<insert id="registRadioSubMenu" parameterType="subMenuDto">
+		insert into sub_menu values(
+			sub_menu_seq.nextval, #{shop_code}, #{menu_code}, #{title}, #{name}, '필수', #{price}
+		)
+	</insert>
+	
+	<!-- 서브메뉴 테이블에 선택메뉴 등록 -->
+	<insert id="registCheckSubMenu" parameterType="subMenuDto">
+		insert into sub_menu values(
+			sub_menu_seq.nextval, #{shop_code}, #{menu_code}, #{title}, #{name}, '선택', #{price}
+		)
+	</insert>
+	
+	<!-- 
+		구조화된 데이터를 불러오기 위한 ResultMap 선언
+		
+		(예상구조)
+			MenuDetailListVO
+				- MenuDetailVO
+				- MenuDetailVO
+				- ...
+	-->
+	
+<!-- 	<resultMap type="menuDetailListVO" id="loader"> -->
+<!-- property : 객체 속성 이름 , column : DB 결과 컬럼명 -->
+<!-- 		<result property="shop_code" column="shop_code"/> -->
+<!-- 		<result property="food_cat" column="food_cat"/> -->
+<!-- 		<result property="menu_name" column="menu_name"/> -->
+<!-- 		<result property="menu_price" column="menu_price"/> -->
+		<!-- javaType : 저장소 자료형 , ofType : 구성요소 자료형 , select : 실행할 명령 ID -->
+<!-- 		<collection property="list" column="shop_code"  -->
+<!-- 				javaType="java.util.ArrayList" ofType="categoryDto"  -->
+<!-- 				select="menuDetailLoader"></collection> -->
+<!-- 	</resultMap> -->
+	
+<!-- 	<select id="menuDetailListLoader" parameterType="map" resultMap="loader"> -->
+<!-- 		select -->
+<!-- 			S.no shop_code, -->
+<!-- 			F.name food_cat, -->
+<!-- 		    M.name menu_name, -->
+<!-- 		    M.price menu_price -->
+<!-- 		from -->
+<!-- 		    shop S -->
+<!-- 		        inner join menu M on M.shop_code = S.no -->
+<!-- 		        inner join food_category F on S.category = F.no -->
+<!-- 		where S.no=1 and M.no=21 -->
+<!-- 	</select> -->
+	
+	<!-- 자동 연결되므로 파라미터 타입이 필요 없음 -->
+<!-- 	<select id="menuDetailLoader" resultType="CategoryDto"> -->
+<!-- 		select * from category where shop_code = #{shop_code} -->
+<!-- 	</select> -->
+	
 </mapper>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  
  

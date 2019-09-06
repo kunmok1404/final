@@ -67,7 +67,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	</delete>
  	
  	
- 	
  	<!-- 회원정보 조회(회원코드로) -->
  	<select id="get_info" parameterType="int" resultType="memberDto">
  		select * from member where no=#{member_code}
@@ -119,6 +118,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="myshop" resultType="myshopDto" parameterType="map">
 		select * from myshop where member_code = #{member_code}
+	</select>
+	
+	<!-- super_admin 회원전체목록 조회 -->
+	<select id="get_member_list" resultType="memberDto">
+		select * from member order by no desc
 	</select>
 	
  </mapper>

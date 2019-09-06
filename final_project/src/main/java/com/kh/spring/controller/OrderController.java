@@ -23,10 +23,10 @@ import org.springframework.web.client.RestTemplate;
 
 import com.kh.spring.KakaoPay.KakaoPaySuccessVO;
 import com.kh.spring.KakaoPay.KakaopayReturnVo;
-import com.kh.spring.entity.CartListVO;
-import com.kh.spring.entity.OrderDetailListVo;
 import com.kh.spring.entity.OrdersDto;
 import com.kh.spring.repository.OrdersDao;
+import com.kh.spring.vo.CartListVO;
+import com.kh.spring.vo.OrderDetailListVo;
 
 @Controller
 @RequestMapping("/order")

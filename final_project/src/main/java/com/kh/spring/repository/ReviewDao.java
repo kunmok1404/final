@@ -5,8 +5,8 @@ import java.util.List;
 import com.kh.spring.entity.FilesDto;
 import com.kh.spring.entity.ReviewDto;
 import com.kh.spring.entity.ReviewDto.ReviewDtoBuilder;
+import com.kh.spring.vo.ShopReviewVO;
 import com.kh.spring.entity.ReviewImgDto;
-import com.kh.spring.entity.ShopReviewVO;
 
 public interface ReviewDao {
 

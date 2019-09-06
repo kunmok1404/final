@@ -1,6 +1,8 @@
-package com.kh.spring.entity;
+package com.kh.spring.vo;
 
 import java.util.List;
+
+import com.kh.spring.entity.OrderDetailDto;
 
 import lombok.Data;
 

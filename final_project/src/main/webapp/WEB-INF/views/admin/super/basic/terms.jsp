@@ -79,10 +79,4 @@
 	</div>
 <!-- 여기까지 -->
 
-
-
-
-
-
-
 <jsp:include page="/WEB-INF/views/template/admin/super/footer.jsp"></jsp:include>

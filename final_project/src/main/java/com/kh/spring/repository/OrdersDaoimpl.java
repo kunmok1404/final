@@ -9,13 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.spring.entity.CartDto;
-import com.kh.spring.entity.CartListVO;
 import com.kh.spring.entity.MemberDto;
 import com.kh.spring.entity.OrderDetailDto;
-import com.kh.spring.entity.OrderDetailListVo;
-import com.kh.spring.entity.OrderVo;
 import com.kh.spring.entity.OrdersDto;
 import com.kh.spring.entity.ShopDto;
+import com.kh.spring.vo.CartListVO;
+import com.kh.spring.vo.OrderDetailListVo;
+import com.kh.spring.vo.OrderVo;
 //주문 관련 Dao impl
 @Repository
 public class OrdersDaoimpl implements OrdersDao{
