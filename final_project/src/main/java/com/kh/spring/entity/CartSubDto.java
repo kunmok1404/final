@@ -11,7 +11,8 @@ public class CartSubDto {
 	private String sub_type;
 	private String sub_title;
 	private String sub_name;
-	private int sub_pirce;
+	private int sub_price;
+	private int sub_amount;
 	
 
 }

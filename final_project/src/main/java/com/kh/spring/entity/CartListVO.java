@@ -12,5 +12,5 @@ import lombok.Data;
 
 @Data
 public class CartListVO {
-	private List<CartDto> list;
+	private List<CartDto> main;
 }

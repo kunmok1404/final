@@ -34,20 +34,24 @@
 				<c:forEach var="order_detail" items="${order_detail}">
 					<tr>
 						<td>${order_detail.menu_name} x ${order_detail.menu_amount}</td>
-						<td>${order_detail.menu_price}</td>
+						<td>${order_detail.menu_price} 원</td>
 					</tr>
-						<c:choose>
-							<c:when test="${order_detail.sub_name!=null }">
-					<tr>
-						<td>  -${order_detail.sub_name}</td>
-						<td>${order_detail.sub_price}</td>
-					</tr>
-							</c:when>
-					</c:choose>
+					<tr>	
+						<td colspan="2">
+						<c:forEach var="order_sub" items="${order_sub_detail}">
+							<c:if test="${order_detail.no eq order_sub.no}">
+									-${order_sub.sub_type}<br>
+									-${order_sub.sub_title}<br>
+									-${order_sub.sub_name} x ${order_sub.sub_amount} 개
+									${order_sub.sub_price} 원<br>
+							</c:if>
+						</c:forEach>
+								</td>
+					</tr>			
 				</c:forEach>
 					<tr>
 						<td>주문합계</td>
-						<td>${orders.total_price}</td>
+						<td>${orders.total_price}원</td>
 					</tr>
 					
 					<tr>
@@ -56,7 +60,7 @@
 					</tr>
 					<tr>
 						<td><font color="red">결제금액</font></td>
-						<td>${orders.total_price + shop_info.delivery_price}</td>
+						<td>${orders.total_price + shop_info.delivery_price}원</td>
 					</tr>
 					<tr>
 						<td>결제방식</td>

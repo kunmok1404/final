@@ -10,6 +10,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	  <typeAliases>
 	  	<typeAlias type="com.kh.spring.entity.OrdersListVo" alias="orderListVo"/>
 	  	<typeAlias type="com.kh.spring.entity.CartSubDto" alias="cartSubDto"/>
+	  	<typeAlias type="com.kh.spring.entity.CartListNo" alias="cartListNo"/>
 	  	<typeAlias type="com.kh.spring.entity.CartDto" alias="cartDto"/>
 	  	<typeAlias type="com.kh.spring.entity.CertDto" alias="certDto"/>
 	  	<typeAlias type="com.kh.spring.entity.MemberDto" alias="memberDto"/>
@@ -20,6 +21,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	  	<typeAlias type="com.kh.spring.entity.SubMenuDto" alias="subMenuDto"/>
 	 	<typeAlias type="com.kh.spring.entity.OrdersDto" alias="ordersDto"/>
 	 	<typeAlias type="com.kh.spring.entity.OrderDetailDto" alias="orderDetailDto"/>
+	 	<typeAlias type="com.kh.spring.entity.OrderSubDetail" alias="orderSubDetail"/>
 	  	<typeAlias type="com.kh.spring.entity.Menu_SubMenuView" alias="menu_SubMenuView"/>
 	  	<typeAlias type="com.kh.spring.entity.NoticeDto" alias="noticeDto"/>
 	  	<typeAlias type="com.kh.spring.entity.OnoDto" alias="onoDto"/>
