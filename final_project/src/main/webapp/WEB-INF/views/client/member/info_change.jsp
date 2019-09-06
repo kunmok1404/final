@@ -52,18 +52,18 @@ $(function(){
 			checkPHONE();
 		});
 		
-// 		//email주소 옵션 선택시 입력창에 선택값 표시
-// 		$("#email_address_option").change(function(){
-// 			$("#email_address").val($(this).val())
-// 			//선택 옵션에서 직접 입력을 선택시 입력창 활성화 후 직접 입력
-// 			if(!$(this).val()){
-// 				$(this).prev().prop("readonly", false);
-// 			}
-// 			//선택 옵션에서 직접입력 이외 선택시 입력창에 선택값 표시 후 입력창 비활성화(수정 불가능하게)
-// 			else{
-// 				$(this).prev().prop("readonly", true);
-// 			}
-// 		});
+		//email주소 옵션 선택시 입력창에 선택값 표시
+		$("#email_address_option").change(function(){
+			$("#email_address").val($(this).val())
+			//선택 옵션에서 직접 입력을 선택시 입력창 활성화 후 직접 입력
+			if(!$(this).val()){
+				$(this).prev().prop("readonly", false);
+			}
+			//선택 옵션에서 직접입력 이외 선택시 입력창에 선택값 표시 후 입력창 비활성화(수정 불가능하게)
+			else{
+				$(this).prev().prop("readonly", true);
+			}
+		});
 	});
 
 	//비밀번호 정규표현식 검사 후 메세지 출력
@@ -225,18 +225,18 @@ $(function(){
 				<tr>
 					<td>이메일</td>
 					<td>
-						<input type="text" name="email" value="${memberDto.email}" pattern="^[a-zA-Z0-9!@#$\-_.]{18,23}$" required>
-<!-- 						<span>@</span> -->
-<%-- 						<input type="text" name="email_address" id="email_address" value="${memberDto.email_address}" pattern="^.*?\..*?$" requried> --%>
-<!-- 						<select id="email_address_option"> -->
-<!-- 							<option>--이메일 선택--</option> -->
-<!-- 							<option value="">직접입력</option> -->
-<!-- 							<option>naver.com</option> -->
-<!-- 							<option>gmail.com</option> -->
-<!-- 							<option>daum.net</option> -->
-<!-- 							<option>nate.com</option> -->
-<!-- 							<option>yahoo.com</option> -->
-<!-- 						</select> -->
+						<input type="text" name="email" value="${memberDto.email}" pattern="^[a-zA-Z0-9!@#$\-_.]{8,16}$" required>
+						<span>@</span>
+						<input type="text" name="email_address" id="email_address" value="${memberDto.email_address}" pattern="^.*?\..*?$" requried>
+						<select id="email_address_option">
+							<option>--이메일 선택--</option>
+							<option value="">직접입력</option>
+							<option>naver.com</option>
+							<option>gmail.com</option>
+							<option>daum.net</option>
+							<option>nate.com</option>
+							<option>yahoo.com</option>
+						</select>
 						<div class="emailD"></div>
 					</td>
 				</tr>
