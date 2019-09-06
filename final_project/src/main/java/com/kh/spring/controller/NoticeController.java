@@ -41,7 +41,7 @@ public class NoticeController {
 		int start = pagesize * page - (pagesize - 1);
 		int end = pagesize * page;
 		
-		int blocksize = 10;
+		int blocksize = 5;
 		int startBlock = (page - 1) / blocksize * blocksize + 1;
 		int endBlock = startBlock + (blocksize - 1);
 		

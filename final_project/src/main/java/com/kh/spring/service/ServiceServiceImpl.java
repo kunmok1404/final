@@ -18,8 +18,10 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.spring.entity.FilesDto;
 import com.kh.spring.entity.NoticeDto;
 import com.kh.spring.entity.OnoDto;
+import com.kh.spring.entity.QnaDto;
 import com.kh.spring.repository.NoticeDao;
 import com.kh.spring.repository.OnoDao;
+import com.kh.spring.repository.QnaDao;
 
 @Service
 public class ServiceServiceImpl implements ServiceService {
@@ -32,6 +34,9 @@ public class ServiceServiceImpl implements ServiceService {
 	
 	@Autowired
 	private SqlSession sqlSession;
+
+	@Autowired
+	private QnaDao qnaDao;
 
 	@Override
 	@Transactional
@@ -119,6 +124,26 @@ public class ServiceServiceImpl implements ServiceService {
 		noticeDao.insert(noticeDto);
 		return no;
 	}
+	@Override
+	public QnaDto qnaInfo(int no) {
+		QnaDto qnaDto = qnaDao.qnaInfo(no);
+		// 시간 자르기
+		String time = qnaDto.getRegist_date().substring(0, 16);
+		qnaDto.setRegist_date(time);
+		return qnaDto;
+	}
+	@Override
+	public int write(QnaDto qnaDto) {
+		int no = qnaDao.getSequenceNumber();
+		 qnaDto.setNo(no);
+		qnaDao.insert( qnaDto);
+		return no;
+	}
+	
+
+
+
+	
 
 
 }

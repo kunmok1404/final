@@ -65,7 +65,7 @@
             <li><a href="${pageContext.request.contextPath}/super_admin/chart/order">통계</a></li>
             <li><a href="#">정산관리</a></li>
             <li><a href="${pageContext.request.contextPath}/super_admin/review/list">리뷰관리</a></li>
-            <li><a href="#">고객센터</a></li>
+            <li><a href="${pageContext.request.contextPath}/super_admin/ono/ono_list">고객센터</a></li>
           </ul>
         </div>
         <!--상단메뉴 끝-->
