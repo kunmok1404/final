@@ -28,7 +28,7 @@
 								<option value="">선택하세요</option>
 								<option>고객</option>
 								<option>업주</option>
-						</select><select name="type">
+						</select><select name="type" >
 								<option value="">선택하세요</option>
 								<option>중요</option>
 						</select></th>

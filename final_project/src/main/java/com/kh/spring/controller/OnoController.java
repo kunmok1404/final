@@ -1,18 +1,12 @@
 package com.kh.spring.controller;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.kh.spring.entity.FilesDto;
 import com.kh.spring.entity.OnoDto;
 import com.kh.spring.repository.OnoDao;
 import com.kh.spring.service.ServiceService;
@@ -44,15 +37,23 @@ public class OnoController {
 	@GetMapping("/list")
 	public String list(Model model,
 			@RequestParam(required = false, defaultValue = "1") int page) {
+		//나의 1대1 목록 불러오기
+		//int member_code = (int)session.getAttribute("member_code");
+		int member_code = 81;
+		
+		
+//		model.addAttribute("list", serviceService.list(member_code));
+		
+		//페이징
 		int pagesize = 10;
 		int start = pagesize * page - (pagesize - 1);
 		int end = pagesize * page;
 		
-		int blocksize = 10;
+		int blocksize = 5;
 		int startBlock = (page - 1) / blocksize * blocksize + 1;
 		int endBlock = startBlock + (blocksize - 1);
-		
 		int count = onoDao.count();
+//		System.out.println(count);
 		int pageCount = (count -1) / pagesize +1;
 		if(endBlock > pageCount) {
 			endBlock = pageCount;
@@ -62,7 +63,9 @@ public class OnoController {
 		model.addAttribute("startBlock", startBlock);
 		model.addAttribute("endBlock", endBlock);
 		
-		List<OnoDto> list = onoDao.list(start, end);
+		List<OnoDto> list = onoDao.list(start, end, member_code);
+		
+//		System.out.println(list.size());
 		model.addAttribute("list", list);
 		
 	return "client/service/ono/list";
@@ -107,6 +110,7 @@ public class OnoController {
 								@RequestParam List<MultipartFile> images,
 								
 								HttpSession session, Model model) throws IllegalStateException, IOException {
+		//int member_code = (int)session.getAttribute("member_code");
 		int member_code = 1;
 		int shop_code = 1;
 		onoDto.setMember_code(member_code);

@@ -13,6 +13,7 @@ import com.kh.spring.entity.MemberDto;
 import com.kh.spring.entity.MyshopDto;
 import com.kh.spring.entity.ShopDto;
 import com.kh.spring.entity.UsergradeDto;
+import com.kh.spring.vo.MemberInfoVO;
 
 @Repository
 public class MemberDaoImpl implements MemberDao {
@@ -87,14 +88,10 @@ public class MemberDaoImpl implements MemberDao {
 	
 	//회원 탈퇴
 	@Override
-	public void delete(int member_code) {
+	public void member_delete(int member_code) {
 		sqlSession.delete("member.delete", member_code);
 		
-	}
-	
-	
-	
-	
+	}	
 	
 	// 회원정보 조회
 	@Override
@@ -102,6 +99,38 @@ public class MemberDaoImpl implements MemberDao {
 		return sqlSession.selectOne("member.get_info",member_code);
 	}
 
+	//관리자 회원 검색
+	@Override
+	public List<MemberInfoVO> search(String status, String grade, String start_date, String end_date, String type, String keyword) {
+		Map<String, String> param = new HashMap<>();
+		param.put("status", status);
+		param.put("grade", grade);
+		param.put("start_date", start_date);
+		param.put("end_date", end_date);
+		param.put("type", type);
+		param.put("keyword", keyword);
+		System.out.println(param);
+		return sqlSession.selectList("member.search", param);
+	}
+	
+	//관리자 회원 정보 상세 보기
+	@Override
+	public List<MemberInfoVO> info(int no) {
+		return sqlSession.selectList("member.info", no);
+	}
+	
+	//관리자 회원 탈퇴 기능
+	@Override
+	public void delete(int no) {
+		sqlSession.delete("member.delete", no);
+	}
+	
+	//관리자 회원 정보 수정
+	@Override
+	public void edit(MemberInfoVO memberInfoVO) {
+		sqlSession.update("memer.edit", memberInfoVO);		
+	}
+	
 	@Override
 	public void like(MyshopDto myshop) {
 		sqlSession.insert("member.like", myshop);

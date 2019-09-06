@@ -17,6 +17,42 @@ public interface QnaDao {
 	void write(QnaDto qnaDto);
 
 
+
+	int supercount();
+
+
+
+	List<QnaDao> superlist(int i, int j);
+
+
+
+	int count_reply_ceo();
+
+
+
+	int count_reply();
+
+
+
+	QnaDto qnaInfo(int no);
+
+
+
+	int getSequenceNumber();
+
+
+
+	void insert(QnaDto qnaDto);
+
+
+
+	void edit(QnaDto qnaDto);
+
+
+
+	void qnadelete(int no);
+
+
 	
 
 }

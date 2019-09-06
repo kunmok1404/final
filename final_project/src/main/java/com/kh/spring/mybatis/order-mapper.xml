@@ -11,6 +11,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="cartlist" parameterType="int" resultType="cartDto">
 		select * from cart where member_code = #{member_code}
 	</select>
+	<!-- '자기'의 카트에 존재하는 메인 메뉴의 코드를 출력하는 코드 -->
+	<select id="cartlistno" parameterType="int" resultType="cartListNo">
+		select no from cart where member_code =#{member_code}
+	</select>
+	<!-- '자신'의 카트에 존재하는 물건의 추가메뉴를 출력하는 코드 -->
+	<select id="cartSubList" parameterType="int" resultType="cartSubDto">
+		select * from cart_sub_menu where no = #{no}
+	</select>
 	<!-- '자신'의 카트에 존재하는 물건에 딸린 매장을 검색하는 코드 -->
 	<select id="cartshop" parameterType="int" resultType="shopDto">
 		select * from shop where no = #{shop_code}
@@ -21,11 +29,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	<!-- 카트에 있는 정보를 수정해서 주문에 넣음 -->
 	<update id="update" parameterType="cartDto">
-		update cart set menu_amount = #{menu_amount},
-		menu_price = #{menu_price}
-		where no = #{no}
+		update cart set menu_amount = ${menu_amount},
+		menu_price = ${menu_price}
+		where no = ${no}
 	</update>
-	
+	<!-- 장바구니 개별 지우기 -->
+	<delete id="cartinnerDelete" parameterType="int">
+		delete cart where no = #{no}
+	</delete>
+
 	<!-- 나의정보 주문내역 -->
 	<select id="my_order_list" parameterType="int" resultType="ordersDto">
 		select * from orders where member_code=#{member_code}
@@ -56,38 +68,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			where 
 		order_code = #{order_code}
 	</select>
-
-	
+	<!-- 나의정보 추가메뉴 주문 상세 -->
+	<select id="my_order_sub_detail" parameterType="map" resultType="orderSubDetail">
+		select * from order_sub_detail where no = #{no}
+	</select>
 	<!-- 나의주문정보조회 -->
 	<select id="order_info" parameterType="int" resultType="ordersDto">
 		select * from orders 
 			where 
 		no = #{order_code}
-	</select>
-	
-
-	<insert id="regist" parameterType="orderDetailDto">
-		insert into order_detail values(#{order_code}, #{title}, #{menu_name}, #{menu_amount},
-		#{menu_price}, #{sub_name}, #{sub_amount}, #{sub_type}, #{sub_price})
-	</insert>
-	
+	</select>	
 	<!-- 주문 번호 미리 구하기 -->
 	<select id="order_seq" resultType="int">
 		select orders_seq.nextval from dual
 	</select>
-	
+	<!-- 주문 상세 번호 미리 구하기 -->
+	<select id="order_det_seq" resultType="int">
+		select order_det_seq.nextval from dual
+	</select>
 	<!-- 주문 내용 등록 -->
 	<insert id="order_regist" parameterType="ordersDto">
 		insert into orders values(${no}, #{member_code},#{shop_code},#{total_price},
-		'접수대기',#{discount_price},#{pay_method},#{request},sysdate, '미작성')
+		'접수대기',#{discount_price},#{pay_method},#{request},sysdate,'미작성')
 	</insert>
 	
 	<!-- 주문 상세 등록 -->
 	<insert id="detail_regist" parameterType="orderDetailDto">
-		insert into order_detail values(#{order_no}, #{title}, #{menu_name}, #{menu_amount},
-		#{menu_price}, #{sub_name}, #{sub_amount}, #{sub_type}, #{sub_price})
+		insert into order_detail values(#{order_code},order_det_seq.nextval, #{title}, #{menu_name}, #{menu_amount},
+		#{menu_price})
 	</insert>
-	
+	<!-- 주문 상세 추가메뉴 등록 -->
+	<insert id="detail_sub_regist" parameterType="orderSubDetail">
+		insert into order_sub_detail values(order_sub_seq.nextval,#{no},#{sub_type},#{sub_title},#{sub_name},#{sub_price},#{sub_amount})
+	</insert>
 	<!-- 장바구니 갯수 확인 -->
 	<select id="quantity" parameterType="int" resultType="int">
 		select count(*) from cart where member_code = #{member_code}
@@ -109,24 +122,54 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     	 , X.*
   		FROM ( 
 		SELECT TO_CHAR(order_date, 'yy') t1,TO_CHAR(order_date, 'mm') 
-		t2,TO_CHAR(order_date, 'dd') t3,count(*) cut from orders 
-		GROUP BY  TO_CHAR(order_date, 'yy') ,TO_CHAR(order_date, 'mm') ,
-		TO_CHAR(order_date, 'dd') HAVING COUNT(TO_CHAR(order_date, 'yy')) >= 1
-		ORDER BY TO_CHAR(order_date, 'yy') aSC
+		t2,TO_CHAR(order_date, 'dd') t3,count(*) cut from 
+		]]>
+		<choose>
+			<when test="no != null">
+				(select * from orders where no = #{no})
+			</when>
+			<otherwise>
+				orders 
+			</otherwise>		
+		</choose> 
+		<![CDATA[
+		GROUP BY  (TO_CHAR(order_date, 'yy') ,TO_CHAR(order_date, 'mm') ,
+		TO_CHAR(order_date, 'dd')) HAVING COUNT(TO_CHAR(order_date, 'yy')) >= 1
+		ORDER BY TO_CHAR(order_date, 'yy') ,TO_CHAR(order_date, 'mm') ,TO_CHAR(order_date, 'dd') aSC
 		) X
 	]]>
 	</select>
 	<select id="cancel_data" resultType="int" parameterType="map">
 	<![CDATA[
-		select count(*) from orders where 
-		order_date like #{order_date} and ORDER_STATUS = '취소완료'
+		select count(*) from 
+		]]>
+		<choose>
+			<when test="no != null">
+				(select * from orders where no = #{no})
+			</when>
+			<otherwise>
+				orders 
+			</otherwise>		
+		</choose> 
+		<![CDATA[
+		where order_date like #{order_date} and ORDER_STATUS = '취소완료'
 	]]>
 	</select>
 	
 	<select id="sussce_data" resultType="int" parameterType="map">
 	<![CDATA[
-		select count(*) from orders where 
-		order_date like #{order_date} and ORDER_STATUS = '배달완료'
+		select count(*) from 
+		]]>
+		<choose>
+			<when test="no != null">
+				(select * from orders where no = #{no})
+			</when>
+			<otherwise>
+				orders 
+			</otherwise>		
+		</choose> 
+		<![CDATA[ 
+		where order_date like #{order_date} and ORDER_STATUS = '배달완료'
 	]]>
 	</select>
 	<select id="date_day" resultType="orderVo" parameterType="map">
@@ -136,15 +179,75 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   		FROM ( 
 		SELECT TO_CHAR(order_date, 'yy') t1,TO_CHAR(order_date, 'mm') 
 		t2,TO_CHAR(order_date, 'dd') t3,count(*) cut from 
-		(select * from orders where ORDER_DATE between 
+		(select * from 
+		]]>
+		<choose>
+			<when test="no != null">
+				(select * from orders where no = #{no})
+			</when>
+			<otherwise>
+				orders 
+			</otherwise>		
+		</choose> 
+		<![CDATA[
+		where ORDER_DATE between 
 		to_date(#{start}) and to_date(#{end})) 
-		GROUP BY  TO_CHAR(order_date, 'yy') ,TO_CHAR(order_date, 'mm') ,
-		TO_CHAR(order_date, 'dd') HAVING COUNT(TO_CHAR(order_date, 'yy')) >= 1
+		GROUP BY  (TO_CHAR(order_date, 'yy') ,TO_CHAR(order_date, 'mm') ,
+		TO_CHAR(order_date, 'dd')) HAVING COUNT(TO_CHAR(order_date, 'yy')) >= 1
 		ORDER BY TO_CHAR(order_date, 'yy') aSC
 		) X
 	]]>
 	</select>
+	<select id="total" resultType="totalVo">
+	<![CDATA[
+	SELECT ROWNUM
+    	 , X.*
+  		FROM ( 
+		select TO_CHAR(order_date, 'yy') t1,TO_CHAR(order_date, 'mm') t2,
+		TO_CHAR(order_date, 'dd') t3,sum(TOTAL_PRICE) tot from	
+		]]>
+		<choose>
+			<when test="no != null">
+				(select * from orders where no = #{no})
+			</when>
+			<otherwise>
+				orders 
+			</otherwise>		
+		</choose> 
+		<![CDATA[
+		GROUP BY ROLLUP(TO_CHAR(order_date, 'yy') ,TO_CHAR(order_date, 'mm') ,TO_CHAR(order_date, 'dd'))
+		HAVING GROUPING_ID(TO_CHAR(order_date, 'yy') ,TO_CHAR(order_date, 'mm') ,TO_CHAR(order_date, 'dd')) IN (0, 4) 
+		ORDER BY TO_CHAR(order_date, 'yy') aSC
+	) X
+		]]>
+	</select>
 	
+	<select id="total_date" resultType="totalVo" parameterType="map">
+	<![CDATA[
+	SELECT ROWNUM
+    	 , X.*
+  		FROM ( 
+		select TO_CHAR(order_date, 'yy') t1,TO_CHAR(order_date, 'mm') t2,
+		TO_CHAR(order_date, 'dd') t3,sum(TOTAL_PRICE) tot from	
+		(select * from 
+		]]>
+		<choose>
+			<when test="no != null">
+				(select * from orders where no = #{no})
+			</when>
+			<otherwise>
+				orders 
+			</otherwise>		
+		</choose> 
+		<![CDATA[
+		where ORDER_DATE between 
+		to_date(#{start}) and to_date(#{end})) 
+		GROUP BY ROLLUP(TO_CHAR(order_date, 'yy') ,TO_CHAR(order_date, 'mm') ,TO_CHAR(order_date, 'dd'))
+		HAVING GROUPING_ID(TO_CHAR(order_date, 'yy') ,TO_CHAR(order_date, 'mm') ,TO_CHAR(order_date, 'dd')) IN (0, 4) 
+		ORDER BY TO_CHAR(order_date, 'yy') aSC
+	) X
+		]]>
+	</select>
 	<!-- 이 밑으로 슈퍼 관리자용 -->
 	<!-- 주문 리스트를 불러오는 코드 -->
 	<select id="ordersList" parameterType="map" resultType="orderListVo">

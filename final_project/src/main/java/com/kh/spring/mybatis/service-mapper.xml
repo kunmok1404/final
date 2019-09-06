@@ -10,8 +10,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			select rownum rn, A.* from (
 				
 				select * from qna
+				 where 1=1
 				<if test="category != null ">
-					where category=#{category}
+				and  category=#{category}
 				</if>
 				order by no desc
 			
@@ -19,7 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		) where rn between #{start} and #{end}
 	</select>
 	
-	<!-- 자주하는 질문 검색기능 -->
+	<!-- 자주하는 질문 목록과 검색일 경우 각각의 게시글 수를 구하는 SQL명령 -->
 	<select id="qna_count" parameterType="string" resultType="int">
 		select count(*) from qna
 			<if test="category != null">
@@ -120,7 +121,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from(
 			select rownum rn, A.* from (
 				
-				select * from OneAndOne order by no desc
+				select * from OneAndOne 
+				 where member_code=#{member_code} order by no desc
 			
 			)A
 		) where rn between #{start} and #{end}
@@ -129,6 +131,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="ono_count"  resultType="int">
 		select count(*) from OneAndOne
 	</select>
+	
+
 	
 <!-- 1:1 문의 글쓰기 기능 -->
 	<insert id="ono_write" parameterType="onoDto">
@@ -152,7 +156,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			'고객', #{category})
 	</insert>
 	
-	<!-- 글 수정 -->
+	<!--1:1 문의 글 수정 -->
 	<select id="get" parameterType="int" resultType="onoDto">
 		select * from oneandone where no = #{no}
 	</select>
@@ -215,6 +219,171 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  				no = #{no}
  	</update>
  	
+<!-- 1:1문의 관리자 목록과 검색일 경우 각각의 게시글 수를 구하는 SQL명령 --> 	
+ 	<select id="super_ono_count" parameterType="map" resultType="int">
+ 		select count(*) from oneandone
+ 			where 1=1
+ 			<if test="apply_status != null">
+				and apply_status=#{apply_status} 
+			</if>
+ 			<if test="keyword_type !=null and keyword !=null">
+ 			and ${keyword_type} like '%'|| #{keyword} ||'%'
+ 			</if>
+ 			
+ 	</select>
+ 	
+ 	
+ 	<!-- 고객 답변완료+답변대기 개수 -->	
+	<select id="client_count"  resultType="int">
+		select count(*) from oneandone where type='고객'
+	</select>
+	
+ 	<!-- 
+ 		만약 전체목록이면 : select * from oneandone where type='고객'
+ 		개수를 구하는경우 : select count(*) from oneandone where type='고객'
+ 	 -->
+ 	
+<!-- 1:1문의 관리자 목록 -->
+<!-- 답변대기만 표시 -->
+
+	<select id="super_ono_list2" parameterType="map"  resultType="onoDto">
+	select * from(
+			select rownum rn, A.* from (
+				
+				select * from oneandone
+				   where 1=1
+				<if test="apply_status !=null">
+					and apply_status =#{apply_status}
+				</if>
+				<if test="keyword_type !=null and keyword != null ">
+					and ${keyword_type} like '%' || #{keyword} || '%'
+				</if>
+					and type='고객'
+					and reply_status like '%' || '답변대기' || '%' 
+		order by no desc
+				
+			)A
+		) where rn between #{start} and #{end}
+	</select>
+	
+<!-- 답변대기+답변완료 모두 표시 -->	
+ 	<select id="super_ono_list" parameterType="map" resultType="onoDto">
+		<!-- 부등호 등 태그 형식에서 사용 불가한 글자를 허용하는 지역 생성 -->
+		select * from(
+			select rownum rn, A.* from (
+				
+				select * from oneandone
+				   where 1=1
+				<if test="apply_status !=null">
+					and apply_status =#{apply_status}
+				</if>
+				<if test="keyword_type !=null and keyword != null ">
+					and ${keyword_type} like '%' || #{keyword} || '%'
+				</if>
+				
+					and type='고객'
+				
+				order by no desc
+				
+			)A
+		) where rn between #{start} and #{end}
+	</select>
+
+<!-- 1:1문의 관리자 글 상세보고 답글달기 -->	
+
+	 	<update id="super_ono_edit" parameterType="onoDto">
+ 		update OneAndOne
+ 			set
+ 				reply_content = #{reply_content}
+ 			where
+ 				no = #{no}
+ 	</update>
+ 	
+<!-- 답변 상태 변경 -->
+	<update id="super_reply_status" parameterType="onoDto">
+		update oneandone set reply_status='답변완료' where no = #{no}
+	</update>
+	
+<!-- 답변대기 개수-->	
+	<select id="count_reply" resultType="int">
+		select count(*) from oneandone
+				where reply_status='답변대기' and type='고객'
+	</select>
+	
+
+<!-- 업주 1:1 문의 -->
+<!-- 1:1문의 관리자 목록과 검색일 경우 각각의 게시글 수를 구하는 SQL명령 --> 	
+ 	<select id="super_ono_count_ceo" parameterType="map" resultType="int">
+ 		select count(*) from oneandone
+ 			<if test="apply_status != null">
+				where apply_status=#{apply_status} 
+			</if>
+ 			<if test="keyword_type !=null and keyword !=null">
+ 			where ${keyword_type} like '%'|| #{keyword} ||'%'
+ 			</if>
+ 			<if test="reply_status=='답변대기'">
+ 			where reply_status='답변대기' and type='업주'
+ 			</if>
+ 			
+ 	</select>
+ 	
+<!-- 답변대기+답변완료 모두 표시 -->	
+ 	<select id="super_ono_list_ceo" parameterType="map" resultType="onoDto">
+		<!-- 부등호 등 태그 형식에서 사용 불가한 글자를 허용하는 지역 생성 -->
+		select * from(
+			select rownum rn, A.* from (
+				
+				select * from oneandone
+				   where 1=1
+				<if test="apply_status !=null">
+					and apply_status =#{apply_status}
+				</if>
+				<if test="keyword_type !=null and keyword != null ">
+					and ${keyword_type} like '%' || #{keyword} || '%'
+				</if>
+					and type='업주'
+				order by no desc
+				
+			)A
+		) where rn between #{start} and #{end}
+	</select> 	
+
+<select id="super_ono_list2_ceo" parameterType="map"  resultType="onoDto">
+	select * from(
+			select rownum rn, A.* from (
+				
+				select * from oneandone
+				   where 1=1
+				<if test="apply_status !=null">
+					and apply_status =#{apply_status}
+				</if>
+				<if test="keyword_type !=null and keyword != null ">
+					and ${keyword_type} like '%' || #{keyword} || '%'
+				</if>
+				
+					and type='업주'
+				
+					and reply_status like '%' || '답변대기' || '%' 
+		order by no desc
+				
+			)A
+		) where rn between #{start} and #{end}
+	</select>
+	
+<!-- 답변대기 개수-->	
+	<select id="count_reply_ceo" resultType="int">
+		select count(*) from oneandone
+				where reply_status='답변대기' and type='업주'
+	</select>
+	
+	
+ 	
+ 	<!-- 업주 답변완료+답변대기 개수 -->	
+	<select id="ceo_count"  resultType="int">
+		select count(*) from oneandone where type='업주'
+	</select>
+
+
  <!-- 조회수 증가 -->
 <!--  	<update id="read" parameterType="int"> -->
 <!--  		update review set read = read+1 where no=#{ono_code} -->
