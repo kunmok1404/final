@@ -16,9 +16,9 @@ public class SuperCouponController {
 	private CouponDao couponDao;
 	
 	@GetMapping("/regist")
-	public String regist(@ModelAttribute CouponDto couponDto) {
-		couponDao.regist(couponDto);
-		return "";
+	public String regist() {
+//		couponDao.regist(couponDto);
+		return "admin/super/promotion/coupon_regist";
 	}
 	
 	// 쿠폰 목록

@@ -59,7 +59,7 @@
             <li><a href="#">매장관리</a></li>
             <li><a href="#">메뉴관리</a></li>
             <li><a href="#">주문관리</a></li>
-            <li><a href="#">통계</a></li>
+            <li><a href="${pageContext.request.contextPath}/shop_admin/chart/order">통계</a></li>
             <li><a href="#">리뷰관리</a></li>
             <li><a href="${pageContext.request.contextPath}/shop_admin/ono/list">고객센터</a></li>
           </ul>

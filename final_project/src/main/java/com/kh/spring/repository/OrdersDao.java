@@ -17,6 +17,7 @@ import com.kh.spring.entity.OrderSubDetailListVo;
 import com.kh.spring.entity.OrderVo;
 import com.kh.spring.entity.OrdersDto;
 import com.kh.spring.entity.ShopDto;
+import com.kh.spring.entity.TotalVo;
 //주문 관련 Dao
 @Repository
 public interface OrdersDao {
@@ -37,10 +38,12 @@ public interface OrdersDao {
 
 	int getQuantity(int member_code);
 	OrdersDto orderResult(int no);
-	List<OrderVo> order_data();
-	int cancel(String t1);
-	int sussce(String t1);
-	List<OrderVo> date_day(String start, String end);
+	List<OrderVo> order_data(String no);
+	List<TotalVo> sale_data(String no);
+	int cancel(String no,String t1);
+	int sussce(String no,String t1);
+	List<OrderVo> date_day(String no,String start, String end);
+	List<TotalVo> sale_day(String no,String start, String end);
 	List<OrdersDto> orderslist(String status,String type,String keyword,int i, int j);
 	int ordersCount(String status,String type,String keyword);
 	List<OrderDetailDto> orderDetail(int no);
