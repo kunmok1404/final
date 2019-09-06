@@ -16,6 +16,7 @@ import com.kh.spring.entity.OrderDetailListVo;
 import com.kh.spring.entity.OrderVo;
 import com.kh.spring.entity.OrdersDto;
 import com.kh.spring.entity.ShopDto;
+import com.kh.spring.entity.TotalVo;
 //주문 관련 Dao impl
 @Repository
 public class OrdersDaoimpl implements OrdersDao{
@@ -117,27 +118,32 @@ public class OrdersDaoimpl implements OrdersDao{
 
 	@Override
 
-	public List<OrderVo> order_data() {
+	public List<OrderVo> order_data(String no) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("no", no);
 		return sqlsession.selectList("order.order_data");
 	}
 
 	@Override
-	public int cancel(String t1) {
+	public int cancel(String no,String t1) {
 		Map<String, Object> map = new HashMap<>();
+		map.put("no", no);
 		map.put("order_date", t1);
 		return sqlsession.selectOne("order.cancel_data", map);
 	}
 
 	@Override
-	public int sussce(String t1) {
+	public int sussce(String no,String t1) {
 		Map<String, Object> map = new HashMap<>();
+		map.put("no", no);
 		map.put("order_date", t1);
 		return sqlsession.selectOne("order.sussce_data", map);
 	}
 
 	@Override
-	public List<OrderVo> date_day(String start, String end) {
+	public List<OrderVo> date_day(String no,String start, String end) {
 		Map<String, Object> map = new HashMap<>();
+		map.put("no", no);
 		map.put("start", start);
 		map.put("end", end);
 		return sqlsession.selectList("order.date_day", map);
@@ -193,6 +199,22 @@ public class OrdersDaoimpl implements OrdersDao{
 		map.put("order_status", order_status);
 		sqlsession.update("order.setStatus",map);
 		
+	}
+
+	@Override
+	public List<TotalVo> sale_data(String no) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("no", no);
+		return sqlsession.selectList("order.total");
+	}
+
+	@Override
+	public List<TotalVo> sale_day(String no, String start, String end) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("no", no);
+		map.put("start", start);
+		map.put("end", end);
+		return sqlsession.selectList("order.total_date", map);
 	}
 
 

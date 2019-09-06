@@ -125,4 +125,16 @@ public class ShopDaoImpl implements ShopDao {
 		return sqlSession.selectOne("shop.myshop",map);
 	}
 
+	@Override
+	public List<ShopDto> shop() {
+		return sqlSession.selectList("shop.all");
+	}
+
+	@Override
+	public List<ShopDto> search_name(String sh_name) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("shop_name", sh_name);
+		return  sqlSession.selectList("shop.search_name",map);
+	}
+
 }

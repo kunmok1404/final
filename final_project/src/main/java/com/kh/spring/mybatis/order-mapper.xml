@@ -109,24 +109,54 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     	 , X.*
   		FROM ( 
 		SELECT TO_CHAR(order_date, 'yy') t1,TO_CHAR(order_date, 'mm') 
-		t2,TO_CHAR(order_date, 'dd') t3,count(*) cut from orders 
-		GROUP BY  TO_CHAR(order_date, 'yy') ,TO_CHAR(order_date, 'mm') ,
-		TO_CHAR(order_date, 'dd') HAVING COUNT(TO_CHAR(order_date, 'yy')) >= 1
-		ORDER BY TO_CHAR(order_date, 'yy') aSC
+		t2,TO_CHAR(order_date, 'dd') t3,count(*) cut from 
+		]]>
+		<choose>
+			<when test="no != null">
+				(select * from orders where no = #{no})
+			</when>
+			<otherwise>
+				orders 
+			</otherwise>		
+		</choose> 
+		<![CDATA[
+		GROUP BY  (TO_CHAR(order_date, 'yy') ,TO_CHAR(order_date, 'mm') ,
+		TO_CHAR(order_date, 'dd')) HAVING COUNT(TO_CHAR(order_date, 'yy')) >= 1
+		ORDER BY TO_CHAR(order_date, 'yy') ,TO_CHAR(order_date, 'mm') ,TO_CHAR(order_date, 'dd') aSC
 		) X
 	]]>
 	</select>
 	<select id="cancel_data" resultType="int" parameterType="map">
 	<![CDATA[
-		select count(*) from orders where 
-		order_date like #{order_date} and ORDER_STATUS = '취소완료'
+		select count(*) from 
+		]]>
+		<choose>
+			<when test="no != null">
+				(select * from orders where no = #{no})
+			</when>
+			<otherwise>
+				orders 
+			</otherwise>		
+		</choose> 
+		<![CDATA[
+		where order_date like #{order_date} and ORDER_STATUS = '취소완료'
 	]]>
 	</select>
 	
 	<select id="sussce_data" resultType="int" parameterType="map">
 	<![CDATA[
-		select count(*) from orders where 
-		order_date like #{order_date} and ORDER_STATUS = '배달완료'
+		select count(*) from 
+		]]>
+		<choose>
+			<when test="no != null">
+				(select * from orders where no = #{no})
+			</when>
+			<otherwise>
+				orders 
+			</otherwise>		
+		</choose> 
+		<![CDATA[ 
+		where order_date like #{order_date} and ORDER_STATUS = '배달완료'
 	]]>
 	</select>
 	<select id="date_day" resultType="orderVo" parameterType="map">
@@ -136,15 +166,75 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   		FROM ( 
 		SELECT TO_CHAR(order_date, 'yy') t1,TO_CHAR(order_date, 'mm') 
 		t2,TO_CHAR(order_date, 'dd') t3,count(*) cut from 
-		(select * from orders where ORDER_DATE between 
+		(select * from 
+		]]>
+		<choose>
+			<when test="no != null">
+				(select * from orders where no = #{no})
+			</when>
+			<otherwise>
+				orders 
+			</otherwise>		
+		</choose> 
+		<![CDATA[
+		where ORDER_DATE between 
 		to_date(#{start}) and to_date(#{end})) 
-		GROUP BY  TO_CHAR(order_date, 'yy') ,TO_CHAR(order_date, 'mm') ,
-		TO_CHAR(order_date, 'dd') HAVING COUNT(TO_CHAR(order_date, 'yy')) >= 1
+		GROUP BY  (TO_CHAR(order_date, 'yy') ,TO_CHAR(order_date, 'mm') ,
+		TO_CHAR(order_date, 'dd')) HAVING COUNT(TO_CHAR(order_date, 'yy')) >= 1
 		ORDER BY TO_CHAR(order_date, 'yy') aSC
 		) X
 	]]>
 	</select>
+	<select id="total" resultType="totalVo">
+	<![CDATA[
+	SELECT ROWNUM
+    	 , X.*
+  		FROM ( 
+		select TO_CHAR(order_date, 'yy') t1,TO_CHAR(order_date, 'mm') t2,
+		TO_CHAR(order_date, 'dd') t3,sum(TOTAL_PRICE) tot from	
+		]]>
+		<choose>
+			<when test="no != null">
+				(select * from orders where no = #{no})
+			</when>
+			<otherwise>
+				orders 
+			</otherwise>		
+		</choose> 
+		<![CDATA[
+		GROUP BY ROLLUP(TO_CHAR(order_date, 'yy') ,TO_CHAR(order_date, 'mm') ,TO_CHAR(order_date, 'dd'))
+		HAVING GROUPING_ID(TO_CHAR(order_date, 'yy') ,TO_CHAR(order_date, 'mm') ,TO_CHAR(order_date, 'dd')) IN (0, 4) 
+		ORDER BY TO_CHAR(order_date, 'yy') aSC
+	) X
+		]]>
+	</select>
 	
+	<select id="total_date" resultType="totalVo" parameterType="map">
+	<![CDATA[
+	SELECT ROWNUM
+    	 , X.*
+  		FROM ( 
+		select TO_CHAR(order_date, 'yy') t1,TO_CHAR(order_date, 'mm') t2,
+		TO_CHAR(order_date, 'dd') t3,sum(TOTAL_PRICE) tot from	
+		(select * from 
+		]]>
+		<choose>
+			<when test="no != null">
+				(select * from orders where no = #{no})
+			</when>
+			<otherwise>
+				orders 
+			</otherwise>		
+		</choose> 
+		<![CDATA[
+		where ORDER_DATE between 
+		to_date(#{start}) and to_date(#{end})) 
+		GROUP BY ROLLUP(TO_CHAR(order_date, 'yy') ,TO_CHAR(order_date, 'mm') ,TO_CHAR(order_date, 'dd'))
+		HAVING GROUPING_ID(TO_CHAR(order_date, 'yy') ,TO_CHAR(order_date, 'mm') ,TO_CHAR(order_date, 'dd')) IN (0, 4) 
+		ORDER BY TO_CHAR(order_date, 'yy') aSC
+	) X
+		]]>
+	</select>
 	<!-- 이 밑으로 슈퍼 관리자용 -->
 	<!-- 주문 리스트를 불러오는 코드 -->
 	<select id="ordersList" parameterType="map" resultType="orderListVo">
