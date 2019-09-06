@@ -19,17 +19,7 @@
 		$("input[name=page]").val(no);
 		$("form").submit();
 		}
-		
-		//select[name=apply_status]인 항목의 값을 선택
-		var apply_status ="${param.apply_status}";
-		if(apply_status){
-		$("select[name=apply_status]").val(apply_status);
-		}
-		var keyword_type ="${param.keyword_type}";
-		if(keyword_type){
-		$("select[name=keyword_type]").val(keyword_type);
-		}
-		
+    		
     	})
     
     </script>
@@ -39,13 +29,12 @@
 		<div id="terms-wrapper">
           <div class="terms-line"></div>
         </div>
-	    <span>고객 1:1 문의</span>
+		<span>업주 1:1 문의</span>
       </div>
      
 	  <!-- 검색목록창 시작 -->
 	  <div class="search-wrapper">
-	  	<form action="ono_list" method="get">
-	  	<input type="hidden" name="page" value="1">
+	  	<form action="" method="get">
 	  	<table class="table table-sm">
 	  		<tbody>
 	  			<tr>
@@ -56,8 +45,7 @@
 	  						<option value="">답변대기</option>
 	  						<option value="">답변완료</option>
 	  					</select>
-	  				</td>
-	  				<td width="10%" class="table-active">키워드 검색</td>
+	  				</td><td width="10%" class="table-active">키워드 검색</td>
 	  				<td>
 	  					<table class="table table-sm">
 		  					<tbody>
@@ -100,10 +88,10 @@
 	  <div class="search-number">
 	  <c:choose>
 	  <c:when test="${param.reply_status=='답변대기'}">
-	  	<p>총 ${count_reply}건</p>
+	  	<p>총 ${count_reply_ceo}건</p>
 	  </c:when>
 	  	<c:otherwise>
-	  	<p>총 ${client_count}건</p>
+	  	<p>총 ${ceo_count}건</p>
 	  	</c:otherwise>
 	  </c:choose>
 	  </div>
@@ -114,6 +102,8 @@
 	  			<tr class="table-primary text-center">
 	  				<td>번호</td>
 	  				<td>제목</td>
+	  				<th>매장명</th>
+	  				<td>매장코드</td>
 	  				<td>작성자</td>
 	  				<td>작성일</td>
 	  				<td>답변상태</td>
@@ -123,13 +113,15 @@
     		<c:when test="${param.reply_status=='답변대기'}">	
     			<c:forEach var="odto" items="${list2}">
 	  			<tr class="text-center">
-	  				<td>${odto.no}</td>
+	  				<td>${odto.ono_no}</td>
 	  				<td>
 	  				<%-- content로 가기 위해 no를 첨부한다 --%>
-    				<a href="super_content?ono_code=${odto.no}&reply_status=${param.reply_status}">
+    				<a href="super_content_ceo?ono_code=${odto.ono_no}&reply_status=${param.reply_status}">
 						${odto.title}
 					</a></td>
-	  				<td>${odto.member_code}</td>
+					<td>${odto.company_name}</td>
+	  				<td>${odto.company_code}</td>
+					<td>${odto.member_code}</td>
 	  				<td>${odto.regist_date}</td>
 	  				<c:choose>
 	  					<c:when test="${odto.reply_status eq '답변대기'}">
@@ -147,12 +139,14 @@
 	  		<c:otherwise>
 	  			<c:forEach var="odto" items="${list}">
 	  			<tr class="text-center">
-	  				<td>${odto.no}</td>
+	  				<td>${odto.ono_no}</td>
 	  				<td>
 	  				<%-- content로 가기 위해 no를 첨부한다 --%>
-    				<a href="super_content?ono_code=${odto.no}">
+    				<a href="super_content_ceo?ono_code=${odto.ono_no}">
 						${odto.title}
 					</a></td>
+	  				<td>${odto.company_name}</td>
+	  				<td>${odto.company_code}</td>
 	  				<td>${odto.member_code}</td>
 	  				<td>${odto.regist_date}</td>
 	  				<c:choose>
@@ -177,12 +171,12 @@
 
 	<%-- 이전 구간 링크 --%>
 	<c:if test="${not p.isFirstBlock()}">
-	<li><a href="ono_list?${p.getPrevBlock()}&reply_status=${param.reply_status}">&lt;&lt;</a></li>
+	<li><a href="ono_list_ceo?${p.getPrevBlock()}&reply_status=${param.reply_status}">&lt;&lt;</a></li>
 	</c:if>
 	
 	<%-- 이전 페이지 링크(pno - 1) --%>
 	<c:if test="${not p.isFirstPage()}">
-	<li><a href="ono_list?${p.getPrevPage()}&reply_status=${param.reply_status}">&lt;</a></li>
+	<li><a href="ono_list_ceo?${p.getPrevPage()}&reply_status=${param.reply_status}">&lt;</a></li>
 	</c:if>
 	
 	<%-- 페이지 출력 --%>
@@ -193,19 +187,19 @@
 				<li class="active">${i}</li>
 			</c:when>
 			<c:otherwise>
-				<li><a href="ono_list?page=${i}&reply_status=${param.reply_status}" class="navigator-page">${i}</a></li>
+				<li><a href="ono_list_ceo?page=${i}&reply_status=${param.reply_status}" class="navigator-page">${i}</a></li>
 			</c:otherwise>
 		</c:choose>
 	</c:forEach>
 
 	<%-- 다음 페이지 링크(pno + 1) --%>
 	<c:if test="${not p.isLastPage()}">
-		<li><a href="ono_list?${p.getNextPage()}&reply_status=${param.reply_status}">&gt;</a></li>
+		<li><a href="ono_list_ceo?${p.getNextPage()}&reply_status=${param.reply_status}">&gt;</a></li>
 	</c:if>
 	
 	<%-- 다음 구간 --%>
 	<c:if test="${not p.isLastBlock()}">
-		<li><a href="ono_list?${p.getNextBlock()}&reply_status=${param.reply_status}">&gt;&gt;</a></li>
+		<li><a href="ono_list_ceo?${p.getNextBlock()}&reply_status=${param.reply_status}">&gt;&gt;</a></li>
 	</c:if>
 
 </ul>
@@ -215,12 +209,12 @@
 
 	<%-- 이전 구간 링크 --%>
 	<c:if test="${not p.isFirstBlock()}">
-	<li><a href="ono_list?${p.getPrevBlock()}">&lt;&lt;</a></li>
+	<li><a href="ono_list_ceo?${p.getPrevBlock()}">&lt;&lt;</a></li>
 	</c:if>
 	
 	<%-- 이전 페이지 링크(pno - 1) --%>
 	<c:if test="${not p.isFirstPage()}">
-	<li><a href="ono_list?${p.getPrevPage()}">&lt;</a></li>
+	<li><a href="ono_list_ceo?${p.getPrevPage()}">&lt;</a></li>
 	</c:if>
 	
 	<%-- 페이지 출력 --%>
@@ -231,19 +225,19 @@
 				<li class="active">${i}</li>
 			</c:when>
 			<c:otherwise>
-				<li><a href="ono_list?page=${i}" class="navigator-page">${i}</a></li>
+				<li><a href="ono_list_ceo?page=${i}" class="navigator-page">${i}</a></li>
 			</c:otherwise>
 		</c:choose>
 	</c:forEach>
 
 	<%-- 다음 페이지 링크(pno + 1) --%>
 	<c:if test="${not p.isLastPage()}">
-		<li><a href="ono_list?${p.getNextPage()}">&gt;</a></li>
+		<li><a href="ono_list_ceo?${p.getNextPage()}">&gt;</a></li>
 	</c:if>
 	
 	<%-- 다음 구간 --%>
 	<c:if test="${not p.isLastBlock()}">
-		<li><a href="ono_list?${p.getNextBlock()}">&gt;&gt;</a></li>
+		<li><a href="ono_list_ceo?${p.getNextBlock()}">&gt;&gt;</a></li>
 	</c:if>
 
 </ul>

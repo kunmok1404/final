@@ -35,6 +35,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	  	<typeAlias type="com.kh.spring.entity.MyshopDto" alias="myshopDto"/>
 	  	<typeAlias type="com.kh.spring.entity.OrderVo" alias="orderVo"/>
 	  	<typeAlias type="com.kh.spring.entity.OnoImgDto" alias="onoImgDto"/>
+	  	<typeAlias type="com.kh.spring.entity.ShopOnoDto" alias="shoponoDto"/>
 	  </typeAliases>
 	  
 </configuration>

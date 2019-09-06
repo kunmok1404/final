@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="shopono">
+<!-- 답변대기+답변완료 모두 표시 -->	
+ 	<select id="super_shopono_list_ceo" parameterType="map" resultType="shoponoDto">
+		<!-- 부등호 등 태그 형식에서 사용 불가한 글자를 허용하는 지역 생성 -->
+		select * from(
+			select rownum rn, A.* from (
+				
+				select * from shop_ono
+				   where 1=1
+				<if test="apply_status !=null">
+					and apply_status =#{apply_status}
+				</if>
+				<if test="keyword_type !=null and keyword != null ">
+					and ${keyword_type} like '%' || #{keyword} || '%'
+				</if>
+					and type='업주'
+				order by ono_no desc
+				
+			)A
+		) where rn between #{start} and #{end}
+	</select> 	
+
+<select id="super_shopono_list2_ceo" parameterType="map"  resultType="shoponoDto">
+	select * from(
+			select rownum rn, A.* from (
+				
+				select * from shop_ono
+				   where 1=1
+				<if test="apply_status !=null">
+					and apply_status =#{apply_status}
+				</if>
+				<if test="keyword_type !=null and keyword != null ">
+					and ${keyword_type} like '%' || #{keyword} || '%'
+				</if>
+				
+					and type='업주'
+				
+					and reply_status like '%' || '답변대기' || '%' 
+		order by ono_no desc
+				
+			)A
+		) where rn between #{start} and #{end}
+	</select>
+	
+	
+	<!-- 테이블에서 리뷰정보조회 -->
+	<select id="ono_info" parameterType="int" resultType="shoponoDto">
+		select * from shop_ono where ono_no = #{ono_code} order by ono_no desc
+	</select>
+	</mapper>

@@ -51,5 +51,56 @@ public class QnaDaoImpl implements QnaDao{
 		return sqlSession.selectList("service.qna_list", param);
 	}
 
+	@Override
+	public int supercount() {
+		return sqlSession.selectOne("superservice.super_qna_count");
+	}
+
+	@Override
+	public List<QnaDao> superlist(int i, int j) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("start", i);
+		param.put("end", j);
+		return sqlSession.selectList("superservice.super_qna_list", param);
+	}
+
+	@Override
+	public int count_reply_ceo() {
+		return sqlSession.selectOne("service.count_reply_ceo");
+	}
+
+	@Override
+	public int count_reply() {
+		return sqlSession.selectOne("service.count_reply");
+	}
+
+	@Override
+	public QnaDto qnaInfo(int no) {
+		return sqlSession.selectOne("superservice.qna_info", no);
+	}
+
+	@Override
+	public int getSequenceNumber() {
+		return sqlSession.selectOne("superservice.qna_seq");
+	}
+
+	@Override
+	public void insert(QnaDto qnaDto) {
+		sqlSession.insert("superservice.qna_insert", qnaDto);
+	}
+
+
+	@Override
+	public void edit(QnaDto qnaDto) {
+		sqlSession.update("superservice.qna_edit", qnaDto);
+		
+	}
+
+	@Override
+	public void qnadelete(int no) {
+		sqlSession.delete("superservice.qna_delete", no);
+		
+	}
+
 	
 }

@@ -12,10 +12,10 @@
 
 <div class="qna">
 	<div class="offset-2 col-8">
-		<span class="qna-number">고객 1:1 문의</span>
+		<span class="qna-number">업주 1:1 문의</span>
 		<div class="empty"></div>
 
-<form action="super_content" method="post">
+<form action="super_content_ceo" method="post">
 
 <input type="hidden" name="no" value="${onoDto.no}">
 		<!-- 표 -->
@@ -32,6 +32,7 @@
 					<th class=notice-th><span>제&nbsp;&nbsp;&nbsp;목</span></th>
 					<th class=notice-th2 colspan="3"><span>${onoDto.title}</span></th>
 				</tr>
+
 				<tr>
 					<th class=notice-th><span>작성자</span></th>
 					<th class=notice-th2><span>${onoDto.member_code}</span></th>
@@ -79,10 +80,10 @@
 							value="등&nbsp;&nbsp;&nbsp;록">
 							<c:choose>
 					<c:when test="${param.reply_status=='답변대기'}">
-					<a href="ono_list?reply_status=${param.reply_status}" class="write-btn">목&nbsp;&nbsp;&nbsp;록</a>
+					<a href="ono_list_ceo?reply_status=${param.reply_status}" class="write-btn">목&nbsp;&nbsp;&nbsp;록</a>
 					</c:when>
 					<c:otherwise>
-					<a href="ono_list" class="write-btn">목&nbsp;&nbsp;&nbsp;록</a>
+					<a href="ono_list_ceo" class="write-btn">목&nbsp;&nbsp;&nbsp;록</a>
 					</c:otherwise>
 					</c:choose>
 					</td>
