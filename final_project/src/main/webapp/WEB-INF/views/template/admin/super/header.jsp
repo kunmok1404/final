@@ -57,7 +57,7 @@
           <ul>
             <li class="ml-5"><a href="${pageContext.request.contextPath}/super_admin/basic/terms">기본설정</a></li>
             <li><a href="${pageContext.request.contextPath}/super_admin/notice/list?status=고객">공지사항</a></li>
-            <li><a href="#">회원관리</a></li>
+            <li><a href="${pageContext.request.contextPath}/super_admin/member/search">회원관리</a></li>
             <li><a href="#">매장관리</a></li>
             <li><a href="${pageContext.request.contextPath}/super_admin/menu/list">메뉴관리</a></li>
             <li><a href="#">주문관리</a></li>

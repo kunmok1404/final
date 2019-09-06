@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/template/client/header.jsp"></jsp:include>
-<jsp:include page="/WEB-INF/views/template/client/info_top_menu.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/template/client/left/my_info_left.jsp"></jsp:include>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>

@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.kh.spring.entity.MemberDto;
 import com.kh.spring.entity.MyshopDto;
-import com.kh.spring.entity.ShopDto;
 import com.kh.spring.entity.UsergradeDto;
+import com.kh.spring.vo.MemberInfoVO;
 
 public interface MemberDao {
 
@@ -27,7 +27,14 @@ public interface MemberDao {
 
 	MemberDto take(int member_code);
 
-	void delete(int member_code);
+	void member_delete(int member_code);
+	
+	List<MemberInfoVO> search(String status, String grade, String start_date, String end_date, String type, String keyword);
+
+	void delete(int no);
+	
+	void edit(MemberInfoVO memberInfoVO);
+	
 	
 	
 	
@@ -47,9 +54,7 @@ public interface MemberDao {
 
 	List<MyshopDto> myshop(int member_code);
 
-	
-
-
+	List<MemberInfoVO> info(int no);
 
 
 

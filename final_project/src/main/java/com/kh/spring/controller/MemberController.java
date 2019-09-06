@@ -227,7 +227,8 @@ public class MemberController {
 			) throws MessagingException {
 		boolean exist = memberDao.findId(memberDto);
 		if(exist) {
-			emailService.sendCertificationid(memberDto.getEmail());
+			System.out.println(memberDto.getId());
+			emailService.sendCertificationid(memberDto.getId());
 			return "redirect:find_id_result";//새로운 기능으로 전송(?이게 뭐야?)
 		}
 		else {
@@ -325,7 +326,7 @@ public class MemberController {
 				HttpSession session,
 				Model model
 			) {
-		//아이디 불러와서 보여줘
+		//회원번호 받아서 회원정보를 불러와 view에 전달
 		int member_code = (int)session.getAttribute("member_code");
 		MemberDto memberDto = memberDao.take(member_code);
 		model.addAttribute("memberDto", memberDto);
@@ -371,7 +372,7 @@ public class MemberController {
 	public String info_change(
 				@ModelAttribute MemberDto memberDto			
 			) {
-		System.out.println("???");
+//		System.out.println("???");
 		if(memberDto.getPw() != null) {
 			String origin = memberDto.getPw();
 			String encrypt = BCrypt.hashpw(origin, BCrypt.gensalt());
@@ -387,7 +388,7 @@ public class MemberController {
 	@GetMapping("/delete")
 	public String delete(HttpSession session) {
 		int member_code = (int)session.getAttribute("member_code");
-		memberDao.delete(member_code);
+		memberDao.member_delete(member_code);
 		session.removeAttribute("member_code");
 		return "client/member/delete";
 	}
