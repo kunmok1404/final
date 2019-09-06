@@ -30,6 +30,8 @@ public interface NoticeDao {
 
 	void insert(NoticeDto noticeDto);
 
+	void edit(NoticeDto noticeDto);
+
 
 
 
