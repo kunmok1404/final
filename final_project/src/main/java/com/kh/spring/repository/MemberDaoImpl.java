@@ -131,18 +131,6 @@ public class MemberDaoImpl implements MemberDao {
 		sqlSession.update("memer.edit", memberInfoVO);		
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	@Override
 	public void like(MyshopDto myshop) {
 		sqlSession.insert("member.like", myshop);
@@ -192,17 +180,11 @@ public class MemberDaoImpl implements MemberDao {
 		return sqlSession.selectList("member.member_code",map);
 	}
 
-	
-
-	
-
-	
-
-	
-
-	
-
-	
+	// super_admin 전체회원목록 조회
+	@Override
+	public List<MemberDto> getMemberList() {
+		return sqlSession.selectList("member.get_member_list");
+	}
 
 }
 

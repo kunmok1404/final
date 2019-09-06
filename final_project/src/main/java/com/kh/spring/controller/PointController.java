@@ -20,8 +20,7 @@ public class PointController {
 	// 포인트 리스트
 	@GetMapping("/list")
 	public String list(HttpSession session, Model model) {
-		//int member_code = (int)session.getAttribute("member_code");
-		int member_code = 1;
+		int member_code = (int)session.getAttribute("member_code");
 		model.addAttribute("point_list", pointService.list(member_code));
 		return "client/member/info_point_list";
 	}

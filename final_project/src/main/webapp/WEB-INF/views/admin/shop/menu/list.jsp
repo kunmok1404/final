@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:include page="/WEB-INF/views/template/admin/super/header.jsp"></jsp:include>
-<jsp:include page="/WEB-INF/views/template/admin/super/left/left_menu.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/template/admin/shop/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/template/admin/shop/left/left_menu.jsp"></jsp:include>
+
 <script>
 
 	$(function(){
@@ -144,13 +145,12 @@
 	  				<td>승인상태</td>
 	  				<td>판매상태</td>
 	  				<td>등록일</td>
-	  				<td>편집</td>
 	  			</tr>
 	  			
 	  			<c:forEach var="menuVO" items="${list}">
 	  			<tr class="text-center">
 	  				<td>${menuVO.no}</td>
-	  				<td class="over-text"><a href="${pageContext.request.contextPath}/super_admin/menu/detail?menu_code=${menuVO.no}" class="text-primary">${menuVO.name}</a></td>
+	  				<td class="over-text"><a href="${pageContext.request.contextPath}/shop_admin/menu/detail?menu_code=${menuVO.no}" class="text-primary">${menuVO.name}</a></td>
 	  				<td>${menuVO.menu_category}</td>
 	  				<td>${menuVO.shop_name}</td>
 	  				<c:choose>
@@ -158,7 +158,7 @@
 	  						<td class="text-danger">${menuVO.apply_status}</td>
 	  					</c:when>
 	  					<c:otherwise>
-	  						<td class="text-info">${menuVO.apply_status}</td>
+	  						<td class="text-info" class="apply_status">${menuVO.apply_status}</td>
 	  					</c:otherwise>
 	  				</c:choose>
 	  				<c:choose>

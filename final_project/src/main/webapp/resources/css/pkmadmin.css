@@ -69,13 +69,13 @@ a{
 }
 
 /*TOP하이라이트*/
-/* .active{ */
-/*     background-color: darkgray; */
-/* } */
+.active{
+    background-color: darkgray;
+}
 /*LEFT하이라이트*/
 .on{
     color:#9C3D39;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
 }
 
 /* | 표시*/
@@ -264,4 +264,24 @@ a{
 .category-img img{
 	width:100px;
 	height:100px;
+}
+
+/*포인트 상세화면 */
+.point-detail{
+	border: 1px solid lightgray;
+}
+.point-detail div{
+	height:60px;
+    padding-top:8px;
+    font-size:1.2rem;
+}
+.point-detail-list{
+	background-color:#2C3E50;
+	color:white;
+	font-size:1.1rem;
+}
+
+/*메뉴 테이블*/
+.menu-regist-table{
+	width:70%;
 }

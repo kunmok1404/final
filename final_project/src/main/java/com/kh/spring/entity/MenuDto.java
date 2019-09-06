@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class MenuDto {
 	private int no; // 메뉴코드
 	private int shop_code; // 매장코드
-	private String menu_category; //메뉴카테고리(업무구분)
+	private int menu_category; //메뉴카테고리 코드
 	private String name; //메뉴명
 	private int price; // 가격
 	private String regist_date;// 등록일

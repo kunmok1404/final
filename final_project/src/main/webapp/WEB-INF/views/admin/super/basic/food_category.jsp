@@ -6,9 +6,41 @@
 
 <script>
 	$(function(){
-		$("input[name=category_img]").change(function(e){
+		$("input[type=file]").change(function(e){
 			var $this = $(this);
-			console.log($this);
+            
+            if(this.files && this.files[0]){
+                //읽기 도구 생성
+                var reader = new FileReader();
+                
+                //읽기 완료시 할 작업을 예약 설정
+                reader.onload = function(data){//data : 파일 정보
+                    var img = $("<img/>").attr("src", data.target.result);
+                    $this.parent().next().empty();
+                    $this.parent().next().append(img);
+                };
+                	reader.readAsDataURL(this.files[0]);
+            }
+           })
+				
+		//프로그램 시작시 템플릿 백업 후 삭제
+		var template = $(".template").clone();
+		$(".template").remove();
+		
+		$(".add").click(function(){
+		//신규 추가하는 버튼에 적용할 이벤트
+		// 숫자넣기
+		var new_template = template.clone();
+		
+		var length = $("#food-table tr").length - 2;
+		// 네임 설정
+		new_template.find(".cat_name").attr("name",'category['+length+'].cat_name');
+		new_template.find(".sort_no").attr("name",'category['+length+'].sort_no');
+		new_template.find(".category_img").attr("name",'category['+length+'].category_img');
+		$(".input").last().append(new_template);
+		
+		new_template.find("input[type=file]").change(function(e){
+			var $this = $(this);
             
             if(this.files && this.files[0]){
                 //읽기 도구 생성
@@ -22,42 +54,18 @@
                 	reader.readAsDataURL(this.files[0]);
             }
            })
-				
-		//프로그램 시작시 템플릿 백업 후 삭제
-		var template = $(".template").clone();
-		$(".template").remove();
 		
-		$(".add").click(function(){
-			//신규 추가하는 버튼에 적용할 이벤트
-			var new_template = template.clone();
-			new_template.find(".del").click(function(){
-				$(this).parents("tr").remove();
-			});
-			$(".input").last().append(new_template);
-			
-			$("input[name=category_img]").change(function(e){
-				var $this = $(this);
-				console.log($this);
-	            
-	            if(this.files && this.files[0]){
-	                //읽기 도구 생성
-	                var reader = new FileReader();
-	                
-	                //읽기 완료시 할 작업을 예약 설정
-	                reader.onload = function(data){//data : 파일 정보
-	                    var img = $("<img/>").attr("src", data.target.result);
-	                    $this.parent().next().append(img);
-	                };
-	                	reader.readAsDataURL(this.files[0]);
-	            }
-	           })
+       	// 삭제버튼 클릭시
+		new_template.find(".del").click(function(){
+			$(this).parents("tr").remove();
+		});
 	           
 		})
 		
 		//처음 표시되는 버튼에 적용할 이벤트
-		$(".del").click(function(){
-			$(this).parents("tr").remove();
-		})
+// 		$(".del").click(function(){
+// 			$(this).parents("tr").remove();
+// 		})
 	})
 </script>
 
@@ -68,7 +76,7 @@
 	       </div>
 	   	   <span>음식카테고리 관리</span>
 	   	   	<form action="${pageContext.request.contextPath}/super_admin/basic/food_category" method="post" enctype="multipart/form-data">
-            <table class="table table-hamburg table-hover text-center mt-3">
+            <table class="table table-hamburg table-hover text-center mt-3" id="food-table">
                 <thead>
                     <tr class="cat_head table-primary">
                         <td>카테고리명</td>
@@ -83,7 +91,6 @@
                         <td>
                         	<input type="number" name="category[${status.index}].sort_no" value="${cat_list.sort_seq}" required>
                         	<input type="hidden" name="category[${status.index}].category_code" value="${cat_list.no}" required>
-                        	<input type="hidden" name="category[${status.index}].image_code" value="${cat_list.img}" required>
                         </td>
                         <td><input type="file" name="category[${status.index}].category_img"></td>
                         <td class="category-img"><img src="${pageContext.request.contextPath}/review/review_img?files_code=${cat_list.img}"></td>
@@ -92,12 +99,11 @@
                     </c:forEach>
                     <!-- 템플릿 -->
 					<tr class="template">
-                        <td><input type="text" name="cat_name" required></td>
+                        <td><input type="text" class="cat_name" required></td>
                         <td>
-                        	<input type="text" name="sort_no" required>
-                        	<input type="hidden" name="category_code" required>
+                        	<input type="text" class="sort_no" required>
                         </td>
-                        <td><input type="file" name="category_img" required>
+                        <td><input type="file" class="category_img">
                         <td class="category-img" width=100px;></td>
                         <td><button class="btn_delete btn-block btn-secondary del">-삭제</button></td>
                     </tr>
@@ -105,7 +111,7 @@
                 <tfoot>
                 	<tr>
                         <td colspan="3"><button class="btn btn-primary add">+추가</button></td>
-                        <td><button class="btn btn-info btn-block submit">등록</button></td>
+                        <td><input class="btn btn-info btn-block " type="submit" value="등록"></td>
                     </tr>
                 </tfoot>
             </table>

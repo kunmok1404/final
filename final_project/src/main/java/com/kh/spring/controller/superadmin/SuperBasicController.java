@@ -1,9 +1,11 @@
 package com.kh.spring.controller.superadmin;
 
 import java.io.IOException;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.spring.entity.MemberDto;
+import com.kh.spring.repository.CategoryDao;
 import com.kh.spring.repository.MemberDao;
 import com.kh.spring.repository.ShopDao;
 import com.kh.spring.repository.TermsDao;
@@ -31,6 +34,8 @@ public class SuperBasicController {
 	private ShopDao shopDao;
 	@Autowired
 	private CategoryService categoryService;
+	@Autowired
+	private CategoryDao CategoryDao;
 	
 	
 	//약관관리
@@ -68,7 +73,6 @@ public class SuperBasicController {
 	public String categoryRegist(Model model, 
 					@ModelAttribute FoodCategoryList food_list) throws IllegalStateException, IOException {
 		// 카테고리 정보 등록
-		System.out.println("컨트롤러"+food_list);
 		categoryService.updateFoodCategory(food_list);
 		return "redirect:food_category";
 	}

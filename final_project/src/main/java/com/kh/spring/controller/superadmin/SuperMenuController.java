@@ -18,11 +18,15 @@ public class SuperMenuController {
 	// 메뉴 목록화면
 	@GetMapping("/list")
 	public String list(Model model) {
-		
 		//메뉴목록 조회
 		model.addAttribute("list", menuService.list());
-		
 		return "admin/super/menu/list";
+	}
+	
+	// 메뉴 등록화면(get)
+	@GetMapping("/regist")
+	public String regist() {
+		return "admin/super/menu/regist";
 	}
 	
 }
