@@ -20,4 +20,71 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="notice_delete" parameterType="int">
 		delete notice where no = #{no}
 	</delete>
+	
+<!-- notice글 수정 -->
+	<update id="notice_edit" parameterType="noticeDto">
+		update notice set title=#{title}, content=#{content}, status=#{status}, type=#{type} where no = #{no}
+	</update>
+	
+<!--  관리자 qna 페이징을 위한 전체 글 수  -->
+	<select id="super_qna_count"  resultType="int">
+		select count(*) from qna
+	</select>
+	
+<!--  관리자 qna 글 목록 -->	
+	<select id="super_qna_list" parameterType="map" resultType="qnaDto">
+		select * from(
+			select rownum rn, A.* from (
+				select * from qna order by no desc
+				)A
+			)where rn between #{start} and #{end}
+			
+	</select>
+	
+	<!-- 답변대기 개수-->	
+	<select id="count_reply_ceo" resultType="int">
+		select count(*) from oneandone
+				where reply_status='답변대기' and type='업주'
+	</select>
+	
+		
+<!-- 답변대기 개수-->	
+	<select id="count_reply" resultType="int">
+		select count(*) from oneandone
+				where reply_status='답변대기' and type='고객'
+	</select>
+	
+<!-- 테이블에서 qna정보조회 -->
+	<select id="qna_info" parameterType="int" resultType="qnaDto">
+		select * from qna where no = #{no} order by no desc
+	</select>
+	
+	<!-- qna시쿼스 번호 생성 -->
+	<select id="qna_seq" resultType="int">
+		select qna_seq.nextval from dual
+	</select>
+	
+	<!-- qna 질문답변 등록 -->
+	<insert id="qna_insert" parameterType="qnaDto">
+		insert into qna values(
+			#{no}, #{category}, #{qustion}, #{answer}, sysdate, sysdate, #{ues_yn}, 'admin', 'admin'
+		)
+	</insert>
+	<!-- qna 수정 -->
+	<update id="qna_edit" parameterType="qnaDto">
+		update qna
+			set
+				category = #{category},
+				question = #{question},
+				answer = #{answer},
+				use_yn=#{use_yn}
+			where
+			 	no = #{no} 
+	</update>	
+	
+	<!-- qna글 삭제 -->
+	<delete id="qna_delete" parameterType="int">
+		delete qna where no = #{no}
+	</delete>
+	
 </mapper>

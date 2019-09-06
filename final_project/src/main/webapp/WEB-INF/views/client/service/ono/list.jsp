@@ -82,7 +82,14 @@
 	    		<%-- 등록일 --%>
 	    		<td>${odto.regist_date}</td>
 	    		<%-- 답변상태 --%>
-	    		<td>${odto.reply_status}	</td>
+	    		<c:choose>
+	  					<c:when test="${odto.reply_status eq '답변대기'}">
+	  						<td class="text-danger">${odto.reply_status}</td>
+	  					</c:when>
+	  					<c:otherwise>
+	  						<td class="text-primary">${odto.reply_status}</td>
+	  					</c:otherwise>
+	  				</c:choose>
 			</tr>
 			</c:forEach>
 			</c:otherwise>

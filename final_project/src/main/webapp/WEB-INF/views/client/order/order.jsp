@@ -7,12 +7,14 @@
 
 //카드 결제시 수정되는 값
 function change_pay_c(){
-	document.querySelector("form").action='order';
+	$(".button").attr("id","order").attr('disabled', false);
+	document.querySelector("form").action='credit_order';
 	document.querySelector(".pay_method").value='credit';
 }
 //현금 결제시 수정되는 값
 function change_pay_m(){
-	document.querySelector("form").action='order';
+	$(".button").attr("id","order").attr('disabled', false);
+	document.querySelector("form").action='credit_order';
 	document.querySelector(".pay_method").value='money';
 }
 //카카오페이 결제시 변경되는 값
@@ -20,7 +22,6 @@ function change_pay_kakao(){
 	$(".button").attr("id","kakao").attr('disabled', false);
 	document.querySelector("form").action='kakao';
 	document.querySelector(".pay_method").value='kakao_pay';
-	
 
 }
 function change_pay_credit(){
@@ -34,8 +35,11 @@ $(function(){
 	$(".button").click(function(e){
 		var check = $(".button").attr("id");
 		e.preventDefault();
-		if(check=="kakao"){
+		if(check == "kakao"){
 			console.log(check);
+			$('form').submit();
+		}
+		else if(check=="order"){
 			$('form').submit();
 		}
 		else{
@@ -73,6 +77,32 @@ $(function(){
 		}
 		
 	})
+
+	var total_price = 0;
+	var menu_price = 0;
+	var sub_price = 0;
+	
+	//개별 메인메뉴 가격
+	$(".ta").each(function(){
+		var menu_pri = parseInt($(this).find(".mp2").val());
+		var price = 0;
+		$(this).find(".sub_price").each(function(){
+			price += parseInt($(this).val());
+		})
+		$(this).find(".pr").text(menu_pri+price);
+	});
+	
+		
+	$(".mp2").each(function(){
+		menu_price += parseInt(this.value);
+	});
+	
+	$(".sub_price").each(function(){
+		 sub_price += parseInt(this.value);
+	});
+
+	$(".total").text(menu_price+sub_price);
+	$("#total_price").val(menu_price+sub_price);
 });
 
 //신용카드 결제시 변경되는 값
@@ -88,7 +118,7 @@ $(function(){
 </div>
 <hr>
 <form id="form" action="kakao" method="post">
-<input type="hidden" id="item_name" name="item_name" value="치킨">
+<input type="hidden" id="item_name" name="item_name" value="${shopDto.company_name}">
 <input type="hidden" id="amount" name="total_amount" value="${total_price + shopDto.delivery_price}">
 <input type="hidden" id="partner" name="partner_user_id" value="${shopDto.company_name}">	
 	<div class="panel-body">
@@ -159,35 +189,52 @@ $(function(){
 				</tr>
 			</thead>
 			<tbody>
-			<c:forEach var="cart" items="${cartList}" varStatus="status">
-				<tr>
+			<c:forEach var="cart" items="${cartList}" varStatus="status1">
+				<tr class="ta">
 					<td><input type="checkbox"></td>
 					<td>
-						<input type="hidden" name="list[${status.index}].title" value="${cart.title}">
-						<input type="hidden" name="list[${status.index}].menu_name" value="${cart.menu_name}">
-						<input type="hidden" name="list[${status.index}].menu_amount" value="${cart.menu_amount}">
-						<input type="hidden" name="list[${status.index}].menu_price" value="${cart.menu_price}">
-						<input type="hidden" name="list[${status.index}].sub_name" value="${cart.sub_name}">
-						<input type="hidden" name="list[${status.index}].sub_amount" value="${cart.sub_amount}">
-						<input type="hidden" name="list[${status.index}].sub_type" value="${cart.sub_type}">
-						<input type="hidden" name="list[${status.index}].sub_price" value="${cart.sub_price}">
+						<input type="hidden" name="main[${status1.index}].title" value="${cart.title}">
+						<input type="hidden" name="main[${status1.index}].menu_name" value="${cart.menu_name}">
+						<input type="hidden" name="main[${status1.index}].menu_amount" value="${cart.menu_amount}">
+						<input type="hidden" class="mp2" name="main[${status1.index}].menu_price" value="${cart.menu_price}">
 					<img src="http://placehold.it/100x100"></td>
-					<td>
-					${cart.menu_name}<c:if test="${cart.sub_price!=0}">
-							<br>
-							<span style="font: small-caption;">${cart.sub_type}</span>
-							<br>
-							<span style="font: small-caption;">${cart.sub_name}${cart.sub_amount}개</span>
-						</c:if></td>
+					<td>${cart.menu_name}
+					필수<br>
+							${cart.menu_name}  ${cart.menu_price}원
+							<hr>
+							선택<br>
+							<c:forEach var="cartsub" items="${cartSubDto}" varStatus="status">
+								<c:if test="${cartsub.no == cart.no}">
+								<input type="hidden" name="list[${status.index}].sub_type" value="${cartsub.sub_type}">
+								<input type="hidden" name="list[${status.index}].sub_title" value="${cartsub.sub_title}">
+								<input type="hidden" name="list[${status.index}].sub_name" value="${cartsub.sub_name}">
+								<input type="hidden" class="sub_price" name="list[${status.index}].sub_price" value="${cartsub.sub_price*cartsub.sub_amount}">
+								<input type="hidden" name="list[${status.index}].sub_amount" value="${cartsub.sub_amount}">
+									<c:if test="${cartsub.sub_type=='선택'}">
+									${cartsub.sub_name} x ${cartsub.sub_amount} 개  ${cartsub.sub_price * cartsub.sub_amount}원<br>
+									</c:if>	
+								</c:if>
+							</c:forEach>
+							<hr>
+							추가<br>
+							<c:forEach var="cartsub" items="${cartSubDto}">
+								<c:if test="${cartsub.no == cart.no}">
+									<c:if test="${cartsub.sub_type=='추가'}">
+									${cartsub.sub_name} x ${cartsub.sub_amount} 개  ${cartsub.sub_price * cartsub.sub_amount}원<br>
+									</c:if>	
+								</c:if>
+							</c:forEach>
+							<hr>
+					</td>
 					<td>${cart.menu_amount}</td>
-					<td>${cart.menu_price}원</td>
+					<td><span class="pr"></span>원</td>
 				</tr>
 			</c:forEach>
 			</tbody>
 			<tfoot>
 				<tr>
 					<td colspan="4">최소 주문금액:${shopDto.min_price}원 이상</td>
-					<td>합계:${total_price}원</td>
+					<td>합계:<span class="total"></span>원</td>
 				</tr>
 			</tfoot>
 		</table>
@@ -209,11 +256,11 @@ $(function(){
 			</thead>
 			<tbody>
 				<tr>
-					<td>${total_price}원</td>
+					<td><span class="total"></span>원</td>
 					<td>5000원<input type="hidden" name="discount_price" value="5000"></td>
 					<td>${shopDto.delivery_price}원</td>
-					<td>${total_price + shopDto.delivery_price}원
-					<input type="hidden" name="total-price" value="${total_price + shopDto.delivery_price}"></td>
+					<td>${total_price + shopDto.delivery_price-5000}원
+					<input type="hidden" name="total-price" value="${total_price + shopDto.delivery_price -5000}"></td>
 				</tr>
 			</tbody>
 

@@ -45,7 +45,7 @@
 		<tfoot>
 			<tr>
 			<td colspan="8" align="center" >
-				<a href="edit" class="write-btn">수 정</a>
+				<a href="edit?no=${ndto.no}&status=${ndto.status}" class="write-btn">수 정</a>
 				<a href="delete?no=${ndto.no}&status=${ndto.status}"  class="write-btn">삭 제</a>
 				<a href="list?status=${ndto.status}" class="write-btn">목 록</a>
 			</td>

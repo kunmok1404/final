@@ -9,13 +9,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.spring.entity.CartDto;
+import com.kh.spring.entity.CartListNo;
 import com.kh.spring.entity.CartListVO;
+import com.kh.spring.entity.CartSubDto;
+import com.kh.spring.entity.CartSubListVo;
 import com.kh.spring.entity.MemberDto;
 import com.kh.spring.entity.OrderDetailDto;
 import com.kh.spring.entity.OrderDetailListVo;
+import com.kh.spring.entity.OrderSubDetail;
+import com.kh.spring.entity.OrderSubDetailListVo;
 import com.kh.spring.entity.OrderVo;
 import com.kh.spring.entity.OrdersDto;
 import com.kh.spring.entity.ShopDto;
+import com.kh.spring.entity.TotalVo;
 //주문 관련 Dao impl
 @Repository
 public class OrdersDaoimpl implements OrdersDao{
@@ -64,7 +70,7 @@ public class OrdersDaoimpl implements OrdersDao{
 		
 	@Override
 	public void cartinput(CartListVO vo) {
-		List<CartDto> list = vo.getList();
+		List<CartDto> list = vo.getMain();
 		for(CartDto cartDto : list) {
 			sqlsession.update("order.update",cartDto);
 		}
@@ -86,11 +92,12 @@ public class OrdersDaoimpl implements OrdersDao{
 	}
 
 	@Override
-	public void orderDetailInput(int no,OrderDetailListVo vo) {
-		List<OrderDetailDto> list = vo.getList();
+	public void orderDetailInput(int no,int order_code,OrderDetailListVo vo) {
+		List<OrderDetailDto> list = vo.getMain();
 		for(OrderDetailDto orderDetailDto : list) {
-			orderDetailDto.setOrder_no(no);
-			sqlsession.update("order.detail_regist",orderDetailDto);
+			orderDetailDto.setOrder_code(no);
+			orderDetailDto.setNo(order_code);
+			sqlsession.insert("order.detail_regist",orderDetailDto);
 		}
 	}
 
@@ -117,27 +124,32 @@ public class OrdersDaoimpl implements OrdersDao{
 
 	@Override
 
-	public List<OrderVo> order_data() {
+	public List<OrderVo> order_data(String no) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("no", no);
 		return sqlsession.selectList("order.order_data");
 	}
 
 	@Override
-	public int cancel(String t1) {
+	public int cancel(String no,String t1) {
 		Map<String, Object> map = new HashMap<>();
+		map.put("no", no);
 		map.put("order_date", t1);
 		return sqlsession.selectOne("order.cancel_data", map);
 	}
 
 	@Override
-	public int sussce(String t1) {
+	public int sussce(String no,String t1) {
 		Map<String, Object> map = new HashMap<>();
+		map.put("no", no);
 		map.put("order_date", t1);
 		return sqlsession.selectOne("order.sussce_data", map);
 	}
 
 	@Override
-	public List<OrderVo> date_day(String start, String end) {
+	public List<OrderVo> date_day(String no,String start, String end) {
 		Map<String, Object> map = new HashMap<>();
+		map.put("no", no);
 		map.put("start", start);
 		map.put("end", end);
 		return sqlsession.selectList("order.date_day", map);
@@ -193,6 +205,56 @@ public class OrdersDaoimpl implements OrdersDao{
 		map.put("order_status", order_status);
 		sqlsession.update("order.setStatus",map);
 		
+	}
+
+	@Override
+	public List<TotalVo> sale_data(String no) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("no", no);
+		return sqlsession.selectList("order.total");
+	}
+
+	@Override
+	public List<TotalVo> sale_day(String no, String start, String end) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("no", no);
+		map.put("start", start);
+		map.put("end", end);
+		return sqlsession.selectList("order.total_date", map);
+	}
+	@Override
+	public List<CartSubDto> cartsublist(int no) {
+		return sqlsession.selectList("order.cartSubList",no);
+	}
+
+	@Override
+	public List<CartListNo> cartlistno(int member_code) {
+		return sqlsession.selectList("order.cartlistno",member_code);
+	}
+
+	@Override
+	public void cartInnerDelete(int no) {
+		sqlsession.delete("order.cartinnerDelete",no);
+	}
+
+	@Override
+	public void orderSubDetailInput(int no,OrderSubDetailListVo vo2) {
+		List<OrderSubDetail> list = vo2.getList();
+		for (OrderSubDetail ordersubdto : list) {
+			ordersubdto.setNo(no);
+			sqlsession.insert("order.detail_sub_regist",ordersubdto);
+		}
+		
+	}
+
+	@Override
+	public List<OrderSubDetail> myOrderSubDetailList(int order_code) {
+		return sqlsession.selectList("order.my_order_sub_detail",order_code);
+	}
+
+	@Override
+	public int getdetseq() {
+		return sqlsession.selectOne("order.order_det_seq");
 	}
 
 

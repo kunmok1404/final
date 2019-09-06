@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>뭐먹지?</title>
-    <script src="https://code.jquery.com/jquery-latest.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" ></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="https://cdn.ckeditor.com/4.12.1/standard/ckeditor.js"></script>
@@ -62,10 +62,10 @@
             <li><a href="${pageContext.request.contextPath}/super_admin/menu/list">메뉴관리</a></li>
             <li><a href="#">주문관리</a></li>
             <li><a href="${pageContext.request.contextPath}/super_admin/coupon/list">프로모션</a></li>
-            <li><a href="#">통계</a></li>
+            <li><a href="${pageContext.request.contextPath}/super_admin/chart/order">통계</a></li>
             <li><a href="#">정산관리</a></li>
             <li><a href="${pageContext.request.contextPath}/super_admin/review/list">리뷰관리</a></li>
-            <li><a href="#">고객센터</a></li>
+            <li><a href="${pageContext.request.contextPath}/super_admin/ono/ono_list">고객센터</a></li>
           </ul>
         </div>
         <!--상단메뉴 끝-->
