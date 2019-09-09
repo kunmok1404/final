@@ -148,7 +148,12 @@ public class MemberDaoImpl implements MemberDao {
 	public List<MyshopDto> myshop(int member_code) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("member_code", member_code);
-		return sqlSession.selectList("member.member_code",map);
+		return sqlSession.selectList("member.myshop",map);
+	}
+
+	@Override
+	public List<MemberDto> member_code() {
+		return sqlSession.selectList("member.member_code");
 	}
 
 }
