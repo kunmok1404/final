@@ -68,8 +68,7 @@ public class ReviewController {
 			@RequestParam List<MultipartFile> images,
 			@RequestParam int order_code,
 			HttpSession session, Model model) throws IllegalStateException, IOException {
-		//int member_code = (int)session.getAttribute("member_code");
-		int member_code = 1;
+		int member_code = (int)session.getAttribute("member_code");
 		reviewDto.setMember_code(member_code);
 		reviewDto.setOrder_code(order_code);
 		

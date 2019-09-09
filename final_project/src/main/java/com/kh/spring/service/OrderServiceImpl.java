@@ -39,7 +39,9 @@ public class OrderServiceImpl implements OrderService {
 			map.put("shop_name", shopDto.getShop_name()); 
 			
 			// 주문번호로 메뉴명1개, 총메뉴갯수 구한후 세팅
+			System.out.println("orderDto.getNo()="+orderDto.getNo());
 			OrderDetailDto menu_name = ordersDao.menuName(orderDto.getNo());
+			System.out.println("menu_name="+menu_name);
 			int menu_count = ordersDao.menuCount(orderDto.getNo());
 			map.put("menu_name",menu_name.getMenu_name());
 			map.put("menu_count",menu_count);

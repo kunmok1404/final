@@ -10,13 +10,12 @@ import com.kh.spring.vo.FoodCategoryVO;
 public interface CategoryDao {
 
 	int getFileSeq();
-	void fileRegist(FilesDto filesDto);
 	FoodCategoryDto getFoodCategoryInfo(int category_code);
 	void updateFoodCategoryInfo(FoodCategoryVO foodDto);
 	void insertFoodCategryInfo(FoodCategoryVO foodDto);
-	void updateFileInfo(FilesDto build);
 	void updateFoodCategory(FoodCategoryDto build);
 	List<FoodCategoryDto> getFoodCategoryList();
 	List<CategoryDto> getMenuCategory(int shop_code);
+	CategoryDto getMenuCategoryInfo(int menu_code);
 
 }

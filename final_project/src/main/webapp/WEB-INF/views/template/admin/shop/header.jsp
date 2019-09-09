@@ -45,8 +45,8 @@
               </a>
             </div>
             <div class="header-button"> 
-              <span class="owner">*안녕하세요. 박근목 사장님!</span>
-              <span class="loginTime">최종접속일자 : 2019.08.10 17:30</span>
+              <span class="owner text-white">*안녕하세요. 박근목 사장님!</span>
+              <span class="loginTime text-white">최종접속일자 : 2019.08.10 17:30</span>
               <a href="#" class="btn btn-light btn-sm">로그아웃</a>
               <button class="btn btn-light btn-sm" id="client-site">뭐먹지 바로가기</button>
             </div>
@@ -61,8 +61,8 @@
             <li><a href="#">매장관리</a></li>
             <li ${url == '/shop_admin/menu/list' ? 'class="active"' : ''}><a href="${pageContext.request.contextPath}/shop_admin/menu/list">메뉴관리</a></li>
             <li><a href="#">주문관리</a></li>
-            <li><a href="${pageContext.request.contextPath}/shop_admin/chart/order">통계</a></li>
-            <li><a href="#">리뷰관리</a></li>
+            <li ${url == '/shop_admin/chart/order' ? 'class="active"' : ''}><a href="${pageContext.request.contextPath}/shop_admin/chart/order">통계</a></li>
+            <li ${url == '/shop_admin/review/list' ? 'class="active"' : ''}><a href="${pageContext.request.contextPath}/shop_admin/review/list">리뷰관리</a></li>
             <li ${url == '/shop_admin/ono/list' ? 'class="active"' : ''}><a href="${pageContext.request.contextPath}/shop_admin/ono/list">고객센터</a></li>
           </ul>
         </div>

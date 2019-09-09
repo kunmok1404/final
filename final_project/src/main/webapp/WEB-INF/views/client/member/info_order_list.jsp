@@ -36,7 +36,7 @@
       </div>
       <div class="row mt-3">
         <div class="col-md-12">
-          <table class="table table-borderless text-center myInfo-table">
+          <table class="table table-borderless table-hover text-center myInfo-table">
             <thead>
               <tr class="">
                 <td style="width: 10%">번호</td>
@@ -60,7 +60,7 @@
 					<td class="text-primary">${order_map.get("order_status")}</td>
 				</c:if>
 				<c:if test="${order_map.get('order_status') eq '접수대기'}">
-					<td class="text-warning">${order_map.get("order_status")}</td>
+					<td class="text-info">${order_map.get("order_status")}</td>
 				</c:if>
 				<c:if test="${order_map.get('order_status') eq '취소완료'}">
 					<td class="text-danger">${order_map.get("order_status")}</td>
@@ -70,7 +70,7 @@
                 		<a href="${pageContext.request.contextPath}/review/write?order_code=${order_map.get('no')}" class="btn btn-sm btn-primary">리뷰작성</a>
                 	</c:if>
                 	<c:if test="${order_map.get('order_status') eq '접수대기'}">
-                		<a class="btn btn-sm btn-danger order-cancel">주문취소</a>
+                		<a class="btn btn-sm btn-danger order-cancel text-white">주문취소</a>
                 	</c:if>
                 </td>
               </tr>

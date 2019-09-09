@@ -61,5 +61,11 @@ public class ShopHomeController {
 		model.addAttribute("shop",shopDao.shopInfo(shopDto.getNo()));
 		return  "admin/shop/shop_info";
 	}
+	
+	// 로그인화면 이동
+	@GetMapping("/login")
+	public String login() {
+		return "admin/shop/login";
+	}
 }
 	

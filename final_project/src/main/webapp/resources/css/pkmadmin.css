@@ -281,7 +281,134 @@ a{
 	font-size:1.1rem;
 }
 
-/*메뉴 테이블*/
+/*메뉴*/
 .menu-regist-table{
 	width:70%;
+}
+.menu-img{
+	width:100px;
+	height:100px;
+}
+
+/*shop_admin login */
+.adminLogin-title{
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bolder;
+    color:#9C3D39;
+    margin-top: 100px;
+}
+.admin-id{
+    font-size: 1.5rem;
+    vertical-align: middle;
+}
+.login-btn{
+    background-color: #9C3D39;
+    font-size: 1.5rem;
+    color:whitesmoke;
+    padding: 10px;
+}
+.login-table td{
+    vertical-align: middle;
+}
+.login-bottom{
+    border-top:2px solid #9C3D39;
+}
+.login-text{
+    color:red;
+    margin-top:10px;
+    font-weight: bolder;
+}
+
+/*shop_admin home */
+.shop-wrapper{
+    margin: 1% 5%;
+    width: 90%;
+    min-height: 600px;
+}
+.home-menu-box{
+    height:250px;
+    width:30%;
+    margin:10px 20px;
+    border: 1px solid lightgray;
+}
+.home-order-box{
+    height:250px;
+    width:30%;
+    margin:10px 23px;
+    border: 1px solid lightgray;
+}
+.home-sale-box{
+    height:250px;
+    width:30%;
+    margin:10px 23px;
+    border: 1px solid lightgray;
+}
+.home-box table{
+    height:180px;
+}
+.home-img{
+    margin-top: 50px;
+    width:130px;
+    margin-left: 20px;
+}
+.home-title{
+    font-weight: bold;
+    font-size: 1.7rem;
+}
+.home-content{
+    font-weight: 700;
+    font-size:1.2rem;
+}
+/* 오늘의 주문현황 */
+.today-order img{
+    height:60px;
+}
+.shop_notice img{
+    height:60px;
+}
+.today-order{
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+.today-table td{
+    vertical-align: middle;
+}
+.today-table img{
+    height:100px;
+    margin-left: 40px;
+}
+.shop_notice{
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+.shop_notice table td{
+    vertical-align: middle;
+}
+.today-order-title{
+    background-color: lightgray;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+.today-order-content{
+    height: 250px;
+    font-weight: bold;
+    font-size:2rem;
+    text-align: center;
+}
+.today-notice-content{
+    font-size: 1.2rem;
+}
+
+/*super_admin*/
+.super-title{
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.4rem;
+    background-color: #f1f1f1;
+}
+.super-sub-title{
+    font-weight: bold;
+    font-size:1.1rem;
 }

@@ -23,12 +23,6 @@ public class CategoryDaoImpl implements CategoryDao {
 		return sqlSession.selectOne("review.review_seq");
 	}
 
-	// 파일 테이블에 등록
-	@Override
-	public void fileRegist(FilesDto filesDto) {
-		sqlSession.insert("review.files_regist",filesDto);
-	}
-
 	// FoodCategory 조회
 	@Override
 	public FoodCategoryDto getFoodCategoryInfo(int category_code) {
@@ -47,12 +41,6 @@ public class CategoryDaoImpl implements CategoryDao {
 		sqlSession.insert("category.insertFoodCategoryInfo",foodDto);
 	}
 
-	// 파일정보 업데이트
-	@Override
-	public void updateFileInfo(FilesDto filesDto) {
-		sqlSession.update("files.updateFilesInfo",filesDto);
-	}
-
 	// Food_categry 업데이트(이미지만)
 	@Override
 	public void updateFoodCategory(FoodCategoryDto foodCategoryDto) {
@@ -69,6 +57,12 @@ public class CategoryDaoImpl implements CategoryDao {
 	@Override
 	public List<CategoryDto> getMenuCategory(int shop_code) {
 		return sqlSession.selectList("category.menuCategoryList", shop_code);
+	}
+
+	// Menu_categry Dto 조회(메뉴코드로)
+	@Override
+	public CategoryDto getMenuCategoryInfo(int menu_code) {
+		return sqlSession.selectOne("category.menuCategoryInfo", menu_code);
 	}
 
 }

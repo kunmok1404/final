@@ -7,12 +7,11 @@
     <div class="card">
     <ul class="card-body">
     	
-        <li class="border"><p>전체보기</p>
-        <img src="${pageContext.request.contextPath}/resources/image/test.png">
-        </li>
+        <li class="border" style="height:203px;"><p>전체보기</p>
+        <img style="height:120px;" src="${pageContext.request.contextPath}/resources/image/all_category1.png"></li>
          <c:forEach var="category" items="${category}">
         	<li class="border" data-food="${category.no}"><p>${category.name}</p>
-        <img src="${pageContext.request.contextPath}/resources/image/test.png">
+        <img src="${pageContext.request.contextPath}/review/review_img?files_code=${category.img}">
         </li>
             
         </c:forEach> 

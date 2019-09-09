@@ -1,137 +1,173 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<jsp:include page="/WEB-INF/views/template/admin/shop/header.jsp"></jsp:include>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
 
-    <jsp:include page="/WEB-INF/views/template/admin/shop/header.jsp"></jsp:include>
-    <jsp:include page="/WEB-INF/views/template/admin/shop/left/left_notice.jsp"></jsp:include> 
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
-<!-- Styles -->
-<style>
-#chartdiv {
-  width: 100%;
-  height: 500px;
-}
+<!--shop_admin home 컨텐츠-->
+    <div class="shop-wrapper">
+      <div class="row">
+        <span class="home-menu-box">
+          <table class="table table-borderless">
+              <tbody>
+                  <tr>
+                      <td width="30%">
+                        <img src="${pageContext.request.contextPath}/resources/image/menu.png" class="home-img">
+                      </td>
+                      <td>
+                        <table class="table table-borderless">
+                          <tbody>
+                            <tr><td class="text-center home-title" colspan="2">메뉴등록 현황</td></tr>
+                            <tr>
+                              <td width="50%" class="text-right"><span class="home-content">총 등록수 :</span></td>
+                              <td><span class="home-content">50건</span></td>
+                            </tr>
+                            <tr>
+                              <td class="text-right"><span class="home-content text-primary">승인 완료 :</span></td>
+                              <td><span class="home-content text-primary">45건</span></td>
+                            </tr>
+                            <tr>
+                              <td class="text-right"><span class="home-content text-danger">승인 대기 :</span></td>
+                              <td><span class="home-content text-danger">5건</span></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+        </span>
+        <span class="home-order-box">
+            <table class="table table-borderless">
+                <tbody>
+                    <tr>
+                        <td width="30%">
+                          <img src="${pageContext.request.contextPath}/resources/image/meal.png" class="home-img">
+                        </td>
+                        <td>
+                            <table class="table table-borderless">
+                              <tbody>
+                                <tr><td class="text-center home-title" colspan="2">주문 현황</td></tr>
+                                <tr>
+                                  <td width="50%" class="text-right"><span class="home-content">총 주문수  :</span></td>
+                                  <td><span class="home-content">1000건</span></td>
+                                </tr>
+                                <tr>
+                                  <td class="text-right"><span class="home-content text-primary">이번 달 :</span></td>
+                                  <td><span class="home-content text-primary">500건</span></td>
+                                </tr>
+                                <tr>
+                                  <td class="text-right"><span class="home-content text-danger">이번 주 :</span></td>
+                                  <td><span class="home-content text-danger">70건</span></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </span>
+        <span class="home-sale-box">
+            <table class="table table-borderless">
+                <tbody>
+                    <tr>
+                        <td width="30%">
+                          <img src="${pageContext.request.contextPath}/resources/image/sale.png" class="home-img">
+                        </td>
+                        <td>
+                            <table class="table table-borderless">
+                              <tbody>
+                                <tr><td class="text-center home-title" colspan="2">매출 현황</td></tr>
+                                <tr>
+                                  <td width="30%" class="text-right"><span class="home-content text-right">이번달 :</span></td>
+                                  <td><span class="home-content">5,000,000원</span></td>
+                                </tr>
+                                <tr>
+                                  <td class="text-right"><span class="home-content text-primary">이번주 :</span></td>
+                                  <td><span class="home-content text-primary">1,500,000원</span></td>
+                                </tr>
+                                <tr>
+                                  <td class="text-right"><span class="home-content text-danger">오늘 :</span></td>
+                                  <td><span class="home-content text-danger">350,000원</span></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </span>
+      </div>
 
-</style>
+      <div class="row mt-3">
+        <!--오늘의 주문현황-->
+        <div class="col-md-6">
+            <div class="today-order">
+              <img src="${pageContext.request.contextPath}/resources/image/order.png">
+              오늘의 주문현황
+            </div>
+            <table class="table table-bordered mt-3 today-table">
+              <tbody>
+                <tr>
+                  <td class="today-order-title">접수대기</td>
+                  <td class="today-order-title">조리중</td>
+                  <td class="today-order-title">배달완료</td>
+                  <td class="today-order-title">취소</td>
+                </tr>
+                <tr>
+                  <td class="today-order-content">10</td>
+                  <td class="today-order-content text-info">7</td>
+                  <td class="today-order-content text-primary">20</td>
+                  <td class="today-order-content text-danger">2</td>
+                </tr>
+              </tbody>
+            </table>
 
-<!-- Resources -->
-<script src="https://www.amcharts.com/lib/4/core.js"></script>
-<script src="https://www.amcharts.com/lib/4/charts.js"></script>
-<script src="https://www.amcharts.com/lib/4/themes/kelly.js"></script>
-<script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+        </div>
+        <!--공지사항-->
+        <div class="col-md-5">
+            <div class="shop_notice">
+              <table class="table table-borderless">
+                  <tbody>
+                    <tr>
+                      <td width="60%" class="today-order">
+                          <img src="${pageContext.request.contextPath}/resources/image/megaphone.png">
+                          공지사항
+                      </td>
+                      <td width="20%" class="text-right">
+                        <a href="#" class="text-secondary today-order">더보기</a>
+                      </td>
+                    </tr>
+                  </tbody>
+              </table>
+            </div>
+            <table class="table table-striped table-hover mt-3 today-table">
+              <tbody>
+                <tr>
+                  <td class="today-notice-content">수수료율 정책 변경 공지사항</td>
+                  <td class="today-notice-content text-secondary text-center">2019-08-01</td>
+                </tr>
+                <tr>
+                  <td class="today-notice-content">신규입점 정책에 관한 공지</td>
+                  <td class="today-notice-content text-secondary text-center">2019-07-20</td>
+                </tr>
+                <tr>
+                  <td class="today-notice-content">메뉴 등록시 주의사항 공지</td>
+                  <td class="today-notice-content text-secondary text-center">2019-06-30</td>
+                </tr>
+                <tr>
+                  <td class="today-notice-content">배송비 수수료에 관한 공지</td>
+                  <td class="today-notice-content text-secondary text-center">2019-05-03</td>
+                </tr>
+                <tr>
+                  <td class="today-notice-content">1:1문의 답변관련 공지</td>
+                  <td class="today-notice-content text-secondary text-center">2019-04-15</td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+      </div>
 
-<!-- Chart code -->
-<script>
-am4core.ready(function() {
-
-// Themes begin
-am4core.useTheme(am4themes_kelly);
-am4core.useTheme(am4themes_animated);
-// Themes end
-
-var chart = am4core.create("chartdiv", am4charts.XYChart);
-
-var data = [];
-var size = parseInt($(".data_size").val())+1;
-for(let i = 1; i < size; i++){
-  data.push({date:new Date(2019, 7, $(".t3"+i).val()), value:$(".data"+i).val(),value2:$(".cancel"+i).val(),value3:$(".sussce"+i).val()});
-}
-
-chart.data = data;
-
-// Create axes
-var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
-dateAxis.renderer.minGridDistance = 60;
-
-var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-
-// Create series
-var series = chart.series.push(new am4charts.LineSeries());
-series.dataFields.valueY = "value";
-series.dataFields.dateX = "date";
-series.tooltipText = "주문건수:{value}";
-
-var series = chart.series.push(new am4charts.LineSeries());
-series.dataFields.valueY = "value2";
-series.dataFields.dateX = "date";
-series.tooltipText = "취소건수:{value2}";
-
-var series = chart.series.push(new am4charts.LineSeries());
-series.dataFields.valueY = "value3";
-series.dataFields.dateX = "date";
-series.tooltipText = "완료건수:{value3}";
-
-
-series.tooltip.pointerOrientation = "vertical";
-
-chart.cursor = new am4charts.XYCursor();
-chart.cursor.xAxis = dateAxis;
-
-//chart.scrollbarY = new am4core.Scrollbar();
-chart.scrollbarX = new am4core.Scrollbar();
-
-
-var date1 = new Date();
-console.log(date1.getDate());
-var date2 = new Date(2019,8,19);
-console.log(date2.getDate());
-var time = date2-date1;
-console.log(time/1000/60/60);
-}); 
-$(function() {
-	$(".daa").click(function() {
-		console.log($(".dda").val());
-	});
-});
-
+    </div>
 
 
-// end am4core.ready()
-</script>
-<style>
-	#chartdiv {
-		width:60%;
-		margin: auto;
-	}
-	
-	#chdiv {
-		width:60%;
-		margin: auto;
-	}
-	.dise {
-		text-align: right;
-	}
-</style>
-<!-- HTML -->
-<div id="chartdiv"></div>
-<div id="chdiv">
-<input type="hidden" value="${order_date.size() }" class="data_size">
-	<table border="1">
-		<thead>
-			<tr align="center">
-				<th>년/월/일</th>
-				<th>주문건수</th>
-				<th>취소건수</th>
-				<th>완료건수</th>
-			</tr>
-		</thead>
-		<tbody>
-<c:forEach var="data"  items="${order_date }">
-			<tr>
-				<td><input type="hidden" value="${data.t3 }" class="t3${data.rownum }">
-				${data.t1 }/${data.t2 }/${data.t3 }</td>
-				<td>
-				<input type="text" value="${data.cut }번" class="data${data.rownum } dise" readonly></td>
-				<td>
-				<input type="text" value="${cancel.get(data.rownum-1) }번" class="cancel${data.rownum } dise" readonly></td>
-				<td>
-				<input type="text" value="${sussce.get(data.rownum-1) }번" class="sussce${data.rownum } dise" readonly></td>
-			</tr>
-</c:forEach>
-		</tbody>
-	</table>
-		<form method="post">
-		시작<input type="date" name="start">종료<input type="date" name="end">
-		<input type="submit" value="검색">
-		</form>
-</div>
     <jsp:include page="/WEB-INF/views/template/admin/shop/footer.jsp"></jsp:include>

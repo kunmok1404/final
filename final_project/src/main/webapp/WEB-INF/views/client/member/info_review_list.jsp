@@ -17,7 +17,7 @@
       </div>
       <div class="row mt-3">
         <div class="col-md-12">
-          <table class="table table-bordered text-center myInfo-table">
+          <table class="table table-borderless table-hover text-center myInfo-table">
             <thead>
               <tr>
                 <td style="width: 5%">번호</td>

@@ -50,7 +50,7 @@ public class CategoryServiceImpl implements CategoryService {
 					String save_name = file.getOriginalFilename() + "-" + System.currentTimeMillis();
 				
 					// 파일 업데이트
-					categoryDao.updateFileInfo(FilesDto.builder()
+					filesDao.updateFileInfo(FilesDto.builder()
 							.no(filesDto.getNo())
 							.file_type(file.getContentType())
 							.upload_name(file.getOriginalFilename())
@@ -83,7 +83,7 @@ public class CategoryServiceImpl implements CategoryService {
 					MultipartFile file = foodDto.getCategory_img();
 					String save_name = file.getOriginalFilename() + "-" + System.currentTimeMillis();
 				
-					categoryDao.fileRegist(FilesDto.builder()
+					filesDao.fileRegist(FilesDto.builder()
 							.no(files_seq)
 							.file_type(file.getContentType())
 							.upload_name(file.getOriginalFilename())

@@ -460,7 +460,7 @@ table {
 
 /*나의정보 제목부분*/
 .wrapper{
-	margin-left:200px;
+	margin-left:280px;
 	width:70%;
 }
 
@@ -472,7 +472,7 @@ table {
 
 /*나의정보 테이블*/
 .myInfo-table tr{
-    height:35px; 
+    height:50px; 
     cursor:pointer;
 }
 
@@ -629,4 +629,36 @@ footer{
 	color:black;
 	text-decoration:none;
 } 
+
+/*메인검색화면*/
+.search_top{
+}
+.where-addr{
+	text-align:center;
+	font-size:2.5rem;
+	font-weight:bold;
+	color:#007f7f;
+}
+.where-addr span{
+	text-align:center;
+	font-size:2.5rem;
+	font-weight:bold;
+	color:	#e4e213;
+}
+.iim{
+	height:200px;
+	padding:30px 30px;
+}
+.where-text{
+	text-align:center;
+	font-size:1.3rem;
+	color:#fcfcfc;
+}
+.search-btn{
+	text-align:center;
+}
+.search-btn > input{
+	height:40px;
+	width:300px;
+}
 

@@ -396,8 +396,7 @@ public class MemberController {
 	// 나의정보 클릭시 나의주문내역
 	@GetMapping("/info_order_list")
 	public String infoOrderList(HttpSession session, Model model) {
-		//int member_code = (int)session.getAttribute("member_code");
-		int member_code = 1;
+		int member_code = (int)session.getAttribute("member_code");
 		model.addAttribute("order_list",oderService.myOrderList(member_code));
 		return "client/member/info_order_list";
 	}
@@ -407,8 +406,8 @@ public class MemberController {
 	@GetMapping("/info_order_detail")
 	public String infoOrderDetail(HttpSession session, Model model,
 					@RequestParam int order_code) {
-		//int member_code = (int)session.getAttribute("member_code");
-		int member_code = 1;
+		int member_code = (int)session.getAttribute("member_code");
+		System.out.println("member_code=session"+member_code);
 		// 주문상세 목록
 		model.addAttribute("order_detail_list",ordersDao.myOrderDetailList(order_code));
 		// 주문정보

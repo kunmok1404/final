@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.kh.spring.entity.TermsDto;
+import com.kh.spring.repository.CategoryDao;
 import com.kh.spring.repository.ShopDao;
 import com.kh.spring.repository.TermsDao;
 
@@ -18,6 +18,8 @@ public class HomeController {
 	TermsDao termsDao;
 	@Autowired
 	ShopDao shopDao;
+	@Autowired
+	CategoryDao categoryDao;
 	
 	// 메인화면
 	@GetMapping({"","/"})

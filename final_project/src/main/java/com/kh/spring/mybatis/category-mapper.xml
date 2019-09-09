@@ -45,6 +45,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="menuCategoryList" parameterType="int" resultType="categoryDto">
 		select * from category where shop_code=#{shop_code}
 	</select>
+	
+	<!-- MenuCategory Dto(메뉴코드로) -->
+	<select id="menuCategoryInfo" parameterType="int" resultType="categoryDto">
+		select * from category where no=#{menu_code}
+	</select>
 </mapper>
  
  

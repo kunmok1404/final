@@ -24,13 +24,15 @@ public class PointDaoImpl implements PointDao {
 	// 총 적립 포인트 조회
 	@Override
 	public int getTotalPoint(int member_code) {
-		return sqlSession.selectOne("point.total_point", member_code);
+		Integer value = sqlSession.selectOne("point.total_point", member_code);
+		return value == null ? 0 : value;
 	}
 
 	// 총 사용 포인트 조회
 	@Override
 	public int getUsePoint(int member_code) {
-		return sqlSession.selectOne("point.use_point", member_code);
+		Integer value = sqlSession.selectOne("point.use_point", member_code);
+		return value == null ? 0 : value;
 	}
 
 	// 총 사용 포인트 적립

@@ -145,6 +145,7 @@
 	  				<td>승인상태</td>
 	  				<td>판매상태</td>
 	  				<td>등록일</td>
+	  				<td>편집</td>
 	  			</tr>
 	  			
 	  			<c:forEach var="menuVO" items="${list}">
@@ -171,10 +172,7 @@
 	  				</c:choose>
 	  				<td>${menuVO.regist_date}</td>
 	  				<td>
-	  					<c:if test="${menuVO.apply_status eq '승인대기'}">
-	  						<button class="btn btn-sm btn-primary apply_menu" data-no="${menuVO.no}">승인</button>
-	  					</c:if>
-	  						<button class="btn btn-sm btn-danger delete_menu" data-no="${menuVO.no}">삭제</button>
+	  					<button class="btn btn-sm btn-danger delete_menu" data-no="${menuVO.no}">삭제</button>
 	  				</td>
 	  			</tr>
 	  			</c:forEach>
