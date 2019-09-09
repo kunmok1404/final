@@ -3,6 +3,8 @@ package com.kh.spring.service;
 import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.session.SqlSession;
@@ -139,7 +141,6 @@ public class ServiceServiceImpl implements ServiceService {
 		qnaDao.insert( qnaDto);
 		return no;
 	}
-	
 
 
 

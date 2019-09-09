@@ -52,9 +52,9 @@
 	  				<td width="10%" class="table-active">답변상태</td>
 	  				<td width="40%">
 	  					<select name="apply_status" class="form-control">
-	  						<option value="">전체</option>
-	  						<option value="">답변대기</option>
-	  						<option value="">답변완료</option>
+	  						<option>전체</option>
+	  						<option>답변대기</option>
+	  						<option>답변완료</option>
 	  					</select>
 	  				</td>
 	  				<td width="10%" class="table-active">키워드 검색</td>
@@ -64,8 +64,9 @@
 		  						<tr>
 					  				<td width="40%">
 					  					<select name="keyword_type" class="form-control">
-					  						<option value="">제목</option>
-					  						<option value="">작성자</option>
+					  						<option>전체</option>
+					  						<option value="title" ${keyword_type == 'title'?'selected':''}>제목</option>
+					  						<option value="member_code" ${keyword_type == 'member_code'?'selected':''}>작성자</option>
 					  					</select>
 					  				</td>
 					  				<td>

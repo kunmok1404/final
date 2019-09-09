@@ -14,6 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				<if test="category != null ">
 				and  category=#{category}
 				</if>
+				and  use_yn like '%'||'y'||'%'
 				order by no desc
 			
 			)A
@@ -223,12 +224,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	<select id="super_ono_count" parameterType="map" resultType="int">
  		select count(*) from oneandone
  			where 1=1
- 			<if test="apply_status != null">
-				and apply_status=#{apply_status} 
-			</if>
- 			<if test="keyword_type !=null and keyword !=null">
- 			and ${keyword_type} like '%'|| #{keyword} ||'%'
- 			</if>
+ 				<if test="apply_status !=null and apply_status != '전체'">
+					and reply_status = #{apply_status} 
+				</if>
+				<if test="keyword_type !=null and keyword_type !='전체'and keyword != null and keyword != ''">
+					and ${keyword_type} like '%' || #{keyword} || '%'
+				</if>
+				<!-- 기간 검색 -->
+				<if test="start_date != null and start_date != '' and end_date != null and end_date != ''">
+				and regist_date between to_date(#{start_date}, 'YYYY-MM-DD') and to_date(#{end_date}, 'YYYY-MM-DD') + 1 - 1 / 864000 
+				</if>
  			
  	</select>
  	
@@ -252,14 +257,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				
 				select * from oneandone
 				   where 1=1
-				<if test="apply_status !=null">
-					and apply_status =#{apply_status}
+				<if test="apply_status !=null and apply_status != '전체'">
+					and reply_status = #{apply_status} 
 				</if>
-				<if test="keyword_type !=null and keyword != null ">
+				<if test="keyword_type !=null and keyword_type !='전체'and keyword != null and keyword != ''">
 					and ${keyword_type} like '%' || #{keyword} || '%'
 				</if>
-					and type='고객'
-					and reply_status like '%' || '답변대기' || '%' 
+				<!-- 기간 검색 -->
+				<if test="start_date != null and start_date != '' and end_date != null and end_date != ''">
+				and regist_date between to_date(#{start_date}, 'YYYY-MM-DD') and to_date(#{end_date}, 'YYYY-MM-DD') + 1 - 1 / 864000 
+				</if>
+					and type='고객' and reply_status ='답변대기'
 		order by no desc
 				
 			)A
@@ -274,11 +282,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				
 				select * from oneandone
 				   where 1=1
-				<if test="apply_status !=null">
-					and apply_status =#{apply_status}
+			
+				<if test="apply_status !=null and apply_status != '전체'">
+					and reply_status = #{apply_status} 
 				</if>
-				<if test="keyword_type !=null and keyword != null ">
+				<if test="keyword_type !=null and keyword_type !='전체'and keyword != null and keyword != ''">
 					and ${keyword_type} like '%' || #{keyword} || '%'
+				</if>
+				<!-- 기간 검색 -->
+				<if test="start_date != null and start_date != '' and end_date != null and end_date != ''">
+				and regist_date between to_date(#{start_date}, 'YYYY-MM-DD') and to_date(#{end_date}, 'YYYY-MM-DD') + 1 - 1 / 864000 
 				</if>
 				
 					and type='고객'
