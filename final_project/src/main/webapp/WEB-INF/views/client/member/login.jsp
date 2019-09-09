@@ -55,7 +55,11 @@
  		<table class="table table-bordered">
  			<tbody>
 				<tr>
-					<td colspan ="4"></td>
+					<td colspan ="4">
+<%-- 						<%if(request.getParameterMap().containsKey("error")){ %> --%>
+<!-- 							[ 로그인 정보가 일치하지 않습니다.] -->
+<%-- 						<%} %> --%>
+					</td>
 				</tr>
 				<!-- 아이디, 로그인 버튼 -->
 				<tr>
@@ -83,15 +87,15 @@
 				</tr>
 				<tr>
 					<td colspan="2">
-						<a href="find_id"><input type="button" value="아이디 찾기" name="findID"></a>
+						<a href="${pageContext.request.contextPath}/member/find_id"><input type="button" value="아이디 찾기" name="findID"></a>
 					</td>
 					<td colspan="2">
-						<a href="find_pw"><input type="button" value="비밀번호 찾기" name="findPW"></a>
+						<a href="${pageContext.request.contextPath}/member/find_pw"><input type="button" value="비밀번호 찾기" name="findPW"></a>
 					</td>
 				</tr>
 				<tr>	
 					<td colspan="2">	
-						<a href="regist"><input type="button" value="회원가입" name="regist"></a>
+						<a href="${pageContext.request.contextPath}/member/regist"><input type="button" value="회원가입" name="regist"></a>
 					</td>
 					<td colspan="2">	
 						<a href="${pageContext.request.contextPath}"><input type="button" value="홈으로" name="main"></a>

@@ -172,32 +172,37 @@ public class MemberController {
 		//암호화 적용 후
 		// 1. id를 DB에서 회원정보를 불러온다.
 		MemberDto result = memberDao.get(memberDto.getId());
-		// 2. BCrypt의 비교명령을 이용하여 비교 후 처리
-				//입력한 비밀번호
-				System.out.println(memberDto.getPw());
-				//암호화된 비밀번호
-				System.out.println(result.getPw());
-				//로그인 성공 여부
-				boolean ok = BCrypt.checkpw(memberDto.getPw(), result.getPw());
-				System.out.println(ok);
-		if(BCrypt.checkpw(memberDto.getPw(), result.getPw())) {
-			session.setAttribute("member_code", result.getNo());
-			
-			// 아이디 저장
-			//쿠키 객체를 만들고 체크 여부에 따라 시간 설정 후 response에 추가
-			Cookie cookie = new Cookie("saveID", memberDto.getId());
-			if(remember == null) {//체크 안했을 때
-				cookie.setMaxAge(0);
+		if(result != null) {
+			// 2. BCrypt의 비교명령을 이용하여 비교 후 처리
+			//입력한 비밀번호
+			System.out.println(memberDto.getPw());
+			//암호화된 비밀번호
+			System.out.println(result.getPw());
+			//로그인 성공 여부
+			boolean ok = BCrypt.checkpw(memberDto.getPw(), result.getPw());
+			System.out.println(ok);
+			if(BCrypt.checkpw(memberDto.getPw(), result.getPw())) {
+				session.setAttribute("member_code", result.getNo());
+				
+				// 아이디 저장
+				//쿠키 객체를 만들고 체크 여부에 따라 시간 설정 후 response에 추가
+				Cookie cookie = new Cookie("saveID", memberDto.getId());
+				if(remember == null) {//체크 안했을 때
+					cookie.setMaxAge(0);
+				}
+				else {//체크 했을 때
+					cookie.setMaxAge(4 * 7 * 24 * 60 * 60);//4주
+				}
+				
+				response.addCookie(cookie);
+				return "redirect:/";			
 			}
-			else {//체크 했을 때
-				cookie.setMaxAge(4 * 7 * 24 * 60 * 60);//4주
+			else {
+				return "client/member/login_fail";
 			}
-			
-			response.addCookie(cookie);
-			return "redirect:/";			
 		}
 		else {
-			return "client/member/login";
+			return "client/member/login_fail";
 		}
 	}
 	
@@ -273,6 +278,35 @@ public class MemberController {
 	public String findPwResult() {
 		return "client/member/find_pw_result";
 	}
+	
+	
+	//참고
+//	@PostMapping("find_pw")
+//	public String findpw(
+//				@ModelAttribute MemberDto memberDto,
+//				Model model
+//			) {
+//		MemberDto memberDto = memberDao.findPassword(memberDto);
+//		if(memberDto != null) {
+//			emailService.find_pw(memberDto);
+//			return "redirect:find_pw_result";
+//		}
+//		else {
+//			model.addAttribute("error", "error");
+//			return "redirect:find_pw?";
+//		}
+//	}
+//	
+//	@GetMapping("/find_pw_result")
+//	public String findpwresult() {
+//		return "member/find_pw_result";
+//	}
+	
+	
+	
+	
+	//
+	
 	
 	@Autowired
 	private CertDao certDao;
@@ -350,7 +384,7 @@ public class MemberController {
 			return "redirect:info_change";
 		}
 		else {
-			return "client/member/info_check";			
+			return "client/member/info_check_fail";			
 		}
 	}
 

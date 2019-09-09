@@ -108,33 +108,27 @@ public class OnoImpl implements OnoDao{
 
 
 	@Override
-	public int supercount(String apply_status, String keyword_type, String keyword) {
+	public int supercount(String apply_status, String keyword_type, String keyword,String start_date, String end_date) {
 		Map<String, String> param = new HashMap<>();
-		if(apply_status != null) {
-			param.put("apply_status", apply_status);
-		}
-		if(keyword_type !=null && keyword !=null) {
-			param.put("keyword_type", keyword_type);
-			param.put("keyword", keyword);
-		}
+		param.put("apply_status", apply_status);
+		param.put("keyword_type", keyword_type);
+		param.put("keyword", keyword);
+		param.put("start_date", start_date);
+		param.put("end_date", end_date);
 		return sqlSession.selectOne("service.super_ono_count", param);
 	}
 
 
 	@Override
-	public List<OnoDto> superlist(String apply_status, String keyword_type, String keyword, int i, int j, String type) {
+	public List<OnoDto> superlist(String apply_status, String keyword_type, String keyword,String start_date, String end_date, int i, int j, String type) {
 		Map<String, Object> param = new HashMap<>();
 		
-		if(apply_status != null) {
 			param.put("apply_status", apply_status);
-		}
-		
-		if(keyword_type !=null && keyword !=null) {
 			param.put("keyword_type", keyword_type);
 			param.put("keyword", keyword);
-		}
-		
-		
+			param.put("start_date", start_date);
+			param.put("end_date", end_date);
+			
 		//검색이든 목록이든 페이징 구간을 전달
 		param.put("start", i);
 		param.put("end", j);
@@ -143,17 +137,14 @@ public class OnoImpl implements OnoDao{
 	}
 	
 	@Override
-	public List<OnoDto> superlist2(String apply_status, String keyword_type, String keyword, String reply_status, int i, int j, String type) {
+	public List<OnoDto> superlist2(String apply_status, String keyword_type, String keyword, String start_date, String end_date,String reply_status, int i, int j, String type) {
 		Map<String, Object> param = new HashMap<>();
 		
-		if(apply_status != null) {
-			param.put("apply_status", apply_status);
-		}
-		
-		if(keyword_type !=null && keyword !=null) {
-			param.put("keyword_type", keyword_type.replace("+", "||"));
-			param.put("keyword", keyword);
-		}
+		param.put("apply_status", apply_status);
+		param.put("keyword_type", keyword_type);
+		param.put("keyword", keyword);
+		param.put("start_date", start_date);
+		param.put("end_date", end_date);
 		
 		
 		//검색이든 목록이든 페이징 구간을 전달

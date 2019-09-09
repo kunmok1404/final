@@ -89,7 +89,14 @@ public class SuperQnaController {
 	
 	//qna 글 쓰기
 	@GetMapping("/qna_write")
-	public String write() {
+	public String write(Model model) {
+		//답변대기 개수
+		int count_reply_ceo = qnaDao.count_reply_ceo();
+		model.addAttribute("count_reply_ceo",count_reply_ceo);
+				
+		//답변대기 개수
+		int count_reply = qnaDao.count_reply();
+		model.addAttribute("count_reply",count_reply);
 		
 		return "admin/super/service/qna/qna_write";
 	}
@@ -118,6 +125,13 @@ public class SuperQnaController {
 	@GetMapping("qna_edit")
 	public String edit(@RequestParam int no, Model model) {
 		model.addAttribute("qdto", qnaDao.qnaInfo(no));
+		//답변대기 개수
+				int count_reply_ceo = qnaDao.count_reply_ceo();
+				model.addAttribute("count_reply_ceo",count_reply_ceo);
+						
+				//답변대기 개수
+				int count_reply = qnaDao.count_reply();
+				model.addAttribute("count_reply",count_reply);
 		return "admin/super/service/qna/qna_edit";
 	}
 	

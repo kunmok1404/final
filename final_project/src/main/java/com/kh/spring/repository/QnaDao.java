@@ -6,7 +6,7 @@ import com.kh.spring.entity.QnaDto;
 
 public interface QnaDao {
 
-	List<QnaDto> list(String type,int i, int j);
+	List<QnaDto> list(String type,int i, int j, String use_yn);
 	
 
 

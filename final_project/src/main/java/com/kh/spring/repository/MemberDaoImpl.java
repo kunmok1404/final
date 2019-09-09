@@ -177,7 +177,12 @@ public class MemberDaoImpl implements MemberDao {
 	public List<MyshopDto> myshop(int member_code) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("member_code", member_code);
-		return sqlSession.selectList("member.member_code",map);
+		return sqlSession.selectList("member.myshop",map);
+	}
+
+	@Override
+	public List<MemberDto> member_code() {
+		return sqlSession.selectList("member.member_code");
 	}
 
 	// super_admin 전체회원목록 조회
@@ -185,6 +190,12 @@ public class MemberDaoImpl implements MemberDao {
 	public List<MemberDto> getMemberList() {
 		return sqlSession.selectList("member.get_member_list");
 	}
+
+	////
+//	@Override
+//	public MemberDto findPassword(MemberDto memberDto) {
+//		return sqlSession.selectOne("member.find_pw", memberDto);
+//	}
 
 }
 

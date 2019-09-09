@@ -8,8 +8,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="regist" parameterType="couponDto">
 		insert into coupon values(
 			coupon_seq.nextval, #{name}, #{issue_type}, #{discount_type},
-			#{discount_price}, #{max_price}, #{start_date}, #{finish_date}, 
-			sysdate , #{issue_status}, sysdate, sysdate, #{auto_type}
+			#{discount_price}, #{max_price}, SYSDATE, (SELECT SYSDATE + #{finish_date} FROM DUAL), 
+			'발급중', SYSDATE, SYSDATE, #{auto_type}, #{issue_date}
 		)
 	</insert>
 	
@@ -22,4 +22,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="get_coupon_info" parameterType="int" resultType="couponDto">
 		select * from coupon where no=#{coupon_code} order by no desc
 	</select>
+	<!-- 쿠폰정보 구하기 -->
+	<select id="list" resultType="couponDto">
+		select * from coupon 
+	</select>
+	<!-- 사용기간이 종료 되었는지 -->
+	<select id="issue"  parameterType="map" resultType="int">
+		SELECT #{finish_date} - SYSDATE FROM DUAL;
+	</select>
+	<!-- 사용상태 변경 -->
+	<update id="finish" parameterType="map">
+		update coupon set issue_status = '발급종료' where no = #{no}
+	</update>
+	
+	<insert id="all" parameterType="map">
+		insert into issue values(#{coupon_code},#{member_code},sysdate)
+	</insert>
+	
+	
+	
 </mapper>
