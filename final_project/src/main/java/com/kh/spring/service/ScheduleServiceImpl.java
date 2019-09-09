@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.kh.spring.entity.CouponDto;
 import com.kh.spring.entity.MemberDto;
 import com.kh.spring.entity.UsergradeDto;
 import com.kh.spring.repository.MemberDao;
@@ -21,7 +22,6 @@ public class ScheduleServiceImpl implements ScheduleService{
 	
 	@Autowired
 	MemberDao memberDao;
-	
 	
 	
 	@Override
@@ -55,5 +55,49 @@ public class ScheduleServiceImpl implements ScheduleService{
 			sqlsession.update("member.update",map2);
 	
 		}
+	}
+
+
+
+	@Override
+	@Scheduled(cron = "0 0 1 * * *")
+	public void work2() {
+	List<CouponDto> list = sqlsession.selectList("coupon.list");
+		
+	for(CouponDto couponDto : list) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("finish_date", couponDto.getFinish_date());
+		int day = sqlsession.selectOne("coupon.issue",map);
+		
+			if (day < 0) {
+				Map<String, Object> map2 = new HashMap<>();
+				map.put("no", couponDto.getNo());
+				sqlsession.update("coupon.finish", map2);
+			}
+		}
+	}
+
+
+
+	@Override
+	public void work3() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void work4() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void work5() {
+		// TODO Auto-generated method stub
+		
 	}
 }
