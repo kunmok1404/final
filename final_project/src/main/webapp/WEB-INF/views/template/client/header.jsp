@@ -70,7 +70,7 @@
         }
 
         .iim {
-        background-image:url("${pageContext.request.contextPath}/resources/image/food.png");
+        background-image:url("${pageContext.request.contextPath}/resources/image/main1-1.jpg");
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;

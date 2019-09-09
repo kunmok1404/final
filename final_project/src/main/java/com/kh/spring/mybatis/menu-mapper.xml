@@ -48,6 +48,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		)
 	</insert>
 	
+	<!-- 메뉴기본정보 수정 -->
+	<update id="updateMenuInfo" parameterType="menuDto">
+		update menu set 
+			menu_category=#{menu_category}, name=#{name}, price=#{price}, 
+			edit_date = sysdate 
+		where no = #{no}
+	</update>
+	
 	<!-- 메뉴테이블에 목록이미지코드 저장 -->
 	<update id="updateListImg" parameterType="map">
 		update menu set basic_img=#{files_seq} where no=#{menu_code}
@@ -71,6 +79,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			sub_menu_seq.nextval, #{shop_code}, #{menu_code}, #{title}, #{name}, '선택', #{price}
 		)
 	</insert>
+	
+	<!-- 메뉴DTO구하기 -->
+	<select id="getMenuInfo" parameterType="int" resultType="menuDto">
+		select * from menu where no=#{menu_code}
+	</select>
+	
+	<!-- 필수메뉴목록구하기 -->
+	<select id="getSubMenuRadioInfo" parameterType="map" resultType="subMenuDto">
+		select * from sub_menu 
+			where shop_code=#{shop_code} and menu_code=#{menu_code} and type='필수'
+	</select>
+	
+	<!-- 선택메뉴목록구하기 -->
+	<select id="getSubMenuCheckInfo" parameterType="map" resultType="subMenuDto">
+		select * from sub_menu 
+			where shop_code=#{shop_code} and menu_code=#{menu_code} and type='선택'
+	</select>
+	
+	<!-- 서브메뉴 삭제 -->
+	<delete id="subMenuDelete" parameterType="map">
+		delete sub_menu where shop_code=#{shop_code} and menu_code=#{menu_code}
+	</delete>
 	
 	<!-- 
 		구조화된 데이터를 불러오기 위한 ResultMap 선언

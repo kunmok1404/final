@@ -103,9 +103,9 @@
 				<th>승인상태</th>
 				<td>
 				<select name="apply_status">
-					<option value="승인완료" <c:out value="${shop.apply_status == 'all'?'selected':'' }"/>>승인완료</option>
-					<option value="승인대기" <c:out value="${shop.apply_status == 'all'?'selected':'' }"/>>승인대기</option>
-					<option value="승인거절" <c:out value="${shop.apply_status == 'all'?'selected':'' }"/>>승인거절</option>
+					<option value="승인완료" ${shop.apply_status eq '승인완료'?'selected':'' }>승인완료</option>
+					<option value="승인대기" ${shop.apply_status eq '대기'?'selected':'' }>승인대기</option>
+					<option value="승인거절" ${shop.apply_status eq '승인거절'?'selected':'' }>승인거절</option>
 				</select>
 				</td>
 			</tr>

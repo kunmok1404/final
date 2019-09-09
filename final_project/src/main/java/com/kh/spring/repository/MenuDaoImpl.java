@@ -67,6 +67,12 @@ public class MenuDaoImpl implements MenuDao {
 		sqlSession.insert("menu.registMenuInfo",menuDto);
 	}
 
+	// 메뉴 기본정보 수정
+	@Override
+	public void updateMenuInfo(MenuDto menuDto) {
+		sqlSession.update("menu.updateMenuInfo",menuDto);
+	}
+	
 	// 메뉴 테이블에 목록이미지 코드 저장
 	@Override
 	public void updateListImg(int files_seq, int menu_code) {
@@ -97,11 +103,37 @@ public class MenuDaoImpl implements MenuDao {
 		sqlSession.insert("menu.registCheckSubMenu",subMenuDto);
 	}
 
-	// 메뉴상세기본정보 구하기
+	// 메뉴 DTO조회(메뉴코드로)
 	@Override
-	public MenuDto getMenuInfo(int shop_code, int menu_code) {
-		
-		return null;
+	public MenuDto getMenuInfo(int menu_code) {
+		return sqlSession.selectOne("menu.getMenuInfo",menu_code);
+	}
+
+	// 필수메뉴 목록
+	@Override
+	public List<SubMenuDto> getSubMenuRadioList(int shop_code, int menu_code) {
+		Map<String,Object> map = new HashMap<String, Object>();
+		map.put("shop_code", shop_code);
+		map.put("menu_code", menu_code);
+		return sqlSession.selectList("menu.getSubMenuRadioInfo",map);
+	}
+
+	// 선택메뉴 목록
+	@Override
+	public List<SubMenuDto> getSubMenuCheckList(int shop_code, int menu_code) {
+		Map<String,Object> map = new HashMap<String, Object>();
+		map.put("shop_code", shop_code);
+		map.put("menu_code", menu_code);
+		return sqlSession.selectList("menu.getSubMenuCheckInfo",map);
+	}
+
+	// 서브메뉴 데이터 삭제
+	@Override
+	public void SubMenuDelete(int menu_code, int shop_code) {
+		Map<String,Object> map = new HashMap<String, Object>();
+		map.put("shop_code", shop_code);
+		map.put("menu_code", menu_code);
+		sqlSession.delete("menu.subMenuDelete",map);
 	}
 
 }

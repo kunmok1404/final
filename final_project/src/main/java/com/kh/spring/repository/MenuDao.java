@@ -21,6 +21,10 @@ public interface MenuDao {
 	void updateDetailImg(int files_seq, int menu_code);
 	void registRadioSubMenu(SubMenuDto subMenuDto);
 	void registCheckSubMenu(SubMenuDto subMenuDto);
-	MenuDto getMenuInfo(int shop_code, int menu_code);
+	MenuDto getMenuInfo(int menu_code);
+	List<SubMenuDto> getSubMenuRadioList(int shop_code, int menu_code);
+	List<SubMenuDto> getSubMenuCheckList(int shop_code, int menu_code);
+	void updateMenuInfo(MenuDto menuDto);
+	void SubMenuDelete(int menu_code, int shop_code);
 
 }

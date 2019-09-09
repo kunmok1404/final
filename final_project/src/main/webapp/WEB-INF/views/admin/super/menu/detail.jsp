@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:include page="/WEB-INF/views/template/admin/shop/header.jsp"></jsp:include>
-<jsp:include page="/WEB-INF/views/template/admin/shop/left/left_menu.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/template/admin/super/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/template/admin/super/left/left_menu.jsp"></jsp:include>
 
 <script>
 	$(function(){
@@ -135,7 +135,15 @@
       		</tr>
       		<tr>
       			<td class="table-secondary text-center">승인상태</td>
-      			<td class="text-left">${menuDto.apply_status}</td>
+      			<td class="text-left">
+      				<span class="text-left pl-2">
+      					<select name="apply_status" class="form-control" required>
+	  						<option>선택</option>
+	  						<option ${menuDto.apply_status eq '승인완료'?'selected':''}>승인완료</option>
+	  						<option ${menuDto.apply_status eq '승인대기'?'selected':''}>승인대기</option>
+	  					</select>
+      				</span>
+      			</td>
       		</tr>
       		<tr>
       			<td class="table-secondary text-center">판매상태</td>
@@ -205,11 +213,11 @@
       							<td width="50%">필수메뉴명</td>
       							<td width="50%">가격</td>
       						</tr>
-      						<c:forEach var="list" items="${radio_list}" varStatus="status" step="1">
+      						<c:forEach var="list" items="${radio_list}">
       						<tr>
-		                        <td><input type="text" value="${list.name}" name="radioMenuList[${status.index}].radio_name" class="form-control radio_name"></td>
+		                        <td><input type="text" value="${list.name}" class="form-control radio_name"></td>
 		                        <td>
-		                        	<input type="number" value="${list.price}" name="radioMenuList[${status.index}].radio_price" class="form-control radio_price" min="1">
+		                        	<input type="number" value="${list.price}" class="form-control radio_price" min="1">
 		                        </td>
 		                        <td><button class="btn_delete btn-block btn-secondary del">-삭제</button></td>
 		                    </tr>
@@ -246,11 +254,11 @@
       							<td width="50%">추가메뉴명</td>
       							<td width="50%">가격</td>
       						</tr>
-      						<c:forEach var="list" items="${check_list}" varStatus="status" step="1">
+      						<c:forEach var="list" items="${check_list}">
       						<tr>
-		                        <td><input type="text" value="${list.name}" name="checkMenuList[${status.index}].check_name" class="form-control radio_name"></td>
+		                        <td><input type="text" value="${list.name}" class="form-control radio_name"></td>
 		                        <td>
-		                        	<input type="number" value="${list.price}" name="checkMenuList[${status.index}].check_price" class="form-control radio_price" min="1">
+		                        	<input type="number" value="${list.price}" class="form-control radio_price" min="1">
 		                        </td>
 		                        <td><button class="btn_delete btn-block btn-secondary del">-삭제</button></td>
 		                    </tr>

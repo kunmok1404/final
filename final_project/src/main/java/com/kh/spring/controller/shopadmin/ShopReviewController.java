@@ -1,4 +1,4 @@
-package com.kh.spring.controller.superadmin;
+package com.kh.spring.controller.shopadmin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,8 +16,8 @@ import com.kh.spring.service.OrderService;
 import com.kh.spring.service.ReviewService;
 
 @Controller
-@RequestMapping("/super_admin/review")
-public class SuperReviewController {
+@RequestMapping("/shop_admin/review")
+public class ShopReviewController {
 
 	@Autowired
 	private ReviewService reviewService;
@@ -33,7 +33,7 @@ public class SuperReviewController {
 	public String list(Model model) {
 		model.addAttribute("list", reviewService.superList());//리뷰목록
 		model.addAttribute("search_number",reviewDao.searchNumber()); //리뷰갯수
-		return "admin/super/review/list";
+		return "admin/shop/review/list";
 	}
 	
 	//리뷰 상세화면
@@ -53,7 +53,7 @@ public class SuperReviewController {
 		model.addAttribute("order_code",reviewDto.getOrder_code());
 		// 이미지코드 조회
 		model.addAttribute("img_list", reviewDao.reviewImg(review_code));
-		return "admin/super/review/detail";
+		return "admin/shop/review/detail";
 	}
 	
 	// 리뷰 답변 등록

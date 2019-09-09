@@ -56,17 +56,16 @@
     </script> 
     
     <div class="iim">
-
-	<div class="addd">
-	<h1 class="addr">"어디로</h1>
-	<h1 class="adrr"> 배달해 </h1>
-	<h1 class="addr">드릴까요?"</h1>
+	
+	<div class="search_top">
+		<div class="where-addr">
+				"어디로 <span>배달해</span> 드릴까요?"
+		</div>
+		<div class="where-text">배달받으실 동 이름으로 검색해 주세요</div>
+		<div class="search-btn">
+		    <input type="text" class="form-control-sm" placeholder="ex)충선로 24번길"><button class="btn btn-success">전송</button>
+		</div>
 	</div>
-	<h6 class="adr">배달받으실 동 이름으로 검색새 주세요</h6>
-
-<div class="adre">
-    <input type="text" ><button>전송</button>
-</div>
 
 <div id="map" style="width:1px;height:1px;"></div>
 

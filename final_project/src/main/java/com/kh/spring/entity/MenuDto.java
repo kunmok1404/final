@@ -17,4 +17,6 @@ public class MenuDto {
 	private String edit_date; // 수정일
 	private String apply_status; // 승인상태
 	private String sale_status; // 판매상태
+	private int basic_img; // 목록이미지코드
+	private int detail_img; // 상세이미지코드
 }

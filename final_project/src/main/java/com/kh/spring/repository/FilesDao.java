@@ -8,5 +8,7 @@ public interface FilesDao {
 	FilesDto getFilesInfo(int img);
 	int getFileSeq();
 	void insertFilesInfo(FoodCategoryVO foodDto);
-
+	void updateFileInfo(FilesDto build);
+	void fileRegist(FilesDto filesDto);
+	void deleteFile(int basic_img);
 }

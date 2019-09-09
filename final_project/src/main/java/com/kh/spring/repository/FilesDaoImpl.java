@@ -30,5 +30,23 @@ public class FilesDaoImpl implements FilesDao {
 	public void insertFilesInfo(FoodCategoryVO foodDto) {
 		sqlSession.insert("files.insertFilesInfo",foodDto);
 	}
+	
+	// 파일 테이블에 등록
+	@Override
+	public void fileRegist(FilesDto filesDto) {
+		sqlSession.insert("review.files_regist",filesDto);
+	}
+	
+	// 파일정보 업데이트
+	@Override
+	public void updateFileInfo(FilesDto filesDto) {
+		sqlSession.update("files.updateFilesInfo",filesDto);
+	}
+
+	// 파일삭제
+	@Override
+	public void deleteFile(int file_code) {
+		sqlSession.delete("files.delete", file_code);	
+	}
 
 }
