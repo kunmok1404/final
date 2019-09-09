@@ -20,4 +20,5 @@ public class CouponDto {
 	private String regist_date; // 쿠폰등록일
 	private String edit_date; // 쿠폰 수정일
 	private String auto_type; // 자동발급 구분(회원가입 축하쿠폰, 첫구매 감사쿠폰, 구매감사쿠폰)
+	private String issue_date;// 발급 시기
 }

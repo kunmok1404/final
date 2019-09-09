@@ -205,7 +205,7 @@ $(function(){
 							선택<br>
 							<c:forEach var="cartsub" items="${cartSubDto}" varStatus="status">
 								<c:if test="${cartsub.no == cart.no}">
-								<input type="hidden" name="list[${status.index}].sub_type" value="${cartsub.sub_type}">
+								<input type="hidden" name="list${status.index}].sub_type" value="${cartsub.sub_type}">
 								<input type="hidden" name="list[${status.index}].sub_title" value="${cartsub.sub_title}">
 								<input type="hidden" name="list[${status.index}].sub_name" value="${cartsub.sub_name}">
 								<input type="hidden" class="sub_price" name="list[${status.index}].sub_price" value="${cartsub.sub_price*cartsub.sub_amount}">

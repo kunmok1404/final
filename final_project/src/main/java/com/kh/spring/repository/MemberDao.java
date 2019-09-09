@@ -30,6 +30,7 @@ public interface MemberDao {
 	void usergrade_edit2(String name2, String min_order2, String max_order2);
 	void usergrade_edit3(String name3, String max_order3);
 	List<MyshopDto> myshop(int member_code);
+	List<MemberDto> member_code();
 	List<MemberDto> getMemberList();
 	List<MemberInfoVO> info(int no);
 	//
