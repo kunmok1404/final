@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/template/admin/super/header.jsp"></jsp:include>
 
 <script src="https://code.jquery.com/jquery-latest.js"></script>
@@ -32,6 +33,13 @@
 		<legend class="legend">Admin 관리자</legend>
 		<hr><br>
 		<table class="table table-bordered">
+			<tr>
+				<td colspan ="4">
+<%-- 						<%if(request.getParameterMap().containsKey("error")){ %> --%>
+<!-- 							[ 로그인 정보가 일치하지 않습니다.] -->
+<%-- 						<%} %> --%>
+				</td>
+			</tr>
 			<tr>
 				<td><label for="id">아이디</label></td>
 				<td>

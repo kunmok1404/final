@@ -35,17 +35,17 @@
 
 </style>
 
+
+<!-- 비밀번호 찾기 -->
+<div class="find_id">
 <!-- error 파라미터 유무에 따라 오류메시지를 출력 -->
-<c:if test="${not empty param.error}">
+<c:if test="${param.error eq 'error'}">
 	<h4>
 		<font color="red">
 			해당 이메일이 존재하지 않습니다.
 		</font>
 	</h4>
 </c:if>
-
-<!-- 비밀번호 찾기 -->
-<div class="find_id">
 	<form action="find_id" method="post">
 		<br><br>
 		<legend class="legend">아이디 찾기</legend>
@@ -55,7 +55,7 @@
 				<tr>
 					<td><label>이메일</label></td>
 					<td>
-						<input type="text" name="email" placeholder="이메일" pattern="^[a-zA-Z0-9!@#$\-_.]{8,16}$" required>
+						<input type="text" name="email" placeholder="이메일" pattern="^[a-zA-Z0-9!@#$\-_.]{6,15}$" required>
 						<span>@</span>
 						<input type="text" name="email_address" id="email_address" pattern="^.*?\..*?$" requried>
 						<select id="email_address_option">

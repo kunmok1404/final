@@ -60,7 +60,7 @@
 				<tr>
 					<td><label>이메일</label></td>
 					<td>
-						<input type="text" name="email" placeholder="이메일" pattern="^[a-zA-Z0-9!@#$\-_.]{8,16}$" required>
+						<input type="text" name="email" placeholder="이메일" pattern="^[a-zA-Z0-9!@#$\-_.]{6,15}$" required>
 						<span>@</span>
 						<input type="text" name="email_address" id="email_address" pattern="^.*?\..*?$" requried>
 						<select id="email_address_option">
