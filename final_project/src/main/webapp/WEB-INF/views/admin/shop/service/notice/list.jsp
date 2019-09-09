@@ -28,7 +28,7 @@
 		$("select[name=keyword]").val(keyword);
 		}
     		
-    	})
+    	});
     
     </script>
     

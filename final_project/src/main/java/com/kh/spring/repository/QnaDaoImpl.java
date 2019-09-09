@@ -39,7 +39,7 @@ public class QnaDaoImpl implements QnaDao{
 	}
 
 	@Override
-	public List<QnaDto> list(String category, int i, int j) {
+	public List<QnaDto> list(String category, int i, int j, String use_yn) {
 		Map<String, Object> param = new HashMap<>();
 		if(category !=null) {
 			param.put("category", category);

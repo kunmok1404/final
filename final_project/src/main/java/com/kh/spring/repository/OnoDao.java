@@ -35,11 +35,10 @@ public interface OnoDao {
 
 	FilesDto getFileInfo(int files_code);
 
-	int supercount(String apply_status, String keyword_type, String keyword);
 
-	List<OnoDto> superlist(String apply_status, String keyword_type, String keyword, int i, int j, String type);
+	List<OnoDto> superlist(String apply_status, String keyword_type, String keyword, String start_date, String end_date, int i, int j, String type);
 
-	List<OnoDto> superlist2(String apply_status, String keyword_type, String keyword, String reply_status, int i, int j, String type);
+	List<OnoDto> superlist2(String apply_status, String keyword_type, String keyword, String start_date, String end_date, String reply_status, int i, int j, String type);
 	
 	void superedit(OnoDto onoDto);
 
@@ -59,6 +58,8 @@ public interface OnoDao {
 	int client_count();
 
 	int ceo_count();
+
+	int supercount(String apply_status, String keyword_type, String keyword, String start_date, String end_date);
 
 
 

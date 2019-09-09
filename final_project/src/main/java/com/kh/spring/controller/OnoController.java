@@ -35,14 +35,13 @@ public class OnoController {
 	
 	//[1] 목록
 	@GetMapping("/list")
-	public String list(Model model,
+	public String list(Model model, HttpSession session,
 			@RequestParam(required = false, defaultValue = "1") int page) {
 		//나의 1대1 목록 불러오기
-		//int member_code = (int)session.getAttribute("member_code");
-		int member_code = 81;
+		int member_code = (int)session.getAttribute("member_code");
+//		int member_code = 1;
+		System.out.println(member_code);
 		
-		
-//		model.addAttribute("list", serviceService.list(member_code));
 		
 		//페이징
 		int pagesize = 10;

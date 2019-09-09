@@ -39,6 +39,8 @@ public class SuperServiceController {
 			@RequestParam(required = false) String apply_status,
 			@RequestParam(required = false) String keyword_type,
 			@RequestParam(required = false) String keyword,
+			@RequestParam(required = false) String start_date,
+			@RequestParam(required = false) String end_date,
 			@RequestParam(required = false) String type,
 			@RequestParam(required = false, defaultValue = "1")int page) {
 		
@@ -51,7 +53,7 @@ public class SuperServiceController {
 		int startBlock = (page -1) / blocksize * blocksize + 1;
 		int endBlock = startBlock + (blocksize - 1);
 		
-		int count = onoDao.supercount(apply_status, keyword_type, keyword );
+		int count = onoDao.supercount(apply_status, keyword_type, keyword,start_date, end_date );
 		int pageCount = (count -1) / pagesize + 1;
 		if(endBlock > pageCount) {
 			endBlock = pageCount;
@@ -62,11 +64,11 @@ public class SuperServiceController {
 		model.addAttribute("endBlock", endBlock);
 		model.addAttribute("count",count);
 		
-		List<OnoDto> list = onoDao.superlist(apply_status, keyword_type, keyword, start, end, type);
+		List<OnoDto> list = onoDao.superlist(apply_status, keyword_type, keyword, start_date, end_date, start, end, type);
 		model.addAttribute("list", list);
 		
 		String reply_status = "답변대기";
-		List<OnoDto> list2 = onoDao.superlist2(apply_status, keyword_type, keyword, reply_status, start, end, type);
+		List<OnoDto> list2 = onoDao.superlist2(apply_status, keyword_type, keyword,  start_date, end_date,reply_status, start, end, type);
 		model.addAttribute("list2", list2);
 		
 		//답변대기 개수(고객)
