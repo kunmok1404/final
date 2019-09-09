@@ -29,6 +29,7 @@ import com.kh.spring.entity.CartListNo;
 import com.kh.spring.entity.CartListVO;
 import com.kh.spring.entity.CartSubDto;
 import com.kh.spring.entity.CartSubListVo;
+import com.kh.spring.entity.OrderDetailDto;
 import com.kh.spring.entity.OrderDetailListVo;
 import com.kh.spring.entity.OrderSubDetail;
 import com.kh.spring.entity.OrderSubDetailListVo;
@@ -113,11 +114,13 @@ public class OrderController {
 				.build();
 		orderDao.orderinput(orderDto);
 		
-		for(OrderSubDetail orderdetailno : vo2.getList()) {
-			int no = orderDao.getseq();
-			orderDao.orderDetailInput(order_code,no,vo);
-			orderDao.orderSubDetailInput(no,vo2);
-			
+		for(OrderDetailDto orderdetailvo : vo.getMain()) {
+			//주문 상세 시퀀스 번호 출력
+			int no = orderDao.getdetseq();
+			orderDao.orderDetailInput(order_code,no,orderdetailvo);
+			for(OrderSubDetail ordersubdetail : vo2.getList()) {
+				orderDao.orderSubDetailInput(no,ordersubdetail);	
+			}
 		}
 		orderDao.cartDelete(member_code);
 		

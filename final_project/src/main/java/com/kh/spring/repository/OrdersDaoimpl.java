@@ -12,10 +12,8 @@ import com.kh.spring.entity.CartDto;
 import com.kh.spring.entity.CartListNo;
 import com.kh.spring.entity.CartListVO;
 import com.kh.spring.entity.CartSubDto;
-import com.kh.spring.entity.CartSubListVo;
 import com.kh.spring.entity.MemberDto;
 import com.kh.spring.entity.OrderDetailDto;
-import com.kh.spring.entity.OrderDetailListVo;
 import com.kh.spring.entity.OrderSubDetail;
 import com.kh.spring.entity.OrderSubDetailListVo;
 import com.kh.spring.entity.OrderVo;
@@ -91,13 +89,11 @@ public class OrdersDaoimpl implements OrdersDao{
 	}
 
 	@Override
-	public void orderDetailInput(int no,int order_code,OrderDetailListVo vo) {
-		List<OrderDetailDto> list = vo.getMain();
-		for(OrderDetailDto orderDetailDto : list) {
-			orderDetailDto.setOrder_code(no);
-			orderDetailDto.setNo(order_code);
-			sqlsession.insert("order.detail_regist",orderDetailDto);
-		}
+	public void orderDetailInput(int no,int order_code,OrderDetailDto orderDetailDto) {
+		orderDetailDto.setOrder_code(no);
+		orderDetailDto.setNo(order_code);
+		System.out.println(orderDetailDto);
+		sqlsession.insert("order.detail_regist",orderDetailDto);
 	}
 
 	@Override
@@ -217,12 +213,10 @@ public class OrdersDaoimpl implements OrdersDao{
 	}
 
 	@Override
-	public void orderSubDetailInput(int no,OrderSubDetailListVo vo2) {
-		List<OrderSubDetail> list = vo2.getList();
-		for (OrderSubDetail ordersubdto : list) {
-			ordersubdto.setNo(no);
-			sqlsession.insert("order.detail_sub_regist",ordersubdto);
-		}
+	public void orderSubDetailInput(int no,OrderSubDetail ordersubdetail) {
+			ordersubdetail.setNo(no);
+			sqlsession.insert("order.detail_sub_regist",ordersubdetail);
+		
 		
 	}
 

@@ -31,7 +31,7 @@ public interface OrdersDao {
 	OrdersDto orderInfo(int order_code);
 	List<OrderDetailDto> orderDistinct(int order_code);
 	void orderinput(OrdersDto ordersDto);
-	void orderDetailInput(int order_code, int no, OrderDetailListVo vo);
+	void orderDetailInput(int order_code, int no, OrderDetailDto vo);
 	int getseq();
 	void cartDelete(int member_code);
 
@@ -50,8 +50,9 @@ public interface OrdersDao {
 	List<CartSubDto> cartsublist(int no);
 	List<CartListNo> cartlistno(int member_code);
 	void cartInnerDelete(int no);
-	void orderSubDetailInput(int no,OrderSubDetailListVo vo2);
+	void orderSubDetailInput(int no,OrderSubDetail ordersubdetail);
 	List<OrderSubDetail> myOrderSubDetailList(int no);
 	int getdetseq();
+	
 
 }
