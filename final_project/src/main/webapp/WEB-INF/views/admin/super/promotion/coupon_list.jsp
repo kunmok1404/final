@@ -3,7 +3,34 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/template/admin/super/header.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/template/admin/super/left/left_promotion.jsp"></jsp:include>
-
+<script type="text/javascript">
+$(function() {
+	$(".stop").click(function() {
+	var no = $(this).parent().siblings(".no").children().val();
+	$.ajax({
+		url:"${pageContext.request.contextPath}/super_admin/coupon/stop",
+		data : {
+			no : no,
+		},
+		success:function(response){
+			alert("발급 중지 되었습니다.");
+		}
+	})
+})
+	$(".all").click(function() {
+	var coupon_code = $(this).parent().siblings(".no").children().val();
+	$.ajax({
+		url:"${pageContext.request.contextPath}/super_admin/coupon/all",
+		data : {
+			coupon_code : coupon_code,
+		},
+		success:function(response){
+			alert("전체 발급 되었습니다.");
+		}
+	})
+})
+})
+</script>
 	<!-- 전체시작 -->
 	<div class="wrapper mt-3">
 	  <div class="top-title">
@@ -63,33 +90,39 @@
 	  <!-- 리뷰목록 시작 -->
 	  <div class="list-wrapper table-responsive">
 	  <div class="search-number">
-	  	<p>총 0건</p>
+	  	<p>총 ${coupon.size() }건</p>
 	  </div>
 	  	<table class="table table-hamburg table-hover">
 	  		<tbody>
 	  			<tr class="table-primary text-center">
-	  				<td>쿠폰번호</td>
+	  				<td>번호</td>
 	  				<td>쿠폰명</td>
-	  				<td>발급방식</td>
-	  				<td>할인방식</td>
+	  				<td>발급종류</td>
+	  				<td>할인종류</td>
 	  				<td>할인금액</td>
-	  				<td>사용기간</td>
+	  				<td>발급기간</td>
 	  				<td>발급시기</td>
-	  				<td>발급상태</td>
+	  				<td>쿠폰상태</td>
 	  			</tr>
-<%-- 	  			<c:forEach var="menuVO" items="${list}"> --%>
-<!-- 	  			<tr class="text-center"> -->
-<%-- 	  				<td>${menuVO.no}</td> --%>
-<%-- 	  				<td class="over-text"><a href="${pageContext.request.contextPath}/super_admin/menu/detail?menu_code=${menuVO.no}" class="text-primary">${menuVO.name}</a></td> --%>
-<%-- 	  				<td>${menuVO.menu_category}</td> --%>
-<%-- 	  				<td>${menuVO.shop_name}</td> --%>
-<%-- 	  				<td>${menuVO.apply_status}</td> --%>
-<%-- 	  				<td>${menuVO.sale_status}</td> --%>
-<%-- 	  				<td>${menuVO.regist_date}</td> --%>
-<!-- 	  				<td><button class="btn btn-sm btn-danger">삭제</button></td> -->
-<!-- 	  			</tr> -->
-<%-- 	  			</c:forEach> --%>
-	  			
+	  			<c:forEach var="coupon" items="${coupon }">
+	  			<tr class="table text-center">
+	  				<td class="no">
+	  					${coupon.no }
+	  					<input type="hidden" value="${coupon.no }">
+	  				</td>
+	  				<td>${coupon.name }</td>
+	  				<td>${coupon.issue_type }</td>
+	  				<td>${coupon.discount_type }</td>
+	  				<td>${coupon.discount_price }%<br>(${coupon.max_price }원 까지)</td>
+	  				<td>${coupon.start_date }<br>~<br>${coupon.finish_date }</td>
+	  				<td>${coupon.issue_date }</td>
+	  				<td>${coupon.issue_status }</td>
+	  				<td>
+	  					<input type="button" value="발급 중지" class="stop">
+	  					<input type="button" value="전체 발급" class="all">
+	  					<input type="button" value="발급 하기" class="issue"></td>
+	  			</tr>
+	  			</c:forEach>
 	  		</tbody>
 	  	</table>
 	  </div>

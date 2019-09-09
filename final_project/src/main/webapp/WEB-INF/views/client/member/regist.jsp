@@ -75,7 +75,7 @@
 	//아이디 정규표현식 검사 후 메세지 출력
 	function checkID(){
 		var id = document.querySelector("#id").value;
-		var regex = /^[a-zA-Z0-9!@#$\-_]{8,15}$/;
+		var regex = /^[a-zA-Z0-9!@#$\-_]{6,15}$/;
 		
 		//정규표현식을 id값 검사
 		var result = regex.test(id);
@@ -88,7 +88,7 @@
 		}
 		//형식에 맞지 않으면 메세지 출력 후, 중복확인 버튼 비활성화
 		else{
-			div.innerHTML = "<font color = 'red' size = '2'>8~15자의 영문/숫자로 입력헤주세요.</font>"
+			div.innerHTML = "<font color = 'red' size = '2'>6~15자의 영문/숫자로 입력헤주세요.</font>"
 		}
 	}
 	
@@ -244,7 +244,7 @@
 				<tr>
 					<td><label for="id">아이디</label></td>
 					<td>
-						<input onblur="checkID();" id="id" type="text" name="id" placeholder="아이디" pattern="^[a-zA-Z0-9!@#$\-_]{8,15}$" required>
+						<input onblur="checkID();" id="id" type="text" name="id" placeholder="아이디" pattern="^[a-zA-Z0-9!@#$\-_]{6,15}$" required>
 						<!-- 아이디 중복검사 후 메세지 출력, 중복확인 버튼 활성화/비활성화 -->
 						<input type="button" name="id_check_btn" value="중복확인">
 						<div class="idD"></div>
@@ -268,7 +268,7 @@
 				<tr>
 					<td><label for="email">이메일</label></td>
 					<td>
-						<input type="text" name="email" placeholder="이메일" pattern="^[a-zA-Z0-9!@#$\-_.]{8,16}$" required>
+						<input type="text" name="email" placeholder="이메일" pattern="^[a-zA-Z0-9!@#$\-_.]{6,15}$" required>
 						<span>@</span>
 						<input type="text" name="email_address" id="email_address" pattern="^.*?\..*?$" requried>
 						<select id="email_address_option">

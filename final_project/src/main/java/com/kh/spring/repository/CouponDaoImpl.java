@@ -1,6 +1,8 @@
 package com.kh.spring.repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,5 +34,30 @@ public class CouponDaoImpl implements CouponDao {
 	public CouponDto getCouponInfo(int coupon_code) {
 		return sqlSession.selectOne("coupon.get_coupon_info", coupon_code);
 	}
+	
+	//쿠폰정보 불러오기
+	@Override
+	public List<CouponDto> getCoupon() {
+		return sqlSession.selectList("coupon.list");
+	}
+
+	@Override
+	public void finish(int no) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("no", no);
+		sqlSession.update("coupon.finish", map);
+		
+	}
+
+	@Override
+	public void all(int member_code, int coupon_code) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("coupon_code", coupon_code);
+		map.put("member_code", member_code);
+		sqlSession.insert("coupon.all", map);
+		
+	}
+	
+	
 
 }

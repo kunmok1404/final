@@ -68,25 +68,30 @@ public class SuperMemberController {
 			) {
 		//DB에서 회원정보(id)를 불러온다.
 		MemberDto result = memberDao.get(memberDto.getId());
-		//BCrypt의 비교명령을 이용하여 비교 후 처리
-		if(BCrypt.checkpw(memberDto.getPw(), result.getPw())) {
-			session.setAttribute("member_code", result.getNo());
-			
-			//아이디 저장
-			//쿠키 객체를 만들고 체크 여부에 따라 시간 설정 후 response에 추가
-			Cookie cookie = new Cookie("saveID", memberDto.getId());
-			if(remember == null) {//체크 안했을 때
-				cookie.setMaxAge(0);
+		if(result != null) {
+			//BCrypt의 비교명령을 이용하여 비교 후 처리
+			if(BCrypt.checkpw(memberDto.getPw(), result.getPw())) {
+				session.setAttribute("member_code", result.getNo());
+				
+				//아이디 저장
+				//쿠키 객체를 만들고 체크 여부에 따라 시간 설정 후 response에 추가
+				Cookie cookie = new Cookie("saveID", memberDto.getId());
+				if(remember == null) {//체크 안했을 때
+					cookie.setMaxAge(0);
+				}
+				else {//체크 했을 때
+					cookie.setMaxAge(4 * 7 * 24 * 60 * 60);//4주
+				}
+				
+				response.addCookie(cookie);
+				return "redirect:/super_admin";//관리자 메인페이지로 이동
 			}
-			else {//체크 했을 때
-				cookie.setMaxAge(4 * 7 * 24 * 60 * 60);//4주
-			}
-			
-			response.addCookie(cookie);
-			return "redirect:/super_admin";//관리자 메인페이지로 이동
+			else {
+				return "admin/super/member/login_fail";
+			}			
 		}
 		else {
-			return "admin/super/member/login";
+			return "admin/super/member/login_fail";
 		}
 	}
 	
@@ -97,7 +102,7 @@ public class SuperMemberController {
 			) {
 		//세션으로 데이터 받아와서 지우기
 		session.removeAttribute("member_code");
-		return "redirect:/";
+		return "redirect:/super_admin";
 	}
 	
 	//회원 목록(회원 검색 기능)

@@ -3,6 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+
    <settings>
       <setting name="defaultExecutorType" value="BATCH"/>
    </settings>
@@ -46,5 +47,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         <typeAlias type="com.kh.spring.entity.ShopOnoDto" alias="shoponoDto"/>
      </typeAliases>
      
+
 </configuration>
 

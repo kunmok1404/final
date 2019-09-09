@@ -94,7 +94,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 주문 상세 등록 -->
 	<insert id="detail_regist" parameterType="orderDetailDto">
-		insert into order_detail values(#{order_code},order_det_seq.nextval, #{title}, #{menu_name}, #{menu_amount},
+		insert into order_detail values(#{order_code},#{no}, #{title}, #{menu_name}, #{menu_amount},
 		#{menu_price})
 	</insert>
 	<!-- 주문 상세 추가메뉴 등록 -->

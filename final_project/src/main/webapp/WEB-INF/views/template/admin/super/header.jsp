@@ -37,21 +37,44 @@
 <body>
     <header>
         <!--네비게이션 영역시작-->
-        <nav class="navbar navbar-default">
-          <div class="container-fluid">
-            <div class="navbar-header">
-              <a class="navbar-brand" href="${pageContext.request.contextPath}/super_admin">
-                <img alt="Brand" src="${pageContext.request.contextPath}/resources/image/logo.jpg">
-              </a>
-            </div>
-            <div class="header-button"> 
-              <span class="owner"><a href="#">*안녕하세요. 박근목 사장님!</a></span>
-              <span class="loginTime"><a href="#">최종접속일자 : 2019.08.10 17:30</a></span>
-              <a href="#" class="btn btn-light btn-sm">로그아웃</a>
-              <a href="#" class="btn btn-light btn-sm" id="client-site">뭐먹지 바로가기</a>
-            </div>
-          </div>
-        </nav>
+        <!-- 로그인 여부에 따라 구분하여 출력 -->
+        <c:set var="login" value="${not empty sessionScope.member_code}"></c:set>
+        <c:choose>
+        	<c:when test="${login}">
+		        <nav class="navbar navbar-default">
+		          <div class="container-fluid">
+		            <div class="navbar-header">
+		              <a class="navbar-brand" href="${pageContext.request.contextPath}/super_admin">
+		                <img alt="Brand" src="${pageContext.request.contextPath}/resources/image/logo.jpg">
+		              </a>
+		            </div>
+		            <div class="header-button"> 
+		              <span class="owner"><a href="#">*안녕하세요. 박근목 사장님!</a></span>
+		              <span class="loginTime"><a href="#">최종접속일자 : 2019.08.10 17:30</a></span>
+		              <a href="${pageContext.request.contextPath}/super_admin/member/logout" class="btn btn-light btn-sm">로그아웃</a>
+		              <a href="#" class="btn btn-light btn-sm" id="client-site">뭐먹지 바로가기</a>
+		            </div>
+		          </div>
+		        </nav>        	
+        	</c:when>
+        	<c:otherwise>
+        		<nav class="navbar navbar-default">
+		          <div class="container-fluid">
+		            <div class="navbar-header">
+		              <a class="navbar-brand" href="${pageContext.request.contextPath}/super_admin">
+		                <img alt="Brand" src="${pageContext.request.contextPath}/resources/image/logo.jpg">
+		              </a>
+		            </div>
+		            <div class="header-button"> 
+<!-- 		              <span class="owner"><a href="#">*안녕하세요. 박근목 사장님!</a></span> -->
+<!-- 		              <span class="loginTime"><a href="#">최종접속일자 : 2019.08.10 17:30</a></span> -->
+		              <a href="${pageContext.request.contextPath}/super_admin/member/login" class="btn btn-light btn-sm">로그인</a>
+		              <a href="#" class="btn btn-light btn-sm" id="client-site">뭐먹지 바로가기</a>
+		            </div>
+		          </div>
+		        </nav>
+        	</c:otherwise>
+        </c:choose>
         <!--네비게이션 영역 끝-->
 
         <!--상단메뉴 시작-->

@@ -4,6 +4,8 @@ import javax.mail.MessagingException;
 
 import org.springframework.stereotype.Service;
 
+import com.kh.spring.entity.MemberDto;
+
 @Service
 public interface EmailService {
 	
@@ -12,6 +14,9 @@ public interface EmailService {
 
 	//비밀번호 찾기
 	void sendCertificationpw(String email) throws MessagingException;
+
+	//
+//	void find_pw(MemberDto memberDto);
 
 	
 }
