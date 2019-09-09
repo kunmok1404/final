@@ -91,9 +91,7 @@ public class OrdersDaoimpl implements OrdersDao{
 	}
 
 	@Override
-	public void orderDetailInput(int no,int order_code,OrderDetailDto orderDetailDto) {
-		orderDetailDto.setOrder_code(no);
-		orderDetailDto.setNo(order_code);
+	public void orderDetailInput(List<OrderDetailDto> orderDetailDto) {
 		System.out.println(orderDetailDto);
 		sqlsession.insert("order.detail_regist",orderDetailDto);
 	}
@@ -235,9 +233,8 @@ public class OrdersDaoimpl implements OrdersDao{
 	}
 
 	@Override
-	public void orderSubDetailInput(int no,OrderSubDetail ordersubdetail) {
-			ordersubdetail.setNo(no);
-			sqlsession.insert("order.detail_sub_regist",ordersubdetail);
+	public void orderSubDetailInput(List<OrderSubDetail> ordersub) {
+			sqlsession.insert("order.detail_sub_regist",ordersub);
 		
 		
 	}

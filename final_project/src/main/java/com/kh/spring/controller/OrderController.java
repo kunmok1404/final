@@ -112,14 +112,23 @@ public class OrderController {
 				.pay_method(ordersDto.getPay_method())
 				.build();
 		orderDao.orderinput(orderDto);
-		
+		List<OrderDetailDto> orderdetail = new ArrayList<>();
+		List<OrderSubDetail> ordersub = new ArrayList<>();
 		for(OrderDetailDto orderdetailvo : vo.getMain()) {
 			//주문 상세 시퀀스 번호 출력
 			int no = orderDao.getdetseq();
-			orderDao.orderDetailInput(order_code,no,orderdetailvo);
+			orderdetailvo.setOrder_code(order_code);
+			orderdetailvo.setNo(no);
+			orderdetail.add(orderdetailvo);
+			System.out.println(orderdetail);
+			orderDao.orderDetailInput(orderdetail);
 			for(OrderSubDetail ordersubdetail : vo2.getList()) {
-				orderDao.orderSubDetailInput(no,ordersubdetail);	
+				ordersubdetail.setNo(no);
+				ordersub.add(ordersubdetail);
+				System.out.println(ordersub);
+				orderDao.orderSubDetailInput(ordersub);						
 			}
+			
 		}
 		orderDao.cartDelete(member_code);
 		
