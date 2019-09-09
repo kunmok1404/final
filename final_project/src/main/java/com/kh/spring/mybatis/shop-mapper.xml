@@ -139,17 +139,11 @@ PUBLIC "//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="myshop" resultType="shopDto" parameterType="map">
 		select * from shop where no = #{no}
 	</select>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	<select id="all" resultType="shopDto">
+		select * from shop 
+	</select>
+	<select id="search_name" resultType="shopDto" parameterType="map">
+		select * from shop where shop_name like '%'||#{shop_name}||'%'
+	</select>
  </mapper>

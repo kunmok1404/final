@@ -131,14 +131,7 @@
 			</tr>
 			</c:forEach>
     	</tbody>
-		<!-- 글쓰기 버튼 -->
-		<tfoot>
-			<tr>
-			<td colspan="8" align="center" >
-				<a href="write" class="write-btn">글쓰기</a>
-			</td>
-			</tr>
-		</tfoot>
+		
     			
     </table>
 

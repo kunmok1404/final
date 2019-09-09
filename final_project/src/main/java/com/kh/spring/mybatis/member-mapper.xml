@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	<!-- 회원가입 regist(등록) -->
  	<insert id="regist" parameterType="memberDto">
  		insert into member values(member_seq.nextval, null, #{id}, #{pw}, #{email}, #{phone}, 
- 				#{post}, #{basic_addr}, #{detail_addr}, '일반', '고객','일반', sysdate, sysdate, sysdate, 0, '고객', #{email_address})
+ 				#{post}, #{basic_addr}, #{detail_addr}, '일반', '고객','일반', sysdate, sysdate, sysdate, 0, '고객', #{email_address}, #{reason})
  	</insert>
  	
  	<!-- 아이디 중복확인 id_check(조회) -->
@@ -62,16 +62,99 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	</update>
  	
  	<!-- 회원 탈퇴 -->
- 	<delete id="delete" parameterType="memberDto">
+ 	<delete id="member_delete" parameterType="memberDto">
  		delete member where no = #{no}
  	</delete>
- 	
- 	
  	
  	<!-- 회원정보 조회(회원코드로) -->
  	<select id="get_info" parameterType="int" resultType="memberDto">
  		select * from member where no=#{member_code}
  	</select>
+ 	
+ 	<!-- 관리자 회원 검색하는 기능-->
+ 	<select id="search" parameterType="map" resultType="memberInfoVO">
+<!--  		select * from ( -->
+<!-- 			select  -->
+<!-- 				M.no, M.id, M.email, M.email_address, M.post, M.basic_addr, M.detail_addr,  -->
+<!--        		 	M.grade, M.status, M.regist_date, M.latest_login, M.point, -->
+<!-- 				count(I.member_code), count(O.no), count(R.no) -->
+<!-- 			from -->
+<!-- 				Member M -->
+<!-- 				inner join Issue I on M.no = I.member_code -->
+<!-- 				inner join Oneandone O on M.no = O.member_code -->
+<!-- 				inner join Review R on M.no = R.member_code -->
+<!-- 			group by -->
+<!-- 				M.no, M.id, M.email, M.email_address, M.post, M.basic_addr, M.detail_addr,  -->
+<!--         		M.grade, M.status, M.regist_date, M.latest_login, M.point -->
+<!-- 		) where id = #{id} -->
+
+		select
+			 M.no, M.id, M.status, M.grade, M.phone, M.point, M.regist_date, count(I.coupon_code) coupon 
+		from 
+			member M left outer join issue I on M.no = I.member_code
+		where 
+			1=1
+			<!-- 
+				회원 상태
+				회원상태가 전체일 때는 할게 없음 
+				회원상태가 일반이면 일반 조건을 설정
+				회원상태가 블랙이면 블랙 조건을 설정
+				회원상태가 탈퇴이면 탈퇴 조건을 설정
+			-->
+			<if test="status != null and status != '전체'">
+				and status = #{status}
+			</if>
+			<!-- 회원 등급 -->
+			<if test="grade != null and grade != '전체'">
+				and grade = #{grade}
+			</if>
+			<!-- 기간 검색 -->
+			<if test="start_date != null and start_date != '' and end_date != null and end_date != ''">
+				and regist_date between to_date(#{start_date}, 'YYYY-MM-DD') and to_date(#{end_date}, 'YYYY-MM-DD') + 1 - 1 / 864000 
+			</if>
+			<if test="type != null and type != '전체' and keyword != null and keyword != ''">
+				and ${type} like '%'||#{keyword}||'%'
+			</if>
+		group by M.no, M.id, M.status, M.grade, M.phone, M.point, M.regist_date
+ 	</select>
+ 	
+ 	<!-- 관리자 회원 목록 상세보기 -->
+ 	<select id="info" parameterType="int" resultType="memberInfoVO">
+ 		select
+ 			M.no, M.id, M.email, M.email_address, M.phone, M.post, M.basic_addr, M.detail_addr, M.grade, M.status, 
+ 			count(I.coupon_code) coupon, count(O.no) ono, count(R.no) review,
+ 			M.regist_date, M.latest_login
+ 		from
+ 			Member M 
+ 				left outer join Issue I on M.no = I.member_code
+ 				left outer join Oneandone O on M.no = O.member_code
+ 				left outer join Review R on M.no = R.member_code
+ 		where M.no = #{no}
+ 		group by
+ 			M.no, M.id, M.email, M.email_address, M.phone, M.post, M.basic_addr, M.detail_addr, M.grade, M.status, M.regist_date, M.latest_login
+<!--  		order by no desc -->
+ 	</select>
+ 	
+ 	<!-- 관리자 회원 탈퇴 기능 -->
+ 	<delete id="delete" parameterType="memberDto">
+ 		delete member where no = #{no}
+ 	</delete>
+ 	
+ 	<!-- 관리자 회원 정보 수정 -->
+ 	<update id="edit" parameterType="memberInfoVO">
+ 		update member set email = #{email}, email_address = #{email_address}, phone = #{phone}, 
+ 		post = #{post}, basic_addr = #{basic_addr}, detail_addr = #{detail_addr}, reason = #{reason}
+ 	</update>
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
 
 	<!-- 찜한매장 등록 -->
  	<insert id="like" parameterType="memberDto">
@@ -119,6 +202,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="myshop" resultType="myshopDto" parameterType="map">
 		select * from myshop where member_code = #{member_code}
+	</select>
+	
+	<!-- super_admin 회원전체목록 조회 -->
+	<select id="get_member_list" resultType="memberDto">
+		select * from member order by no desc
 	</select>
 	
  </mapper>

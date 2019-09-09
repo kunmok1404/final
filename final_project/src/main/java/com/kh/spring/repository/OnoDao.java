@@ -9,10 +9,10 @@ import com.kh.spring.entity.ReviewImgDto;
 
 public interface OnoDao {
 
-	List<OnoDto> list(int i, int j);
+	List<OnoDto> list(int i, int j, int member_code);
 
 	int count();
-
+	
 	void write(OnoDto onoDto);
 
 	OnoDto get(int no);
@@ -34,6 +34,41 @@ public interface OnoDao {
 	List<OnoImgDto> onoImg(int ono_code);
 
 	FilesDto getFileInfo(int files_code);
+
+	int supercount(String apply_status, String keyword_type, String keyword);
+
+	List<OnoDto> superlist(String apply_status, String keyword_type, String keyword, int i, int j, String type);
+
+	List<OnoDto> superlist2(String apply_status, String keyword_type, String keyword, String reply_status, int i, int j, String type);
+	
+	void superedit(OnoDto onoDto);
+
+	void updateReplyStatus(OnoDto onoDto);
+
+	int count_reply();
+
+	int supercount_ceo(String apply_status, String keyword_type, String keyword);
+
+	List<OnoDto> superlist_ceo(String apply_status, String keyword_type, String keyword, int i, int j, String type);
+
+	List<OnoDto> superlist2_ceo(String apply_status, String keyword_type, String keyword, String reply_status,
+			int i, int j, String type);
+
+	int count_reply_ceo();
+
+	int client_count();
+
+	int ceo_count();
+
+
+
+
+
+
+
+
+
+
 
 //	void read(int ono_code);
 

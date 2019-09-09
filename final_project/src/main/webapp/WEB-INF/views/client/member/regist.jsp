@@ -270,7 +270,7 @@
 					<td>
 						<input type="text" name="email" placeholder="이메일" pattern="^[a-zA-Z0-9!@#$\-_.]{8,16}$" required>
 						<span>@</span>
-						<input type="text" name="email_address" id="email_address" placeholder="-----이메일 선택-----" pattern="^.*?\..*?$" requried>
+						<input type="text" name="email_address" id="email_address" pattern="^.*?\..*?$" requried>
 						<select id="email_address_option">
 							<option>--이메일 선택--</option>
 							<option value="">직접입력</option>

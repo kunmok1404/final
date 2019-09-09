@@ -10,5 +10,5 @@ public class FoodCategoryDto {
 	private int no; //카테고리번호
 	private String name; //카테고리 명
 	private String sort_seq; //노출순서
-	private String img; //업무구분
+	private int img; //카테고리 이미지코드
 }

@@ -4,8 +4,8 @@
   <!--left 메뉴 시작-->
   <div class="left">
     <ul>
-      <li><a href="#">메뉴1</a></li>
-      <li><a href="#">메뉴2</a></li>
+      <li><a href="search">회원목록</a></li>
+      <li><a href="#">회원등급관리</a></li>
     </ul>
   </div>  
   <!--left 메뉴 끝--> 

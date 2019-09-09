@@ -16,9 +16,11 @@ import com.kh.spring.entity.MemberDto;
 import com.kh.spring.entity.OrderDetailDto;
 import com.kh.spring.entity.OrderSubDetail;
 import com.kh.spring.entity.OrderSubDetailListVo;
-import com.kh.spring.entity.OrderVo;
 import com.kh.spring.entity.OrdersDto;
 import com.kh.spring.entity.ShopDto;
+import com.kh.spring.entity.TotalVo;
+import com.kh.spring.vo.OrderVo;
+
 //주문 관련 Dao impl
 @Repository
 public class OrdersDaoimpl implements OrdersDao{
@@ -119,27 +121,32 @@ public class OrdersDaoimpl implements OrdersDao{
 
 	@Override
 
-	public List<OrderVo> order_data() {
+	public List<OrderVo> order_data(String no) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("no", no);
 		return sqlsession.selectList("order.order_data");
 	}
 
 	@Override
-	public int cancel(String t1) {
+	public int cancel(String no,String t1) {
 		Map<String, Object> map = new HashMap<>();
+		map.put("no", no);
 		map.put("order_date", t1);
 		return sqlsession.selectOne("order.cancel_data", map);
 	}
 
 	@Override
-	public int sussce(String t1) {
+	public int sussce(String no,String t1) {
 		Map<String, Object> map = new HashMap<>();
+		map.put("no", no);
 		map.put("order_date", t1);
 		return sqlsession.selectOne("order.sussce_data", map);
 	}
 
 	@Override
-	public List<OrderVo> date_day(String start, String end) {
+	public List<OrderVo> date_day(String no,String start, String end) {
 		Map<String, Object> map = new HashMap<>();
+		map.put("no", no);
 		map.put("start", start);
 		map.put("end", end);
 		return sqlsession.selectList("order.date_day", map);
@@ -197,6 +204,21 @@ public class OrdersDaoimpl implements OrdersDao{
 		
 	}
 
+	@Override
+	public List<TotalVo> sale_data(String no) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("no", no);
+		return sqlsession.selectList("order.total");
+	}
+
+	@Override
+	public List<TotalVo> sale_day(String no, String start, String end) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("no", no);
+		map.put("start", start);
+		map.put("end", end);
+		return sqlsession.selectList("order.total_date", map);
+	}
 	@Override
 	public List<CartSubDto> cartsublist(int no) {
 		return sqlsession.selectList("order.cartSubList",no);

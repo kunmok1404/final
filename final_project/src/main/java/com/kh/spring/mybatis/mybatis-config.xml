@@ -8,7 +8,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	</settings>
 	  <!-- 별칭 설정 -->
 	  <typeAliases>
-	  	<typeAlias type="com.kh.spring.entity.OrdersListVo" alias="orderListVo"/>
+	  	<typeAlias type="com.kh.spring.vo.OrdersListVo" alias="orderListVo"/>
 	  	<typeAlias type="com.kh.spring.entity.CartSubDto" alias="cartSubDto"/>
 	  	<typeAlias type="com.kh.spring.entity.CartListNo" alias="cartListNo"/>
 	  	<typeAlias type="com.kh.spring.entity.CartDto" alias="cartDto"/>
@@ -29,15 +29,21 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	  	<typeAlias type="com.kh.spring.entity.TermsDto" alias="termsDto"/>
 	  	<typeAlias type="com.kh.spring.entity.ReviewDto" alias="reviewDto"/>
 	  	<typeAlias type="com.kh.spring.entity.ReviewImgDto" alias="reviewImgDto"/>
-	  	<typeAlias type="com.kh.spring.entity.ShopReviewVO" alias="shopReviewVO"/>
+	  	<typeAlias type="com.kh.spring.vo.ShopReviewVO" alias="shopReviewVO"/>
 	  	<typeAlias type="com.kh.spring.entity.FoodCategoryDto" alias="foodCategoryDto"/>
 	  	<typeAlias type="com.kh.spring.entity.PointDetailDto" alias="pointDetailDto"/>
 	  	<typeAlias type="com.kh.spring.entity.CouponDto" alias="couponDto"/>
 	  	<typeAlias type="com.kh.spring.entity.IssueDto" alias="issueDto"/>
 	  	<typeAlias type="com.kh.spring.entity.UsergradeDto" alias="usergradeDto"/>
 	  	<typeAlias type="com.kh.spring.entity.MyshopDto" alias="myshopDto"/>
-	  	<typeAlias type="com.kh.spring.entity.OrderVo" alias="orderVo"/>
+	  	<typeAlias type="com.kh.spring.vo.OrderVo" alias="orderVo"/>
 	  	<typeAlias type="com.kh.spring.entity.OnoImgDto" alias="onoImgDto"/>
+	  	<typeAlias type="com.kh.spring.vo.FoodCategoryVO" alias="foodCategoryVO"/>
+	  	<typeAlias type="com.kh.spring.vo.MenuRegistVO" alias="menuRegistVO"/>
+	  	<typeAlias type="com.kh.spring.vo.MenuDetailVO" alias="menuDetailVO"/>
+	  	<typeAlias type="com.kh.spring.vo.MemberInfoVO" alias="memberInfoVO"/>
+	  	<typeAlias type="com.kh.spring.entity.TotalVo" alias="totalVo"/>
+	  	<typeAlias type="com.kh.spring.entity.ShopOnoDto" alias="shoponoDto"/>
 	  </typeAliases>
 	  
 </configuration>

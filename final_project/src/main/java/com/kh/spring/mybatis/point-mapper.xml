@@ -9,4 +9,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from point_detail where member_code = #{member_code} order by when desc
 	</select>
 	
+	<!-- 포인트 총적립액 구하기(회원코드로) -->
+	<select id="total_point" parameterType="int" resultType="int">
+		select sum(point) from point_detail where use_yn = '적립' and member_code=#{member_code}
+	</select>
+	
+	<!-- 포인트 총사용액 구하기(회원코드로) -->
+	<select id="use_point" parameterType="int" resultType="int">
+		select sum(point) from point_detail where use_yn = '사용' and member_code=#{member_code}
+	</select>
+	
+	<!-- 포인트 증정 -->
+	<insert id="sendPoint" parameterType="pointDetailDto">
+		insert into point_detail values(
+			#{member_code}, '적립', #{point}, sysdate, #{content}
+		)
+	</insert>
 </mapper>

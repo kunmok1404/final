@@ -9,7 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into coupon values(
 			coupon_seq.nextval, #{name}, #{issue_type}, #{discount_type},
 			#{discount_price}, #{max_price}, #{start_date}, #{finish_date}, 
-			sysdate , #{issue_status}, sysdate, sysdate, #{auto_type} 
+			sysdate , #{issue_status}, sysdate, sysdate, #{auto_type}
 		)
 	</insert>
 	

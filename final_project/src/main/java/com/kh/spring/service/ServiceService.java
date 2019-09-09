@@ -1,15 +1,15 @@
 package com.kh.spring.service;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kh.spring.entity.FilesDto;
 import com.kh.spring.entity.NoticeDto;
 import com.kh.spring.entity.OnoDto;
+import com.kh.spring.entity.QnaDto;
 
 public interface ServiceService {
 
@@ -24,6 +24,16 @@ public interface ServiceService {
 	ResponseEntity<ByteArrayResource> onoImg(int files_code) throws IOException;
 
 	int write(NoticeDto noticeDto);
+
+	QnaDto qnaInfo(int no);
+
+	int write(QnaDto qnaDto);
+
+
+
+
+
+
 
 
 

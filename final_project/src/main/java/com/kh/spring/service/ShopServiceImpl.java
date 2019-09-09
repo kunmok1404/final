@@ -26,10 +26,10 @@ public class ShopServiceImpl implements ShopService {
 	
 	//留매장정보
 	@Override
-	public Map<String, List<MenuDto>> menuList(int no) {
+	public Map<Integer, List<MenuDto>> menuList(int no) {
 		List<MenuDto> menu_list = shopDao.menuList(no);
 		
-		Map<String, List<MenuDto>> map = new TreeMap<>();
+		Map<Integer, List<MenuDto>> map = new TreeMap<>();
 		
 		// �궎 �엯�젰, 由ъ뒪�듃�깮�꽦
 		for(MenuDto menuDto : menu_list) {

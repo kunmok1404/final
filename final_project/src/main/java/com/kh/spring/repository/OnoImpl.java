@@ -21,13 +21,15 @@ public class OnoImpl implements OnoDao{
 	
 
 	@Override
-	public List<OnoDto> list(int i, int j) {
+	public List<OnoDto> list(int i, int j, int member_code) {
 		Map<String, Object> param = new HashMap<>();
 		
+		param.put("member_code", member_code);
 		//검색이든 목록이든 페이징 구간을 전달
 		param.put("start", i);
 		param.put("end", j);
 		
+		System.out.println(param);
 		return sqlSession.selectList("service.ono_list", param);
 	}
 
@@ -103,6 +105,178 @@ public class OnoImpl implements OnoDao{
 		System.out.println(files_code);
 		return sqlSession.selectOne("service.filesDto", files_code);
 	}
+
+
+	@Override
+	public int supercount(String apply_status, String keyword_type, String keyword) {
+		Map<String, String> param = new HashMap<>();
+		if(apply_status != null) {
+			param.put("apply_status", apply_status);
+		}
+		if(keyword_type !=null && keyword !=null) {
+			param.put("keyword_type", keyword_type);
+			param.put("keyword", keyword);
+		}
+		return sqlSession.selectOne("service.super_ono_count", param);
+	}
+
+
+	@Override
+	public List<OnoDto> superlist(String apply_status, String keyword_type, String keyword, int i, int j, String type) {
+		Map<String, Object> param = new HashMap<>();
+		
+		if(apply_status != null) {
+			param.put("apply_status", apply_status);
+		}
+		
+		if(keyword_type !=null && keyword !=null) {
+			param.put("keyword_type", keyword_type);
+			param.put("keyword", keyword);
+		}
+		
+		
+		//검색이든 목록이든 페이징 구간을 전달
+		param.put("start", i);
+		param.put("end", j);
+		
+		return sqlSession.selectList("service.super_ono_list", param);
+	}
+	
+	@Override
+	public List<OnoDto> superlist2(String apply_status, String keyword_type, String keyword, String reply_status, int i, int j, String type) {
+		Map<String, Object> param = new HashMap<>();
+		
+		if(apply_status != null) {
+			param.put("apply_status", apply_status);
+		}
+		
+		if(keyword_type !=null && keyword !=null) {
+			param.put("keyword_type", keyword_type.replace("+", "||"));
+			param.put("keyword", keyword);
+		}
+		
+		
+		//검색이든 목록이든 페이징 구간을 전달
+		param.put("start", i);
+		param.put("end", j);
+		
+		return sqlSession.selectList("service.super_ono_list2", param);
+		
+	}
+
+	@Override
+	public void superedit(OnoDto onoDto) {
+		sqlSession.update("service.super_ono_edit",onoDto);
+		
+	}
+
+	@Override
+	public void updateReplyStatus(OnoDto onoDto) {
+		sqlSession.update("service.super_reply_status", onoDto);
+		
+	}
+
+	@Override
+	public int count_reply() {
+		return sqlSession.selectOne("service.count_reply");
+	}
+
+
+	@Override
+	public int supercount_ceo(String apply_status, String keyword_type, String keyword) {
+		Map<String, String> param = new HashMap<>();
+		if(apply_status != null) {
+			param.put("apply_status", apply_status);
+		}
+		if(keyword_type !=null && keyword !=null) {
+			param.put("keyword_type", keyword_type.replace("+", "||"));
+			param.put("keyword", keyword);
+		}
+		return sqlSession.selectOne("service.super_ono_count_ceo", param);
+	}
+
+
+	@Override
+	public List<OnoDto> superlist_ceo(String apply_status, String keyword_type, String keyword, int i, int j, String type) {
+		Map<String, Object> param = new HashMap<>();
+		
+		if(apply_status != null) {
+			param.put("apply_status", apply_status);
+		}
+		
+		if(keyword_type !=null && keyword !=null) {
+			param.put("keyword_type", keyword_type.replace("+", "||"));
+			param.put("keyword", keyword);
+		}
+		
+		param.put("type",type);
+		//검색이든 목록이든 페이징 구간을 전달
+		param.put("start", i);
+		param.put("end", j);
+		
+		return sqlSession.selectList("service.super_ono_list_ceo", param);
+	}
+
+
+	@Override
+	public List<OnoDto> superlist2_ceo(String apply_status, String keyword_type, String keyword, String reply_status,
+			int i, int j, String type) {
+		Map<String, Object> param = new HashMap<>();
+		
+		if(apply_status != null) {
+			param.put("apply_status", apply_status);
+		}
+		
+		if(keyword_type !=null && keyword !=null) {
+			param.put("keyword_type", keyword_type.replace("+", "||"));
+			param.put("keyword", keyword);
+		}
+		
+		
+		//검색이든 목록이든 페이징 구간을 전달
+		param.put("start", i);
+		param.put("end", j);
+		
+		return sqlSession.selectList("service.super_ono_list2_ceo", param);
+	}
+
+
+	@Override
+	public int count_reply_ceo() {
+		return sqlSession.selectOne("service.count_reply_ceo");
+	}
+
+
+	@Override
+	public int client_count() {
+		return sqlSession.selectOne("service.client_count");
+	}
+
+
+	@Override
+	public int ceo_count() {
+		return sqlSession.selectOne("service.ceo_count");
+	}
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
 
 //조회수 증가
 //	@Override

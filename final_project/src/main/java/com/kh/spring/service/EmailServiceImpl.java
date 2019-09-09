@@ -33,8 +33,8 @@ public class EmailServiceImpl implements EmailService{
 		//이메일 전송
 		MimeMessage mail = sender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(mail, false, "UTF-8");
-		helper.setFrom("뭐먹지?");
-		helper.setTo(email);
+		helper.setFrom("dyi000908@gmail.com");
+		helper.setTo(email+"@gmail.com");
 		helper.setSubject("뭐먹지 아이디 찾기 메일입니다.");
 		helper.setText("${memberDto.id}", true);
 		sender.send(mail);
