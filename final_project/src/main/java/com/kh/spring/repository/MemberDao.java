@@ -32,5 +32,7 @@ public interface MemberDao {
 	List<MyshopDto> myshop(int member_code);
 	List<MemberDto> getMemberList();
 	List<MemberInfoVO> info(int no);
+	//
+//	MemberDto findPassword(MemberDto memberDto);
 
 }

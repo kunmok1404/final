@@ -28,6 +28,7 @@
 		<hr><br>
 		<div class="find_id_result_textbox">
 			이메일이 발송되었습니다.
+			[${id}]입니다.
 			<br>
 			해당 이메일에서 아이디를 확인해주세요.
 		</div>

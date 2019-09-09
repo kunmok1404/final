@@ -1,21 +1,46 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:include page="/WEB-INF/views/template/admin/shop/header.jsp"></jsp:include>
 
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/cryptojs/components/core-min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/cryptojs/components/sha256-min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/password-encoder.js"></script>
 
+<style>
+	
+	.login{
+		width: 400px;
+		margin: auto;
+	}
+	
+	.legend{
+		text-align: center;
+	}
+	
+	.warn{
+		color: red;
+		font-size: 15;
+	}
+	
+</style>
 
 <!-- shop 로그인 페이지 -->
-<div>
-	<form>
+<div class="login">
+	<form action="login" method="post">
 		<br><br>
-		<legend>뭐먹지 사장님</legend>
+		<legend class="legend">뭐먹지 사장님</legend>
 		<hr><br>
-		<table>
+		<table class="table table-bordered">
 			<tbody>
+				<tr>
+					<td colspan ="4">
+<%-- 						<%if(request.getParameterMap().containsKey("error")){ %> --%>
+<!-- 							[ 로그인 정보가 일치하지 않습니다.] -->
+<%-- 						<%} %> --%>
+					</td>
+				</tr>
 				<tr>
 					<td><label for="id">아이디</label></td>
 					<td>
@@ -39,7 +64,9 @@
 				</tr>
 			</tbody>
 		</table>
-		<br><br>
+		<br><hr>
 		<div class="warn">*불법적인 접근 또는 허가되지 않은 사용자가 접속을 시도할 경우 관계 법령에 의해 처벌을 받을 수 있습니다.</div>
 	</form>
 </div>
+
+<jsp:include page="/WEB-INF/views/template/admin/shop/footer.jsp"></jsp:include>

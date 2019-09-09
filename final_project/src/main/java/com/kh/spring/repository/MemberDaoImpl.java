@@ -186,5 +186,11 @@ public class MemberDaoImpl implements MemberDao {
 		return sqlSession.selectList("member.get_member_list");
 	}
 
+	////
+//	@Override
+//	public MemberDto findPassword(MemberDto memberDto) {
+//		return sqlSession.selectOne("member.find_pw", memberDto);
+//	}
+
 }
 
