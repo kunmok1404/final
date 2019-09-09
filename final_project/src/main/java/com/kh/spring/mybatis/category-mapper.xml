@@ -10,6 +10,41 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * files where no=#{image_code}
 	</select>
 	
+	<!-- FoodCategory조회 -->
+	<select id="getFoodCategory" parameterType="int" resultType="foodCategoryDto">
+		select * from food_category where no=#{category_code}
+	</select>
+	
+	<!-- FoodCategory 업데이트(이미지 빼고) -->
+	<update id="updateFoodCategory" parameterType="foodCategoryVO">
+		update food_category set 
+			name=#{cat_name}, sort_seq=#{sort_no}
+		where no=#{category_code}
+	</update>
+	
+	<!-- FoodCategory 업데이트(이미지만) -->
+	<update id="updateCategoryImg" parameterType="foodCategoryDto">
+		update food_category set 
+			img = #{img}
+		where no=#{no}
+	</update>
+	
+	<!-- FoodCategory 신규정보 추가 -->
+	<insert id="insertFoodCategoryInfo" parameterType="foodCategoryVO">
+		insert into food_category values(
+			food_category_seq.nextval, #{cat_name}, #{sort_no}, #{image_code}
+		)
+	</insert>
+	
+	<!-- FoodCategory 전체 리스트 -->
+	<select id="foodCategoryList" resultType="foodCategoryDto">
+		select * from food_category
+	</select>
+	
+	<!-- MenuCategory 목록(매장코드로) -->
+	<select id="menuCategoryList" parameterType="int" resultType="categoryDto">
+		select * from category where shop_code=#{shop_code}
+	</select>
 </mapper>
  
  

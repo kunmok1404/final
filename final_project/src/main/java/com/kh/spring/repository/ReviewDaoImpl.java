@@ -11,8 +11,8 @@ import org.springframework.stereotype.Repository;
 import com.kh.spring.entity.FilesDto;
 import com.kh.spring.entity.ReviewDto;
 import com.kh.spring.entity.ReviewDto.ReviewDtoBuilder;
+import com.kh.spring.vo.ShopReviewVO;
 import com.kh.spring.entity.ReviewImgDto;
-import com.kh.spring.entity.ShopReviewVO;
 
 @Repository
 public class ReviewDaoImpl implements ReviewDao {

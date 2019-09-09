@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.spring.entity.ReviewDto;
 import com.kh.spring.entity.ReviewDto.ReviewDtoBuilder;
-import com.kh.spring.entity.ShopReviewVO;
+import com.kh.spring.vo.ShopReviewVO;
 
 public interface ReviewService {
 

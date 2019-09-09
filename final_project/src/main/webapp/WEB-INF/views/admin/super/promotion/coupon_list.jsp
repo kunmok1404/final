@@ -78,32 +78,6 @@ $(function() {
 	  					</select>
 	  				</td>
 	  			</tr>
-	  			<tr>
-	  				<td width="10%" class="table-active">키워드 검색</td>
-	  				<td>
-	  					<table class="table table-sm">
-		  					<tbody>
-		  						<tr>
-					  				<td width="40%">
-					  					<select name="keyword_type" class="form-control">
-					  						<option value="">쿠폰번호</option>
-					  						<option value="">쿠폰명</option>
-					  						<option value="">발급방식</option>
-					  						<option value="">할인구분</option>
-					  						<option value="">할인</option>
-					  						<option value="">사용기간</option>
-					  						<option value="">발급시기</option>
-					  						<option value="">발급상태</option>
-					  					</select>
-					  				</td>
-					  				<td>
-					  					<input type="text" name="keyword" class="form-control">
-					  				</td>
-		  						</tr>
-		  					</tbody>
-	  					</table>
-	  				</td>
-	  			</tr>
 	  		</tbody>
 	  	</table>
 	  	<div style="width:100%;">

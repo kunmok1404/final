@@ -12,13 +12,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.kh.spring.entity.OrderVo;
-import com.kh.spring.entity.ShopDto;
 import com.kh.spring.entity.TotalVo;
 import com.kh.spring.repository.OrdersDao;
 import com.kh.spring.repository.ShopDao;
+import com.kh.spring.vo.OrderVo;
 
 @Controller
 @RequestMapping("/shop_admin/chart")

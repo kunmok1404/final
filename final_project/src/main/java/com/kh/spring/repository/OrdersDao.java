@@ -8,16 +8,15 @@ import com.kh.spring.entity.CartDto;
 import com.kh.spring.entity.CartListNo;
 import com.kh.spring.entity.CartListVO;
 import com.kh.spring.entity.CartSubDto;
-import com.kh.spring.entity.CartSubListVo;
 import com.kh.spring.entity.MemberDto;
 import com.kh.spring.entity.OrderDetailDto;
 import com.kh.spring.entity.OrderDetailListVo;
 import com.kh.spring.entity.OrderSubDetail;
 import com.kh.spring.entity.OrderSubDetailListVo;
-import com.kh.spring.entity.OrderVo;
 import com.kh.spring.entity.OrdersDto;
 import com.kh.spring.entity.ShopDto;
 import com.kh.spring.entity.TotalVo;
+import com.kh.spring.vo.OrderVo;
 //주문 관련 Dao
 @Repository
 public interface OrdersDao {
@@ -35,7 +34,6 @@ public interface OrdersDao {
 	void orderDetailInput(int order_code, int no, OrderDetailListVo vo);
 	int getseq();
 	void cartDelete(int member_code);
-
 	int getQuantity(int member_code);
 	OrdersDto orderResult(int no);
 	List<OrderVo> order_data(String no);
