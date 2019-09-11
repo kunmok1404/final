@@ -53,5 +53,7 @@
 	<beans:bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<beans:property name="dataSource" ref="dataSource"></beans:property>
 	</beans:bean>
+	
+	<view-controller path="/test" view-name="test"/>
 
 </beans:beans>
