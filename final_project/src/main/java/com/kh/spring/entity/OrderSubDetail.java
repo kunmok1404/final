@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 
 @Data @Builder @NoArgsConstructor @AllArgsConstructor
 public class OrderSubDetail {
+	private int sub_order_code;
 	private int no;//order_detail에 종속되는 번호
-	private int sub_order_code;//시퀀스로 생기는 번호
 	private String sub_title;//추가메뉴제목
 	private String sub_name;//추가 메뉴이름
 	private String sub_type;//추가 메뉴 유형
