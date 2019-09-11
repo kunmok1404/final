@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-    <jsp:include page="/WEB-INF/views/template/admin/super/header.jsp"></jsp:include>
-    <jsp:include page="/WEB-INF/views/template/admin/super/left/left_shop.jsp"></jsp:include>    
+    <jsp:include page="/WEB-INF/views/template/client/header.jsp"></jsp:include>
+    
 	<style>
 		.regist {
 			width: 70%;
@@ -11,6 +10,7 @@
 		.table-bordered > tbody > tr > th {
 			border: solid 1px;
 			background-color: #C7C3C5;
+		
 		}
 	</style>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2c2ba04f24dbd55e914c1d24e55dfaa7&libraries=services"></script>
@@ -63,11 +63,11 @@
         });
         
         
-    </script>
-    <div class="wrapper mt-3">
+    </script> 
+	
+	<div class="wrapper mt-3">
     
-	<form action="detail" method="post" enctype="multipart/form-data">
-	<input type="hidden" name="no" value="${shop.no}">
+	<form action="shop_regist" method="post" enctype="multipart/form-data">
 
 	<!--메뉴기본정보 -->
 	  <div class="top-title">
@@ -82,132 +82,140 @@
       		<tr>
       			<td width="20%" class="table-secondary text-center title">상&nbsp호</td>
       			<td class="text-left">
-      				<input type="text" name="company_name" value="${shop.company_name }" class="form-control" placeholder="상호명을 입력하세요." required>
+      				<input type="text" name="company_name" class="form-control" placeholder="상호명을 입력하세요." required>
    				</td>
       		</tr>
       		<tr>
       			<td class="table-secondary text-center title">사업자&nbsp번호</td>
-      			<td class="text-left "><input type="text" name="company_code" value="${shop.company_code }" class="form-control" min="1" placeholder="가격을 입력하세요." required></td>
+      			<td class="text-left "><input type="text" name="company_code" class="form-control" min="1" placeholder="가격을 입력하세요." required></td>
       		</tr>
       		<tr>
       			<td class="table-secondary text-center title">사업주명</td>
-      			<td class="text-left"><input type="text" name="ceo" value="${shop.ceo }" class="form-control"></td>
+      			<td class="text-left"><input type="text" name="ceo" class="form-control"></td>
       		</tr>
       		<tr>
       			<td class="table-secondary text-center title">사업주&nbsp전화번호</td>
-      			<td class="text-left"><input type="text" name="ceo_phone" value="${shop.ceo_phone }" class="form-control"></td>
+      			<td class="text-left"><input type="text" name="ceo_phone" class="form-control"></td>
       		</tr>
       		<tr>
       			<td class="table-secondary text-center title">은행명</td>
-      			<td class="text-left"><input type="text" name="bank" value="${shop.bank }" class="form-control"></td>
+      			<td class="text-left"><input type="text" name="bank" class="form-control"></td>
       		</tr>
       		<tr>
       			<td class="table-secondary text-center title">계좌번호</td>
-      			<td><input type="text" name="account_number" value="${shop.account_number }" class="form-control"></td>
+      			<td><input type="text" name="account_number" class="form-control"></td>
       		</tr>
       		<tr>
       			<td class="table-secondary text-center title">예금주</td>
-      			<td><input type="text" name="account_name" value="${shop.account_name }" class="form-control"></td>
-      		</tr>
-      		<tr>
-      			<td class="table-secondary text-center title">승인상태</td>
-      			<td class="text-left">
-      				<span class="text-left pl-2">
-      					<select name="apply_status" class="form-control" required>
-							<option ${shop.apply_status eq '승인완료'?'selected':'' }>승인완료</option>
-							<option ${shop.apply_status eq '승인대기'?'selected':'' }>승인대기</option>
-							<option ${shop.apply_status eq '승인거절'?'selected':'' }>승인거절</option>
-						</select>
-      				</span>
-      			</td>
-      		</tr>
-      		<tr>
-      			<td class="table-secondary text-center title">계약상태</td>
-      			<td class="text-left">
-      				<span class="text-left pl-2">
-      					<select name="contract_status" class="form-control" required>
-							<option ${shop.contract_status eq '계약종료'?'selected':'' }>계약종료</option>
-							<option ${shop.contract_status eq '계약중'?'selected':'' }>계약중</option>
-						</select>
-      				</span>
-      			</td>
+      			<td><input type="text" name="account_name"class="form-control"></td>
       		</tr>
       	</tbody>
       </table>
 	
-	<div class="top-title">
+	  <div class="top-title">
 		<div id="terms-wrapper">
           <div class="terms-line"></div>
         </div>
 	    <span class="header-title">매장 정보</span>
       </div>
       
-      
       <table class="table table-hamburg mt-3 menu-regist-table">
       	<tbody>
       		<tr>
-      			<td width="20%" class="table-secondary text-center title">카테고리</td>
+      			<td class="table-secondary text-center title">카테고리</td>
       			<td class="text-left">
-      				<input type="text" name="category" value="${shop.category }" class="form-control">
-   				</td>
+      				<span class="text-left pl-2">
+      					<select name="category" class="form-control" required>
+							<option value="">선택</option>
+							<option></option>
+						</select>
+      				</span>
+      			</td>
       		</tr>
       		<tr>
-      			<td class="table-secondary text-center title">매장이미지</td>
+      			<td class="table-secondary text-center title">매장로고</td>
       			<td class="text-left "><input type="file" name="img" class="form-control"></td>
       		</tr>
       		<tr>
       			<td class="table-secondary text-center title">매장명</td>
       			<td class="text-left">
-      				<input  type="text" name="shop_name" value="${shop.shop_name }" class="form-control">
+      				<input  type="text" name="shop_name" class="form-control">
       			</td>
       		</tr>
       		<tr>
       			<td class="table-secondary text-center title">매장전화번호</td>
-      			<td class="text-left"><input type="text" name="shop_phone" value="${shop.shop_phone }" class="form-control"></td>
+      			<td class="text-left"><input type="text" name="shop_phone" class="form-control"></td>
       		</tr>
       		<tr>
       			<td class="table-secondary text-center title">매장주소</td>
-      			<td><input type="text" id="sample6_postcode" placeholder="우편번호" name="zip_code" value="${shop.zip_code }" class="form-control">
+      			<td><input type="text" id="sample6_postcode" placeholder="우편번호" name="zip_code" class="form-control">
 					<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" class="btn btn-info mt-2 mb-2"><br>
-					<input type="text" id="sample6_address" placeholder="주소" name="basic_addr" value="${shop.basic_addr }" class="form-control"><br>
-					<input type="text" id="sample6_detailAddress" placeholder="상세주소" name="detail_addr" value="${shop.detail_addr }" class="form-control">
+					<input type="text" id="sample6_address" placeholder="주소" name="basic_addr" class="form-control"><br>
+					<input type="text" id="sample6_detailAddress" placeholder="상세주소" name="detail_addr" class="form-control">
 					<input type="hidden" id="sample6_extraAddress" placeholder="참고항목" class="form-control">
-					<input class="location_y" type="hidden" name="location_y" value="${shop.location_y }" class="form-control">
-					<input class="location_x" type="hidden" name="location_x" value="${shop.location_x }" class="form-control">
+					<input class="location_y" type="hidden" name="location_y" class="form-control">
+					<input class="location_x" type="hidden" name="location_x" class="form-control">
 				</td>
       		</tr>
       		<tr>
-      			<td class="table-secondary text-center title">매장설명</td>
-      			<td><input type="text" name="content" value="${shop.content }" class="form-control"></td>
+      			<td class="table-secondary text-center title">매장소개</td>
+      			<td><input type="text" name="content" class="form-control"></td>
       		</tr>
       		<tr>
       			<td class="table-secondary text-center title">최소주문금액</td>
-      			<td><input type="text" name="min_price" value="${shop.min_price }" class="form-control"></td>
+      			<td><input type="text" name="min_price" class="form-control" placeholder="최소주문금액을 입력해주세요."></td>
       		</tr>
       		<tr>
-      			<td class="table-secondary text-center title">최소주문시간</td>
-      			<td><input type="text" name="min_time" value="${shop.min_time }" class="form-control"></td>
+      			<td class="table-secondary text-center title">예상배달시간</td>
+      			<td><input type="text" name="min_time" class="form-control" placeholder="예상배달시간을 입력해주세요."></td>
       		</tr>
       		<tr>
       			<td class="table-secondary text-center title">배달비용</td>
-      			<td><input type="text" name="delivery_price" value="${shop.delivery_price }" class="form-control"></td>
+      			<td><input type="text" name="delivery_price" class="form-control"></td>
       		</tr>
       		<tr>
       			<td class="table-secondary text-center title">영업시간</td>
-      			<td><input class="testss"  type="time" name="start_time" placeholder="시작" value="${shop.start_time }">
+      			<td><input class="testss"  type="time" name="start_time" placeholder="시작">
       			-
-				<input type="time" name="finish_time" placeholder="종료" value="${shop.finish_time }"></td>
+				<input type="time" name="finish_time" placeholder="종료"></td>
       		</tr>
       		<tr>
       			<td colspan="2" class="text-center"><input type="submit" value="저장" class="form-class btn btn-primary text-center"></td>
       		</tr>
       	</tbody>
       </table>
+      
+      <!-- 계정정보 -->
+      <div class="top-title">
+		<div id="terms-wrapper">
+          <div class="terms-line"></div>
+        </div>
+	    <span class="header-title">매장 정보</span>
+      </div>
+      
+      <table class="table table-hamburg mt-3 menu-regist-table">
+      	<tbody>
+      		<tr>
+      			<td width="20%" class="table-secondary text-center title">아이디</td>
+      			<td class="text-left">
+      				<input type="text" name="id" class="form-control" placeholder="희망계정을 입력해주세요." required>
+      				<button class="btn btn-info id-check">중복 검사</button>
+   				</td>
+      		</tr>
+      		<tr>
+      			<td width="20%" class="table-secondary text-center title">비밀번호</td>
+      			<td class="text-left">
+      				<input type="password" name="pw" class="form-control" placeholder="비밀번호를 입력하세요." required>
+   				</td>
+      		</tr>
+      	</tbody>
+      </table>
+      	
+      
 	</form>
 	
 	</div>
-	
-    	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
     function sample6_execDaumPostcode() {
         new daum.Postcode({
@@ -257,4 +265,4 @@
         }).open();
     }
 </script>
-    <jsp:include page="/WEB-INF/views/template/admin/shop/footer.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/template/client/footer.jsp"></jsp:include>

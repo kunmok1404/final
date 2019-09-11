@@ -59,7 +59,7 @@
 			// 총 주문금액 = 메뉴 총가격 + 서브메뉴 가격
 			order.total = order.menu_total + order.sub_total;
 			$(".total-price").text(order.total);
-			$("input[name=total_price]").val(order.total);
+			$("input[name=menu_price]").val(order.total);
 			order.sub_total=0;
 			order.menu_total =0;
 		})
@@ -99,7 +99,24 @@
 // 			})
 // 			console.log("------------------- end -------------------------");
 // 		})
+	$("#go_cart").click(function(e){
+		e.preventDefault();
+		var location = "${pageContext.request.contextPath}/order/cart";
+		$("form").attr("action", location);
+		$("form").submit();
 	})
+	
+	$("#go_order").click(function(e){
+		e.preventDefault();
+		var location = "${pageContext.request.contextPath}/order/direct_order";
+		$("form").attr("action", location);
+		$("form").submit();
+	})
+	
+	}
+)
+
+	
 </script>
 
     <div class="modal-img">
@@ -108,7 +125,9 @@
     <div class="modal-menuName border-bottom">
       <h4>${menuDto.name}</h4>
     </div>
-    <form action="#">
+    <form method="post">
+    <input type="hidden" name="menu_name" value="${menuDto.name}">
+    <input type="hidden" name="title" value="${menuDto.menu_category}">
     <div class="modal-choiceNeed mt-3">
       <!-- 필수 title 시작-->
       <c:set var="loop1Flag" value="true"></c:set>
@@ -122,10 +141,11 @@
   	  <!-- 필수 영역 시작-->
       <table>
         <tbody>
+          <c:set var="count" value="${count+1}"/>
           <c:forEach var="subMenu" items="${list}">
           <tr>
           	<c:if test="${subMenu.type eq '필수'}">
-            	<td><input name="need" type="radio" checked data-price="${subMenu.price}">${subMenu.name}</td>
+            	<td><input name="need" type="radio" value="${subMenu.price}" checked data-price="${subMenu.price}">${subMenu.name}</td>
             	<c:choose>
             		<c:when test="${subMenu.price eq '0'}">      	
 	            		<td>추가금액없음</td>          	
@@ -158,7 +178,7 @@
         	<c:forEach var="subMenu" items="${list}">
 	        	<c:if test="${subMenu.type eq '선택'}">
 		            <tr>
-		              <td><input type="checkbox" data-price="${subMenu.price}">${subMenu.name}</td>
+		              <td><input type="checkbox" name="main[${count}].sub_type" value="${subMenu.price}" data-price="${subMenu.price}">${subMenu.name}</td>
 		              <c:choose>
 	            		<c:when test="${subMenu.price eq '0'}">      	
 		            		<td>추가금액없음</td>          	
@@ -178,7 +198,7 @@
       <span class="modal-number">수량</span>
       <span class="wrap">
 		<button type="button" class="dw up-down">-</button>
-				<input type="text" min="1" value="1" id="change-number" readonly>
+				<input type="text" min="1" value="1" name="menu_amount" id="change-number" readonly>
 		<button type="button" class="up up-down">+</button>
 		</span>
 		<input type="hidden" class="origin-price" value="${menuDto.price}">
@@ -187,7 +207,7 @@
     <div class="modal-totalPrice">
       <span>총 주문금액</span>
       <span class="total-price">
-      	<input type="hidden" name="total_price">
+      	<input type="hidden" name="menu_price">
       	${menuDto.price}
       </span>원
     </div>

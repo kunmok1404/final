@@ -146,4 +146,10 @@ PUBLIC "//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="search_name" resultType="shopDto" parameterType="map">
 		select * from shop where shop_name like '%'||#{shop_name}||'%'
 	</select>
+	
+	<!-- 매장관리에서 승인버튼 클릭시 -->
+	<update id="apply_shop" parameterType="int">
+		update shop set apply_status='승인완료' where no=#{shop_code}
+	</update>
+	
  </mapper>
