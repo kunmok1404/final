@@ -18,4 +18,5 @@ public interface CouponDao {
 	void finish(int no);
 	
 	void all(int member_code,int coupon_code);
+
 }

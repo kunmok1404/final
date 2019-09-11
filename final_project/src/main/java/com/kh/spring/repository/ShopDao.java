@@ -27,4 +27,5 @@ public interface ShopDao {
 	ShopDto myshop(int shop_code);
 	List<ShopDto> shop();
 	List<ShopDto> search_name(String sh_name);
+	void apply(int shop_code);
 }

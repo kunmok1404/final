@@ -57,7 +57,4 @@ public class CouponDaoImpl implements CouponDao {
 		sqlSession.insert("coupon.all", map);
 		
 	}
-	
-	
-
 }

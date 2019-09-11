@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.spring.entity.FoodCategoryDto;
@@ -60,6 +61,15 @@ public class SuperShopController {
 		return "admin/super/shop/shop_info";
 	}
 	
+	// 매장관리에서 승인버튼 클릭시
+	@GetMapping("/apply")
+	@ResponseBody
+	public String apply(@RequestParam int shop_code) {
+		shopDao.apply(shop_code);
+		return "승인이 완료되었습니다.";
+	}
+	
+	// 매장정보수정
 	@PostMapping("/shop_info")
 	public String shop_inf(Model model,
 			@RequestParam(defaultValue="1") int curPage,
@@ -99,7 +109,7 @@ public class SuperShopController {
 		return "admin/super/shop/detail";
 	}
 	
-//	매장정보수정확인
+	//	매장정보수정확인
 	@PostMapping("/detail")
 	public String shop_info(
 				ShopDto shopDto,
@@ -109,7 +119,8 @@ public class SuperShopController {
 		shopService.edit(shopDto,img);
 		
 		model.addAttribute("shop",shopDao.shopInfo(shopDto.getNo()));
-		return  "admin/super/shop/detail";
+		model.addAttribute("no", shopDto.getNo());
+		return  "redirect:detail";
 	}
 	
 }
