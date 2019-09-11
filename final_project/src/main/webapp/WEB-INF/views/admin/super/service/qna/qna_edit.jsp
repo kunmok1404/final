@@ -11,8 +11,10 @@
 	rel="stylesheet">
 	<script>
 	$(function(){
-		var status ="${qdto.category}";
+		var category ="${qdto.category}";
 		$("select[name=category]").val(category);
+		var use_yn ="${qdto.use_yn}";
+		$("select[name=use_yn]").val(use_yn);
 	});
 </script>
 <div class="qna">
@@ -55,7 +57,12 @@
 					</th>
 					
 					<th class=notice-th><span>진열여부</span></th>
-					<th class=notice-th2><input type='text' name='use_yn' value="${qdto.use_yn}"></th>
+					<th class=notice-th2>
+					<select name="use_yn" required>
+								<option value="">선택하세요</option>
+								<option>Y</option>
+								<option>N</option>
+						</select></th>
 				</tr>
 				<tr>
 					<th class=notice-th><span>등록일</span></th>

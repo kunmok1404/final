@@ -8,7 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.kh.spring.entity.OnoDto;
+import com.kh.spring.entity.ShopOnoDto;
 
 @Repository
 public class ShopOnoDaoImpl implements ShopOnoDao{
@@ -16,18 +16,16 @@ public class ShopOnoDaoImpl implements ShopOnoDao{
 	private SqlSession sqlSession;
 	
 	@Override
-	public List<OnoDto> superlist_ceo(String apply_status, String keyword_type, String keyword, int i, int j,
+	public List<ShopOnoDto> superlist_ceo(String apply_status, String keyword_type, String keyword,String start_date, String end_date, int i, int j,
 			String type) {
 		Map<String, Object> param = new HashMap<>();
 		
-		if(apply_status != null) {
-			param.put("apply_status", apply_status);
-		}
+		param.put("apply_status", apply_status);
+		param.put("keyword_type", keyword_type);
+		param.put("keyword", keyword);
+		param.put("start_date", start_date);
+		param.put("end_date", end_date);
 		
-		if(keyword_type !=null && keyword !=null) {
-			param.put("keyword_type", keyword_type.replace("+", "||"));
-			param.put("keyword", keyword);
-		}
 		
 		param.put("type",type);
 		//검색이든 목록이든 페이징 구간을 전달
@@ -39,19 +37,17 @@ public class ShopOnoDaoImpl implements ShopOnoDao{
 	}
 
 	@Override
-	public List<OnoDto> superlist2_ceo(String apply_status, String keyword_type, String keyword, String reply_status,
+	public List<ShopOnoDto> superlist2_ceo(String apply_status, String keyword_type, String keyword, String start_date, String end_date,String reply_status,
 			int i, int j, String type) {
 		Map<String, Object> param = new HashMap<>();
 		
-		if(apply_status != null) {
-			param.put("apply_status", apply_status);
-		}
+		param.put("apply_status", apply_status);
+		param.put("keyword_type", keyword_type);
+		param.put("keyword", keyword);
+		param.put("start_date", start_date);
+		param.put("end_date", end_date);
 		
-		if(keyword_type !=null && keyword !=null) {
-			param.put("keyword_type", keyword_type.replace("+", "||"));
-			param.put("keyword", keyword);
-		}
-		
+		param.put("type",type);
 		
 		//검색이든 목록이든 페이징 구간을 전달
 		param.put("start", i);

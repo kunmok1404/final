@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.spring.entity.OnoDto;
+import com.kh.spring.entity.ShopOnoDto;
 import com.kh.spring.repository.OnoDao;
 import com.kh.spring.repository.ShopOnoDao;
 import com.kh.spring.service.ServiceService;
@@ -63,6 +64,7 @@ public class SuperServiceController {
 		model.addAttribute("startBlock", startBlock);
 		model.addAttribute("endBlock", endBlock);
 		model.addAttribute("count",count);
+		model.addAttribute("pageCount", pageCount);
 		
 		List<OnoDto> list = onoDao.superlist(apply_status, keyword_type, keyword, start_date, end_date, start, end, type);
 		model.addAttribute("list", list);
@@ -134,10 +136,12 @@ public class SuperServiceController {
 	
 	// 업주 1:1 문의
 			@GetMapping("/ono_list_ceo")
-			public String list_ceo(Model model,@ ModelAttribute OnoDto onoDto,
+			public String list_ceo(Model model,@ ModelAttribute ShopOnoDto ShoponoDto,
 					@RequestParam(required = false) String apply_status,
 					@RequestParam(required = false) String keyword_type,
 					@RequestParam(required = false) String keyword,
+					@RequestParam(required = false) String start_date,
+					@RequestParam(required = false) String end_date,
 					@RequestParam(required = false) String type,
 					@RequestParam(required = false, defaultValue = "1")int page) {
 				
@@ -154,7 +158,7 @@ public class SuperServiceController {
 				int startBlock = (page -1) / blocksize * blocksize + 1;
 				int endBlock = startBlock + (blocksize - 1);
 				
-				int count = onoDao.supercount_ceo(apply_status, keyword_type, keyword );
+				int count = onoDao.supercount_ceo(apply_status, keyword_type, keyword,start_date, end_date );
 				int pageCount = (count -1) / pagesize + 1;
 				if(endBlock > pageCount) {
 					endBlock = pageCount;
@@ -164,12 +168,13 @@ public class SuperServiceController {
 				model.addAttribute("startBlock", startBlock);
 				model.addAttribute("endBlock", endBlock);
 				model.addAttribute("count",count);
+				model.addAttribute("pageCount", pageCount);
 				
-				List<OnoDto> list = shoponoDao.superlist_ceo(apply_status, keyword_type, keyword, start, end, type);
+				List<ShopOnoDto> list = shoponoDao.superlist_ceo(apply_status, keyword_type, keyword,start_date, end_date, start, end, type);
 				model.addAttribute("list", list);
 				
 				String reply_status = "답변대기";
-				List<OnoDto> list2 = shoponoDao.superlist2_ceo(apply_status, keyword_type, keyword, reply_status, start, end, type);
+				List<ShopOnoDto> list2 = shoponoDao.superlist2_ceo(apply_status, keyword_type, keyword, start_date, end_date, reply_status, start, end, type);
 				model.addAttribute("list2", list2);
 				
 				//답변대기 개수

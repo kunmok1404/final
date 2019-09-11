@@ -1,5 +1,7 @@
 package com.kh.spring.entity;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,6 +15,8 @@ public class OrderDetailDto {
 	private String menu_name;//메뉴이름
 	private int menu_amount;//메뉴수량
 	private int menu_price;//메뉴가격
+	
+	private List<OrderSubDetail> list;
 	
 
 }

@@ -29,6 +29,20 @@ $(function() {
 		}
 	})
 })
+
+	$(".issue").click(function() {
+		var coupon_code = $(this).parent().siblings(".no").children().val();
+		location.href = '${pageContext.request.contextPath}/super_admin/coupon/search?coupon_code='+coupon_code;
+	})
+
+
+
+
+
+
+
+
+
 })
 </script>
 	<!-- 전체시작 -->

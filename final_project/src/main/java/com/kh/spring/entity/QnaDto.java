@@ -17,5 +17,6 @@ public class QnaDto {
 	 private String regist_date; 		//작성날짜
 	 private String edit_date;			//수정날짜
 
+
 	 
 }
