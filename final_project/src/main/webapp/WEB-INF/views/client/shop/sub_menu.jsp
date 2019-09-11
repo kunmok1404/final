@@ -133,20 +133,13 @@
     <input type="hidden" name="title" value="${menuDto.menu_category}">
     <div class="modal-choiceNeed mt-3">
       <!-- 필수 title 시작-->
-      <c:set var="loop1Flag" value="true"></c:set>
-      <c:forEach var="subMenu" items="${list}">	
-      	  <c:if test="${loop1Flag && subMenu.type eq '필수'}">
-	      	<h5 class="modal-title1">${subMenu.title}</h5>
-	      	<c:set var="loop1Flag" value="false" />
-	      </c:if>
-	  </c:forEach>
+      <h5 class="modal-title2">${sub_title.radio_title}</h5>
 	  <!-- 필수 title 끝 -->
   	  <!-- 필수 영역 시작-->
       <table>
         <tbody>
            <tr>
            	 <td>
-           	 	${sub_title.radio_title}
            	 	<input type="hidden" value="${sub_title.radio_title}">
            	 </td>
            </tr>
