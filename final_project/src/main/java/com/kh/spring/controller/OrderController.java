@@ -53,7 +53,6 @@ public class OrderController {
 //		int shop_code = (int) session.getAttribute("shop_code");	
 		//>>자신<<의 카트에 있는
 		int member_code = (int) session.getAttribute("member_code");
-		int shop_code = (int) session.getAttribute("shop_code");
 		//주 메뉴의 정보를 전부 출력하고,
 		//주 메뉴의 번호를 전부 불러다가
 		List<CartDto> cartDto = orderDao.cartlist(member_code);

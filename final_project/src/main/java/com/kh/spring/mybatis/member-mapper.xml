@@ -184,6 +184,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	<delete id="unlike" parameterType="memberDto">
  		delete myshop where member_code = #{member_code} and shop_code = #{shop_code}
  	</delete>
+ 	
 	
 	<!-- 회원등급 정보 -->
 	<select id="usergrade" resultType="usergradeDto">
