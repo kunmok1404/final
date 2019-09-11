@@ -246,6 +246,11 @@ public class OrdersDaoimpl implements OrdersDao{
 		return sqlsession.selectOne("order.order_det_seq");
 	}
 
+	@Override
+	public int getcoupon(int member_code) {
+		return sqlsession.selectOne("order.getcoupon",member_code);
+	}
+
 
 
 

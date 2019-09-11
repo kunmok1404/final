@@ -141,11 +141,12 @@
   	  <!-- 필수 영역 시작-->
       <table>
         <tbody>
-          <c:set var="count" value="${count+1}"/>
-          <c:forEach var="subMenu" items="${list}">
+        
+          <c:forEach var="subMenu" items="${list}" varStatus="status">
           <tr>
           	<c:if test="${subMenu.type eq '필수'}">
-            	<td><input name="need" type="radio" value="${subMenu.price}" checked data-price="${subMenu.price}">${subMenu.name}</td>
+            	<td><input name="list[${status.index}].sub_title" type="radio" value="${subMenu.name}">${subMenu.name}</td>
+            	<input type="hidden" name="list[${status.index}].sub_price" value="${subMenu.price}">
             	<c:choose>
             		<c:when test="${subMenu.price eq '0'}">      	
 	            		<td>추가금액없음</td>          	
@@ -175,10 +176,10 @@
 	  <!-- 선택 영역 시작-->
       <table>
         <tbody>
-        	<c:forEach var="subMenu" items="${list}">
+        	<c:forEach var="subMenu" items="${list}" varStatus="status2">
 	        	<c:if test="${subMenu.type eq '선택'}">
 		            <tr>
-		              <td><input type="checkbox" name="main[${count}].sub_type" value="${subMenu.price}" data-price="${subMenu.price}">${subMenu.name}</td>
+		              <td><input type="checkbox" name="list[${status2.index}].sub_title" value="${subMenu.price}" data-price="${subMenu.price}">${subMenu.name}</td>
 		              <c:choose>
 	            		<c:when test="${subMenu.price eq '0'}">      	
 		            		<td>추가금액없음</td>          	

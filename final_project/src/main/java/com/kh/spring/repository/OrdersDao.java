@@ -52,6 +52,7 @@ public interface OrdersDao {
 	void orderSubDetailInput(OrderSubDetail ordersubdetail);
 	List<OrderSubDetail> myOrderSubDetailList(int no);
 	int getdetseq();
+	int getcoupon(int member_code);
 	
 
 }

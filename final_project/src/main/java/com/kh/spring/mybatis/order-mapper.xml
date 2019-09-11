@@ -324,4 +324,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="setStatus" parameterType="map">
 		update orders set order_status = #{order_status} where no = #{no}
 	</update>
+	<!-- 쿠폰 갯수 조회 -->
+	<select id="getcoupon" parameterType="int" resultType="int">
+		select count(*) from issue where member_code = #{member_code}
+	</select>
 </mapper>
