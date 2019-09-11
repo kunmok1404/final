@@ -101,7 +101,7 @@ $(function() {
 	  </div>
 	  <!-- 검색목록창 끝-->
 	  
-	  <!-- 리뷰목록 시작 -->
+	  <!-- 쿠폰목록 시작 -->
 	  <div class="list-wrapper table-responsive">
 	  <div class="search-number">
 	  	<p>총 ${coupon.size() }건</p>

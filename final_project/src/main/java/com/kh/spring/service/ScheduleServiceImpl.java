@@ -9,10 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.kh.spring.entity.CommissionDto;
 import com.kh.spring.entity.CouponDto;
+import com.kh.spring.entity.FoodCategoryDto;
 import com.kh.spring.entity.MemberDto;
+import com.kh.spring.entity.ShopDto;
+import com.kh.spring.entity.TotalVo;
 import com.kh.spring.entity.UsergradeDto;
 import com.kh.spring.repository.MemberDao;
+import com.kh.spring.repository.OrdersDao;
+import com.kh.spring.repository.ShopDao;
 
 @Service
 public class ScheduleServiceImpl implements ScheduleService{
@@ -23,6 +29,11 @@ public class ScheduleServiceImpl implements ScheduleService{
 	@Autowired
 	MemberDao memberDao;
 	
+	@Autowired
+	ShopDao shopDao;
+	
+	@Autowired
+	OrdersDao ordersDao;
 	
 	@Override
 	@Scheduled(cron = "0 0 0 1 * *")
@@ -80,8 +91,46 @@ public class ScheduleServiceImpl implements ScheduleService{
 
 
 	@Override
+	@Scheduled(cron = "0 0 1 * * *")
 	public void work3() {
-		// TODO Auto-generated method stub
+		CommissionDto commissionDto = sqlsession.selectOne("commission.date");
+		Map<String, Object> map = new HashMap<>();
+		map.put("commission_date", commissionDto.getCommission_date());
+		int day = sqlsession.selectOne("commission.day",map);
+		if (day==0) {
+			List<ShopDto> list = shopDao.shop();
+			String start = sqlsession.selectOne("commission.start");
+			String end = sqlsession.selectOne("commission.end");
+			List<TotalVo> date;
+			for (int i = 0; i < list.size(); i++) {
+				int total = 0;
+				String no = Integer.toString(list.get(i).getNo());	
+				date =ordersDao.sale_day(no,start,end); 
+				for (int j = 0; j < date.size(); j++) {					
+					total+=date.get(j).getTot();
+				} 
+				String shop_name = list.get(i).getShop_name();
+				int cartegory = list.get(i).getCategory();
+				FoodCategoryDto FoodCategory = sqlsession.selectOne("category.getFoodCategory", cartegory);
+				int commission_rate = commissionDto.getCommission_rate();
+				int commission_charge = total/commission_rate;
+				int commission_sum = total-commission_charge;
+				Map<String, Object> map2 = new HashMap<>();
+				map2.put("shop_code", no);
+				map2.put("shop_name", shop_name);
+				map2.put("cartegory", FoodCategory.getName());
+				map2.put("total_sum", total);
+				map2.put("commission_rate", commission_rate);
+				map2.put("commission_charge", commission_charge);
+				map2.put("commission_sum", commission_sum);
+				map2.put("start_date", start);
+				map2.put("end_date", end);
+				sqlsession.insert("commission.regist", map2);
+				
+			}
+		}
+		
+		
 		
 	}
 

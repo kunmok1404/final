@@ -57,6 +57,7 @@ public class OrderController {
 					   HttpSession session, Model model) {	
 		//>>자신<<의 카트에 있는
 		int member_code = (int) session.getAttribute("member_code");
+
 		int cart_seq = orderDao.getcartseq();
 		//메인 메뉴 넣는 코드
 		cartdto = CartDto.builder()
@@ -77,7 +78,8 @@ public class OrderController {
 			List<SubMenuDto> submenudtolist = orderDao.getsubmenu(i,shop_code);	
 			System.out.println(submenudtolist);
 		}
-		
+		//주 메뉴의 정보를 전부 출력하고,
+		//주 메뉴의 번호를 전부 불러다가
 		List<CartDto> cartDto = orderDao.cartlist(member_code);
 		model.addAttribute("cartDto", cartDto);
 		//추가 메뉴를 타입별로 출력	
@@ -85,12 +87,7 @@ public class OrderController {
 		session.setAttribute("shop_code", shop_code);
 		return "client/order/cart";
 	}
-	@PostMapping("/direct_order")
-	public String direct(
-			
-			HttpSession session,Model model,@RequestParam int total_price) {
-		return "client/order/order";
-	}
+
 
 	@PostMapping("/orderinput")
 	public String cart(@ModelAttribute CartListVO vo,

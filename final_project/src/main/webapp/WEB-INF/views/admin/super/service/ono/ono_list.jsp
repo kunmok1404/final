@@ -198,12 +198,12 @@
 
 	<%-- 이전 구간 링크 --%>
 	<c:if test="${(not (page eq 1))&& not empty page && page>=6}">
-	<li><a href="ono_list?page=${startBlock-1}&reply_status=${param.reply_status}&apply_status=${param.apply_status}&keyword_type=${param.keyword_type}&keyword=${param.keyword}&start_date=${param.start_date}&end_date=${param.end_date}">&lt;&lt;</a></li>
+	<li><a href="ono_list?page=${startBlock-1}&reply_status=${param.reply_status}&apply_status=${param.apply_status}&keyword_type=${param.keyword_type}&keyword=${param.keyword}&start_date=${param.start_date}&end_date=${param.end_date}" class='page_block'>&lt;&lt;</a></li>
 	</c:if>
 	
 	<%-- 이전 페이지 링크(pno - 1) --%>
 	<c:if test="${not (page eq 1)&& not empty page}">
-	<li><a href="ono_list?page=${page-1}&reply_status=${param.reply_status}&apply_status=${param.apply_status}&keyword_type=${param.keyword_type}&keyword=${param.keyword}&start_date=${param.start_date}&end_date=${param.end_date}">&lt;</a></li>
+	<li><a href="ono_list?page=${page-1}&reply_status=${param.reply_status}&apply_status=${param.apply_status}&keyword_type=${param.keyword_type}&keyword=${param.keyword}&start_date=${param.start_date}&end_date=${param.end_date}" class='page_block'>&lt;</a></li>
 	</c:if>
 	
 	<%-- 페이지 출력 --%>
@@ -223,12 +223,12 @@
 
 	<%-- 다음 페이지 링크(pno + 1) --%>
 	<c:if test="${not (page eq pageCount)}">
-		<li><a href="ono_list?page=${page+1}&reply_status=${param.reply_status}&apply_status=${param.apply_status}&keyword_type=${param.keyword_type}&keyword=${param.keyword}&start_date=${param.start_date}&end_date=${param.end_date}">&gt;</a></li>
+		<li><a href="ono_list?page=${page+1}&reply_status=${param.reply_status}&apply_status=${param.apply_status}&keyword_type=${param.keyword_type}&keyword=${param.keyword}&start_date=${param.start_date}&end_date=${param.end_date}" class='page_block'>&gt;</a></li>
 	</c:if>
 	
 	<%-- 다음 구간 --%>
 	<c:if test="${(not (page eq pageCount)) && pageCount>=5}">
-		<li><a href="ono_list?page=${endBlock+1}&reply_status=${param.reply_status}&apply_status=${param.apply_status}&keyword_type=${param.keyword_type}&keyword=${param.keyword}&start_date=${param.start_date}&end_date=${param.end_date}">&gt;&gt;</a></li>
+		<li><a href="ono_list?page=${endBlock+1}&reply_status=${param.reply_status}&apply_status=${param.apply_status}&keyword_type=${param.keyword_type}&keyword=${param.keyword}&start_date=${param.start_date}&end_date=${param.end_date}" class='page_block'>&gt;&gt;</a></li>
 	</c:if>
 
 </ul>
@@ -238,12 +238,12 @@
 
 	<%-- 이전 구간 링크 --%>
 	<c:if test="${(not (page eq 1))&& not empty page && page>=6}">
-	<li><a href="ono_list?page=${startBlock-1}&apply_status=${param.apply_status}&keyword_type=${param.keyword_type}&keyword=${param.keyword}&start_date=${param.start_date}&end_date=${param.end_date}">&lt;&lt;</a></li>
+	<li><a href="ono_list?page=${startBlock-1}&apply_status=${param.apply_status}&keyword_type=${param.keyword_type}&keyword=${param.keyword}&start_date=${param.start_date}&end_date=${param.end_date}" class='page_block'>&lt;&lt;</a></li>
 	</c:if>
 	
 	<%-- 이전 페이지 링크(pno - 1) --%>
 	<c:if test="${not (page eq 1)&& not empty page}">
-	<li><a href="ono_list?page=${page-1}&apply_status=${param.apply_status}&keyword_type=${param.keyword_type}&keyword=${param.keyword}&start_date=${param.start_date}&end_date=${param.end_date}">&lt;</a></li>
+	<li><a href="ono_list?page=${page-1}&apply_status=${param.apply_status}&keyword_type=${param.keyword_type}&keyword=${param.keyword}&start_date=${param.start_date}&end_date=${param.end_date}" class='page_block'>&lt;</a></li>
 	</c:if>
 	
 	<%-- 페이지 출력 --%>
@@ -263,12 +263,12 @@
 
 	<%-- 다음 페이지 링크(pno + 1) --%>
 	<c:if test="${not (page eq pageCount)}">
-		<li><a href="ono_list?page=${page+1}&apply_status=${param.apply_status}&keyword_type=${param.keyword_type}&keyword=${param.keyword}&start_date=${param.start_date}&end_date=${param.end_date}">&gt;</a></li>
+		<li><a href="ono_list?page=${page+1}&apply_status=${param.apply_status}&keyword_type=${param.keyword_type}&keyword=${param.keyword}&start_date=${param.start_date}&end_date=${param.end_date}" class='page_block'>&gt;</a></li>
 	</c:if>
 	
 	<%-- 다음 구간 --%>
 	<c:if test="${(not (page eq pageCount)) && pageCount>=5}">
-		<li><a href="ono_list?page=${endBlock+1}&apply_status=${param.apply_status}&keyword_type=${param.keyword_type}&keyword=${param.keyword}&start_date=${param.start_date}&end_date=${param.end_date}">&gt;&gt;</a></li>
+		<li><a href="ono_list?page=${endBlock+1}&apply_status=${param.apply_status}&keyword_type=${param.keyword_type}&keyword=${param.keyword}&start_date=${param.start_date}&end_date=${param.end_date}" class='page_block'>&gt;&gt;</a></li>
 	</c:if>
 
 </ul>

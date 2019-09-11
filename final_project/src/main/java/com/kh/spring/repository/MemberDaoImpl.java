@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.spring.entity.MemberDto;
 import com.kh.spring.entity.MyshopDto;
+import com.kh.spring.entity.OrdersDto;
 import com.kh.spring.entity.ShopDto;
 import com.kh.spring.entity.UsergradeDto;
 import com.kh.spring.vo.MemberInfoVO;
@@ -131,6 +132,13 @@ public class MemberDaoImpl implements MemberDao {
 		sqlSession.update("memer.edit", memberInfoVO);		
 	}
 	
+	//총 사용금액 구하기
+	@Override
+	public int total_price(int no) {
+		Integer result = sqlSession.selectOne("member.total_price", no);
+		return result == null ? 0 : result;
+	}
+	
 	@Override
 	public void like(MyshopDto myshop) {
 		sqlSession.insert("member.like", myshop);
@@ -190,6 +198,8 @@ public class MemberDaoImpl implements MemberDao {
 	public List<MemberDto> getMemberList() {
 		return sqlSession.selectList("member.get_member_list");
 	}
+
+	
 
 	////
 //	@Override

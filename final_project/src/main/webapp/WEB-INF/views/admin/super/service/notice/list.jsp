@@ -65,7 +65,12 @@
 	<!-- 검색창-->
 	<form class="form" action="list" method="get">
 	<input type="hidden" name="page" value="1">
-<!-- 	<input type="hidden" name="status" value="1"> -->
+	<c:if test="${param.status=='고객' }">
+	<input type="hidden" name="status" value="고객">
+	</c:if>
+		<c:if test="${param.status=='업주' }">
+	<input type="hidden" name="status" value="업주">
+	</c:if>
 	<input type="search" name="keyword" placeholder="제목 + 내용" required value="${param.keyword}">
 
 	<img class="search_btn" src="${pageContext.request.contextPath}/resources/image/search.png" width="30" height="30">
@@ -256,12 +261,12 @@
 
 	<%-- 이전 구간 링크 --%>
 	<c:if test="${(not (page eq 1))&& not empty page && page>=6}">
-	<li><a href="list?page=${startBlock-1}&status=${param.status}&keyword=${param.keyword}">&lt;&lt;</a></li>
+	<li><a href="list?page=${startBlock-1}&status=${param.status}&keyword=${param.keyword}" class='page_block'>&lt;&lt;</a></li>
 	</c:if>
 	
 	<%-- 이전 페이지 링크(pno - 1) --%>
 	<c:if test="${not (page eq 1)&& not empty page}">
-	<li><a href="list?page=${page-1}&status=${param.status}&keyword=${param.keyword}">&lt;</a></li>
+	<li><a href="list?page=${page-1}&status=${param.status}&keyword=${param.keyword}" class='page_block'>&lt;</a></li>
 	</c:if>
 	
 	<%-- 페이지 출력 --%>
@@ -281,12 +286,12 @@
 
 	<%-- 다음 페이지 링크(pno + 1) --%>
 	<c:if test="${not (page eq pageCount)}">
-		<li><a href="list?page=${page+1}&status=${param.status}&keyword=${param.keyword}">&gt;</a></li>
+		<li><a href="list?page=${page+1}&status=${param.status}&keyword=${param.keyword}" class='page_block'>&gt;</a></li>
 	</c:if>
 	
 	<%-- 다음 구간 --%>
 	<c:if test="${(not (page eq pageCount)) && pageCount>=5}">
-		<li><a href="list?page=${endBlock+1}&status=${param.status}&keyword=${param.keyword}">&gt;&gt;</a></li>
+		<li><a href="list?page=${endBlock+1}&status=${param.status}&keyword=${param.keyword}" class='page_block'>&gt;&gt;</a></li>
 	</c:if>
 </ul>
 </c:when>
@@ -295,12 +300,12 @@
 
 	<%-- 이전 구간 링크 --%>
 	<c:if test="${(not (page eq 1))&& not empty page && page>=6}">
-	<li><a href="list?page=${startBlock-1}&status=${param.status}">&lt;&lt;</a></li>
+	<li><a href="list?page=${startBlock-1}&status=${param.status}" class="page_block">&lt;&lt;</a></li>
 	</c:if>
 	
 	<%-- 이전 페이지 링크(pno - 1) --%>
 	<c:if test="${not (page eq 1)&& not empty page}">
-	<li><a href="list?page=${page-1}&status=${param.status}">&lt;</a></li>
+	<li><a href="list?page=${page-1}&status=${param.status}" class="page_block">&lt;</a></li>
 	</c:if>
 	
 	<%-- 페이지 출력 --%>
@@ -320,12 +325,12 @@
 
 	<%-- 다음 페이지 링크(pno + 1) --%>
 	<c:if test="${not (page eq pageCount)}">
-		<li><a href="list?page=${page+1}&status=${param.status}">&gt;</a></li>
+		<li><a href="list?page=${page+1}&status=${param.status}" class="page_block">&gt;</a></li>
 	</c:if>
 	
 	<%-- 다음 구간 --%>
-	<c:if test="${(not (page eq pageCount)) && pageCount>=5}">
-		<li><a href="list?page=${endBlock+1}&status=${param.status}">&gt;&gt;</a></li>
+	<c:if test="${(not (page eq pageCount)) && pageCount>=5}" >
+		<li><a href="list?page=${endBlock+1}&status=${param.status}" class="page_block">&gt;&gt;</a></li>
 	</c:if>
 </ul>
 </c:otherwise>
