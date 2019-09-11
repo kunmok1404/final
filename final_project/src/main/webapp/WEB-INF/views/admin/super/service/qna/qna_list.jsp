@@ -9,15 +9,55 @@
 	$(function(){
 		//목표 : 페이지 번호를 누르면 해당하는 번호의 페이지로 이동처리
 		// 		이동은 form을 전송하는 것으로 대체
-		$(".navigator-page").click(function(){
+// 		$(".navigator-page").click(function(){
+// 			var p = $(this).text();
+// 			move(p);
+// 		});
+		//이동 함수
+		function move(no){
+			//input[name=page]에 no를 설정한 뒤 form을 전송
+			$("input[name=page]").val(no);
+			$("form").submit();
+		}
+		
+		$(".navigator-page").click(function(e){
+			e.preventDefault();
 			var p = $(this).text();
 			move(p);
 		});
-		//이동 함수
-		function move(no){
-		//input[name=page]에 no를 설정한 뒤 form을 전송
-		$("input[name=page]").val(no);
-		$("form").submit();
+		
+// 		$(".page_block").click(function(e){
+// 			e.preventDefault();
+// 			var p = $(this).text();
+// 			switch(p){
+// 			case '<':
+// 				move(parseInt(page)-1);
+// 			break;
+// 			case '<<':
+// 				move(parseInt(startBlock)-1);
+// 			break;
+// 			case '>':
+// 				move(parseInt(page)+1);
+// 			break;
+// 			case '>>':
+// 				move(parseInt(endBlock)+1);
+// 			break;
+			
+// 			}
+// 		});
+		
+		//select[name=apply_status]인 항목의 값을 선택
+		var apply_status ="${param.apply_status}";
+		if(apply_status){
+		$("select[name=apply_status]").val(apply_status);
+		}
+		var keyword_type ="${param.keyword_type}";
+		if(keyword_type){
+		$("select[name=keyword_type]").val(keyword_type);
+		}
+		var yn ="${param.yn}";
+		if(yn){
+		$("select[name=yn]").val(yn);
 		}
     		
     	})
@@ -34,16 +74,22 @@
      
 	  <!-- 검색목록창 시작 -->
 	  <div class="search-wrapper">
-	  	<form action="" method="get">
+	  	<form action="qna_list" method="get">
+	  	<input type="hidden" name="page" value="1">
 	  	<table class="table table-sm">
 	  		<tbody>
 	  			<tr>
 	  				<td width="10%" class="table-active">카테고리</td>
 	  				<td width="40%">
 	  					<select name="apply_status" class="form-control">
-	  						<option value="">전체</option>
-	  						<option value="">답변대기</option>
-	  						<option value="">답변완료</option>
+	  						<option>전체</option>
+								<option value=1>주문접수</option>
+								<option value=2>주문확인</option>
+								<option value=3>주문취소/변경</option>
+								<option value=4>서비스이용</option>
+								<option value=5>결제</option>
+								<option value=6>가맹 및 기타</option>
+								<option value=7>뭐먹지 슈퍼클럽</option>
 	  					</select>
 	  				</td>
 	  				<td width="10%" class="table-active">키워드 검색</td>
@@ -53,12 +99,12 @@
 		  						<tr>
 					  				<td width="40%">
 					  					<select name="keyword_type" class="form-control">
-					  						<option value="">제목</option>
-					  						<option value="">작성자</option>
+					  						<option>전체</option>
+					  						<option value="question" ${keyword_type == 'question'?'selected':''}>질문</option>
 					  					</select>
 					  				</td>
 					  				<td>
-					  					<input type="text" name="keyword" class="form-control">
+					  					<input type="text" name="keyword" class="form-control" value="${param.keyword}">
 					  				</td>
 		  						</tr>
 		  					</tbody>
@@ -69,15 +115,15 @@
 	  			<tr>
 	  				<td width="10%" class="table-active">등록일</td>
 	  				<td width="40%">
-	  					<input type="date" name="start_date">~
-	  					<input type="date" name="end_date">
+	  					<input type="date" name="start_date" value="${param.start_date}">~
+	  					<input type="date" name="end_date" value="${param.end_date}">
 	  				</td>
 	  				<td width="10%" class="table-active">진열여부</td>
 	  				<td width="40%">
-	  					<select name="apply_status" class="form-control">
-	  						<option value="">전체</option>
-	  						<option value="">Y</option>
-	  						<option value="">N</option>
+	  					<select name="yn" class="form-control">
+	  						<option>전체</option>
+	  						<option>Y</option>
+	  						<option>N</option>
 	  					</select>
 	  				</td>
 	  			</tr>
@@ -101,7 +147,7 @@
 	  				<th>카테고리</th>
 	  				<td>득록일</td>
 	  				<td>수정일</td>
-	  				<td>작성여부</td>
+	  				<td>진열여부</td>
 	  				<td>편집</td>
 	  			</tr>
 	  		
@@ -136,13 +182,13 @@
 	 <ul class="navigator">
 
 	<%-- 이전 구간 링크 --%>
-	<c:if test="${not p.isFirstBlock()}">
-	<li><a href="qna_list?${p.getPrevBlock()}">&lt;&lt;</a></li>
+	<c:if test="${(not (page eq 1))&& not empty page && page>=11}">
+	<li><a href="qna_list?page=${startBlock-1}&apply_status=${param.apply_status}&keyword_type=${param.keyword_type}&keyword=${param.keyword}&start_date=${param.start_date}&end_date=${param.end_date}&yn=${param.yn}" class="page_block">&lt;&lt;</a></li>
 	</c:if>
 	
 	<%-- 이전 페이지 링크(pno - 1) --%>
-	<c:if test="${not p.isFirstPage()}">
-	<li><a href="qna_list?${p.getPrevPage()}">&lt;</a></li>
+	<c:if test="${not (page eq 1)&& not empty page}">
+	<li><a href="qna_list?page=${page-1}&apply_status=${param.apply_status}&keyword_type=${param.keyword_type}&keyword=${param.keyword}&start_date=${param.start_date}&end_date=${param.end_date}&yn=${param.yn}" class="page_block">&lt;</a></li>
 	</c:if>
 	
 	<%-- 페이지 출력 --%>
@@ -153,21 +199,22 @@
 				<li class="active">${i}</li>
 			</c:when>
 			<c:otherwise>
-				<li><a href="qna_list?page=${i}" class="navigator-page">${i}</a></li>
+			<c:if test="${i>0}">
+				<li><a href="qna_list?page=${i}&apply_status=${param.apply_status}&keyword_type=${param.keyword_type}&keyword=${param.keyword}&start_date=${param.start_date}&end_date=${param.end_date}&yn=${param.yn}" class="navigator-page">${i}</a></li>
+			</c:if>
 			</c:otherwise>
 		</c:choose>
 	</c:forEach>
 
 	<%-- 다음 페이지 링크(pno + 1) --%>
-	<c:if test="${not p.isLastPage()}">
-		<li><a href="qna_list?${p.getNextPage()}">&gt;</a></li>
+	<c:if test="${not (page eq pageCount)}">
+		<li><a href="qna_list?page=${page+1}&apply_status=${param.apply_status}&keyword_type=${param.keyword_type}&keyword=${param.keyword}&start_date=${param.start_date}&end_date=${param.end_date}&yn=${param.yn}" class="page_block">&gt;</a></li>
 	</c:if>
 	
 	<%-- 다음 구간 --%>
-	<c:if test="${not p.isLastBlock()}">
-		<li><a href="qna_list?${p.getNextBlock()}">&gt;&gt;</a></li>
+	<c:if test="${(not (page eq pageCount)) && pageCount>=10}">
+		<li><a href="qna_list?page=${endBlock+1}&apply_status=${param.apply_status}&keyword_type=${param.keyword_type}&keyword=${param.keyword}&start_date=${param.start_date}&end_date=${param.end_date}&yn=${param.yn}" class="page_block">&gt;&gt;</a></li>
 	</c:if>
-
 </ul>
 
 	</div>

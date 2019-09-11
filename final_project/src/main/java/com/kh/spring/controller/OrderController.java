@@ -1,3 +1,4 @@
+
 package com.kh.spring.controller;
 
 import java.net.URI;
@@ -48,10 +49,9 @@ public class OrderController {
 		return "/cart";
 	}
 	@RequestMapping("/cart")
-	public String cart(HttpSession session, Model model) {	
+	public String cart(@RequestParam int shop_code,HttpSession session, Model model) {	
 		//>>자신<<의 카트에 있는
 		int member_code = (int) session.getAttribute("member_code");
-		int shop_code = 8000;
 		//주 메뉴의 정보를 전부 출력하고,
 		//주 메뉴의 번호를 전부 불러다가
 		List<CartDto> cartDto = orderDao.cartlist(member_code);

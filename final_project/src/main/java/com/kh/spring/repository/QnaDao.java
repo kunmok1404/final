@@ -18,11 +18,11 @@ public interface QnaDao {
 
 
 
-	int supercount();
+	int supercount(String apply_status, String keyword_type, String keyword, String start_date, String end_date, String yn);
 
 
 
-	List<QnaDao> superlist(int i, int j);
+	List<QnaDao> superlist(String apply_status, String keyword_type, String keyword, String start_date, String end_date, String yn, int i, int j);
 
 
 

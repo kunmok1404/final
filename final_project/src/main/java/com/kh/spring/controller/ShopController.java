@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.spring.entity.ShopDto;
+import com.kh.spring.repository.MenuDao;
 import com.kh.spring.repository.ShopDao;
+import com.kh.spring.service.MenuService;
 import com.kh.spring.service.ShopService;
 
 
@@ -25,7 +27,10 @@ public class ShopController {
 
 	@Autowired
 	private ShopService shopService;
-	
+	@Autowired
+	private MenuDao menuDao;
+	@Autowired
+	private MenuService menuService;
 	@Autowired
 	private ShopDao shopDao;
 	
@@ -58,21 +63,34 @@ public class ShopController {
 		model.addAttribute("cat_list", shopDao.catList()); 
 		model.addAttribute("shopDto", shopDao.shopInfo(no));
 		model.addAttribute("map", shopService.menuList(no)); 
+		model.addAttribute("shop_code", no);
 		return "client/shop/shop_detail";
 	}
 	
 	// 메뉴클릭 후 모달창정보
 	@GetMapping("/sub_menu")
-	public String sub_menu(@RequestParam int menu_no,Model model) {
-		model.addAttribute("map", shopService.sub_menu(menu_no));
-		model.addAttribute("menuDto",shopDao.menuName(menu_no));
-		model.addAttribute("list", shopDao.subMenuList(menu_no));
+	public String sub_menu(@RequestParam int menu_code,
+			@RequestParam int shop_code,
+			Model model) {
+		System.out.println("shop_code="+shop_code);
+		// 메뉴코드 넘기기
+		model.addAttribute("menu_code", menu_code);
+		model.addAttribute("map", shopService.sub_menu(menu_code));
+		model.addAttribute("menuDto",shopDao.menuName(menu_code));
+		model.addAttribute("list", shopDao.subMenuList(menu_code));
+		
+		//서브메뉴제목 조회
+		model.addAttribute("sub_title", menuService.getSubTitle(shop_code,menu_code));
+				
+		//필수메뉴목록 조회
+		model.addAttribute("radio_list", menuDao.getSubMenuRadioList(shop_code,menu_code));
+				
+		//선택메뉴목록 조회
+		model.addAttribute("check_list", menuDao.getSubMenuCheckList(shop_code,menu_code));
 		return "client/shop/sub_menu";
 	}
-	
 
 	// 입점문의 페이지
-
 	@GetMapping("/explan")
 	public String explan() {
 		return "client/order/shop_explan";
