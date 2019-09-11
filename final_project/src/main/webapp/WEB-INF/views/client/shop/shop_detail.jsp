@@ -21,12 +21,14 @@
         
         // 메뉴클릭시 서브메뉴 호출
         $(".border-bottom").click(function(){
-        	var menu_no = $(this).attr("data-menu"); // 메뉴번호
+        	var menu_code = $(this).attr("data-menu"); // 메뉴번호
+        	var shop_code = $(".shop_no").val();
         	// ajax통신
         	$.ajax({
     			url:"${pageContext.request.contextPath}/shop/sub_menu",
     			data : {
-    				menu_no : menu_no,
+    				menu_code : menu_code,
+    				shop_code : shop_code
     			},
     			success:function(response){
     				console.log(response);
@@ -76,6 +78,7 @@
 			}
 		});
         
+        $(".modal").last().remove();        
 	});
 </script>
 <!--매장상세-->
@@ -94,7 +97,7 @@
                     <tbody>
                       <tr>
                         <td class="shop-detail-name">${shopDto.shop_name}
-                        <input class="shop_no" type="hidden" value="${shopDto.no }">
+                        <input class="shop_no" type="hidden" value="${shopDto.no}">
                         </td>
                       </tr>
                       <tr>

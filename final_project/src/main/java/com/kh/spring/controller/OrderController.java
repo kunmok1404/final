@@ -49,6 +49,7 @@ public class OrderController {
 	}
 	@RequestMapping("/cart")
 	public String cart(HttpSession session, Model model) {
+		int shop_code=1;
 //		int shop_code = (int) session.getAttribute("shop_code");	
 		//>>자신<<의 카트에 있는
 		int member_code = (int) session.getAttribute("member_code");
