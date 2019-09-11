@@ -121,14 +121,14 @@ public class OrdersDaoimpl implements OrdersDao{
 
 	public List<OrderVo> order_data(String no) {
 		Map<String, Object> map = new HashMap<>();
-		map.put("no", no);
+		map.put("shop_code", no);
 		return sqlsession.selectList("order.order_data");
 	}
 
 	@Override
 	public int cancel(String no,String t1) {
 		Map<String, Object> map = new HashMap<>();
-		map.put("no", no);
+		map.put("shop_code", no);
 		map.put("order_date", t1);
 		return sqlsession.selectOne("order.cancel_data", map);
 	}
@@ -136,7 +136,7 @@ public class OrdersDaoimpl implements OrdersDao{
 	@Override
 	public int sussce(String no,String t1) {
 		Map<String, Object> map = new HashMap<>();
-		map.put("no", no);
+		map.put("shop_code", no);
 		map.put("order_date", t1);
 		return sqlsession.selectOne("order.sussce_data", map);
 	}
@@ -144,7 +144,7 @@ public class OrdersDaoimpl implements OrdersDao{
 	@Override
 	public List<OrderVo> date_day(String no,String start, String end) {
 		Map<String, Object> map = new HashMap<>();
-		map.put("no", no);
+		map.put("shop_code", no);
 		map.put("start", start);
 		map.put("end", end);
 		return sqlsession.selectList("order.date_day", map);
@@ -205,14 +205,14 @@ public class OrdersDaoimpl implements OrdersDao{
 	@Override
 	public List<TotalVo> sale_data(String no) {
 		Map<String, Object> map = new HashMap<>();
-		map.put("no", no);
+		map.put("shop_code", no);
 		return sqlsession.selectList("order.total");
 	}
 
 	@Override
 	public List<TotalVo> sale_day(String no, String start, String end) {
 		Map<String, Object> map = new HashMap<>();
-		map.put("no", no);
+		map.put("shop_code", no);
 		map.put("start", start);
 		map.put("end", end);
 		return sqlsession.selectList("order.total_date", map);

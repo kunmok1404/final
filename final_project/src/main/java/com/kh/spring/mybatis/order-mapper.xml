@@ -126,7 +126,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]>
 		<choose>
 			<when test="no != null">
-				(select * from orders where no = #{no})
+				(select * from orders where shop_code = #{shop_code})
 			</when>
 			<otherwise>
 				orders 
@@ -145,7 +145,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]>
 		<choose>
 			<when test="no != null">
-				(select * from orders where no = #{no})
+				(select * from orders where shop_code = #{shop_code})
 			</when>
 			<otherwise>
 				orders 
@@ -162,7 +162,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]>
 		<choose>
 			<when test="no != null">
-				(select * from orders where no = #{no})
+				(select * from orders where shop_code = #{shop_code})
 			</when>
 			<otherwise>
 				orders 
@@ -183,7 +183,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]>
 		<choose>
 			<when test="no != null">
-				(select * from orders where no = #{no})
+				(select * from orders where shop_code = #{shop_code})
 			</when>
 			<otherwise>
 				orders 
@@ -208,7 +208,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]>
 		<choose>
 			<when test="no != null">
-				(select * from orders where no = #{no})
+				(select * from orders where shop_code = #{shop_code})
 			</when>
 			<otherwise>
 				orders 
@@ -233,7 +233,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]>
 		<choose>
 			<when test="no != null">
-				(select * from orders where no = #{no})
+				(select * from orders where shop_code = #{shop_code})
 			</when>
 			<otherwise>
 				orders 

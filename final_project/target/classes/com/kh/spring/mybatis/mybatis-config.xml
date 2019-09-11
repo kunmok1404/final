@@ -45,6 +45,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         <typeAlias type="com.kh.spring.vo.MemberInfoVO" alias="memberInfoVO"/>
         <typeAlias type="com.kh.spring.entity.TotalVo" alias="totalVo"/>
         <typeAlias type="com.kh.spring.entity.ShopOnoDto" alias="shoponoDto"/>
+        <typeAlias type="com.kh.spring.entity.CommissionDto" alias="commissionDto"/>
+        <typeAlias type="com.kh.spring.entity.CommissionListDto" alias="commissionListDto"/>
      </typeAliases>
      
 

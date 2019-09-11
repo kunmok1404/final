@@ -4,7 +4,7 @@
 <script>
 	$(function() {		
 	$(".regist").click(function() {
-		$(location).attr("href", "http://localhost:9090/spring/shop/order_regist");
+		$(location).attr("href", "${pageContext.request.contextPath}/shop/order_regist");
 	});
 	});
 </script>
