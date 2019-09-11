@@ -18,7 +18,7 @@
           <span><a href="${pageContext.request.contextPath}/point/list">포인트</a></span>
         </div>
         <div class="myMenu">
-          <span>찜한매장</span>
+          <span><a href="${pageContext.request.contextPath}/member/myshop">찜한매장</a></span>
         </div>
         <div class="myMenu">
           <span><a href="${pageContext.request.contextPath}/member/info_check">개인정보수정</a></span>

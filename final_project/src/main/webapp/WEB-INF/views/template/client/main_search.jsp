@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     
     <!-- 메인화면 상단 검색영역 -->
     
@@ -57,15 +58,30 @@
     
     <div class="iim">
 	
+	<form action="${pageContext.request.contextPath}/search">
 	<div class="search_top">
 		<div class="where-addr">
 				"어디로 <span>배달해</span> 드릴까요?"
 		</div>
 		<div class="where-text">배달받으실 동 이름으로 검색해 주세요</div>
 		<div class="search-btn">
-		    <input type="text" class="form-control-sm" placeholder="ex)충선로 24번길"><button class="btn btn-success">전송</button>
+			<c:choose>
+				<c:when test="${!empty param.keyword}">
+		    		<input type="text" list="addr" name="keyword" value="${param.keyword}" class="form-control-sm" placeholder="ex)충선로 24번길"><button class="btn btn-success">전송</button>
+				</c:when>
+				<c:otherwise>
+					<input type="text" list="addr" name="keyword" class="form-control-sm" placeholder="ex)충선로 24번길"><button class="btn btn-success">전송</button>
+				</c:otherwise>
+			</c:choose>
+			
+			<datalist id="addr">
+				<c:forEach var="list" items="${shop_list}">
+					<option value="${list.basic_addr}${list.detail_addr}">
+				</c:forEach>
+			</datalist>
 		</div>
 	</div>
+	</form>
 
 <div id="map" style="width:1px;height:1px;"></div>
 

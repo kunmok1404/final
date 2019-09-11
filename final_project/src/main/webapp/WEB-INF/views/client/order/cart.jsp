@@ -159,33 +159,31 @@
 					<c:forEach var="cart" items="${cartDto}" varStatus="status1">
 						<tr class = "subtr">
 							<td><input type="checkbox" class="okcheck"></td>
-							<td width="150"><img src="http://placehold.it/100x100"></td>
+							<td width="150"><img src="http://placehold.it/100x100">
+							</td>
 							<td width="380">
 							<h2>${cart.menu_name}</h2>
 							필수<br>
 							${cart.menu_name}  ${cart.menu_price}원
 							<hr>
 							선택<br>
-							<c:forEach var="cartsub" items="${cartSubDto}" varStatus="status">
-								<c:if test="${cartsub.no == cart.no}">
-									<input type="hidden" name="list[${status.index}].sub_type" value="${cartsub.sub_type}">
-									<input type="hidden" name="list[${status.index}].sub_title" value="${cartsub.sub_title}">
-									<input type="hidden" name="list[${status.index}].sub_name" value="${cartsub.sub_name}">
-									<input type="hidden" class="sub_price" name="list[${status.index}].sub_price" value="${cartsub.sub_price*cartsub.sub_amount}">
-									<input type="hidden" name="list[${status.index}].sub_amount" value="${cartsub.sub_amount}">					
+							<c:forEach var="cartsub" items="${cart.list}" varStatus="status2">
+									<input type="hidden" name="main[${status1.index}].list[${status2.index}].no" value="${cartsub.no}">
+									<input type="hidden" name="main[${status1.index}].list[${status2.index}].sub_type" value="${cartsub.sub_type}">
+									<input type="hidden" name="main[${status1.index}].list[${status2.index}].sub_title" value="${cartsub.sub_title}">
+									<input type="hidden" name="main[${status1.index}].list[${status2.index}].sub_name" value="${cartsub.sub_name}">
+									<input type="hidden" class="sub_price" name="main[${status1.index}].list[${status2.index}].sub_price" value="${cartsub.sub_price*cartsub.sub_amount}">
+									<input type="hidden" name="main[${status1.index}].list[${status2.index}].sub_amount" value="${cartsub.sub_amount}">					
 								<c:if test="${cartsub.sub_type=='선택'}">
 									${cartsub.sub_name} x ${cartsub.sub_amount} 개  ${cartsub.sub_price * cartsub.sub_amount}원<br>
-								</c:if>	
-								</c:if>	
+								</c:if>
 							</c:forEach>
 							<hr>
 							추가<br>
-							<c:forEach var="cartsub" items="${cartSubDto}">
-								<c:if test="${cartsub.no == cart.no}">
+							<c:forEach var="cartsub" items="${cart.list}">
 									<c:if test="${cartsub.sub_type=='추가'}">
 									${cartsub.sub_name} x ${cartsub.sub_amount} 개  ${cartsub.sub_price * cartsub.sub_amount}원<br>
-									</c:if>	
-								</c:if>
+									</c:if>
 							</c:forEach>
 							<!-- 주문 상세에 들어갈 정보 -->
 							<input type="hidden" name="main[${status1.index}].no" value="${cart.no}">

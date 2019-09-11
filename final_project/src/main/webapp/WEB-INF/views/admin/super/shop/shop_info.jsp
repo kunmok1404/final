@@ -2,45 +2,148 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/template/admin/super/header.jsp"></jsp:include>
-<jsp:include page="/WEB-INF/views/template/admin/super/left/left_review.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/template/admin/super/left/left_shop.jsp"></jsp:include>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript">
 	function list(page) {
 		location.href = "${pageContext.request.contextPath}/super_admin/shop_info?curPage="+page+"&searchOption=${searchOption}"+"&keyword=${keyword}";
 	}
+	
+	$(function(){
+	
+		// 승인버튼 클릭시
+		$(".apply_menu").click(function(){
+			var result = confirm("승인하시겠습니까?");
+			var $this = $(this);
+			var shop_code = $(this).attr("data-no");
+			if(result){
+				$.ajax({
+					url : "${pageContext.request.contextPath}/super_admin/shop/apply",
+					data : {
+						shop_code : shop_code,
+					},
+					success : function(response){
+						alert(response);
+						$this.parent().prev().prev().text("승인완료").css("color","#58A2B8").removeClass("text-danger");
+						$this.remove();
+					}
+				})
+			}
+			
+		})
+		
+		// 삭제버튼 클릭시
+		$(".delete_menu").click(function(){
+			var result = confirm("메뉴를 삭제하시겠습니까?");
+			var $this = $(this);
+			var menu_code = $(this).attr("data-no");
+			if(result){
+				$.ajax({
+					url : "${pageContext.request.contextPath}/shop_admin/menu/delete_menu",
+					data : {
+						menu_code : menu_code,
+					},
+					success : function(response){
+						alert(response);
+						$this.closest("tr").remove();
+					}
+				})
+			}
+		})
+		
+	})	
 </script>
-<style>
-	.table-responsive {
-		width: 90%;
-		margin-left: 5%;
-	}
-	
-	.table {
-		width: 90%;
-		margin-left: 10%;
-	}
-	
-	.table > thead > tr > th {
-		width: auto;
-	}
-	.table > tbody > tr > th {
-		width: auto;
-	}
-</style>
-<h2>매장 목록</h2>
 
- <div class="search-wrapper">
-<form action="${pageContext.request.contextPath}/super_admin/shop/shop_info" method="post">
-	<select name="searchOption">
-		<!-- 검색 조건을검색처리후 결과 화면에 보여 주기위해 c:out 출력태그 사용,삼항연산자 -->
-		<option value="all" <c:out value="${searchOption == 'all'?'selected':'' }"></c:out>>모든 조건</option>
-		<option value="category" <c:out value="${searchOption == 'category'?'selected':'' }"></c:out>>카테고리</option>
-		<option value="reason" <c:out value="${searchOption == 'reason'?'selected':'' }"></c:out>>계약상태</option>
-	</select>
-	<input name="keyword" value="${keyword }" type="text">
-	<input type="submit" value="조회">
-</form>
-</div>
+<div class="wrapper mt-3">
+	  <div class="top-title">
+		<div id="terms-wrapper">
+          <div class="terms-line"></div>
+        </div>
+	    <span>매장 목록</span>
+      </div>
+
+
+<!--  <div class="search-wrapper"> -->
+<%-- <form action="${pageContext.request.contextPath}/super_admin/shop/shop_info" method="post"> --%>
+<!-- 	<select name="searchOption" class="form-control"> -->
+<!-- 		<!-- 검색 조건을검색처리후 결과 화면에 보여 주기위해 c:out 출력태그 사용,삼항연산자 --> 
+<%-- 		<option value="all" <c:out value="${searchOption == 'all'?'selected':'' }"></c:out>>모든 조건</option> --%>
+<%-- 		<option value="category" <c:out value="${searchOption == 'category'?'selected':'' }"></c:out>>카테고리</option> --%>
+<%-- 		<option value="reason" <c:out value="${searchOption == 'reason'?'selected':'' }"></c:out>>계약상태</option> --%>
+<!-- 	</select> -->
+<%-- 	<input name="keyword" value="${keyword }" type="text"> --%>
+<!-- 	<input type="submit" value="조회"> -->
+<!-- </form> -->
+<!-- </div> -->
+
+<!-- 검색목록창 시작 -->
+  <div class="search-wrapper">
+  	<form action="${pageContext.request.contextPath}/super_admin/shop/shop_info" method="post">
+  	<table class="table table-sm">
+  		<tbody>
+  			<tr>
+  				<td width="10%" class="table-active">입점상태</td>
+  				<td width="40%">
+  					<select name="apply_status" class="form-control">
+  						<option value="">전체</option>
+  						<option>입점대기</option>
+  						<option>승인완료</option>
+  					</select>
+  				</td>
+  				<td width="10%" class="table-active">계약상태</td>
+  				<td width="40%">
+  					<select name="sale_status" class="form-control">
+  						<option value="">전체</option>
+  						<option>계약중</option>
+  						<option>계약종료</option>
+  					</select>
+  				</td>
+  			</tr>
+  			<tr>
+  				<td width="10%" class="table-active">입점신청일</td>
+  				<td width="40%">
+  					<input type="date" name="start_date">~
+  					<input type="date" name="end_date">
+  				</td>
+  				<td width="10%" class="table-active">카테고리</td>
+  				<td width="40%">
+  					<select name="food_category" class="form-control">
+  						<option value="">전체</option>
+  						<option value="">카테고리</option>
+  					</select>
+  				</td>
+  			</tr>
+  			<tr>
+  				<td width="10%" class="table-active">키워드 검색</td>
+  				<td>
+  					<table class="table table-sm">
+	  					<tbody>
+	  						<tr>
+				  				<td width="40%">
+				  					<select name="keyword_type" class="form-control">
+				  						<option value="">선택</option>
+				  						<option>매장명</option>
+				  						<option>사업주</option>
+				  						<option>전화번호</option>
+				  					</select>
+				  				</td>
+				  				<td>
+				  					<input type="text" name="keyword" class="form-control">
+				  				</td>
+	  						</tr>
+	  					</tbody>
+  					</table>
+  				</td>
+  			</tr>
+  		</tbody>
+  	</table>
+  	<div style="width:100%;">
+  	<input type="submit" value="검색" class="btn pull-right btn-outline-primary search-btn">
+  	</div>
+  	</form>
+  </div>
+  <!-- 검색목록창 끝-->
+
  <div class="list-wrapper table-responsive">
 <table class="table table-hamburg table-hover">
 	<thead>
@@ -50,23 +153,43 @@
 			<th >매장명</th>
 			<th >승인상태</th>
 			<th >계약상태</th>
+			<th >편집</th>
 		</tr>
 	</thead>
 	<tbody>
-		<c:forEach var="list" items="${list }">
+		<c:forEach var="list" items="${list}">
 		 <tr class="text-center" >
 		 	<td>${list.no }</td>
 		 	<td>
-		 	<c:forEach var="name" items="${name }">
-		 	<c:if test="${list.category == name.no }">
-		 	${name.name }
+		 	<c:forEach var="name" items="${name}">
+		 	<c:if test="${list.category == name.no}">
+		 	${name.name}
 		 	</c:if>
 		 	</c:forEach>
 		 	</td>
 		 	<td><a href="${pageContext.request.contextPath}/super_admin/shop/detail?no=${list.no }">${list.company_name }</a></td>
-		 	<td>${list.apply_status }</td>
-		 	<td>${list.contract_status }</td>
-		 	
+		 	<c:choose>
+				<c:when test="${list.apply_status eq '승인대기'}">
+					<td class="text-danger">${list.apply_status}</td>
+				</c:when>
+				<c:otherwise>
+					<td class="text-info">${list.apply_status}</td>
+				</c:otherwise>
+			</c:choose>
+		 	<c:choose>
+				<c:when test="${list.contract_status eq '계약종료'}">
+					<td class="text-danger">${list.contract_status}</td>
+				</c:when>
+				<c:otherwise>
+					<td class="text-info">${list.contract_status}</td>
+				</c:otherwise>
+			</c:choose>
+		 	<td>
+		 		<c:if test="${list.apply_status eq '승인대기'}">
+					<button class="btn btn-sm btn-primary apply_menu" data-no="${list.no}">승인</button>
+				</c:if>
+				<button class="btn btn-sm btn-danger delete_menu" data-no="${list.no}">삭제</button>
+			</td>
 		 </tr>
 		</c:forEach>	
 	</tbody>
@@ -106,5 +229,6 @@
 </table>
 </div>
 
+</div>
 
 <jsp:include page="/WEB-INF/views/template/admin/super/footer.jsp"></jsp:include>

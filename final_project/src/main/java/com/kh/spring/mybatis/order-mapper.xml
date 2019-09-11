@@ -7,16 +7,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="search" parameterType="int" resultType="memberDto">
 		select * from member where no = #{member_code}
 	</select>
-	<!-- '자기'의 카트에 존재하는 물건을 출력하는 코드  -->
-	<select id="cartlist" parameterType="int" resultType="cartDto">
+
+	<!-- '자기'의 카트에 존재하는 메인 메뉴의 코드를 출력하는 코드 -->
+	
+	<resultMap type="cartDto" id="cartlist">
+		<result property="no" column="no"/>
+		<result property="member_code" column="member_code"/>
+		<result property="shop_code" column="shop_code"/>
+		<result property="title" column="title"/>
+		<result property="menu_name" column="menu_name"/>
+		<result property="menu_amount" column="menu_amount"/>
+		<result property="menu_price" column="menu_price"/>
+		<result property="regist_date" column="regist_date"/>
+		<collection property="list" column="no" javaType="java.util.ArrayList" ofType="cartSubDto"
+		select="cartSubList"/>
+	</resultMap>
+		<!-- '자기'의 카트에 존재하는 물건을 출력하는 코드  -->
+	<select id="cartlist" parameterType="int" resultMap="cartlist">
 		select * from cart where member_code = #{member_code}
 	</select>
-	<!-- '자기'의 카트에 존재하는 메인 메뉴의 코드를 출력하는 코드 -->
-	<select id="cartlistno" parameterType="int" resultType="cartListNo">
-		select no from cart where member_code =#{member_code}
-	</select>
 	<!-- '자신'의 카트에 존재하는 물건의 추가메뉴를 출력하는 코드 -->
-	<select id="cartSubList" parameterType="int" resultType="cartSubDto">
+	<select id="cartSubList" resultType="cartSubDto">
 		select * from cart_sub_menu where no = #{no}
 	</select>
 	<!-- '자신'의 카트에 존재하는 물건에 딸린 매장을 검색하는 코드 -->
@@ -126,7 +137,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]>
 		<choose>
 			<when test="no != null">
-				(select * from orders where no = #{no})
+				(select * from orders where shop_code = #{shop_code})
 			</when>
 			<otherwise>
 				orders 
@@ -145,7 +156,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]>
 		<choose>
 			<when test="no != null">
-				(select * from orders where no = #{no})
+				(select * from orders where shop_code = #{shop_code})
 			</when>
 			<otherwise>
 				orders 
@@ -162,7 +173,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]>
 		<choose>
 			<when test="no != null">
-				(select * from orders where no = #{no})
+				(select * from orders where shop_code = #{shop_code})
 			</when>
 			<otherwise>
 				orders 
@@ -183,7 +194,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]>
 		<choose>
 			<when test="no != null">
-				(select * from orders where no = #{no})
+				(select * from orders where shop_code = #{shop_code})
 			</when>
 			<otherwise>
 				orders 
@@ -208,7 +219,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]>
 		<choose>
 			<when test="no != null">
-				(select * from orders where no = #{no})
+				(select * from orders where shop_code = #{shop_code})
 			</when>
 			<otherwise>
 				orders 
@@ -233,7 +244,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]>
 		<choose>
 			<when test="no != null">
-				(select * from orders where no = #{no})
+				(select * from orders where shop_code = #{shop_code})
 			</when>
 			<otherwise>
 				orders 

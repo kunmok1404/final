@@ -53,7 +53,7 @@ public class NoticeController {
 		model.addAttribute("page", page);  //model 객체 이용해서, view로  data 전달
 		model.addAttribute("startBlock", startBlock);//model.addAttribute(변수이름, 변수에 넣을 데이터값);
 		model.addAttribute("endBlock", endBlock); // 스피링은 데이터값을 뷰쪽으로 넘겨준다 -> 뷰(.jsp파일)에서는 ${}를 이용해서 값을 가져온다 
-		
+		model.addAttribute("pageCount", pageCount);
 		/*
 		 * 1.중요 공지사항만 조회 하도록 추가
 		 * 2.중요 공지사항을 제외한 글목록 조회
