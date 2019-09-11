@@ -49,13 +49,13 @@ public class NoticeDaoImpl implements NoticeDao{
 	}
 
 	@Override
-	public List<NoticeDto> list3(String keyword, String status2,  int i, int j) {
+	public List<NoticeDto> list3(String keyword, String status,  int i, int j) {
 		Map<String, Object> param = new HashMap<>();
 		if(keyword !=null) {
 			param.put("keyword", keyword);
 		}
 		
-		param.put("status", status2);
+		param.put("status", status);
 		//검색이든 목록이든 페이징 구간을 전달
 		param.put("start", i);
 		param.put("end", j);

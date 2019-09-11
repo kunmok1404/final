@@ -17,7 +17,7 @@ public interface NoticeDao {
 
 	void read(int no);
 
-	List<NoticeDto> list3(String keyword, String status2, int i, int j);
+	List<NoticeDto> list3(String keyword, String status, int i, int j);
 	
 	List<NoticeDto> list4();
 

@@ -38,6 +38,12 @@ public class SuperQnaController {
 	//목록
 	@GetMapping("/qna_list")
 	public String list(Model model,
+			@RequestParam(required = false) String apply_status,
+			@RequestParam(required = false) String keyword_type,
+			@RequestParam(required = false) String keyword,
+			@RequestParam(required = false) String start_date,
+			@RequestParam(required = false) String end_date,
+			@RequestParam(required = false) String yn,
 			@RequestParam(required = false, defaultValue ="1") int page
 			) {
 		int pagesize = 10;
@@ -48,7 +54,7 @@ public class SuperQnaController {
 		int startBlock =(page -1) / blocksize * blocksize + 1;
 		int endBlock = startBlock + (blocksize - 1);
 		
-		int count = qnaDao.supercount();
+		int count = qnaDao.supercount(apply_status, keyword_type, keyword,start_date, end_date, yn);
 		int pageCount = (count - 1) / pagesize + 1;
 		if(endBlock > pageCount) {
 			endBlock = pageCount;
@@ -64,8 +70,10 @@ public class SuperQnaController {
 		model.addAttribute("page", page);
 		model.addAttribute("startBlock", startBlock);
 		model.addAttribute("endBlock", endBlock);
+		model.addAttribute("pageCount", pageCount);
+	
 		
-		List<QnaDao> list = qnaDao.superlist(start, end);
+		List<QnaDao> list = qnaDao.superlist(apply_status, keyword_type, keyword,start_date, end_date, yn, start, end);
 		model.addAttribute("list", list);
 		return "admin/super/service/qna/qna_list";
 	}
@@ -101,12 +109,13 @@ public class SuperQnaController {
 		return "admin/super/service/qna/qna_write";
 	}
 	
-	@PostMapping("/qnd_write")
+	@PostMapping("/qna_write")
 	public String write(HttpSession session, @ModelAttribute QnaDto qnaDto,
 			Model model) {
 		//글등록
 		//int super_code = (int)session.getAttribute("member_code");
 		int super_code = 64;
+//		qnaDto.setWriter(super_code);
 		int no = serviceService.write(qnaDto);
 		
 		model.addAttribute("no",no);

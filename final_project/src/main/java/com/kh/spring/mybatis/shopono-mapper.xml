@@ -11,11 +11,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				
 				select * from shop_ono
 				   where 1=1
-				<if test="apply_status !=null">
-					and apply_status =#{apply_status}
+ 				<if test="apply_status !=null and apply_status != '전체'">
+					and reply_status = #{apply_status} 
 				</if>
-				<if test="keyword_type !=null and keyword != null ">
+				<if test="keyword_type !=null and keyword_type !='전체'and keyword != null and keyword != ''">
 					and ${keyword_type} like '%' || #{keyword} || '%'
+				</if>
+				<!-- 기간 검색 -->
+				<if test="start_date != null and start_date != '' and end_date != null and end_date != ''">
+				and regist_date between to_date(#{start_date}, 'YYYY-MM-DD') and to_date(#{end_date}, 'YYYY-MM-DD') + 1 - 1 / 864000 
 				</if>
 					and type='업주'
 				order by ono_no desc
@@ -29,17 +33,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			select rownum rn, A.* from (
 				
 				select * from shop_ono
-				   where 1=1
-				<if test="apply_status !=null">
-					and apply_status =#{apply_status}
+				  where 1=1
+ 				<if test="apply_status !=null and apply_status != '전체'">
+					and reply_status = #{apply_status} 
 				</if>
-				<if test="keyword_type !=null and keyword != null ">
+				<if test="keyword_type !=null and keyword_type !='전체'and keyword != null and keyword != ''">
 					and ${keyword_type} like '%' || #{keyword} || '%'
 				</if>
-				
-					and type='업주'
-				
-					and reply_status like '%' || '답변대기' || '%' 
+				<!-- 기간 검색 -->
+				<if test="start_date != null and start_date != '' and end_date != null and end_date != ''">
+				and regist_date between to_date(#{start_date}, 'YYYY-MM-DD') and to_date(#{end_date}, 'YYYY-MM-DD') + 1 - 1 / 864000 
+				</if>
+					and type='업주' and reply_status ='답변대기'
 		order by ono_no desc
 				
 			)A
@@ -47,7 +52,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	
-	<!-- 테이블에서 리뷰정보조회 -->
+	<!-- 테이블에서 정보조회 -->
 	<select id="ono_info" parameterType="int" resultType="shoponoDto">
 		select * from shop_ono where ono_no = #{ono_code} order by ono_no desc
 	</select>
