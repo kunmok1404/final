@@ -21,7 +21,7 @@
           <span>찜한매장</span>
         </div>
         <div class="myMenu">
-          <span><a href="info_check">개인정보수정</a></span>
+          <span><a href="${pageContext.request.contextPath}/member/info_check">개인정보수정</a></span>
         </div>
       </div>
     </div>

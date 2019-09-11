@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.spring.entity.MemberDto;
 import com.kh.spring.repository.MemberDao;
+import com.kh.spring.service.MemberService;
 import com.kh.spring.vo.MemberInfoVO;
 
 @Controller
@@ -25,7 +26,10 @@ import com.kh.spring.vo.MemberInfoVO;
 public class SuperMemberController {
 	
 	@Autowired
-	MemberDao memberDao;
+	private MemberDao memberDao;
+	
+	@Autowired
+	private MemberService memberService;
 	
 	
 	@GetMapping("/usergrade")
@@ -71,7 +75,13 @@ public class SuperMemberController {
 		if(result != null) {
 			//BCrypt의 비교명령을 이용하여 비교 후 처리
 			if(BCrypt.checkpw(memberDto.getPw(), result.getPw())) {
-				session.setAttribute("member_code", result.getNo());
+				if(result.getType().equals("관리자")) {
+					session.setAttribute("member_code", result.getNo());
+					session.setAttribute("type", result.getType());
+				}
+				else {
+					return "admin/login_auth";//권한 없음 페이지로 전송
+				}
 				
 				//아이디 저장
 				//쿠키 객체를 만들고 체크 여부에 따라 시간 설정 후 response에 추가
@@ -117,7 +127,8 @@ public class SuperMemberController {
 			@RequestParam(required = false) String keyword,
 			Model model
 			) {
-		List<MemberInfoVO> list = memberDao.search(status, grade, start_date, end_date, type, keyword);
+//		List<MemberInfoVO> list = memberDao.search(status, grade, start_date, end_date, type, keyword);
+		List<MemberInfoVO> list = memberService.search(status, grade, start_date, end_date, type, keyword);
 		model.addAttribute("list", list);
 		return "admin/super/member/search";
 	}
@@ -132,8 +143,9 @@ public class SuperMemberController {
 			) {
 //		int member_code = 23;
 //		System.out.println(no);
-		List<MemberInfoVO> list = memberDao.info(no);
-		model.addAttribute("membervo", list.get(0));
+//		List<MemberInfoVO> list = memberDao.info(no);
+		MemberInfoVO memberInfoVO = memberService.detail(no);
+		model.addAttribute("membervo", memberInfoVO);
 		return "admin/super/member/info";
 	}
 	

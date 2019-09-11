@@ -46,7 +46,7 @@
 				</tr>
 				<tr>
 					<td class="table-active">총 구매 금액</td>
-					<td colspan="3">100만원</td>
+					<td colspan="3">${membervo.total_price}원</td>
 				</tr>
 				<tr>
 					<td class="table-active">1:1문의</td>

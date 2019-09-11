@@ -42,7 +42,14 @@ public class ShopMemberController {
 		if(result != null) {
 			//BCrypt의 비교명령을 이용하여 비교 후 처리
 			if(BCrypt.checkpw(memberDto.getPw(), result.getPw())) {
-				session.setAttribute("member_code", result.getNo());
+				if(result.getShop_code() > 0) {
+					session.setAttribute("member_code", result.getNo());
+					session.setAttribute("shop_code", result.getShop_code());
+					session.setAttribute("type", result.getType());
+				}
+				else {
+					return "admin/login_auth";//권한 없음 페이지로 전송
+				}
 				
 				//아이디 저장
 				//쿠키 객체 생성 후 체크 여부에 따라 시간 설정 후 response에 추가

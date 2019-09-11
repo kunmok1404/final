@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kh.spring.entity.MemberDto;
 import com.kh.spring.entity.MyshopDto;
+import com.kh.spring.entity.OrdersDto;
 import com.kh.spring.entity.UsergradeDto;
 import com.kh.spring.vo.MemberInfoVO;
 
@@ -33,6 +34,7 @@ public interface MemberDao {
 	List<MemberDto> member_code();
 	List<MemberDto> getMemberList();
 	List<MemberInfoVO> info(int no);
+	int total_price(int no);
 	//
 //	MemberDto findPassword(MemberDto memberDto);
 
