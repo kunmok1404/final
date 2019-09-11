@@ -345,7 +345,7 @@ public class MenuServiceImpl implements MenuService {
 				SubMenuDto subMenuDto = SubMenuDto.builder()
 															.shop_code(menuRegistVO.getShop_code())
 															.menu_code(menu_code)
-															.title(menuRegistVO.getRadio_title())
+															.title(menuRegistVO.getCheck_title())
 															.name(checkMenuVO.getCheck_name())
 															.price(checkMenuVO.getCheck_price()).build();
 				menuDao.registCheckSubMenu(subMenuDto);
