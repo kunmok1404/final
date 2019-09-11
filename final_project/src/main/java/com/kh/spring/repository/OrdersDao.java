@@ -5,16 +5,15 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.kh.spring.entity.CartDto;
-import com.kh.spring.entity.CartListNo;
+
 import com.kh.spring.entity.CartListVO;
 import com.kh.spring.entity.CartSubDto;
 import com.kh.spring.entity.MemberDto;
 import com.kh.spring.entity.OrderDetailDto;
-import com.kh.spring.entity.OrderDetailListVo;
 import com.kh.spring.entity.OrderSubDetail;
-import com.kh.spring.entity.OrderSubDetailListVo;
 import com.kh.spring.entity.OrdersDto;
 import com.kh.spring.entity.ShopDto;
+import com.kh.spring.entity.SubMenuDto;
 import com.kh.spring.entity.TotalVo;
 import com.kh.spring.vo.OrderVo;
 //주문 관련 Dao
@@ -31,7 +30,7 @@ public interface OrdersDao {
 	OrdersDto orderInfo(int order_code);
 	List<OrderDetailDto> orderDistinct(int order_code);
 	void orderinput(OrdersDto ordersDto);
-	void orderDetailInput(List<OrderDetailDto> orderdetail);
+	void orderDetailInput(OrderDetailDto orderdetailvo);
 	int getseq();
 	void cartDelete(int member_code);
 	int getQuantity(int member_code);
@@ -48,12 +47,18 @@ public interface OrdersDao {
 	MemberDto orderMember(int no);
 	ShopDto orderDelivery(int no);
 	void setStatus(int no, String order_status);
-	List<CartSubDto> cartsublist(int no);
-	List<CartListNo> cartlistno(int member_code);
+	List<CartSubDto> cartsublist(CartDto no);
+	List<Integer> cartlistno(int member_code);
 	void cartInnerDelete(int no);
-	void orderSubDetailInput(List<OrderSubDetail> ordersub);
+	void orderSubDetailInput(OrderSubDetail ordersubdetail);
 	List<OrderSubDetail> myOrderSubDetailList(int no);
 	int getdetseq();
+	int getcoupon(int member_code);
+	SubMenuDto getmenu(int radiomenu,int shop_code);
+	void cartinsert(SubMenuDto getmenu);
+	int getcartseq();
+	void cartmenuinsert(CartDto cartdto);
+	List<SubMenuDto> getsubmenu(int checkmenu, int shop_code);
 	
 
 }

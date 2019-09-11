@@ -57,6 +57,7 @@ public class SuperNoticeController {
 		model.addAttribute("page", page);
 		model.addAttribute("startBlock", startBlock);
 		model.addAttribute("endBlock", endBlock);
+		model.addAttribute("pageCount", pageCount);
 		
 		String status1 ="고객";
 		List<NoticeDto> list = noticeDao.list(keyword, status, start, end);
@@ -67,7 +68,7 @@ public class SuperNoticeController {
 		model.addAttribute("list2", list2);
 		
 		String status2 ="업주";
-		List<NoticeDto> list3 = noticeDao.list3(keyword, status2, start, end );
+		List<NoticeDto> list3 = noticeDao.list3(keyword, status, start, end );
 		model.addAttribute("list3", list3);
 		
 		List<NoticeDto> list4 = noticeDao.list4();

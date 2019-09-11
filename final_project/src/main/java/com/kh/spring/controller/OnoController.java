@@ -61,6 +61,7 @@ public class OnoController {
 		model.addAttribute("page", page);
 		model.addAttribute("startBlock", startBlock);
 		model.addAttribute("endBlock", endBlock);
+		model.addAttribute("pageCount", pageCount);
 		
 		List<OnoDto> list = onoDao.list(start, end, member_code);
 		

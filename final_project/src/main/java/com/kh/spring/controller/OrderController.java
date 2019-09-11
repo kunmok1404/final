@@ -1,3 +1,4 @@
+
 package com.kh.spring.controller;
 
 import java.net.URI;
@@ -24,7 +25,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.kh.spring.KakaoPay.KakaoPaySuccessVO;
 import com.kh.spring.KakaoPay.KakaopayReturnVo;
-import com.kh.spring.entity.CartListNo;
+import com.kh.spring.entity.CartDto;
 import com.kh.spring.entity.CartListVO;
 import com.kh.spring.entity.CartSubDto;
 import com.kh.spring.entity.CartSubListVo;
@@ -33,6 +34,7 @@ import com.kh.spring.entity.OrderDetailListVo;
 import com.kh.spring.entity.OrderSubDetail;
 import com.kh.spring.entity.OrderSubDetailListVo;
 import com.kh.spring.entity.OrdersDto;
+import com.kh.spring.entity.SubMenuDto;
 import com.kh.spring.repository.OrdersDao;
 
 @Controller
@@ -48,25 +50,44 @@ public class OrderController {
 		return "/cart";
 	}
 	@RequestMapping("/cart")
-	public String cart(@RequestParam int shop_code, HttpSession session, Model model) {
-		
+	public String cart(@ModelAttribute CartDto cartdto,
+					   @RequestParam int shop_code,
+					   @RequestParam int radiomenu,
+					   @RequestParam List<Integer> checkmenu,
+					   HttpSession session, Model model) {	
 		//>>자신<<의 카트에 있는
 		int member_code = (int) session.getAttribute("member_code");
-		//주 메뉴의 정보를 전부 출력하고,
-		model.addAttribute("cartDto", orderDao.cartlist(member_code));
-		//주 메뉴의 번호를 전부 불러다가
-		List<CartListNo> no = orderDao.cartlistno(member_code);
-		List<CartSubDto> cartsublist = new ArrayList<CartSubDto>();
-		for(CartListNo sub : no) {
-			cartsublist.addAll(orderDao.cartsublist(sub.getNo()));
-		}
-		//추가 메뉴를 타입별로 출력	
-		model.addAttribute("cartSubDto",cartsublist);//이건 전체 리스트
 
+		int cart_seq = orderDao.getcartseq();
+		//메인 메뉴 넣는 코드
+		cartdto = CartDto.builder()
+								.no(cart_seq)
+								.member_code(member_code)
+								.shop_code(shop_code)
+								.title(cartdto.getTitle())
+								.menu_name(cartdto.getTitle())
+								.menu_amount(cartdto.getMenu_amount())
+								.menu_price(cartdto.getMenu_price())
+								.build();
+		orderDao.cartmenuinsert(cartdto);
+		//필수 메뉴 넣는 코드
+		SubMenuDto submenudto = orderDao.getmenu(radiomenu,shop_code);
+		submenudto.setNo(cart_seq);
+		orderDao.cartinsert(submenudto);
+		for(int i : checkmenu) {
+			List<SubMenuDto> submenudtolist = orderDao.getsubmenu(i,shop_code);	
+			System.out.println(submenudtolist);
+		}
+		//주 메뉴의 정보를 전부 출력하고,
+		//주 메뉴의 번호를 전부 불러다가
+		List<CartDto> cartDto = orderDao.cartlist(member_code);
+		model.addAttribute("cartDto", cartDto);
+		//추가 메뉴를 타입별로 출력	
 		model.addAttribute("shopDto", orderDao.shopInfo(shop_code));
 		session.setAttribute("shop_code", shop_code);
 		return "client/order/cart";
 	}
+
 
 	@PostMapping("/orderinput")
 	public String cart(@ModelAttribute CartListVO vo,
@@ -76,16 +97,12 @@ public class OrderController {
 		int member_code = (int) session.getAttribute("member_code");
 		int shop_code = (int) session.getAttribute("shop_code");
 		orderDao.cartinput(vo);
-		List<CartListNo> no = orderDao.cartlistno(member_code);
-		List<CartSubDto> cartsublist = new ArrayList<CartSubDto>();
-		for(CartListNo sub : no) {
-			cartsublist.addAll(orderDao.cartsublist(sub.getNo()));
-		};			
-		model.addAttribute("cartSubDto",cartsublist);
+
 		model.addAttribute("shopDto", orderDao.shopInfo(shop_code));
 		model.addAttribute("cartList", orderDao.cartlist(member_code));
 		model.addAttribute("memberDto", orderDao.memberSearch(member_code));
 		model.addAttribute("total_price", total_price);
+		model.addAttribute("coupon",orderDao.getcoupon(member_code));
 		session.setAttribute("total_price", total_price);
 		return "client/order/order";
 	}
@@ -93,7 +110,6 @@ public class OrderController {
 	@PostMapping("/credit_order")
 	public String order(@ModelAttribute OrdersDto ordersDto,
 						@ModelAttribute OrderDetailListVo vo,
-						@ModelAttribute OrderSubDetailListVo vo2,
 						HttpSession session,Model model) {
 
 		int member_code = (int) session.getAttribute("member_code");
@@ -110,24 +126,23 @@ public class OrderController {
 				.pay_method(ordersDto.getPay_method())
 				.build();
 		orderDao.orderinput(orderDto);
-		List<OrderDetailDto> orderdetail = new ArrayList<>();
-		List<OrderSubDetail> ordersub = new ArrayList<>();
+		
+		System.out.println(vo);
 		for(OrderDetailDto orderdetailvo : vo.getMain()) {
 			//주문 상세 시퀀스 번호 출력
 			int no = orderDao.getdetseq();
 			orderdetailvo.setOrder_code(order_code);
 			orderdetailvo.setNo(no);
-			orderdetail.add(orderdetailvo);
-			System.out.println(orderdetail);
-			orderDao.orderDetailInput(orderdetail);
-			for(OrderSubDetail ordersubdetail : vo2.getList()) {
+			System.out.println(orderdetailvo);
+			orderDao.orderDetailInput(orderdetailvo);
+			for(OrderSubDetail ordersubdetail : orderdetailvo.getList()) {
 				ordersubdetail.setNo(no);
-				ordersub.add(ordersubdetail);
-				System.out.println(ordersub);
-				orderDao.orderSubDetailInput(ordersub);						
+				System.out.println(ordersubdetail);
+				orderDao.orderSubDetailInput(ordersubdetail);						
 			}
-			
 		}
+		
+		
 		orderDao.cartDelete(member_code);
 		
 		model.addAttribute("shop_info", orderDao.shopInfo(shop_code));
@@ -178,7 +193,6 @@ public class OrderController {
 		params.add("approval_url", "http://localhost:8082/spring/order/success");
 		params.add("cancel_url", "http://localhost:8082/sts27/pay/kakao/fail");
 		params.add("fail_url", "http://localhost:8082/sts27/pay/kakao/cancel");
-		params.add("shop_code", String.valueOf(shop_code));
 
 //		headers와 params를 합쳐서 전송할 객체를 생성
 		HttpEntity<MultiValueMap<String, String>> send = new HttpEntity<MultiValueMap<String, String>>(params, headers);

@@ -9,7 +9,8 @@
 	$(function(){
 		//목표 : 페이지 번호를 누르면 해당하는 번호의 페이지로 이동처리
 		// 		이동은 form을 전송하는 것으로 대체
-		$(".navigator-page").click(function(){
+		$(".navigator-page").click(function(e){
+			e.preventDefault();
 			var p = $(this).text();
 			move(p);
 		});
@@ -20,17 +21,36 @@
 		$("form").submit();
 		}
 		
+		$(".page_block").click(function(e){
+			e.preventDefault();
+			var p = $(this).text();
+			switch(p){
+			case '<':
+				move(parseInt(page)-1);
+			break;
+			case '<<':
+				move(parseInt(startBlock)-1);
+			break;
+			case '>':
+				move(parseInt(page)+1);
+			break;
+			case '>>':
+				move(parseInt(endBlock)+1);
+			break;
+			}
+		});
 		//select[name=apply_status]인 항목의 값을 선택
-		var apply_status ="${param.apply_status}";
-		if(apply_status){
-		$("select[name=apply_status]").val(apply_status);
-		}
-		var keyword_type ="${param.keyword_type}";
-		if(keyword_type){
-		$("select[name=keyword_type]").val(keyword_type);
-		}
-		
-    	})
+			var apply_status ="${param.apply_status}";
+			if(apply_status){
+			$("select[name=apply_status]").val(apply_status);
+			}
+			var keyword_type ="${param.keyword_type}";
+			if(keyword_type){
+			$("select[name=keyword_type]").val(keyword_type);
+			}
+			
+	    		
+	    	})
     
     </script>
 	<!-- 전체시작 -->
@@ -70,7 +90,7 @@
 					  					</select>
 					  				</td>
 					  				<td>
-					  					<input type="text" name="keyword" class="form-control">
+					  					<input type="text" name="keyword" class="form-control" value="${param.keyword}">
 					  				</td>
 		  						</tr>
 		  					</tbody>
@@ -81,8 +101,8 @@
 	  			<tr>
 	  				<td width="10%" class="table-active">등록일</td>
 	  				<td width="40%">
-	  					<input type="date" name="start_date">~
-	  					<input type="date" name="end_date">
+	  					<input type="date" name="start_date" value="${param.start_date}">~
+	  					<input type="date" name="end_date" value="${param.end_date}">
 	  				</td>
 	  				
 	  			</tr>
@@ -177,13 +197,13 @@
 	 <ul class="navigator">
 
 	<%-- 이전 구간 링크 --%>
-	<c:if test="${not p.isFirstBlock()}">
-	<li><a href="ono_list?${p.getPrevBlock()}&reply_status=${param.reply_status}">&lt;&lt;</a></li>
+	<c:if test="${(not (page eq 1))&& not empty page && page>=6}">
+	<li><a href="ono_list?page=${startBlock-1}&reply_status=${param.reply_status}&apply_status=${param.apply_status}&keyword_type=${param.keyword_type}&keyword=${param.keyword}&start_date=${param.start_date}&end_date=${param.end_date}" class='page_block'>&lt;&lt;</a></li>
 	</c:if>
 	
 	<%-- 이전 페이지 링크(pno - 1) --%>
-	<c:if test="${not p.isFirstPage()}">
-	<li><a href="ono_list?${p.getPrevPage()}&reply_status=${param.reply_status}">&lt;</a></li>
+	<c:if test="${not (page eq 1)&& not empty page}">
+	<li><a href="ono_list?page=${page-1}&reply_status=${param.reply_status}&apply_status=${param.apply_status}&keyword_type=${param.keyword_type}&keyword=${param.keyword}&start_date=${param.start_date}&end_date=${param.end_date}" class='page_block'>&lt;</a></li>
 	</c:if>
 	
 	<%-- 페이지 출력 --%>
@@ -194,19 +214,21 @@
 				<li class="active">${i}</li>
 			</c:when>
 			<c:otherwise>
-				<li><a href="ono_list?page=${i}&reply_status=${param.reply_status}" class="navigator-page">${i}</a></li>
+			<c:if test="${i>0}">
+				<li><a href="ono_list?page=${i}&reply_status=${param.reply_status}&apply_status=${param.apply_status}&keyword_type=${param.keyword_type}&keyword=${param.keyword}&start_date=${param.start_date}&end_date=${param.end_date}" class="navigator-page">${i}</a></li>
+			</c:if>
 			</c:otherwise>
 		</c:choose>
 	</c:forEach>
 
 	<%-- 다음 페이지 링크(pno + 1) --%>
-	<c:if test="${not p.isLastPage()}">
-		<li><a href="ono_list?${p.getNextPage()}&reply_status=${param.reply_status}">&gt;</a></li>
+	<c:if test="${not (page eq pageCount)}">
+		<li><a href="ono_list?page=${page+1}&reply_status=${param.reply_status}&apply_status=${param.apply_status}&keyword_type=${param.keyword_type}&keyword=${param.keyword}&start_date=${param.start_date}&end_date=${param.end_date}" class='page_block'>&gt;</a></li>
 	</c:if>
 	
 	<%-- 다음 구간 --%>
-	<c:if test="${not p.isLastBlock()}">
-		<li><a href="ono_list?${p.getNextBlock()}&reply_status=${param.reply_status}">&gt;&gt;</a></li>
+	<c:if test="${(not (page eq pageCount)) && pageCount>=5}">
+		<li><a href="ono_list?page=${endBlock+1}&reply_status=${param.reply_status}&apply_status=${param.apply_status}&keyword_type=${param.keyword_type}&keyword=${param.keyword}&start_date=${param.start_date}&end_date=${param.end_date}" class='page_block'>&gt;&gt;</a></li>
 	</c:if>
 
 </ul>
@@ -215,13 +237,13 @@
 	 <ul class="navigator">
 
 	<%-- 이전 구간 링크 --%>
-	<c:if test="${not p.isFirstBlock()}">
-	<li><a href="ono_list?${p.getPrevBlock()}">&lt;&lt;</a></li>
+	<c:if test="${(not (page eq 1))&& not empty page && page>=6}">
+	<li><a href="ono_list?page=${startBlock-1}&apply_status=${param.apply_status}&keyword_type=${param.keyword_type}&keyword=${param.keyword}&start_date=${param.start_date}&end_date=${param.end_date}" class='page_block'>&lt;&lt;</a></li>
 	</c:if>
 	
 	<%-- 이전 페이지 링크(pno - 1) --%>
-	<c:if test="${not p.isFirstPage()}">
-	<li><a href="ono_list?${p.getPrevPage()}">&lt;</a></li>
+	<c:if test="${not (page eq 1)&& not empty page}">
+	<li><a href="ono_list?page=${page-1}&apply_status=${param.apply_status}&keyword_type=${param.keyword_type}&keyword=${param.keyword}&start_date=${param.start_date}&end_date=${param.end_date}" class='page_block'>&lt;</a></li>
 	</c:if>
 	
 	<%-- 페이지 출력 --%>
@@ -232,19 +254,21 @@
 				<li class="active">${i}</li>
 			</c:when>
 			<c:otherwise>
-				<li><a href="ono_list?page=${i}" class="navigator-page">${i}</a></li>
+			<c:if test="${i>0}">
+				<li><a href="ono_list?page=${i}&apply_status=${param.apply_status}&keyword_type=${param.keyword_type}&keyword=${param.keyword}&start_date=${param.start_date}&end_date=${param.end_date}" class="navigator-page">${i}</a></li>
+			</c:if>
 			</c:otherwise>
 		</c:choose>
 	</c:forEach>
 
 	<%-- 다음 페이지 링크(pno + 1) --%>
-	<c:if test="${not p.isLastPage()}">
-		<li><a href="ono_list?${p.getNextPage()}">&gt;</a></li>
+	<c:if test="${not (page eq pageCount)}">
+		<li><a href="ono_list?page=${page+1}&apply_status=${param.apply_status}&keyword_type=${param.keyword_type}&keyword=${param.keyword}&start_date=${param.start_date}&end_date=${param.end_date}" class='page_block'>&gt;</a></li>
 	</c:if>
 	
 	<%-- 다음 구간 --%>
-	<c:if test="${not p.isLastBlock()}">
-		<li><a href="ono_list?${p.getNextBlock()}">&gt;&gt;</a></li>
+	<c:if test="${(not (page eq pageCount)) && pageCount>=5}">
+		<li><a href="ono_list?page=${endBlock+1}&apply_status=${param.apply_status}&keyword_type=${param.keyword_type}&keyword=${param.keyword}&start_date=${param.start_date}&end_date=${param.end_date}" class='page_block'>&gt;&gt;</a></li>
 	</c:if>
 
 </ul>

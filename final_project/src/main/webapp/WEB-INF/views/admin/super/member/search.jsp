@@ -86,8 +86,8 @@
 							<th>전화번호</th>
 							<th>쿠폰</th>
 							<th>포인트</th>
-							<th>가입일</th>
 							<th>사용금액</th>
+							<th>가입일</th>
 							<th>비고</th>
 						</tr>
 					</thead>
@@ -101,8 +101,8 @@
 								<td>${vo.phone}</td>
 								<td>${vo.coupon}</td>
 								<td>${vo.point}</td>
+								<td>${vo.total_price}</td>
 								<td>${vo.regist_date}</td>
-								<td></td>
 								<td>
 									<a class="btn btn-info">포인트</a>
 									<a class="btn btn-info">쿠폰</a>

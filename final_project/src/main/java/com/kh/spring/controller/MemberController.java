@@ -183,6 +183,12 @@ public class MemberController {
 			System.out.println(ok);
 			if(BCrypt.checkpw(memberDto.getPw(), result.getPw())) {
 				session.setAttribute("member_code", result.getNo());
+				if(result.getShop_code() > 0) {
+					session.setAttribute("shop_code", result.getShop_code());
+				}
+				if(result.getType().equals("관리자")) {
+					session.setAttribute("member_type", result.getType());
+				}
 				
 				// 아이디 저장
 				//쿠키 객체를 만들고 체크 여부에 따라 시간 설정 후 response에 추가
@@ -426,6 +432,9 @@ public class MemberController {
 		session.removeAttribute("member_code");
 		return "client/member/delete";
 	}
+	
+	
+	
 	
 	// 나의정보 클릭시 나의주문내역
 	@GetMapping("/info_order_list")

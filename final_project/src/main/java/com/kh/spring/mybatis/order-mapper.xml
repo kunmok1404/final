@@ -7,16 +7,43 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="search" parameterType="int" resultType="memberDto">
 		select * from member where no = #{member_code}
 	</select>
-	<!-- '자기'의 카트에 존재하는 물건을 출력하는 코드  -->
-	<select id="cartlist" parameterType="int" resultType="cartDto">
+	<!-- 장바구니 시퀀스 받아오는 코드 -->
+	<select id="getcartseq" resultType="int">
+		select cart_seq.nextval from dual
+	</select>
+	<!-- 장바구니에 메인메뉴를 넣는 코드 -->
+	<insert id="cartmenuinsert" parameterType="cartDto">
+	 	insert into cart values(#{no},#{member_code},#{shop_code},#{title},#{menu_name},#{menu_amount},
+	 	#{menu_price},sysdate);
+	</insert>
+	<!-- 주문시 받아온 번호로 서브메뉴를 조회하는 코드 -->
+	<select id="getsubmenu" parameterType="map" resultType="submenuDto">
+		select * from sub_menu where shop_code = #{shop_code} and no = #{no}
+	</select>
+	<!-- 주문 입력 코드 -->
+	<insert id="subinsert" parameterType="submenuDto">
+		insert into cart_sub_menu values(#{no},#{type},#{title},#{name},#{price},1);
+	</insert>
+	<!-- '자기'의 카트에 존재하는 메인 메뉴의 코드를 출력하는 코드 -->
+	
+	<resultMap type="cartDto" id="cartlist">
+		<result property="no" column="no"/>
+		<result property="member_code" column="member_code"/>
+		<result property="shop_code" column="shop_code"/>
+		<result property="title" column="title"/>
+		<result property="menu_name" column="menu_name"/>
+		<result property="menu_amount" column="menu_amount"/>
+		<result property="menu_price" column="menu_price"/>
+		<result property="regist_date" column="regist_date"/>
+		<collection property="list" column="no" javaType="java.util.ArrayList" ofType="cartSubDto"
+		select="cartSubList"/>
+	</resultMap>
+		<!-- '자기'의 카트에 존재하는 물건을 출력하는 코드  -->
+	<select id="cartlist" parameterType="int" resultMap="cartlist">
 		select * from cart where member_code = #{member_code}
 	</select>
-	<!-- '자기'의 카트에 존재하는 메인 메뉴의 코드를 출력하는 코드 -->
-	<select id="cartlistno" parameterType="int" resultType="cartListNo">
-		select no from cart where member_code =#{member_code}
-	</select>
 	<!-- '자신'의 카트에 존재하는 물건의 추가메뉴를 출력하는 코드 -->
-	<select id="cartSubList" parameterType="int" resultType="cartSubDto">
+	<select id="cartSubList" resultType="cartSubDto">
 		select * from cart_sub_menu where no = #{no}
 	</select>
 	<!-- '자신'의 카트에 존재하는 물건에 딸린 매장을 검색하는 코드 -->
@@ -126,7 +153,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]>
 		<choose>
 			<when test="no != null">
-				(select * from orders where no = #{no})
+				(select * from orders where shop_code = #{shop_code})
 			</when>
 			<otherwise>
 				orders 
@@ -145,7 +172,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]>
 		<choose>
 			<when test="no != null">
-				(select * from orders where no = #{no})
+				(select * from orders where shop_code = #{shop_code})
 			</when>
 			<otherwise>
 				orders 
@@ -162,7 +189,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]>
 		<choose>
 			<when test="no != null">
-				(select * from orders where no = #{no})
+				(select * from orders where shop_code = #{shop_code})
 			</when>
 			<otherwise>
 				orders 
@@ -183,7 +210,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]>
 		<choose>
 			<when test="no != null">
-				(select * from orders where no = #{no})
+				(select * from orders where shop_code = #{shop_code})
 			</when>
 			<otherwise>
 				orders 
@@ -208,7 +235,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]>
 		<choose>
 			<when test="no != null">
-				(select * from orders where no = #{no})
+				(select * from orders where shop_code = #{shop_code})
 			</when>
 			<otherwise>
 				orders 
@@ -233,7 +260,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]>
 		<choose>
 			<when test="no != null">
-				(select * from orders where no = #{no})
+				(select * from orders where shop_code = #{shop_code})
 			</when>
 			<otherwise>
 				orders 
@@ -313,4 +340,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="setStatus" parameterType="map">
 		update orders set order_status = #{order_status} where no = #{no}
 	</update>
+	<!-- 쿠폰 갯수 조회 -->
+	<select id="getcoupon" parameterType="int" resultType="int">
+		select count(*) from issue where member_code = #{member_code}
+	</select>
 </mapper>

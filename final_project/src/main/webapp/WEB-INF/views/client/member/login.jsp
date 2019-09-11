@@ -10,17 +10,6 @@
 <script src="${pageContext.request.contextPath}/resources/js/cryptojs/components/sha256-min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/password-encoder.js"></script>
 
-<script>
-		
-		//로그인 실패 시 alert으로 메세지 노출
-// 		$(function(){
-// 			if($(".fail").text()=='faillogin'){
-// 				alert("아이디 또는 비밀번호가 일치하지 않습니다. 다시 입력해주세요")
-// 			}							
-// 		});
-		
-</script>
-
 <style>
 
 	.login{
@@ -34,19 +23,6 @@
 
 </style>
 
-<%-- <c:if test="${fail==fail}"> --%>
-<!-- 	<div class="fail" style="display: none;">faillogin</div> -->
-<%-- </c:if> --%>
-
-<!-- error 파라미터 유무에 따라 오류메시지를 출력 -->
-<c:if test="${not empty param.error}">
-	<h4>
-		<font color="red">
-			입력하신 정보에 해당하는 회원이 존재하지 않습니다.
-		</font>
-	</h4>
-</c:if>
-
 <div class="login">
  	<form action="login" method="post">
  	<br>
@@ -55,11 +31,7 @@
  		<table class="table table-bordered">
  			<tbody>
 				<tr>
-					<td colspan ="4">
-<%-- 						<%if(request.getParameterMap().containsKey("error")){ %> --%>
-<!-- 							[ 로그인 정보가 일치하지 않습니다.] -->
-<%-- 						<%} %> --%>
-					</td>
+					<td colspan ="4"></td>
 				</tr>
 				<!-- 아이디, 로그인 버튼 -->
 				<tr>

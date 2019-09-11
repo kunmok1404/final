@@ -9,15 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.spring.entity.CartDto;
-import com.kh.spring.entity.CartListNo;
 import com.kh.spring.entity.CartListVO;
 import com.kh.spring.entity.CartSubDto;
 import com.kh.spring.entity.MemberDto;
 import com.kh.spring.entity.OrderDetailDto;
 import com.kh.spring.entity.OrderSubDetail;
-import com.kh.spring.entity.OrderSubDetailListVo;
 import com.kh.spring.entity.OrdersDto;
 import com.kh.spring.entity.ShopDto;
+import com.kh.spring.entity.SubMenuDto;
 import com.kh.spring.entity.TotalVo;
 import com.kh.spring.vo.OrderVo;
 
@@ -91,7 +90,7 @@ public class OrdersDaoimpl implements OrdersDao{
 	}
 
 	@Override
-	public void orderDetailInput(List<OrderDetailDto> orderDetailDto) {
+	public void orderDetailInput(OrderDetailDto orderDetailDto) {
 		System.out.println(orderDetailDto);
 		sqlsession.insert("order.detail_regist",orderDetailDto);
 	}
@@ -121,14 +120,14 @@ public class OrdersDaoimpl implements OrdersDao{
 
 	public List<OrderVo> order_data(String no) {
 		Map<String, Object> map = new HashMap<>();
-		map.put("no", no);
+		map.put("shop_code", no);
 		return sqlsession.selectList("order.order_data");
 	}
 
 	@Override
 	public int cancel(String no,String t1) {
 		Map<String, Object> map = new HashMap<>();
-		map.put("no", no);
+		map.put("shop_code", no);
 		map.put("order_date", t1);
 		return sqlsession.selectOne("order.cancel_data", map);
 	}
@@ -136,7 +135,7 @@ public class OrdersDaoimpl implements OrdersDao{
 	@Override
 	public int sussce(String no,String t1) {
 		Map<String, Object> map = new HashMap<>();
-		map.put("no", no);
+		map.put("shop_code", no);
 		map.put("order_date", t1);
 		return sqlsession.selectOne("order.sussce_data", map);
 	}
@@ -144,7 +143,7 @@ public class OrdersDaoimpl implements OrdersDao{
 	@Override
 	public List<OrderVo> date_day(String no,String start, String end) {
 		Map<String, Object> map = new HashMap<>();
-		map.put("no", no);
+		map.put("shop_code", no);
 		map.put("start", start);
 		map.put("end", end);
 		return sqlsession.selectList("order.date_day", map);
@@ -205,25 +204,25 @@ public class OrdersDaoimpl implements OrdersDao{
 	@Override
 	public List<TotalVo> sale_data(String no) {
 		Map<String, Object> map = new HashMap<>();
-		map.put("no", no);
+		map.put("shop_code", no);
 		return sqlsession.selectList("order.total");
 	}
 
 	@Override
 	public List<TotalVo> sale_day(String no, String start, String end) {
 		Map<String, Object> map = new HashMap<>();
-		map.put("no", no);
+		map.put("shop_code", no);
 		map.put("start", start);
 		map.put("end", end);
 		return sqlsession.selectList("order.total_date", map);
 	}
 	@Override
-	public List<CartSubDto> cartsublist(int no) {
+	public List<CartSubDto> cartsublist(CartDto no) {
 		return sqlsession.selectList("order.cartSubList",no);
 	}
 
 	@Override
-	public List<CartListNo> cartlistno(int member_code) {
+	public List<Integer> cartlistno(int member_code) {
 		return sqlsession.selectList("order.cartlistno",member_code);
 	}
 
@@ -233,10 +232,9 @@ public class OrdersDaoimpl implements OrdersDao{
 	}
 
 	@Override
-	public void orderSubDetailInput(List<OrderSubDetail> ordersub) {
-			sqlsession.insert("order.detail_sub_regist",ordersub);
-		
-		
+	public void orderSubDetailInput(OrderSubDetail ordersub) {
+		System.out.println(ordersub);
+		sqlsession.insert("order.detail_sub_regist",ordersub);
 	}
 
 	@Override
@@ -247,6 +245,44 @@ public class OrdersDaoimpl implements OrdersDao{
 	@Override
 	public int getdetseq() {
 		return sqlsession.selectOne("order.order_det_seq");
+	}
+
+	@Override
+	public int getcoupon(int member_code) {
+		return sqlsession.selectOne("order.getcoupon",member_code);
+	}
+
+	@Override
+	public SubMenuDto getmenu(int radiomenu,int shop_code) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("shop_code", shop_code);
+		map.put("no", radiomenu);
+		return sqlsession.selectOne("order.getsubmenu",map);
+	}
+
+	@Override
+	public void cartinsert(SubMenuDto getmenu) {
+		sqlsession.insert("order.subinsert",getmenu);
+		
+	}
+
+	@Override
+	public int getcartseq() {
+		return sqlsession.selectOne("order.getcartseq");
+	}
+
+	@Override
+	public void cartmenuinsert(CartDto cartdto) {
+		sqlsession.insert("order.cartmenuinsert",cartdto);
+		
+	}
+
+	@Override
+	public List<SubMenuDto> getsubmenu(int checkmenu, int shop_code) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("no", checkmenu);
+		map.put("shop_code", shop_code);
+		return sqlsession.selectList("order.getsubmenu",map);
 	}
 
 
