@@ -12,7 +12,8 @@
 	$(function(){
 		//목표 : 페이지 번호를 누르면 해당하는 번호의 페이지로 이동처리
 		// 		이동은 form을 전송하는 것으로 대체
-		$(".navigator-page").click(function(){
+		$(".navigator-page").click(function(e){
+			e.preventDefault();
 			var p = $(this).text();
 			move(p);
 		});
@@ -22,6 +23,25 @@
 		$("input[name=page]").val(no);
 		$("form").submit();
 		}
+		
+		$(".page_block").click(function(e){
+			e.preventDefault();
+			var p = $(this).text();
+			switch(p){
+			case '<':
+				move(parseInt(page)-1);
+			break;
+			case '<<':
+				move(parseInt(startBlock)-1);
+			break;
+			case '>':
+				move(parseInt(page)+1);
+			break;
+			case '>>':
+				move(parseInt(endBlock)+1);
+			break;
+			}
+		});
 		//select[name=keyword]인 항목의 값을 선택
 		var keyword ="${param.keyword}";
 		if(keyword){
@@ -140,13 +160,13 @@
 <div class="empty"></div>
     <ul class="navigator">
 	<%-- 이전 구간 링크 --%>
-	<c:if test="${not p.isFirstBlock()}">
-	<li><a href="list?${p.getPrevBlock()}">&lt;&lt;</a></li>
+	<c:if test="${(not (page eq 1))&& not empty page && page>=6}">
+	<li><a href="list?page=${startBlock-1}" class='page_block'>&lt;&lt;</a></li>
 	</c:if>
 	
 	<%-- 이전 페이지 링크(pno - 1) --%>
-	<c:if test="${not p.isFirstPage()}">
-	<li><a href="list?${p.getPrevPage()}">&lt;</a></li>
+	<c:if test="${not (page eq 1)&& not empty page}">
+	<li><a href="list?page=${page-1}" class='page_block'>&lt;</a></li>
 	</c:if>
 	
 	<%-- 페이지 출력 --%>
@@ -156,19 +176,21 @@
 				<li class="active">${i}</li>
 			</c:when>
 			<c:otherwise>
+			<c:if test="${i>0}">
 				<li><a href="list?page=${i}" class="navigator-page">${i}</a></li>
+			</c:if>
 			</c:otherwise>
 		</c:choose>
 	</c:forEach>
 	
 	<%-- 다음 페이지 링크(pno + 1) --%>
-	<c:if test="${not p.isLastPage()}">
-		<li><a href="list?${p.getNextPage()}">&gt;</a></li>
+	<c:if test="${not (page eq pageCount)}">
+		<li><a href="list?page=${page+1}" class='page_block'>&gt;</a></li>
 	</c:if>
 	
 	<%-- 다음 구간 --%>
-	<c:if test="${not p.isLastBlock()}">
-		<li><a href="list?${p.getNextBlock()}">&gt;&gt;</a></li>
+	<c:if test="${(not (page eq pageCount)) && pageCount>=5}">
+		<li><a href="list?page=${endBlock+1}" class='page_block'>&gt;&gt;</a></li>
 	</c:if>
 </ul>
 </div>
