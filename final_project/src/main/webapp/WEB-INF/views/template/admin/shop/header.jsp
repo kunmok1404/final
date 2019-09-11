@@ -36,7 +36,7 @@
 </head>
 <body>
     <header>
-        
+        <!--네비게이션 영역시작-->
         <!-- 로그인 여부에 따라 구분하여 출력 -->
         <c:set var="login" value="${not empty sessionScope.member_code}"></c:set>
         <c:choose>

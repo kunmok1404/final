@@ -88,10 +88,50 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!--         		M.grade, M.status, M.regist_date, M.latest_login, M.point -->
 <!-- 		) where id = #{id} -->
 
-		select
-			 M.no, M.id, M.status, M.grade, M.phone, M.point, M.regist_date, count(I.coupon_code) coupon 
-		from 
-			member M left outer join issue I on M.no = I.member_code
+<!-- 		select -->
+<!-- 			 M.no, M.id, M.status, M.grade, M.phone, M.point, M.regist_date, count(I.coupon_code) coupon  -->
+<!-- 		from  -->
+<!-- 			member M left outer join issue I on M.no = I.member_code -->
+<!-- 		where  -->
+<!-- 			1=1 -->
+ 			<!-- 주석 -->
+<!-- 				회원 상태 -->
+<!-- 				회원상태가 전체일 때는 할게 없음  -->
+<!-- 				회원상태가 일반이면 일반 조건을 설정 -->
+<!-- 				회원상태가 블랙이면 블랙 조건을 설정 -->
+<!-- 				회원상태가 탈퇴이면 탈퇴 조건을 설정 -->
+<!-- 			 --> 
+<!-- 			<if test="status != null and status != '전체'"> -->
+<!-- 				and status = #{status} -->
+<!-- 			</if> -->
+ 			<!-- 회원 등급 -->
+<!-- 			<if test="grade != null and grade != '전체'"> -->
+<!-- 				and grade = #{grade} -->
+<!-- 			</if> -->
+ 			<!-- 기간 검색 --> 
+<!-- 			<if test="start_date != null and start_date != '' and end_date != null and end_date != ''"> -->
+<!-- 				and regist_date between to_date(#{start_date}, 'YYYY-MM-DD') and to_date(#{end_date}, 'YYYY-MM-DD') + 1 - 1 / 864000  -->
+<!-- 			</if> -->
+<!-- 			<if test="type != null and type != '전체' and keyword != null and keyword != ''"> -->
+<!-- 				and ${type} like '%'||#{keyword}||'%' -->
+<!-- 			</if> -->
+<!-- 		group by M.no, M.id, M.status, M.grade, M.phone, M.point, M.regist_date -->
+
+		select 
+		    MP.member_code, sum(subtotal) point
+		    ,M.no, M.id, M.email, M.email_address, M.phone, M.post, M.basic_addr, M.detail_addr, M.grade, M.status, M.regist_date
+		    ,(select count(*) from issue where member_code = M.no) coupon
+		    ,(select count(*) from oneandone where member_code = M.no) ono
+		    ,(select count(*) from review where member_code = M.no) review
+		from (
+		      select 
+		          P.member_code, decode(P.use_yn, '사용', -1, '적립', +1) * P.point subtotal
+		      from 
+		          point_detail P
+		) MP
+		    inner join Member M on M.no = MP.member_code
+		    left outer join Review R on M.no = R.member_code
+<!-- 		where M.no = #{no} -->
 		where 
 			1=1
 			<!-- 
@@ -100,7 +140,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				회원상태가 일반이면 일반 조건을 설정
 				회원상태가 블랙이면 블랙 조건을 설정
 				회원상태가 탈퇴이면 탈퇴 조건을 설정
-			-->
+			 -->
 			<if test="status != null and status != '전체'">
 				and status = #{status}
 			</if>
@@ -115,44 +155,48 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="type != null and type != '전체' and keyword != null and keyword != ''">
 				and ${type} like '%'||#{keyword}||'%'
 			</if>
-		group by M.no, M.id, M.status, M.grade, M.phone, M.point, M.regist_date
+		group by MP.member_code
+		, M.no, M.id, M.email, M.email_address, M.phone, M.post, M.basic_addr, M.detail_addr, M.grade, M.status, M.regist_date
+		order by MP.member_code asc
+		
  	</select>
  	
  	<!-- 관리자 회원 목록 상세보기 -->
  	<select id="info" parameterType="int" resultType="memberInfoVO">
- 		select
- 			M.no, M.id, M.email, M.email_address, M.phone, M.post, M.basic_addr, M.detail_addr, M.grade, M.status, 
- 			count(I.coupon_code) coupon, count(O.no) ono, count(R.no) review,
- 			M.regist_date, M.latest_login
- 		from
- 			Member M 
- 				left outer join Issue I on M.no = I.member_code
- 				left outer join Oneandone O on M.no = O.member_code
- 				left outer join Review R on M.no = R.member_code
- 		where M.no = #{no}
- 		group by
- 			M.no, M.id, M.email, M.email_address, M.phone, M.post, M.basic_addr, M.detail_addr, M.grade, M.status, M.regist_date, M.latest_login
- 		order by no desc
+<!--  		select -->
+<!--  			M.no, M.id, M.email, M.email_address, M.phone, M.post, M.basic_addr, M.detail_addr, M.grade, M.status,  -->
+<!--  			count(I.coupon_code) coupon, count(O.no) ono, count(R.no) review, -->
+<!--  			M.regist_date, M.latest_login -->
+<!--  		from -->
+<!--  			Member M  -->
+<!--  				left outer join Issue I on M.no = I.member_code -->
+<!--  				left outer join Oneandone O on M.no = O.member_code -->
+<!--  				left outer join Review R on M.no = R.member_code -->
+<!--  		where M.no = #{no} -->
+<!--  		group by -->
+<!--  			M.no, M.id, M.email, M.email_address, M.phone, M.post, M.basic_addr, M.detail_addr, M.grade, M.status, M.regist_date, M.latest_login -->
+<!--  		order by no desc -->
  		
- 		<!-- 강사님의 피와 땀이 들어간 구문(포인트도 보여줄려고 했는데....) -->
-<!-- 		select  -->
-<!-- 		    MP.member_code, sum(subtotal) point -->
-<!-- 		    ,M.no, M.id, M.email, M.email_address, M.phone, M.post, M.basic_addr, M.detail_addr, M.grade, M.status -->
-<!-- 		    ,(select count(*) from issue where member_code = M.no) coupon -->
-<!-- 		    ,(select count(*) from oneandone where member_code = M.no) ono -->
-<!-- 		    ,(select count(*) from review where member_code = M.no) review -->
-<!-- 		    from ( -->
-<!-- 		        select  -->
-<!-- 		            P.member_code, decode(P.use_yn, '사용', -1, '적립', +1) * P.point subtotal -->
-<!-- 		        from  -->
-<!-- 		            point_detail P -->
-<!-- 		    ) MP -->
-<!-- 		    inner join Member M on M.no = MP.member_code -->
-<!-- 		    left outer join Review R on M.no = R.member_code -->
-<!-- 		where M.no = #{no} -->
-<!-- 		group by MP.member_code -->
-<!-- 		, M.no, M.id, M.email, M.email_address, M.phone, M.post, M.basic_addr, M.detail_addr, M.grade, M.status -->
-<!-- 		order by MP.member_code asc; -->
+ 		<!-- 강사님의 피땀눈물 구문(포인트도 보여줄려고 했는데....) -->
+		select 
+		    MP.member_code, sum(subtotal) point
+		    ,M.no, M.id, M.email, M.email_address, M.phone, M.post, M.basic_addr, M.detail_addr
+		    ,M.grade, M.status, M.regist_date, M.latest_login
+		    ,(select count(*) from issue where member_code = M.no) coupon
+		    ,(select count(*) from oneandone where member_code = M.no) ono
+		    ,(select count(*) from review where member_code = M.no) review
+		    from (
+		        select 
+		            P.member_code, decode(P.use_yn, '사용', -1, '적립', +1) * P.point subtotal
+		        from 
+		            point_detail P
+		    ) MP
+		    inner join Member M on M.no = MP.member_code
+		    left outer join Review R on M.no = R.member_code
+		where M.no = #{no}
+		group by MP.member_code
+		, M.no, M.id, M.email, M.email_address, M.phone, M.post, M.basic_addr, M.detail_addr, M.grade, M.status, M.regist_date, M.latest_login
+		order by MP.member_code asc
  	</select>
  	
  	<!-- 관리자 회원 탈퇴 기능 -->
@@ -165,6 +209,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  		update member set email = #{email}, email_address = #{email_address}, phone = #{phone}, 
  		post = #{post}, basic_addr = #{basic_addr}, detail_addr = #{detail_addr}, reason = #{reason}
  	</update>
+ 	
+ 	<!-- 관리자 회원 정보 총 사용금액 구하기 -->
+ 	<select id="total_price" parameterType="memberInfoVO" resultType="int">
+ 		select 
+ 			(select sum(total_price) from orders where member_code = #{no})
+ 		-
+ 			(select sum(discount_price) from orders where member_code = #{no})
+ 		as total_price
+ 		from dual
+ 	</select>
  	
  	
  	
