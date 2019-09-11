@@ -9,13 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.spring.entity.CartDto;
-import com.kh.spring.entity.CartListNo;
 import com.kh.spring.entity.CartListVO;
 import com.kh.spring.entity.CartSubDto;
 import com.kh.spring.entity.MemberDto;
 import com.kh.spring.entity.OrderDetailDto;
 import com.kh.spring.entity.OrderSubDetail;
-import com.kh.spring.entity.OrderSubDetailListVo;
 import com.kh.spring.entity.OrdersDto;
 import com.kh.spring.entity.ShopDto;
 import com.kh.spring.entity.TotalVo;
@@ -91,7 +89,7 @@ public class OrdersDaoimpl implements OrdersDao{
 	}
 
 	@Override
-	public void orderDetailInput(List<OrderDetailDto> orderDetailDto) {
+	public void orderDetailInput(OrderDetailDto orderDetailDto) {
 		System.out.println(orderDetailDto);
 		sqlsession.insert("order.detail_regist",orderDetailDto);
 	}
@@ -218,12 +216,12 @@ public class OrdersDaoimpl implements OrdersDao{
 		return sqlsession.selectList("order.total_date", map);
 	}
 	@Override
-	public List<CartSubDto> cartsublist(int no) {
+	public List<CartSubDto> cartsublist(CartDto no) {
 		return sqlsession.selectList("order.cartSubList",no);
 	}
 
 	@Override
-	public List<CartListNo> cartlistno(int member_code) {
+	public List<Integer> cartlistno(int member_code) {
 		return sqlsession.selectList("order.cartlistno",member_code);
 	}
 
@@ -233,10 +231,9 @@ public class OrdersDaoimpl implements OrdersDao{
 	}
 
 	@Override
-	public void orderSubDetailInput(List<OrderSubDetail> ordersub) {
-			sqlsession.insert("order.detail_sub_regist",ordersub);
-		
-		
+	public void orderSubDetailInput(OrderSubDetail ordersub) {
+		System.out.println(ordersub);
+		sqlsession.insert("order.detail_sub_regist",ordersub);
 	}
 
 	@Override

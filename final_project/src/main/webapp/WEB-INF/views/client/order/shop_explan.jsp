@@ -4,7 +4,7 @@
 <script>
 	$(function() {		
 	$(".regist").click(function() {
-		$(location).attr("href", "${pageContext.request.contextPath}/shop/order_regist");
+		$(location).attr("href", "${pageContext.request.contextPath}/shop/shop_regist");
 	});
 	});
 </script>

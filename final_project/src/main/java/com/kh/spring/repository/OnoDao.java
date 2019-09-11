@@ -46,12 +46,9 @@ public interface OnoDao {
 
 	int count_reply();
 
-	int supercount_ceo(String apply_status, String keyword_type, String keyword);
+	int supercount_ceo(String apply_status, String keyword_type, String keyword, String start_date, String end_date);
 
-	List<OnoDto> superlist_ceo(String apply_status, String keyword_type, String keyword, int i, int j, String type);
 
-	List<OnoDto> superlist2_ceo(String apply_status, String keyword_type, String keyword, String reply_status,
-			int i, int j, String type);
 
 	int count_reply_ceo();
 
@@ -60,6 +57,12 @@ public interface OnoDao {
 	int ceo_count();
 
 	int supercount(String apply_status, String keyword_type, String keyword, String start_date, String end_date);
+
+//	List<OnoDto> superlist_ceo(String apply_status, String keyword_type, String keyword, String start_date,
+//			String end_date, int i, int j, String type);
+//
+//	List<OnoDto> superlist2_ceo(String apply_status, String keyword_type, String keyword, String reply_status,
+//			String start_date, String end_date, int i, int j, String type);
 
 
 

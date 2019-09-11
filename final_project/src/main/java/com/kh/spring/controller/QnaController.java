@@ -37,7 +37,7 @@ public class QnaController {
 		int start = pagesize * page - (pagesize - 1);
 		int end = pagesize * page;
 		
-		int blocksize = 10;
+		int blocksize = 5;
 		int startBlock = (page - 1) / blocksize * blocksize + 1;
 		int endBlock = startBlock + (blocksize - 1);
 		
@@ -49,6 +49,7 @@ public class QnaController {
 		model.addAttribute("page", page);
 		model.addAttribute("startBlock", startBlock);
 		model.addAttribute("endBlock", endBlock);
+		model.addAttribute("pageCount", pageCount);
 		
 		String use_yn="n";
 		List<QnaDto> list = qnaDao.list(category, start, end,use_yn);
@@ -59,22 +60,22 @@ public class QnaController {
 	}
 	
 	//[2]글쓰기
-	@GetMapping("/write")
-	public String write() {
-		return "client/service/qna/write";
-	}
+//	@GetMapping("/write")
+//	public String write() {
+//		return "client/service/qna/write";
+//	}
 	
-	@PostMapping("/write")
-	public String write(HttpSession session,
-								@ModelAttribute QnaDto qnaDto,
-								Model model) {
+//	@PostMapping("/write")
+//	public String write(HttpSession session,
+//								@ModelAttribute QnaDto qnaDto,
+//								Model model) {
 //		int member_code = (int)session.getAttribute("member_code");
-		String id = "test1";
-		qnaDto.setWriter(id);
-		qnaDao.write(qnaDto); 
-		model.addAttribute("no", qnaDto.getNo());
-		return "redirect:list";
-	}
+//		String id = "test1";
+//		qnaDto.setWriter(id);
+//		qnaDao.write(qnaDto); 
+//		model.addAttribute("no", qnaDto.getNo());
+//		return "redirect:list";
+//	}
 	//[3]글 삭제
 	@GetMapping("/delete")
 	public String delete(@RequestParam int no, Model model) {

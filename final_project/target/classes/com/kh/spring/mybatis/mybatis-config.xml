@@ -11,7 +11,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
      <typeAliases>
         <typeAlias type="com.kh.spring.vo.OrdersListVo" alias="orderListVo"/>
         <typeAlias type="com.kh.spring.entity.CartSubDto" alias="cartSubDto"/>
-        <typeAlias type="com.kh.spring.entity.CartListNo" alias="cartListNo"/>
         <typeAlias type="com.kh.spring.entity.CartDto" alias="cartDto"/>
         <typeAlias type="com.kh.spring.entity.CertDto" alias="certDto"/>
         <typeAlias type="com.kh.spring.entity.MemberDto" alias="memberDto"/>
