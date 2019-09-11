@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/template/client/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/template/client/main_search.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/template/client/category/food_category.jsp"></jsp:include>
     
 <script>

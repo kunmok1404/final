@@ -412,3 +412,15 @@ a{
     font-weight: bold;
     font-size:1.1rem;
 }
+
+/*매장관리*/
+.header-title{
+	font-weight: bold;
+    font-size: 1.4rem;
+}
+.menu-regist-table .title{
+	font-weight: bold;
+    font-size: 1.1rem;
+    background-color:#bd444d;
+    color:white;
+}

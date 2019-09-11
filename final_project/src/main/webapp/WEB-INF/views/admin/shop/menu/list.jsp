@@ -107,10 +107,10 @@
 		  						<tr>
 					  				<td width="40%">
 					  					<select name="keyword_type" class="form-control">
-					  						<option value="">메뉴명</option>
-					  						<option value="">메뉴코드</option>
-					  						<option value="">매장명</option>
-					  						<option value="">전화번호</option>
+					  						<option>메뉴명</option>
+					  						<option>메뉴코드</option>
+					  						<option>매장명</option>
+					  						<option>전화번호</option>
 					  					</select>
 					  				</td>
 					  				<td>

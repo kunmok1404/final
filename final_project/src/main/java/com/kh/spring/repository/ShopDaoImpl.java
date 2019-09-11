@@ -137,4 +137,10 @@ public class ShopDaoImpl implements ShopDao {
 		return  sqlSession.selectList("shop.search_name",map);
 	}
 
+	// 매장관리에서 승인버튼 클릭시
+	@Override
+	public void apply(int shop_code) {
+		sqlSession.update("shop.apply_shop", shop_code);
+	}
+
 }

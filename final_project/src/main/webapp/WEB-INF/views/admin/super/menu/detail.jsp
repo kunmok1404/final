@@ -111,6 +111,12 @@
       			</td>
       		</tr>
       		<tr>
+      			<td class="table-secondary text-center">매장코드</td>
+      			<td class="text-left">
+      				${menuDto.shop_code}
+   				</td>
+      		</tr>
+      		<tr>
       			<td class="table-secondary text-center">메뉴명</td>
       			<td class="text-left">
       				<input type="text" name="menu_name" value="${menuDetailVO.menu_name}" class="form-control" placeholder="메뉴명을 입력하세요." required>

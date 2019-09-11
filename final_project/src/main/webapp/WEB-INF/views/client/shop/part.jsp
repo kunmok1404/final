@@ -14,7 +14,7 @@
 <c:forEach var="shop" items="${shop_list}">
 	<li data-no="${shop.no}">
 	  <div class="menu-image">
-	      <img src="https://placeimg.com/100/100/any">
+	      <img class="review-img" src="${pageContext.request.contextPath}/review/review_img?files_code=${shop.shop_img}">
 	  </div>
 	  <div class="menu-info pl-2">
 	    <div class="shop-name">${shop.shop_name}</div>

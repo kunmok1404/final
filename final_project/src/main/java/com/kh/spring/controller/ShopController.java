@@ -31,9 +31,11 @@ public class ShopController {
 	
 	// 매장목록
 	@RequestMapping("/list")
-	public String list(Model model,@RequestParam int cat_no) {
+	public String list(Model model,@RequestParam int cat_no, @RequestParam(required = false) String keyword) {
 		model.addAttribute("cat_no", cat_no);
 		model.addAttribute("cat_list", shopDao.catList()); // 음식카테고리 목록
+		model.addAttribute("shop_list", shopDao.shop()); // 검색 주소목록
+		
 		return "client/shop/shop_list";
 	}
 	
@@ -78,21 +80,20 @@ public class ShopController {
 	
 
 	// 입점문의 신청페이지(get)
-
-	@GetMapping("/order_regist")
+	@GetMapping("/shop_regist")
 	public String order_regist() {
-		return "client/order/order_regist";
+		return "client/order/shop_regist";
 	}
 
 	// 입점문의 신청페이지(post)
-	@PostMapping("/order_regist")
+	@PostMapping("/shop_regist")
 	public String order_regist(
 								@ModelAttribute ShopDto shopDto,
 								@RequestParam MultipartFile business,
 								@RequestParam MultipartFile img,
 								@RequestParam MultipartFile sale) throws IllegalStateException, IOException {
 		shopService.regist(shopDto,business,img,sale);
-		return "client/order/order_regist";
+		return "client/order/shop_regist";
 		
 	}
 }
