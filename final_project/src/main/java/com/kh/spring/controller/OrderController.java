@@ -34,6 +34,7 @@ import com.kh.spring.entity.OrderDetailListVo;
 import com.kh.spring.entity.OrderSubDetail;
 import com.kh.spring.entity.OrderSubDetailListVo;
 import com.kh.spring.entity.OrdersDto;
+import com.kh.spring.entity.SubMenuDto;
 import com.kh.spring.repository.OrdersDao;
 
 @Controller
@@ -49,11 +50,34 @@ public class OrderController {
 		return "/cart";
 	}
 	@RequestMapping("/cart")
-	public String cart(@RequestParam int shop_code,HttpSession session, Model model) {	
+	public String cart(@ModelAttribute CartDto cartdto,
+					   @RequestParam int shop_code,
+					   @RequestParam int radiomenu,
+					   @RequestParam List<Integer> checkmenu,
+					   HttpSession session, Model model) {	
 		//>>자신<<의 카트에 있는
 		int member_code = (int) session.getAttribute("member_code");
-		//주 메뉴의 정보를 전부 출력하고,
-		//주 메뉴의 번호를 전부 불러다가
+		int cart_seq = orderDao.getcartseq();
+		//메인 메뉴 넣는 코드
+		cartdto = CartDto.builder()
+								.no(cart_seq)
+								.member_code(member_code)
+								.shop_code(shop_code)
+								.title(cartdto.getTitle())
+								.menu_name(cartdto.getTitle())
+								.menu_amount(cartdto.getMenu_amount())
+								.menu_price(cartdto.getMenu_price())
+								.build();
+		orderDao.cartmenuinsert(cartdto);
+		//필수 메뉴 넣는 코드
+		SubMenuDto submenudto = orderDao.getmenu(radiomenu,shop_code);
+		submenudto.setNo(cart_seq);
+		orderDao.cartinsert(submenudto);
+		for(int i : checkmenu) {
+			List<SubMenuDto> submenudtolist = orderDao.getsubmenu(i,shop_code);	
+			System.out.println(submenudtolist);
+		}
+		
 		List<CartDto> cartDto = orderDao.cartlist(member_code);
 		model.addAttribute("cartDto", cartDto);
 		//추가 메뉴를 타입별로 출력	
@@ -172,7 +196,6 @@ public class OrderController {
 		params.add("approval_url", "http://localhost:8082/spring/order/success");
 		params.add("cancel_url", "http://localhost:8082/sts27/pay/kakao/fail");
 		params.add("fail_url", "http://localhost:8082/sts27/pay/kakao/cancel");
-		params.add("shop_code", String.valueOf(shop_code));
 
 //		headers와 params를 합쳐서 전송할 객체를 생성
 		HttpEntity<MultiValueMap<String, String>> send = new HttpEntity<MultiValueMap<String, String>>(params, headers);

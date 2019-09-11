@@ -7,7 +7,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="search" parameterType="int" resultType="memberDto">
 		select * from member where no = #{member_code}
 	</select>
-
+	<!-- 장바구니 시퀀스 받아오는 코드 -->
+	<select id="getcartseq" resultType="int">
+		select cart_seq.nextval from dual
+	</select>
+	<!-- 장바구니에 메인메뉴를 넣는 코드 -->
+	<insert id="cartmenuinsert" parameterType="cartDto">
+	 	insert into cart values(#{no},#{member_code},#{shop_code},#{title},#{menu_name},#{menu_amount},
+	 	#{menu_price},sysdate);
+	</insert>
+	<!-- 주문시 받아온 번호로 서브메뉴를 조회하는 코드 -->
+	<select id="getsubmenu" parameterType="map" resultType="submenuDto">
+		select * from sub_menu where shop_code = #{shop_code} and no = #{no}
+	</select>
+	<!-- 주문 입력 코드 -->
+	<insert id="subinsert" parameterType="submenuDto">
+		insert into cart_sub_menu values(#{no},#{type},#{title},#{name},#{price},1);
+	</insert>
 	<!-- '자기'의 카트에 존재하는 메인 메뉴의 코드를 출력하는 코드 -->
 	
 	<resultMap type="cartDto" id="cartlist">
