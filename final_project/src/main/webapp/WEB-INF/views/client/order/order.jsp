@@ -264,11 +264,11 @@ $(function(){
 			<tfoot>
 				<tr>
 					<th>쿠폰</th>
-					<th>?장보유</th>
+					<th><font color="red">${coupon}</font>장보유</th>
 				</tr>
 				<tr>
 					<th>포인트</th>
-					<th>xx원사용가능</th>
+					<th>${memberDto.point}원사용가능</th>
 				</tr>
 			</tfoot>
 		</table>
