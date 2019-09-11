@@ -128,6 +128,7 @@
       <h4>${menuDto.name}</h4>
     </div>
     <form class="test-form" method="post">
+    <input name="shop_code" type="hidden" value="${shopDto.no}">
     <input type="hidden" name="menu_name" value="${menuDto.name}">
     <input type="hidden" name="title" value="${menuDto.menu_category}">
     <div class="modal-choiceNeed mt-3">
