@@ -52,7 +52,7 @@ public class OrderController {
 	public String cart(HttpSession session, Model model) {
 		int member_code = (int) session.getAttribute("member_code");
 		List<CartDto> cartDto = orderDao.cartlist(member_code);
-		if(cartDto == null) {
+		if(cartDto != null) {
 			model.addAttribute("cartDto", cartDto);			
 		}
 		int shop_code = orderDao.cart(member_code);
