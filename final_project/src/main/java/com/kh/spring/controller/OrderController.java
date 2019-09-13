@@ -3,7 +3,6 @@ package com.kh.spring.controller;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -27,7 +26,6 @@ import com.kh.spring.KakaoPay.KakaoPaySuccessVO;
 import com.kh.spring.KakaoPay.KakaopayReturnVo;
 import com.kh.spring.entity.CartDto;
 import com.kh.spring.entity.CartListVO;
-import com.kh.spring.entity.CartSubDto;
 import com.kh.spring.entity.CartSubListVo;
 import com.kh.spring.entity.OrderDetailDto;
 import com.kh.spring.entity.OrderDetailListVo;
@@ -49,7 +47,22 @@ public class OrderController {
 		orderDao.cartInnerDelete(no);
 		return "/cart";
 	}
-	@RequestMapping("/cart")
+	
+	@GetMapping("/cart")
+	public String cart(HttpSession session, Model model) {
+		int member_code = (int) session.getAttribute("member_code");
+		List<CartDto> cartDto = orderDao.cartlist(member_code);
+		if(cartDto == null) {
+			model.addAttribute("cartDto", cartDto);			
+		}
+		int shop_code = orderDao.cart(member_code);
+		if(shop_code > 0) {
+			model.addAttribute("shopDto", orderDao.shopInfo(shop_code));
+			session.setAttribute("shop_code", shop_code);		
+		}		
+		return "client/order/cart";
+	}
+	@PostMapping("/cart")
 	public String cart(@ModelAttribute CartDto cartdto,
 					   @RequestParam int shop_code,
 					   @RequestParam int radiomenu,
@@ -78,6 +91,8 @@ public class OrderController {
 			List<SubMenuDto> submenudtolist = orderDao.getsubmenu(i,shop_code);	
 			System.out.println(submenudtolist);
 		}
+		
+		
 		//주 메뉴의 정보를 전부 출력하고,
 		//주 메뉴의 번호를 전부 불러다가
 		List<CartDto> cartDto = orderDao.cartlist(member_code);

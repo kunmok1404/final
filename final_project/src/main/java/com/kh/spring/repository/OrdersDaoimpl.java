@@ -285,6 +285,11 @@ public class OrdersDaoimpl implements OrdersDao{
 		return sqlsession.selectList("order.getsubmenu",map);
 	}
 
+	@Override
+	public int cart(int member_code) {
+		return sqlsession.selectOne("order.cart",member_code);
+	}
+
 
 
 

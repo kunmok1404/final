@@ -7,6 +7,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="search" parameterType="int" resultType="memberDto">
 		select * from member where no = #{member_code}
 	</select>
+	<!-- 장바구니에 그냥 접속시 샵번호를 불러오는 코드 -->
+	<select id="cart" parameterType="int" resultType="int">
+		select distinct shop_code from cart where member_code = #{member_code};
+	</select>
 	<!-- 장바구니 시퀀스 받아오는 코드 -->
 	<select id="getcartseq" resultType="int">
 		select cart_seq.nextval from dual
