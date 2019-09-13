@@ -39,8 +39,7 @@ public class ShopMenuController {
 	@GetMapping("/list")
 	public String list(HttpSession session, Model model) {
 		//메뉴목록 조회
-		//int member_code = (int)session.getAttribute("member_code");
-		int member_code = 64;
+		int member_code = (int)session.getAttribute("member_code");
 		model.addAttribute("list", menuService.shopMenuList(member_code));
 		return "admin/shop/menu/list";
 	}
@@ -64,8 +63,8 @@ public class ShopMenuController {
 					@ModelAttribute CheckMenuVOList checkMenuVOList,
 					HttpSession session
 			) throws IllegalStateException, IOException {
-		//int shop_code = (int)session.getAttribute("shop_code");
-		int shop_code = 1;
+		int shop_code = (int)session.getAttribute("shop_code");
+		System.out.println("shop_code="+ shop_code);
 		menuRegistVO.setShop_code(shop_code);
 		menuService.menuRegist(menuRegistVO,radioMenuVOList,checkMenuVOList);
 		
@@ -108,8 +107,7 @@ public class ShopMenuController {
 	// 메뉴 상세화면 이동
 	@GetMapping("/detail")
 	public String detail(@RequestParam int menu_code,Model model,HttpSession session) {
-		//int shop_code = (int)session.getAttribute("shop_code");
-		int shop_code = 1;
+		int shop_code = (int)session.getAttribute("shop_code");
 		// 메뉴코드 넘기기
 		model.addAttribute("menu_code", menu_code);
 		

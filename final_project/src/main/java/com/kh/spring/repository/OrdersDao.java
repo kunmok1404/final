@@ -60,6 +60,7 @@ public interface OrdersDao {
 	void cartmenuinsert(CartDto cartdto);
 	List<SubMenuDto> getsubmenu(int checkmenu, int shop_code);
 	int cart(int member_code);
+	List<OrdersDto> getShopOrderList(int no);
 	
 
 }

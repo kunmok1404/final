@@ -62,6 +62,9 @@ dl, ol, ul{
     width:100%;
     height:60px;
 }
+.food-category ul{
+	height:60px;
+}
 .food-list{
     margin-top: 0;
 }
@@ -100,7 +103,9 @@ dl, ol, ul{
     margin-top: 0.5rem;
 }
 .shop-number{
-    margin-left: 3%;
+    font-weight: bolder;
+	font-size:1.2rem;
+	color:gray;
 }
 .shop-filter{
     margin-left:45%;
@@ -117,7 +122,6 @@ dl, ol, ul{
     background-color: #fafafa;
 }
 .shop-list{
-	margin-left:100px;
     list-style: none;
     padding:10px;
 }
@@ -127,8 +131,8 @@ dl, ol, ul{
     padding: 5px;
     float:left;
     background-color: #ffffff;
-	width: 415px;
-    height:110px;
+	width: 500px;
+    height:160px;
     cursor:pointer;
 }
 .shop-list::after{
@@ -136,44 +140,56 @@ dl, ol, ul{
     display:block;
     clear:both;
 }
-.shop-list li .menu-image{
-    height: 100px;
-    width: 25%;
-    display: inline-block;
-    vertical-align: middle;
+.menu-info{
+	height:160px;
+	margin-left:170px;
 }
-.shop-list li .menu-info{
-    height: 100px;
-    width: 70%;
-    display: inline-block;
-    vertical-align: middle;
+/* .shop-list li .menu-image{ */
+/*     height: 100px; */
+/*     width: 25%; */
+/*     display: inline-block; */
+/*     vertical-align: middle; */
+/* } */
+/* .shop-list li .menu-info{ */
+/*     height: 100px; */
+/*     width: 70%; */
+/*     display: inline-block; */
+/*     vertical-align: middle; */
+/* } */
+.shop-list-img{
+	cursor:pointer;
+    border:1px solid lightgray;
+    padding: 5px;
+    float:left;
+    background-color: #ffffff;
+	width: 150px;
+    height:150px;
+    cursor:pointer;
 }
+
 
 /*매장목록정보표시*/
 .shop-name{
 	padding-top:7px;
-	height:40px;
-	font-size:1.2rem;
+	height:60px;
+	font-weight: bolder;
+	font-size:1.5rem;
+	margin-left:10px;
 }
 .shop-score{
 	height:30px;
-	font-size:0.8rem;
 	color:gray;
 }
 .shop-review{
 	height:30px;
-	font-size:0.8rem;
 	color:gray;
 }
 .min-price{
 	height:30px;
-	font-size:0.8rem;
 	color:gray;
 }
 .delivery-time{
-	height:30px;
-	margin-left:100px;
-	font-size:0.8rem;
+	height:40px;
 	color:gray;
 }
 /*매장목록정보 사이 | 표시*/
@@ -662,3 +678,154 @@ footer{
 	width:300px;
 }
 
+/* | 표시*/
+#terms-wrapper {
+    cursor:pointer;
+    display: inline-block;
+  }
+.terms-line {
+    background-color:#9C3D39;
+    top:3px;
+    width:3px;
+    height:25px; 
+    margin-right: 10px;
+    border-radius:2px;
+    box-shadow:0 1px 3px rgba(0,0,0,.5);
+    position:relative;
+    display: inline-block;
+  }
+  
+  /*입점신청*/
+.header-title{
+	font-weight: bold;
+    font-size: 1.4rem;
+}
+.menu-regist-table{
+	width:60%;
+}
+.menu-regist-table td{
+	height:35px;
+}
+.menu-regist-table input{
+	height:40px;
+	padding-left:10px;
+}
+.menu-regist-table .title{
+	
+    font-size: 1.3rem;
+    background-color:#ab5a5a;
+    color:white;
+   	width:30%;
+}
+.menu-regist-table img{
+	width:100px;
+}
+
+/*입점절차*/
+.regist-wrapper{
+	margin-left:280px;
+	width:70%;
+}
+.regist-wrapper .shop-apply-img{
+	width:100%;
+}
+.explan-title{
+	font-weight: bold;
+	font-size: 1.7rem;
+}
+.shop_apply_btn button{
+	width:20%;
+	margin-top:20px;
+}
+.apply-check-title img{
+	width:50px;
+}
+.regist_result{
+	min-height:600px;
+}
+.regist_result img{
+	height:400px;
+}
+.regist_result a{
+	width:200px;
+	background-color:#7aa0bd;
+}
+
+/*login*/
+.adminLogin-title{
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bolder;
+    color:#9C3D39;
+    margin-top: 100px;
+}
+.admin-id{
+    font-size: 1.5rem;
+    vertical-align: middle;
+}
+.login-btn{
+    background-color: #9C3D39;
+    font-size: 1.5rem;
+    color:whitesmoke;
+    padding: 10px;
+}
+.login-table td{
+    vertical-align: middle;
+    height:50px;
+}
+.idpw input{
+	width:95%;
+	height:50px;
+}
+.idpw-2 input{
+	height:50px;
+}
+.idpw select{
+	width:95%;
+	height:50px;
+}
+.login-bottom{
+    border-top:2px solid #9C3D39;
+}
+.login-text{
+    color:red;
+    margin-top:10px;
+    font-weight: bolder;
+    font-size:1.2rem;
+}
+input[name=remember]{
+	margin-top:10px;
+	margin-left:55%;
+	text-align:left;
+	width:30px;
+}
+.save-id{
+	font-weight: bolder;
+}
+
+/*hr색상*/
+.hr{
+	border-bottom:4px solid #9C3D39;
+}
+
+/*로그인*/
+.login-text{
+	color:black;
+	margin-right:10px;
+}
+
+/*회원가입*/
+.regist-btn{
+	width:300px;
+	height:50px;
+	font-size:1.2rem;
+	font-weight: bolder;
+	background-color:#7aa0bd;
+}
+.terms-agree-title{
+	font-size:1.4rem;
+	font-weight: bolder;
+}
+.terms-agree{
+	font-size:1.3rem;
+}

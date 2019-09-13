@@ -29,19 +29,18 @@
 					}
 				})
 			}
-			
 		})
 		
 		// 삭제버튼 클릭시
-		$(".delete_menu").click(function(){
-			var result = confirm("메뉴를 삭제하시겠습니까?");
+		$(".delete_shop").click(function(){
+			var result = confirm("매장을 삭제하시겠습니까?");
 			var $this = $(this);
-			var menu_code = $(this).attr("data-no");
+			var shop_code = $(this).attr("data-no");
 			if(result){
 				$.ajax({
-					url : "${pageContext.request.contextPath}/shop_admin/menu/delete_menu",
+					url : "${pageContext.request.contextPath}/super_admin/shop/delete_shop",
 					data : {
-						menu_code : menu_code,
+						shop_code : shop_code,
 					},
 					success : function(response){
 						alert(response);
@@ -167,7 +166,7 @@
 		 	</c:if>
 		 	</c:forEach>
 		 	</td>
-		 	<td><a href="${pageContext.request.contextPath}/super_admin/shop/detail?no=${list.no }">${list.company_name }</a></td>
+		 	<td><a href="${pageContext.request.contextPath}/super_admin/shop/detail?no=${list.no }">${list.shop_name }</a></td>
 		 	<c:choose>
 				<c:when test="${list.apply_status eq '승인대기'}">
 					<td class="text-danger">${list.apply_status}</td>
@@ -188,7 +187,7 @@
 		 		<c:if test="${list.apply_status eq '승인대기'}">
 					<button class="btn btn-sm btn-primary apply_menu" data-no="${list.no}">승인</button>
 				</c:if>
-				<button class="btn btn-sm btn-danger delete_menu" data-no="${list.no}">삭제</button>
+				<button class="btn btn-sm btn-danger delete_shop" data-no="${list.no}">삭제</button>
 			</td>
 		 </tr>
 		</c:forEach>	

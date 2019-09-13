@@ -289,6 +289,11 @@ public class OrdersDaoimpl implements OrdersDao{
 	public int cart(int member_code) {
 		return sqlsession.selectOne("order.cart",member_code);
 	}
+	// shop_code로 해당 주문내역 전부조회
+	@Override
+	public List<OrdersDto> getShopOrderList(int shop_code) {
+		return sqlsession.selectList("order.getShopOrderList", shop_code);
+	}
 
 
 

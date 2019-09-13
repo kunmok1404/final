@@ -60,7 +60,7 @@
       <div class="border border-bottom filter-wrap">
         <div class="container filter">
           <div class="offset-1 col-md-10">
-            <span class="shop-number">음식점 00곳을 찾았습니다.</span>
+            <span class="shop-number">음식점 <span class="text-primary">${shop_count}</span>&nbsp곳을 찾았습니다.</span>
             <span class="shop-filter">
               <span class="dropdown">
                 <a class="btn btn-default dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
