@@ -55,6 +55,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from review where no=#{review_code} order by no desc
 	</select>
 	
+	<!-- order_code로 리뷰정보 조회 -->
+	<select id="getReivewInfo" parameterType="int" resultType="reviewDto">
+		select * from review where order_code=#{order_code}
+	</select>
+	
 	<!-- 리뷰조회수 증가 -->
 	<update id="read" parameterType="int">
 		update review set read=read+1 where no=#{review_code}

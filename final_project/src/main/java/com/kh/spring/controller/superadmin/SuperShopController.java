@@ -58,15 +58,23 @@ public class SuperShopController {
         model.addAttribute("keyword", keyword);
         model.addAttribute("pageing", pageing);
         
-		return "admin/super/shop/shop_info";
+		return "admin/super/shop/list";
 	}
 	
 	// 매장관리에서 승인버튼 클릭시
 	@GetMapping("/apply")
 	@ResponseBody
 	public String apply(@RequestParam int shop_code) {
-		shopDao.apply(shop_code);
+		shopService.apply(shop_code);
 		return "승인이 완료되었습니다.";
+	}
+	
+	// 매장관리에서 삭제버튼 클릭시
+	@GetMapping("/delete_shop")
+	@ResponseBody
+	public String delete(@RequestParam int shop_code) {
+		shopService.deleteShop(shop_code);
+		return "매장이 삭제되었습니다.";
 	}
 	
 	// 매장정보수정

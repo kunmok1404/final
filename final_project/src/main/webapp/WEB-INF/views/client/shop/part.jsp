@@ -14,20 +14,22 @@
 <c:forEach var="shop" items="${shop_list}">
 	<li data-no="${shop.no}">
 	  <div class="menu-image">
-	      <img class="review-img" src="${pageContext.request.contextPath}/review/review_img?files_code=${shop.shop_img}">
+	      <img class="shop-list-img" src="${pageContext.request.contextPath}/review/review_img?files_code=${shop.shop_img}">
 	  </div>
-	  <div class="menu-info pl-2">
+	  <div class="menu-info">
 	    <div class="shop-name">${shop.shop_name}</div>
-	    <div>
-	    	<span class="shop-score">평점</span>
+	    <div class="shop-score">
+	    	<span>평점</span>
 	    	<div id="line-shop">
               <div class="line"></div>
             </div>
 	    	<span class="shop-review">리뷰243</span>
 	    </div>
-	    <div class="pt-2">
-	    	<span class="min-price">최소주문금액 : 9000원</span>
-	    	<span class="delivery-time">40~50분</span>
+	    <div class="min-price">
+	    	<span>최소주문금액 : 9000원</span>
+	    </div>
+	    <div class="delivery-time">
+	    	<span>예상배달시간 : 40~50분</span>
 	    </div>
 	  </div>
 	</li>

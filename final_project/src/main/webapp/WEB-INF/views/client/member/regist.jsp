@@ -42,13 +42,11 @@
 		
 		//pw 입력창에 blur 이벤트가 발생하면 ajax통신으로 checkPW(정규표현식 검사)실행
 		$("input[name=pw]").blur(function(){
-// 			alert("비밀번호");
 			checkPW();
 		});
 		
 		//pw_check 입력창에 blur 이벤트가 발생하면 ajax통신으로 PWOK(비빌번호 확인)실행
 		$("input[name=pw_check]").blur(function(){
-// 			alert("비밀번호확인");
 			PWOK();
 		});
 		
@@ -218,118 +216,143 @@
 	
 </script>
 
-<style>
-	.regist{
-		width: 800px;
-		margin: auto;
-	}
-	
-	.legend{
-		text-align: center;
-	}
-	
-	#email_address{
-		text-align: center;
-	}
+<div class="container">
+	<form action="find_pw" method="post">
+ 	<div class="row">
+       <div class="col-md-12">
+         <div class="adminLogin-title">회원가입</div>
+       </div>
+     </div><hr class="hr"><br>
 
-</style>
+	<div class="row">
+	   	  <div class="offset-2 col-md-8">
+	   	  	<div class="top-title">
+				<div id="terms-wrapper">
+		          <div class="terms-line"></div>
+		        </div>
+			    <span class="terms-agree-title">회원정보 입력</span>
+	        </div>
+	   	  </div>
+   	  </div>
 
-<div class="regist">
-	<form action="regist" method="post">
-		<br><br>
-		<legend class="legend">회원가입</legend>
-		<hr><br>
-		<table class="table table-borderless">
-			<tbody>
-				<tr>
-					<td><label for="id">아이디</label></td>
-					<td>
-						<input onblur="checkID();" id="id" type="text" name="id" placeholder="아이디" pattern="^[a-zA-Z0-9!@#$\-_]{6,15}$" required>
-						<!-- 아이디 중복검사 후 메세지 출력, 중복확인 버튼 활성화/비활성화 -->
-						<input type="button" name="id_check_btn" value="중복확인">
-						<div class="idD"></div>
-					</td>
-				</tr>
-				<tr>
-					<td><label for="pw">비밀번호</label></td>
-					<td>
-						<input onblur="checkPW();" id="pw" type="password" name="pw" placeholder="비밀번호" pattern="^[a-zA-Z0-9!@#$\-_]{8,15}$" required>
-						<div class="pwD"></div>
-					</td>
-				</tr>
-				<tr>
-					<td><label for="pw_check">비밀번호 확인</label></td>
-					<td>
-						<input type="password" id="pw_check" name="pw_check" placeholder="비밀번호 확인" pattern="^[a-zA-Z0-9!@#$\-_]{8,15}$" required>
-						<!-- 비밀번호 일치/불일치 문구표시 -->
-						<div class="pw_checkD"></div>
-					</td>
-				</tr>
-				<tr>
-					<td><label for="email">이메일</label></td>
-					<td>
-						<input type="text" name="email" placeholder="이메일" pattern="^[a-zA-Z0-9!@#$\-_.]{6,15}$" required>
-						<span>@</span>
-						<input type="text" name="email_address" id="email_address" pattern="^.*?\..*?$" requried>
-						<select id="email_address_option">
-							<option>--이메일 선택--</option>
-							<option value="">직접입력</option>
-							<option>naver.com</option>
-							<option>gmail.com</option>
-							<option>daum.net</option>
-							<option>nate.com</option>
-							<option>yahoo.com</option>
-						</select>
-						<div class="emailD"></div>
-					</td>
-				</tr>
-				<tr>
-					<td><label for="phone">휴대폰</label></td>
-					<td>
-						<input onblur="checkPHONE();" id="phone" type="tel" name="phone" placeholder="'-'없이 숫자만 입력해주세요." pattern="^01[016-9][0-9]{7,8}$" required>
-						<div class="phoneD"></div>
-					</td>
-				</tr>
-				<tr>
-					<td><label for="address">주소</label></td>
-					<td>
-						<input type="text" name="post" placeholder="우편번호" required readonly>
-						<input type="button" name="post_find" value="주소 찾기"><br>
-						<input type="text" name="basic_addr" placeholder="기본주소" required readonly><br>
-						<input type="text" name="detail_addr" placeholder="상세주소" required>	
-					</td>
-				</tr>
-			</tbody>
-		</table>
-		<br>
-		<legend>약관동의</legend>
-		<hr>
-		<table>
-			<thead>
-			<tr>
-				<th>
-					<input type="checkbox" id="th_AllCheck" onclick="checkAll();">전체 동의<br>
-				</th>
-			</tr>			
-			</thead>
-			<tbody>
-				<tr>
-					<td>
-						<input type="checkbox" name="checkRow" value="${content.IDX}" required>이용약관(필수)<a data-toggle="modal" data-target="#myModal" class="text-primary">&emsp;약관보기</a><br>
-						<input type="checkbox" name="checkRow" value="${content.IDX}" required>개인정보방침(필수)	<a data-toggle="modal" data-target="#myModal" class="text-primary">&emsp;약관보기</a><br>
-						<input type="checkbox" name="checkRow" value="${content.IDX}" required>본인은 만 14세 이상입니다.(필수)<br>
-					</td>
-				</tr>
-				<tr align="center">
-					<td colspan=2>
-						<input type="submit" name="registbtn" value="가입하기">
-						<br><br>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</form>
-</div>
+	<div class="row">
+            <div class="offset-1 col-md-10">
+                <table class="table table-borderless mt-3 text-center login-table">
+                  <tbody>
+                  	<tr>
+               			<td width="20%" class="text-right"><span class="login-text font-weight-bold mr-3">아이디</span></td>
+                  		<td>
+                  			<input onblur="checkID();" class="form-control" id="id" type="text" name="id" placeholder="아이디" pattern="^[a-zA-Z0-9!@#$\-_]{6,15}$" required>
+							<div class="idD"></div>
+						</td>
+						<td>
+							<!-- 아이디 중복검사 후 메세지 출력, 중복확인 버튼 활성화/비활성화 -->
+							<input type="button" name="id_check_btn" class="btn btn-secondary ml-3" value="중복확인">
+						</td>
+                  	</tr>
+                  	<tr>
+						<td width="20%" class="text-right"><span class="login-text font-weight-bold mr-3">비밀번호</span></td>
+						<td>
+							<input onblur="checkPW();" class="form-control" id="pw" type="password" name="pw" placeholder="비밀번호" pattern="^[a-zA-Z0-9!@#$\-_]{8,15}$" required>
+							<div class="pwD"></div>
+						</td>
+					</tr>
+					<tr>
+						<td class="text-right"><span class="login-text font-weight-bold mr-3">비밀번호확인</span></td>
+						<td>
+							<input type="password" class="form-control" id="pw_check" name="pw_check" placeholder="비밀번호 확인" pattern="^[a-zA-Z0-9!@#$\-_]{8,15}$" required>
+							<!-- 비밀번호 일치/불일치 문구표시 -->
+							<div class="pw_checkD"></div>
+						</td>
+					</tr>
+                    <tr>
+                        <td width="10%" class="text-right"><span class="login-text font-weight-bold mr-3">이메일</span></td>
+                        <td>
+                            <input type="text" name="email" class="form-control" placeholder="이메일" pattern="^[a-zA-Z0-9!@#$\-_.]{6,15}$" required>
+                        </td>
+                        <td width="3%">@</td>
+                        <td>
+                        	<input type="text" name="email_address" id="email_address" class="form-control" pattern="^.*?\..*?$" required>
+                        </td>
+                        <td>
+                        	<select id="email_address_option" class="form-control">
+								<option>--이메일 선택--</option>
+								<option>naver.com</option>
+								<option>gmail.com</option>
+								<option>daum.net</option>
+								<option>nate.com</option>
+								<option>yahoo.com</option>
+							</select>
+							<div class="emailD"></div>
+                        </td>
+                    </tr>
+                    <tr>
+						<td class="text-right"><span class="login-text font-weight-bold mr-3">휴대폰</span></td>
+						<td>
+							<input onblur="checkPHONE();" class="form-control" id="phone" type="tel" name="phone" placeholder="'-'없이 숫자만 입력해주세요." pattern="^01[016-9][0-9]{7,8}$" required>
+							<div class="phoneD"></div>
+						</td>
+					</tr>
+					<tr>
+						<td rowspan="3" class="text-right"><span class="login-text font-weight-bold mr-3">주소</span></td>
+						<td>
+							<input type="text" name="post"  class="addr-input form-control" placeholder="우편번호" required readonly>
+						</td>
+						<td><input type="button" name="post_find" value="주소 찾기"></td>
+					</tr>
+					<tr>
+						<td>		
+							<input type="text" name="basic_addr" class="form-control" placeholder="기본주소" required readonly>
+							<input type="text" name="detail_addr" class="form-control" placeholder="상세주소" required>	
+						</td>
+					</tr>
+                  </tbody>
+                </table>
+                
+            </div>
+          </div>
+   	 <br><hr><br>
+   	  
+   	  <div class="row">
+	   	  <div class="offset-2 col-md-8">
+	   	  	<div class="top-title">
+				<div id="terms-wrapper">
+		          <div class="terms-line"></div>
+		        </div>
+			    <span class="terms-agree-title">약관동의</span>
+	        </div>
+	   	  </div>
+   	  </div><br>
+   	  
+   	  <div class="row">
+   	  	<div class="offset-2 col-md-8">
+   	  		<table class="table table-borderless terms-agree">
+   	  			<tbody>
+   	  				<tr>
+   	  					<th>
+							<input type="checkbox" id="th_AllCheck" onclick="checkAll();">전체 동의<br>
+						</th>
+   	  				</tr>
+   	  				<tr>
+						<td>
+							<input type="checkbox" name="checkRow" value="${content.IDX}" required>이용약관(필수)<a data-toggle="modal" data-target="#myModal" class="text-primary">&emsp;약관보기</a><br>
+							<input type="checkbox" name="checkRow" value="${content.IDX}" required>개인정보방침(필수)	<a data-toggle="modal" data-target="#myModal" class="text-primary">&emsp;약관보기</a><br>
+							<input type="checkbox" name="checkRow" value="${content.IDX}" required>본인은 만 14세 이상입니다.(필수)<br>
+						</td>
+					</tr>
+   	  			</tbody>
+   	  		</table>
+   	  	</div>
+   	  </div>
+   	  
+   	  <br><hr class="hr">
+   	  
+   	  <div class="text-center mt-5">
+   	  		<input type="submit" class="btn btn-primary regist-btn" value="가입하기">
+   	  </div>
+   	  
+	   </form>
+</div><br><br><br><br>
 
 <!-- 모달 -->
 <!-- The Modal -->

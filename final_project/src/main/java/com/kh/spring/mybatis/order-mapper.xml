@@ -344,4 +344,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getcoupon" parameterType="int" resultType="int">
 		select count(*) from issue where member_code = #{member_code}
 	</select>
+	<!-- Shop_code로 매장별 주문내역 조회 -->
+	<select id="getShopOrderList" parameterType="int" resultType="ordersDto">
+		select * from orders where shop_code=#{shop_code}
+	</select>
+	
 </mapper>
