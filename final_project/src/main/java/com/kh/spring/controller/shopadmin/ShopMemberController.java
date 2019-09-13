@@ -80,6 +80,8 @@ public class ShopMemberController {
 			) {
 		//세션으로 데이터 받아와서 지우기
 		session.removeAttribute("member_code");
+		session.removeAttribute("shop_code");
+		session.removeAttribute("type");
 		return "redirect:/shop_admin";
 	}
 	

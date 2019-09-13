@@ -28,4 +28,7 @@ public interface ShopDao {
 	List<ShopDto> shop();
 	List<ShopDto> search_name(String sh_name);
 	void apply(int shop_code);
+	int getShopSeq();
+	void deleteShop(int shop_code);
+	int getShopCount(int cat_no);
 }

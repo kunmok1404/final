@@ -113,4 +113,11 @@ public class ReviewDaoImpl implements ReviewDao {
 		sqlSession.update("review.super_reply_status",reviewDto);
 	}
 
+	// 주문코드로 리뷰정보 구하기
+	@Override
+	public ReviewDto getReivewInfo(int order_code) {
+		ReviewDto result = sqlSession.selectOne("review.getReivewInfo", order_code);
+		return result ;
+	}
+
 }

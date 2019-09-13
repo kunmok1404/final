@@ -21,18 +21,15 @@ public class ShopDaoImpl implements ShopDao {
 	@Autowired
 	private SqlSession sqlSession;
 
-	// 留ㅼ옣紐⑸줉 �뜑蹂닿린 �럹�씠吏�
 	@Override
 	public List<ShopDto> ajaxPaging(int start, int end, int cat_no) {
 		Map<String, Integer> map = new HashMap<>();
 		map.put("start", start);
 		map.put("end", end);
 		map.put("cat_no", cat_no);
-		
 		return sqlSession.selectList("shop.list", map);
 	}
 
-	// 移댄뀒怨좊━ 紐⑸줉議고쉶
 	@Override
 	public List<FoodCategoryDto> catList() {
 		return sqlSession.selectList("shop.category");
@@ -44,7 +41,6 @@ public class ShopDaoImpl implements ShopDao {
 		return sqlSession.selectOne("shop.shop_info", no);
 	}
 
-	// 留ㅼ옣�긽�꽭 硫붾돱紐⑸줉
 	@Override
 	public List<MenuDto> menuList(int no) {
 		return sqlSession.selectList("shop.menu", no);
@@ -141,6 +137,24 @@ public class ShopDaoImpl implements ShopDao {
 	@Override
 	public void apply(int shop_code) {
 		sqlSession.update("shop.apply_shop", shop_code);
+	}
+
+	// shop_seq 생성
+	@Override
+	public int getShopSeq() {
+		return sqlSession.selectOne("shop.shop_seq");
+	}
+
+	// 매장정보 삭제
+	@Override
+	public void deleteShop(int shop_code) {
+		sqlSession.delete("shop.deleteShop",shop_code);
+	}
+
+	// 매장 갯수
+	@Override
+	public int getShopCount(int cat_no) {
+		return sqlSession.selectOne("shop.getShopCount",cat_no);
 	}
 
 }

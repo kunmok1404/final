@@ -22,22 +22,6 @@
 
 </script>
 
-<style>
-
-	.find_id{
-		width: 800px;
-		margin: auto;
-	}
-	
-	.legend{
-		text-align: center;
-	}
-
-</style>
-
-
-<!-- 비밀번호 찾기 -->
-<div class="find_id">
 <!-- error 파라미터 유무에 따라 오류메시지를 출력 -->
 <c:if test="${param.error eq 'error'}">
 	<h4>
@@ -46,44 +30,57 @@
 		</font>
 	</h4>
 </c:if>
-	<form action="find_id" method="post">
-		<br><br>
-		<legend class="legend">아이디 찾기</legend>
-		<hr><br>
-		<table class="table table-bordered">
-			<tbody>
-				<tr>
-					<td><label>이메일</label></td>
-					<td>
-						<input type="text" name="email" placeholder="이메일" pattern="^[a-zA-Z0-9!@#$\-_.]{6,15}$" required>
-						<span>@</span>
-						<input type="text" name="email_address" id="email_address" pattern="^.*?\..*?$" requried>
-						<select id="email_address_option">
-							<option>--이메일 선택--</option>
-							<option value="">직접입력</option>
-							<option>naver.com</option>
-							<option>gmail.com</option>
-							<option>daum.net</option>
-							<option>nate.com</option>
-							<option>yahoo.com</option>
-						</select>
-						<div class="emailD"></div>
-					</td>
-					<td>
-						<input type="submit" value="이메일 발송">
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<a href="${pageContext.request.contextPath}"><input type="button" value="홈으로" name="main"></a>
-					</td>
-					<td>
-						<a href="find_pw"><input type="button" value="비밀번호 찾기" name="find_pw"></a>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</form>
-</div>
+
+<div class="container">
+
+ 	<form action="login" method="post">
+ 	<div class="row">
+       <div class="col-md-12">
+         <div class="adminLogin-title">아이디 찾기</div>
+       </div>
+     </div><hr class="hr"><br>
+     
+     <div class="row">
+            <div class="offset-1 col-md-10">
+                <table class="table table-borderless mt-5 text-center login-table">
+                  <tbody>
+                    <tr>
+                        <td width="10%" class="text-right"><span class="admin-id font-weight-bold mr-3">이메일</span></td>
+                        <td class="idpw-2">
+                            <input type="text" name="email" class="form-control" placeholder="이메일" pattern="^[a-zA-Z0-9!@#$\-_.]{6,15}$" required>
+                        </td>
+                        <td width="5%">@</td>
+                        <td class="idpw">
+                        	<input type="text" name="email_address" id="email_address" class="form-control" pattern="^.*?\..*?$" required>
+                        </td>
+                        <td class="idpw">
+                        	<select id="email_address_option" class="form-control">
+								<option>--이메일 선택--</option>
+								<option>naver.com</option>
+								<option>gmail.com</option>
+								<option>daum.net</option>
+								<option>nate.com</option>
+								<option>yahoo.com</option>
+							</select>
+							<div class="emailD"></div>
+                        </td>
+                        <td>
+                        	<input type="submit" value="이메일 발송" class="btn btn-secondary text-white">
+                        </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </div>
+   	  </form><br><br><br><hr class="hr">
+   	  
+   	  <div class="text-center mt-5">
+   	  		<a href="${pageContext.request.contextPath}/member/find_pw" class="btn btn-info ml-3">비밀번호 찾기</a>
+   	  		<a href="${pageContext.request.contextPath}/member/regist" class="btn btn-info ml-3">회원가입</a>
+   	  		<a href="${pageContext.request.contextPath}" class="btn btn-info ml-3">홈으로</a>
+   	  </div>
+   	  
+ </div><br><br><br><br><br>
+
 
 <jsp:include page="/WEB-INF/views/template/client/footer.jsp"></jsp:include>

@@ -33,7 +33,7 @@ public class ShopDto {
 	private String start_time; 
 	private String finish_time;
 	private String reason; 
-	private double location_x,location_y;
+//	private double location_x,location_y;
 	private int shop_img,business_regist,sale_regist;
 	private int score;
 }

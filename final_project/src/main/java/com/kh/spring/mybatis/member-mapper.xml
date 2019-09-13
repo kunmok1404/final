@@ -13,8 +13,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	<!-- 회원가입 regist(등록) -->
  	<insert id="regist" parameterType="memberDto">
  		insert into member values(member_seq.nextval, null, #{id}, #{pw}, #{email}, #{phone}, 
- 				#{post}, #{basic_addr}, #{detail_addr}, '일반', '고객','일반', sysdate, sysdate, sysdate, 0, '고객', #{email_address}, null)
+ 				#{post}, #{basic_addr}, #{detail_addr}, '일반', '고객','일반', sysdate, sysdate, sysdate, 0, '승인완료', #{email_address}, null)
  	</insert>
+ 	
+ 	<!-- 매장입점신청 업주회원가입 가등록(승인대기) -->
+ 	<insert id="shop_apply_regist" parameterType="memberDto">
+ 		insert into member values(member_seq.nextval, #{shop_code}, #{id}, #{pw}, null, null, 
+ 				null, null, null, '일반', '업주','일반', sysdate, sysdate, sysdate, 0, '승인대기', null, null)
+ 	</insert>
+ 	
+ 	<!-- 매장승인시 업주회원정보 변경(승인대기->승인완료) -->
+ 	<update id="shop_apply_ok" parameterType="int">
+ 		update member set apply_status='승인완료' where shop_code=#{shop_code}
+ 	</update>
  	
  	<!-- 아이디 중복확인 id_check(조회) -->
  	<select id="id_check" parameterType="String" resultType="memberDto">

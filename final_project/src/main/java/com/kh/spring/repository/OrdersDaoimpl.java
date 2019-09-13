@@ -285,6 +285,12 @@ public class OrdersDaoimpl implements OrdersDao{
 		return sqlsession.selectList("order.getsubmenu",map);
 	}
 
+	// shop_code로 해당 주문내역 전부조회
+	@Override
+	public List<OrdersDto> getShopOrderList(int shop_code) {
+		return sqlsession.selectList("order.getShopOrderList", shop_code);
+	}
+
 
 
 
