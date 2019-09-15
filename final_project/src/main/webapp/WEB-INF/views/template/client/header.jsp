@@ -147,7 +147,11 @@
 	              <li>
 	                <a href="${pageContext.request.contextPath}/notice/list" class="mr-2"" class="mr-2">고객센터</a>
 	              </li>
-	              <li><img src="${pageContext.request.contextPath}/resources/image/shopping-cart.png"></li>
+	              <li>
+	              	 <a href="${pageContext.request.contextPath}/order/mycart">
+	              <img src="${pageContext.request.contextPath}/resources/image/shopping-cart.png">
+	             	 </a>
+				  </li>
 	            </ul>          	
           	</c:when>
           	<c:otherwise>
@@ -173,7 +177,11 @@
 	              <li>
 	                <a href="${pageContext.request.contextPath}/notice/list" class="mr-2"" class="mr-2">고객센터</a>
 	              </li>
-	              <li><img src="${pageContext.request.contextPath}/resources/image/shopping-cart.png"></li>
+	              <li>
+	              	<a href="${pageContext.request.contextPath}/order/mycart">
+	            	  <img src="${pageContext.request.contextPath}/resources/image/shopping-cart.png">
+	              	</a>
+	              </li>
 	            </ul>
           	</c:otherwise>
           </c:choose>

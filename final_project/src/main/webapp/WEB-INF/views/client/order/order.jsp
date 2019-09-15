@@ -32,6 +32,36 @@ function change_pay_credit(){
 }
 
 $(function(){
+	$("#allCheck").click(function(){
+		if($("#allCheck").prop("checked")){
+			$(".check").prop("checked",true);
+		}
+		else{
+			$(".check").prop("checked",false);
+		}
+	});	
+	$("form").submit(function(e){
+		var result = $("#allCheck").prop("checked");
+		var result2 = $("#okcheck").prop("checked");
+		if(result){
+			if(result2){
+				alert("결제를 시작합니다");
+			}else{
+				e.preventDefault();
+				alert("개인정보 수집 및 이용동의를 읽은 후 주문해주세요");	
+			}
+		}
+		else{
+			e.preventDefault();
+			alert("상품을 전부 선택 후 주문해주세요");					
+		}
+	});
+	
+	$("#chec").click(function(){
+		$("#okcheck").prop("checked",true);
+	});
+	
+	
 	$(".button").click(function(e){
 		var check = $(".button").attr("id");
 		e.preventDefault();
@@ -104,6 +134,9 @@ $(function(){
 	$(".total").text(menu_price+sub_price);
 	$("#total_price").val(menu_price+sub_price);
 });
+
+
+
 
 //신용카드 결제시 변경되는 값
 
@@ -181,7 +214,7 @@ $(function(){
 		<table>
 			<thead>
 				<tr>
-					<th><input type="checkbox"></th>
+					<th><input type="checkbox" id="allCheck"></th>
 					<th>전체선택</th>
 					<th>메뉴</th>
 					<th>수량</th>
@@ -191,18 +224,23 @@ $(function(){
 			<tbody>
 			<c:forEach var="cart" items="${cartList}" varStatus="status1">
 				<tr class="ta">
-					<td><input type="checkbox"></td>
+					<td><input type="checkbox" class="check"></td>
 					<td>
 						<input type="hidden" name="main[${status1.index}].title" value="${cart.title}">
 						<input type="hidden" name="main[${status1.index}].menu_name" value="${cart.menu_name}">
 						<input type="hidden" name="main[${status1.index}].menu_amount" value="${cart.menu_amount}">
 						<input type="hidden" class="mp2" name="main[${status1.index}].menu_price" value="${cart.menu_price}">
 					<img src="http://placehold.it/100x100"></td>
-					<td>${cart.menu_name}
+					<td>${cart.menu_name}  ${cart.menu_price}원
+					<hr>
 					필수<br>
-							${cart.menu_name}  ${cart.menu_price}원
-							<hr>
-							선택<br>
+							<c:forEach var="cartsub" items="${cart.list}" varStatus="status2">
+								<c:if test="${cartsub.sub_type eq '필수'}">
+								${cartsub.sub_name} ${cartsub.sub_price}원
+								</c:if>
+							</c:forEach>
+					<br>
+					선택<br>
 							<c:forEach var="cartsub" items="${cart.list}" varStatus="status">
 								<input type="hidden" name="main[${status1.index}].list[${status.index}].no" value="${cartsub.no}">
 								<input type="hidden" name="main[${status1.index}].list[${status.index}].sub_type" value="${cartsub.sub_type}">
@@ -210,18 +248,14 @@ $(function(){
 								<input type="hidden" name="main[${status1.index}].list[${status.index}].sub_name" value="${cartsub.sub_name}">
 								<input type="hidden" class="sub_price" name="main[${status1.index}].list[${status.index}].sub_price" value="${cartsub.sub_price*cartsub.sub_amount}">
 								<input type="hidden" name="main[${status1.index}].list[${status.index}].sub_amount" value="${cartsub.sub_amount}">
-									<c:if test="${cartsub.sub_type=='선택'}">
-									${cartsub.sub_name} x ${cartsub.sub_amount} 개  ${cartsub.sub_price * cartsub.sub_amount}원<br>
-									</c:if>	
 							</c:forEach>
-							<hr>
-							추가<br>
-							<c:forEach var="cartsub" items="${cart.list}">
-									<c:if test="${cartsub.sub_type=='추가'}">
-									${cartsub.sub_name} x ${cartsub.sub_amount} 개  ${cartsub.sub_price * cartsub.sub_amount}원<br>
-									</c:if>	
+							<c:forEach var="cartsub" items="${cart.list}" varStatus="status2">
+								<c:if test="${cartsub.sub_type eq '선택'}">
+								${cartsub.sub_name} ${cartsub.sub_price}원
+								<br>
+								</c:if>
 							</c:forEach>
-							<hr>
+						<hr>
 					</td>
 					<td>${cart.menu_amount}</td>
 					<td><span class="pr"></span>원</td>
@@ -254,10 +288,10 @@ $(function(){
 			<tbody>
 				<tr>
 					<td><span class="total"></span>원</td>
-					<td>5000원<input type="hidden" name="discount_price" value="5000"></td>
+					<td>0원<input type="hidden" name="discount_price" value="0"></td>
 					<td>${shopDto.delivery_price}원</td>
-					<td>${total_price + shopDto.delivery_price-5000}원
-					<input type="hidden" name="total-price" value="${total_price + shopDto.delivery_price -5000}"></td>
+					<td>${total_price + shopDto.delivery_price}원
+					<input type="hidden" name="total-price" value="${total_price + shopDto.delivery_price}"></td>
 				</tr>
 			</tbody>
 
@@ -285,16 +319,11 @@ $(function(){
 	<button type="button" id="credit_card" onclick="change_pay_credit();">신용카드</button>
 	<hr>
 	<div>
-		<input type="checkbox">
+		<input type="checkbox" id="okcheck" disabled>
 		<h4>개인정보 수집 및 이용동의(필수)</h4>
-		<a href="#">(내용보기)</a>
+		<a href="#" id="chec">(내용보기)</a>
 	</div>
 	<br>
-	<div>
-		<input type="checkbox">
-		<h4>개인정보 제3자 제공 동의(필수)</h4>
-		<a href="#">(내용보기)</a>
-	</div>
 	<br> <button type="button" class="button" id="check" disabled="">주문완료</button>
 </form>
 </div>

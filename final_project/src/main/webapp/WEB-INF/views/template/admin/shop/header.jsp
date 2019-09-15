@@ -83,7 +83,7 @@
             <li ${url == '/shop_admin/notice/list' ? 'class="active"' : ''}><a href="${pageContext.request.contextPath}/shop_admin/notice/list">공지사항</a></li>
             <li><a href="#">매장관리</a></li>
             <li ${url == '/shop_admin/menu/list' ? 'class="active"' : ''}><a href="${pageContext.request.contextPath}/shop_admin/menu/list">메뉴관리</a></li>
-            <li><a href="#">주문관리</a></li>
+            <li><a href="${pageContext.request.contextPath}/shop_admin/order/list">주문관리</a></li>
             <li ${url == '/shop_admin/chart/order' ? 'class="active"' : ''}><a href="${pageContext.request.contextPath}/shop_admin/chart/order">통계</a></li>
             <li ${url == '/shop_admin/review/list' ? 'class="active"' : ''}><a href="${pageContext.request.contextPath}/shop_admin/review/list">리뷰관리</a></li>
             <li ${url == '/shop_admin/ono/list' ? 'class="active"' : ''}><a href="${pageContext.request.contextPath}/shop_admin/ono/list">고객센터</a></li>
