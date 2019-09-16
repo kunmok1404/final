@@ -338,40 +338,76 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			</otherwise>
 		</choose>
 			</if>
+	</select>	
+	<!-- 점주 주문 리스트를 불러오는 코드 -->
+	<select id="shopordersList" parameterType="map" resultType="orderListVo">
+		<![CDATA[
+		select * from 
+		(select rownum rn,A.*from(
+		select DISTINCT * from shop_order_list where shop_code = #{shop_code}
+		]]>
+		<if test="status !='all'">
+		<choose>
+			<when test="type !=null and keyword != null and status ==''">
+				and ${type} like '%'||#{keyword}||'%'
+			</when>
+			<when test="status !=null and type =='' and keyword == ''">
+				and order_status = #{status}
+			</when>
+			<when test="status !=null and type !=null and keyword != null">
+				and ${type} like '%'||#{keyword}||'%' and order_status = #{status}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+		</if>
+		<![CDATA[
+		order by no desc
+		)A)where rn >= #{start} and rn <=#{end}
+		]]> 
 	</select>
-	<!-- 매장 주인의 주문 개수를 불러오는 코드 [뷰 만들어야함] -->
-<!-- 	<select id="shopOrdersCount" parameterType="int" resultType="int"> -->
-<!-- 	<![CDATA[ -->
-<!-- 		select count(*) from order_list	 -->
-<!-- 		]]> -->
-<!-- 			<if test="status !='all'"> -->
-<!-- 			<choose> -->
-<!-- 			<when test="type !=null and keyword != null and status ==''"> -->
-<!-- 				where ${type} like '%'||#{keyword}||'%' -->
-<!-- 			</when> -->
-<!-- 			<when test="status !=null and type =='' and keyword == ''"> -->
-<!-- 				where order_status = #{status} -->
-<!-- 			</when> -->
-<!-- 			<when test="status !=null and type != null and keyword != null"> -->
-<!-- 				where ${type} like '%'||#{keyword}||'%' and order_status = #{status} -->
-<!-- 			</when> -->
-<!-- 			<otherwise>  -->
-<!-- 			</otherwise> -->
-<!-- 		</choose> -->
-<!-- 			</if> -->
-<!-- 			where  -->
-<!-- 	</select> -->
-	<!-- 매장 주인이 주문 정보를 개별로 불러오는 코드 -->
-<!-- 	<select id=""> -->
-<!-- 		select * from order_detail where order_code = #{no} and shop_code = #{shop_code} -->
-<!-- 	</select> -->
+	<!-- 매장 주인의 주문 개수를 불러오는 코드 -->
+	<select id="shopOrdersCount" parameterType="int" resultType="int">
+	<![CDATA[
+		select count(*) from shop_order_list where shop_code = #{shop_code}
+			]]> 
+			<if test="status !='all'">
+			<choose>
+			<when test="type !=null and keyword != null and status ==''">
+				and ${type} like '%'||#{keyword}||'%' 
+			</when>
+			<when test="status !=null and type =='' and keyword == ''">
+				and order_status = #{status} and shop_code = #{shop_code}
+			</when>
+			<when test="status !=null and type != null and keyword != null">
+				and ${type} like '%'||#{keyword}||'%' and order_status = #{status} 
+			</when>
+			<otherwise> 
+			</otherwise>
+		</choose>
+			</if>
+	</select>
 	<!-- 매장 점주가 주문 확인시 보여줄 코드 -->
-<!-- 	<select id="shop_order_result" parameterType="map" resultType="ordersDto"> -->
-<!-- 		select * from orders where no = #{no} and shop_code = #{shop_code} -->
-<!-- 	</select>	 -->
+	<select id="shop_order_result" parameterType="map" resultType="ordersDto">
+		select * from orders where no = #{no} and shop_code = #{shop_code}
+	</select>	
 	<!-- 관리자가 주문 정보를 개별로 불러오는 코드 -->
-	<select id="orderDetail" parameterType="int" resultType="orderDetailDto">
+	
+	<resultMap type="orderDetailDto" id="orderDetail">
+		<result property="order_code" column="order_code"/>
+		<result property="no" column="no"/>
+		<result property="title" column="title"/>
+		<result property="menu_name" column="menu_name"/>
+		<result property="menu_amount" column="menu_amount"/>
+		<result property="menu_price" column="menu_price"/>
+		<collection property="list" column="no" javaType="java.util.ArrayList" ofType="orderSubDetail"
+		select="ordersubdetail"/>
+	</resultMap>
+	<select id="orderDetail" parameterType="int" resultMap="orderDetail">
 		select * from order_detail where order_code = #{no}
+	</select>
+	<select id="ordersubdetail" resultType="orderSubDetail">
+		select * from order_sub_detail where no = #{no}
 	</select>
 	<!-- 주문 번호에 딸린 멤버 정보를 불러오는 코드 -->
 	<select id="orderMember" parameterType="int" resultType="memberDto">
@@ -392,6 +428,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- Shop_code로 매장별 주문내역 조회 -->
 	<select id="getShopOrderList" parameterType="int" resultType="ordersDto">
 		select * from orders where shop_code=#{shop_code}
+	</select>
+	<!-- member_code로 shop_code 조회 -->
+	<select id="getshopcode" parameterType="int" resultType="int">
+		select shop_code from member where no = #{member_code}
 	</select>
 	
 </mapper>

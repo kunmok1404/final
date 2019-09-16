@@ -85,7 +85,7 @@
             <li ${url == '/super_admin/notice/member/search' ? 'class="active"' : ''}><a href="${pageContext.request.contextPath}/super_admin/member/search">회원관리</a></li>
             <li ${url == '/super_admin/shop/shop_info' ? 'class="active"' : ''}><a href="${pageContext.request.contextPath}/super_admin/shop/shop_info">매장관리</a></li>
             <li ${url == '/super_admin/menu/list' ? 'class="active"' : ''}><a href="${pageContext.request.contextPath}/super_admin/menu/list">메뉴관리</a></li>
-            <li><a href="#">주문관리</a></li>
+            <li ${url == '/super_admin/order/list' ? 'class="active"' : ''}><a href="${pageContext.request.contextPath}/super_admin/order/list">주문관리</a></li>
             <li ${url == '/super_admin/coupon/list' ? 'class="active"' : ''}><a href="${pageContext.request.contextPath}/super_admin/coupon/list">프로모션</a></li>
             <li ${url == '/super_admin/chart/order' ? 'class="active"' : ''}><a href="${pageContext.request.contextPath}/super_admin/chart/order">통계</a></li>
             <li ${url == '/super_admin/commission/list' ? 'class="active"' : ''}><a href="${pageContext.request.contextPath}/super_admin/commission/list">정산관리</a></li>
