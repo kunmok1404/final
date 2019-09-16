@@ -3,7 +3,6 @@ package com.kh.spring.controller;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -27,12 +26,10 @@ import com.kh.spring.KakaoPay.KakaoPaySuccessVO;
 import com.kh.spring.KakaoPay.KakaopayReturnVo;
 import com.kh.spring.entity.CartDto;
 import com.kh.spring.entity.CartListVO;
-import com.kh.spring.entity.CartSubDto;
 import com.kh.spring.entity.CartSubListVo;
 import com.kh.spring.entity.OrderDetailDto;
 import com.kh.spring.entity.OrderDetailListVo;
 import com.kh.spring.entity.OrderSubDetail;
-import com.kh.spring.entity.OrderSubDetailListVo;
 import com.kh.spring.entity.OrdersDto;
 import com.kh.spring.entity.SubMenuDto;
 import com.kh.spring.repository.OrdersDao;
@@ -49,7 +46,22 @@ public class OrderController {
 		orderDao.cartInnerDelete(no);
 		return "/cart";
 	}
-	@RequestMapping("/cart")
+	
+	@GetMapping("/mycart")
+	public String cart(HttpSession session, Model model){
+		int member_code = (int) session.getAttribute("member_code");
+		if(member_code>0) {
+			int shop_code = orderDao.cart(member_code);
+			List<CartDto> cartDto = orderDao.cartlist(member_code);
+				if(cartDto != null&&shop_code > 0) {
+					model.addAttribute("cartDto", cartDto);			
+					model.addAttribute("shopDto", orderDao.shopInfo(shop_code));
+					session.setAttribute("shop_code", shop_code);		
+				}	
+		}
+		return "client/order/cart";
+	}
+	@PostMapping("/cart")
 	public String cart(@ModelAttribute CartDto cartdto,
 					   @RequestParam int shop_code,
 					   @RequestParam int radiomenu,
@@ -60,29 +72,32 @@ public class OrderController {
 
 		int cart_seq = orderDao.getcartseq();
 		//메인 메뉴 넣는 코드
+		int cartamount = cartdto.getMenu_amount();
+		int cartprice = cartdto.getMenu_price();
+		int price = cartamount * cartprice;
 		cartdto = CartDto.builder()
 								.no(cart_seq)
 								.member_code(member_code)
 								.shop_code(shop_code)
 								.title(cartdto.getTitle())
-								.menu_name(cartdto.getTitle())
+								.menu_name(cartdto.getMenu_name())
 								.menu_amount(cartdto.getMenu_amount())
-								.menu_price(cartdto.getMenu_price())
+								.menu_price(price)
 								.build();
 		orderDao.cartmenuinsert(cartdto);
 		//필수 메뉴 넣는 코드
 		SubMenuDto submenudto = orderDao.getmenu(radiomenu,shop_code);
 		submenudto.setNo(cart_seq);
 		orderDao.cartinsert(submenudto);
+		//선택 메뉴 넣는 코드
 		for(int i : checkmenu) {
-			List<SubMenuDto> submenudtolist = orderDao.getsubmenu(i,shop_code);	
-			System.out.println(submenudtolist);
+			SubMenuDto submenudtolist = orderDao.getsubmenu(i,shop_code);	
+			submenudtolist.setNo(cart_seq);
+			orderDao.cartinsert(submenudtolist);
 		}
-		//주 메뉴의 정보를 전부 출력하고,
 		//주 메뉴의 번호를 전부 불러다가
 		List<CartDto> cartDto = orderDao.cartlist(member_code);
 		model.addAttribute("cartDto", cartDto);
-		//추가 메뉴를 타입별로 출력	
 		model.addAttribute("shopDto", orderDao.shopInfo(shop_code));
 		session.setAttribute("shop_code", shop_code);
 		return "client/order/cart";
@@ -106,6 +121,51 @@ public class OrderController {
 		session.setAttribute("total_price", total_price);
 		return "client/order/order";
 	}
+	
+	//바로 주문시 나오는 페이지
+	@PostMapping("/direct_order")
+	public String dorder(@ModelAttribute CartDto cartdto,
+			   @RequestParam int shop_code,
+			   @RequestParam int radiomenu,
+			   @RequestParam List<Integer> checkmenu,
+			   HttpSession session, Model model) {
+		
+		int member_code = (int) session.getAttribute("member_code");
+
+		int cart_seq = orderDao.getcartseq();
+		//메인 메뉴 넣는 코드
+		int cartamount = cartdto.getMenu_amount();
+		int cartprice = cartdto.getMenu_price();
+		int price = cartamount * cartprice;
+		cartdto = CartDto.builder()
+								.no(cart_seq)
+								.member_code(member_code)
+								.shop_code(shop_code)
+								.title(cartdto.getTitle())
+								.menu_name(cartdto.getMenu_name())
+								.menu_amount(cartdto.getMenu_amount())
+								.menu_price(price)
+								.build();
+		orderDao.cartmenuinsert(cartdto);
+		//필수 메뉴 넣는 코드
+		SubMenuDto submenudto = orderDao.getmenu(radiomenu,shop_code);
+		submenudto.setNo(cart_seq);
+		orderDao.cartinsert(submenudto);
+		//선택 메뉴 넣는 코드
+		for(int i : checkmenu) {
+			SubMenuDto submenudtolist = orderDao.getsubmenu(i,shop_code);	
+			submenudtolist.setNo(cart_seq);
+			orderDao.cartinsert(submenudtolist);
+		}
+		List<CartDto> cartDto = orderDao.cartlist(member_code);
+		model.addAttribute("shopDto", orderDao.shopInfo(shop_code));
+		model.addAttribute("cartList", cartDto);
+		model.addAttribute("memberDto", orderDao.memberSearch(member_code));
+		model.addAttribute("coupon",orderDao.getcoupon(member_code));
+		
+		return "client/order/order";
+	}
+	
 
 	@PostMapping("/credit_order")
 	public String order(@ModelAttribute OrdersDto ordersDto,
@@ -126,29 +186,23 @@ public class OrderController {
 				.pay_method(ordersDto.getPay_method())
 				.build();
 		orderDao.orderinput(orderDto);
-		
-		System.out.println(vo);
 		for(OrderDetailDto orderdetailvo : vo.getMain()) {
 			//주문 상세 시퀀스 번호 출력
 			int no = orderDao.getdetseq();
 			orderdetailvo.setOrder_code(order_code);
 			orderdetailvo.setNo(no);
-			System.out.println(orderdetailvo);
 			orderDao.orderDetailInput(orderdetailvo);
 			for(OrderSubDetail ordersubdetail : orderdetailvo.getList()) {
 				ordersubdetail.setNo(no);
-				System.out.println(ordersubdetail);
 				orderDao.orderSubDetailInput(ordersubdetail);						
 			}
 		}
-		
-		
+	
 		orderDao.cartDelete(member_code);
 		
 		model.addAttribute("shop_info", orderDao.shopInfo(shop_code));
 		model.addAttribute("orders", orderDao.orderResult(order_code));
 		model.addAttribute("order_detail", orderDao.myOrderDetailList(order_code));
-		model.addAttribute("order_sub_detail",orderDao.myOrderSubDetailList(order_code));
 		model.addAttribute("memberDto", orderDao.memberSearch(member_code));
 
 		return "/client/order/success";
@@ -161,7 +215,6 @@ public class OrderController {
 						   @RequestParam int total_amount, 
 						   @ModelAttribute OrdersDto ordersDto, 
 						   @ModelAttribute OrderDetailListVo vo,
-						   @ModelAttribute OrderSubDetailListVo vo2,
 			HttpSession session, Model model) throws URISyntaxException {
 		// 미리 구해 올 정보
 		int total_price = (int) session.getAttribute("total_price");
@@ -210,7 +263,6 @@ public class OrderController {
 		session.setAttribute("order_no", order_code);// 주문 번호 저장
 		session.setAttribute("order_detail_no", no);
 		session.setAttribute("OrderDetailListVo", vo);// 주문 상세정보 저장
-		session.setAttribute("OrderSubDetailListVo", vo2);
 		session.setAttribute("ordersDto", ordersDto);
 		session.setAttribute("payInfo", kakaopay);
 		session.setAttribute("partner_user_id", partner_user_id);
@@ -228,21 +280,28 @@ public class OrderController {
 		int order_code = (int) session.getAttribute("order_no");
 		int member_code = (int) session.getAttribute("member_code");
 		OrderDetailListVo vo = (OrderDetailListVo) session.getAttribute("OrderDetailListVo");
-		OrderSubDetailListVo vo3 = (OrderSubDetailListVo) session.getAttribute("OrderSubDetailListVo");
 		OrdersDto ordersDto = (OrdersDto) session.getAttribute("ordersDto");
 		OrdersDto orderDto = OrdersDto.builder().no(order_code).member_code(member_code).shop_code(shop_code)
 				.request(ordersDto.getRequest()).discount_price(ordersDto.getDiscount_price()).total_price(total_price)
 				.pay_method(ordersDto.getPay_method()).build();
 		orderDao.orderinput(orderDto);
-//		orderDao.orderDetailInput(order_code, vo);
-//		orderDao.orderSubDetailInput(vo3);
+		for(OrderDetailDto orderdetailvo : vo.getMain()) {
+			//주문 상세 시퀀스 번호 출력
+			int no = orderDao.getdetseq();
+			orderdetailvo.setOrder_code(order_code);
+			orderdetailvo.setNo(no);
+			orderDao.orderDetailInput(orderdetailvo);
+			for(OrderSubDetail ordersubdetail : orderdetailvo.getList()) {
+				ordersubdetail.setNo(no);
+				orderDao.orderSubDetailInput(ordersubdetail);						
+			}
+		}
 		orderDao.cartDelete(member_code);
 		
 
 		model.addAttribute("shop_info", orderDao.shopInfo(shop_code));
 		model.addAttribute("orders", orderDao.orderResult(order_code));
 		model.addAttribute("order_detail", orderDao.myOrderDetailList(order_code));
-		model.addAttribute("order_sub_detail",orderDao.myOrderSubDetailList(order_code));
 		model.addAttribute("memberDto", orderDao.memberSearch(member_code));
 
 		RestTemplate template = new RestTemplate();
@@ -289,22 +348,28 @@ public class OrderController {
 		int shop_code = (int) session.getAttribute("shop_code");
 		int order_code = (int) session.getAttribute("order_no");
 		int member_code = (int) session.getAttribute("member_code");
-		int no = (int) session.getAttribute("order_detail_no");
 		OrderDetailListVo vo = (OrderDetailListVo) session.getAttribute("OrderDetailListVo");
-		OrderSubDetailListVo vo2 = (OrderSubDetailListVo) session.getAttribute("OrderSubDetailListVo");
 		OrdersDto ordersDto = (OrdersDto) session.getAttribute("ordersDto");
 		OrdersDto orderDto = OrdersDto.builder().no(order_code).member_code(member_code).shop_code(shop_code)
 				.request(ordersDto.getRequest()).discount_price(ordersDto.getDiscount_price()).total_price(total_price)
 				.pay_method(ordersDto.getPay_method()).build();
 		orderDao.orderinput(orderDto);
-//		orderDao.orderDetailInput(no, vo);
-//		orderDao.orderSubDetailInput(vo2);
+		for(OrderDetailDto orderdetailvo : vo.getMain()) {
+			//주문 상세 시퀀스 번호 출력
+			int no = orderDao.getdetseq();
+			orderdetailvo.setOrder_code(order_code);
+			orderdetailvo.setNo(no);
+			orderDao.orderDetailInput(orderdetailvo);
+			for(OrderSubDetail ordersubdetail : orderdetailvo.getList()) {
+				ordersubdetail.setNo(no);
+				orderDao.orderSubDetailInput(ordersubdetail);						
+			}
+		}
 		orderDao.cartDelete(member_code);
 		
 		model.addAttribute("shop_info", orderDao.shopInfo(shop_code));
 		model.addAttribute("orders", orderDao.orderResult(order_code));
 		model.addAttribute("order_detail", orderDao.myOrderDetailList(order_code));
-		model.addAttribute("order_sub_detail",orderDao.myOrderSubDetailList(no));
 		model.addAttribute("memberDto", orderDao.memberSearch(member_code));
 		
 		return "/client/order/success";

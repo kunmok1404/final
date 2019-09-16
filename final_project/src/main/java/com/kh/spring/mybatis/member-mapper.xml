@@ -210,6 +210,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		order by MP.member_code asc
  	</select>
  	
+ 	<!-- 관리자 회원 상세보기 -->
+ 	<select id="infoVO" parameterType="int" resultType="memberInfoVO">
+		select 
+		    MP.member_code, sum(subtotal) point
+		    ,M.no, M.id, M.email, M.email_address, M.phone, M.post, M.basic_addr, M.detail_addr
+		    ,M.grade, M.status, M.regist_date, M.latest_login
+		    ,(select count(*) from issue where member_code = M.no) coupon
+		    ,(select count(*) from oneandone where member_code = M.no) ono
+		    ,(select count(*) from review where member_code = M.no) review
+		    from (
+		        select 
+		            P.member_code, decode(P.use_yn, '사용', -1, '적립', +1) * P.point subtotal
+		        from 
+		            point_detail P
+		    ) MP
+		    inner join Member M on M.no = MP.member_code
+		    left outer join Review R on M.no = R.member_code
+		where M.no = #{no}
+		group by MP.member_code
+		, M.no, M.id, M.email, M.email_address, M.phone, M.post, M.basic_addr, M.detail_addr, M.grade, M.status, M.regist_date, M.latest_login
+		order by MP.member_code asc
+ 	</select>
+ 	
  	<!-- 관리자 회원 탈퇴 기능 -->
  	<delete id="delete" parameterType="memberDto">
  		delete member where no = #{no}
@@ -229,17 +252,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  			(select sum(discount_price) from orders where member_code = #{no})
  		as total_price
  		from dual
- 	</select>
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
+ 	</select> 	
 
 	<!-- 찜한매장 등록 -->
  	<insert id="like" parameterType="memberDto">

@@ -59,7 +59,7 @@
          // 총 주문금액 = 메뉴 총가격 + 서브메뉴 가격
          order.total = order.menu_total + order.sub_total;
          $(".total-price").text(order.total);
-         $("input[name=menu_price]").val(order.total);
+//          $("input[name=menu_price]").val(order.total);
          var result = $("input[name=menu_price]").val();
          alert(result);
          order.sub_total=0;
@@ -128,7 +128,7 @@
       <h4>${menuDto.name}</h4>
     </div>
     <form class="test-form" method="post">
-    <input name="shop_code" type="hidden" value="${shop_code}">
+    <input name="shop_code" type="hidden" value="${menuDto.shop_code}">
     <input type="hidden" name="menu_name" value="${menuDto.name}">
     <input type="hidden" name="title" value="${menuDto.menu_category}">
     <div class="modal-choiceNeed mt-3">

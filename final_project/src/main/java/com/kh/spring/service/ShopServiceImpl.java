@@ -277,7 +277,6 @@ public class ShopServiceImpl implements ShopService {
 	// 매장리스트 VO
 	@Override
 	public List<ShopListVO> ajaxPaging(int start, int end, int cat_no) {
-		
 		List<ShopDto> list = shopDao.ajaxPaging(start, end, cat_no);
 		List<ShopListVO> shop_list = new ArrayList<>();
 		
@@ -364,6 +363,30 @@ public class ShopServiceImpl implements ShopService {
 			shopListVO.setShop_img(shopDto.getShop_img());
 		}	
 		return shopListVO;
+//
+//		List<ShopDto> list = shopDao.ajaxPaging(start, end, cat_no);
+//		List<ShopListVO> shop_list = new ArrayList<>();
+//
+//		for (ShopDto shopDto : list) {
+//			ShopListVO shopListVO = new ShopListVO();
+//			// 리뷰 갯수 구하기
+//			// orders 테이블에서 List조회(orders.no로 review조회가능)
+//			List<OrdersDto> orderList = ordersDao.getShopOrderList(shopDto.getNo());
+//			// 구해온 주문내역을 추출하여 review테이블에서 점수조회후 더함
+//			int count = 0; // 리뷰갯수
+//			int total_score = 0; // 총점
+//			for (OrdersDto ordersDto : orderList) {
+//				// 해당 주문에 대해 review작성이 되어 있다면 점수계산
+//				ReviewDto reviewDto = reviewDao.getReivewInfo(ordersDto.getNo());
+//				if (reviewDto != null) {
+//					total_score += reviewDto.getScore();
+//					count++;
+//				}
+//			}
+//			double average_score = total_score / count; //평균점수
+//			double result_score = Math.round(average_score*10) / 10.0; // 소수점 첫째자리반올림
+
+//		}
 	}
 
 	// 다운로드

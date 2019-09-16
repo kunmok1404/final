@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <jsp:include page="/WEB-INF/views/template/admin/super/header.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/template/admin/super/left/left_member.jsp"></jsp:include>
@@ -11,7 +11,7 @@
 		</div>
 		<span>회원 정보</span>
 	</div>
-	
+
 	<!-- 회원 정보 상세보기 -->
 	<div>
 		<table class="table table-bordered">
@@ -26,9 +26,7 @@
 					<td class="table-active">전화번호</td>
 					<td>${membervo.phone}</td>
 					<td class="table-active">주소</td>
-					<td>
-						${membervo.post}<br>
-						${membervo.basic_addr}<br>
+					<td>${membervo.post}<br> ${membervo.basic_addr}<br>
 						${membervo.detail_addr}
 					</td>
 				</tr>
@@ -45,7 +43,7 @@
 					<td>${membervo.point}</td>
 				</tr>
 				<tr>
-					<td class="table-active">총 구매 금액</td>
+					<td class="table-active">총 사용 금액</td>
 					<td colspan="3">${membervo.total_price}원</td>
 				</tr>
 				<tr>
@@ -63,9 +61,13 @@
 			</tbody>
 		</table>
 		<div class="text-center">
-			<a href="${pageContext.request.contextPath}/super_admin/member/search" class="btn btn-secondary btn-lg mr-5">목록</a>
-	    	<a href="${pageContext.request.contextPath}/super_admin/member/edit?no=${membervo.no}" class="btn btn-primary btn-lg mr-5">수정</a>
-	    	<a href="${pageContext.request.contextPath}/super_admin/member/delete?no=${membervo.no}" class="btn btn-danger btn-lg mr-5">탈퇴</a>
+			<a
+				href="${pageContext.request.contextPath}/super_admin/member/search"
+				class="btn btn-secondary btn-lg mr-5">목록</a> <a
+				href="${pageContext.request.contextPath}/super_admin/member/edit?no=${membervo.no}"
+				class="btn btn-primary btn-lg mr-5">수정</a> <a
+				href="${pageContext.request.contextPath}/super_admin/member/delete?no=${membervo.no}"
+				class="btn btn-danger btn-lg mr-5">탈퇴</a>
 		</div>
 	</div>
 </div>

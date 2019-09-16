@@ -4,6 +4,14 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<script>
+$(function(){
+   // 로그인 버튼 클릭시
+   $(".login-btn").click(function(){
+      $(".login_form").submit();
+   })
+})
+</script>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/cryptojs/components/core-min.js"></script>

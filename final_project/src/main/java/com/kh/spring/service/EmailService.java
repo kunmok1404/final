@@ -15,7 +15,7 @@ public interface EmailService {
 	//비밀번호 찾기
 	void sendCertificationpw(String email) throws MessagingException;
 
-	//
+	//비밀번호 찾기
 //	void find_pw(MemberDto memberDto);
 
 	

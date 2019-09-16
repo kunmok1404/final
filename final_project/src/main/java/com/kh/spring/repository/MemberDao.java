@@ -24,6 +24,7 @@ public interface MemberDao {
 	List<MemberInfoVO> search(String status, String grade, String start_date, String end_date, String type, String keyword);
 	void edit(MemberInfoVO memberInfoVO);
 	MemberDto getInfo(int member_code);
+	MemberInfoVO detail(int no);
 	void like(MyshopDto myshop);
 	void unlike(MyshopDto myshop);
 	List<UsergradeDto> grade();
@@ -38,5 +39,6 @@ public interface MemberDao {
 	void shopMemberApply(MemberDto memberDto);
 	void applyShop(int shop_code);
 	void deleteShopMember(int shop_code);
+//	MemberDto findPassword(MemberDto memberDto);
 
 }

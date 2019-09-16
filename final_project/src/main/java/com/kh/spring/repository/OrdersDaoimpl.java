@@ -278,18 +278,52 @@ public class OrdersDaoimpl implements OrdersDao{
 	}
 
 	@Override
-	public List<SubMenuDto> getsubmenu(int checkmenu, int shop_code) {
+	public SubMenuDto getsubmenu(int checkmenu, int shop_code) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("no", checkmenu);
 		map.put("shop_code", shop_code);
-		return sqlsession.selectList("order.getsubmenu",map);
+		return sqlsession.selectOne("order.getsubmenu",map);
 	}
 
+	@Override
+	public int cart(int member_code) {
+		int value = 0;
+		try {
+			value = sqlsession.selectOne("order.cart",member_code);			
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return value;
+
+	}
 	// shop_code로 해당 주문내역 전부조회
 	@Override
 	public List<OrdersDto> getShopOrderList(int shop_code) {
 		return sqlsession.selectList("order.getShopOrderList", shop_code);
 	}
+
+
+//	@Override
+//	public OrdersDto shoporderResult(int no, int shop_code) {
+//		Map<String, Object> map = new HashMap<>();
+//		map.put("no", no);
+//		map.put("shop_code", shop_code);
+//		return sqlsession.selectOne("order.shop_order_result",map);
+//	}
+
+//	@Override
+//	public int shopordersCount(String status, String type, String keyword) {
+//		Map<String, Object> param = new HashMap<>();
+//		if(status!=null) {
+//		param.put("status", status);			
+//		}
+//		if(type!=null && keyword!=null) {
+//		param.put("type", type);
+//		param.put("keyword", keyword);
+//		}	
+//		return sqlsession.selectOne("order.shopOrdersCount",param);
+//	}
 
 
 

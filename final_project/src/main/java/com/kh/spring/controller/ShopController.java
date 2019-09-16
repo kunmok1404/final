@@ -60,6 +60,7 @@ public class ShopController {
 		int end = page * size;
 		int start = end - size + 1;
 		model.addAttribute("shop_list", shopService.ajaxPaging(start, end, cat_no));
+		
 		return "client/shop/part";
 	}
 	
