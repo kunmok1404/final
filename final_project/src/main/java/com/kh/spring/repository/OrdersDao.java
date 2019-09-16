@@ -15,6 +15,7 @@ import com.kh.spring.entity.OrdersDto;
 import com.kh.spring.entity.ShopDto;
 import com.kh.spring.entity.SubMenuDto;
 import com.kh.spring.entity.TotalVo;
+import com.kh.spring.vo.OrderCountVO;
 import com.kh.spring.vo.OrderVo;
 //주문 관련 Dao
 @Repository
@@ -65,6 +66,6 @@ public interface OrdersDao {
 	OrdersDto shoporderResult(int no, int shop_code);
 	List<OrdersDto> shoporderslist(int shop_code, String status, String type, String keyword, int start, int end);
 	int getshopcode(int member_code);
-	
-
+	void orderCancel(int order_code);
+	List<OrderCountVO> getCount(int shop_code);
 }

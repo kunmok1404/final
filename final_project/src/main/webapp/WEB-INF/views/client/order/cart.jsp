@@ -117,8 +117,16 @@
 
 </script>
 <div class="container">
+	<br>
+	
+	<div class="row">
+       <div class="col-md-12">
+         <div class="adminLogin-title">장바구니</div>
+       </div>
+     </div><hr class="hr"><br>
+     
 	<div class="offset-md-2 col-md-8">
-		<table style="border-style: solid">
+		<table style='height:300px' class="table table-hamburg">
 			<thead>
 				<tr>
 					<td><img src="http://placehold.it/80x80"></td>
@@ -150,19 +158,17 @@
 </div>
 <form action="orderinput" method="post">
 	<div class="container">
-		<div class="offset-md-2 col-md-8">
-			<table class="table" id="ta">
-				<thead>
-					<tr>
-						<th><input type="checkbox" id="allCheck"></th>
-						<th>전체선택</th>
-						<th>메뉴</th>
-						<th>수량</th>
-						<th style="text-align:center" colspan="2">상품금액</th>
-						<th></th>
-					</tr>
-				</thead>
+		<div class="offset-md-2 col-md-8 my-cart">
+			<table class="table table-hamburg" id="ta">
 				<tbody>
+					<tr>
+						<td><input type="checkbox" id="allCheck"></td>
+						<td>전체선택</td>
+						<td>메뉴</td>
+						<td>수량</td>
+						<td style="text-align:center" colspan="2">상품금액</td>
+						<td></td>
+					</tr>
 				<c:choose>	
 					<c:when test="${cartDto != null}">		
 					<c:forEach var="cart" items="${cartDto}" varStatus="status1">
@@ -222,7 +228,7 @@
 					<c:otherwise>
 					<tr>
 						<td colspan = "6" align="center">
-							<h1>비어있습니다</h1>
+							<h3>장바구니가 비어있습니다</h3>
 						</td>
 					</tr>
 					</c:otherwise>					
@@ -246,5 +252,5 @@
 	<div align="center">
 		<input class="btn btn-primary" class="okbtn" type="submit" value="주문하기">
 	</div>
-</form>
+</form><br><br><br>
 <jsp:include page="/WEB-INF/views/template/client/footer.jsp"></jsp:include>

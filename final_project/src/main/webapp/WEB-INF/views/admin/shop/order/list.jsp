@@ -51,9 +51,8 @@ $(function(){
 	  						<option value="all">전체</option>
 	  						<option value="접수대기">접수대기</option>
 	  						<option value="조리중">조리중</option>
-	  						<option value="주문확인">주문확인</option>
 	  						<option value="배달완료">배달완료</option>
-	  						<option value="취소완료">취소완료</option>
+	  						<option value="취소">취소</option>
 	  					</select>
 	  				</td>
 	  				<td width="10%" class="table-active">키워드검색</td>
@@ -116,9 +115,8 @@ $(function(){
 						<select name="order_status" class="status${list.no}" >
   							<option>접수대기</option>
   							<option>조리중</option>
-  							<option>주문확인</option>
  							<option>배달완료</option>
- 							<option>취소완료</option>
+ 							<option>취소</option>
  						</select>
  						<script>
 								$(".status${list.no}").val("${list.order_status}");

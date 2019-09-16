@@ -20,7 +20,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.spring.entity.CategoryDto;
 import com.kh.spring.entity.FilesDto;
+import com.kh.spring.entity.MemberDto;
 import com.kh.spring.entity.MenuDto;
+import com.kh.spring.entity.OrderDetailDto;
+import com.kh.spring.entity.OrderSubDetail;
 import com.kh.spring.entity.OrdersDto;
 import com.kh.spring.entity.ReviewDto;
 import com.kh.spring.entity.ReviewImgDto;
@@ -80,24 +83,58 @@ public class ShopServiceImpl implements ShopService {
 		
 		//주문정보에 있는 review_code로 리뷰정보 조회 후 map에 세팅
 		Map<ReviewDto, List<ReviewImgDto>> map = new HashMap<>();
-		
+		ReviewDto reviewDto = null;
 		// key 세팅
 		for(OrdersDto orderDto : orderList) {
-			ReviewDto reviewDto = reviewDao.getReivewInfo(orderDto.getNo());
-			System.out.println("reviewDto="+reviewDto);
-			map.put(reviewDto, new ArrayList<>());
-		}
-		
-		// value 세팅
-		for(OrdersDto orderDto : orderList) {
-			ReviewDto reviewDto = reviewDao.getReivewInfo(orderDto.getNo());
+			reviewDto = reviewDao.getReivewInfo(orderDto.getNo());
+			
 			if(reviewDto != null) {
-				List<ReviewImgDto> reviewImgList = reviewDao.reviewImg(reviewDto.getNo());
-				map.get(reviewDto).addAll(reviewImgList);
+				// 회원아이디 조회
+				MemberDto memberDto = memberDao.getInfo(reviewDto.getMember_code());
+				reviewDto.setMember_id(memberDto.getId());
+				//시간 자르기
+				String time = reviewDto.getRegist_date().substring(0, 16);
+				reviewDto.setRegist_date(time);
+				// 메뉴조합
+				OrdersDto ordersDto = ordersDao.orderInfo(reviewDto.getOrder_code());
+				List<OrderDetailDto> orderDetailList = ordersDao.orderDetail(ordersDto.getNo());
+				if(orderDetailList != null) {
+					String menu = "";
+					for(OrderDetailDto orderDetailDto : orderDetailList) {
+						menu += orderDetailDto.getMenu_name() + orderDetailDto.getMenu_amount();
+						if(orderDetailDto.getList() != null) { 
+							menu += "(";
+							for(OrderSubDetail orderSubDetail : orderDetailDto.getList()) {
+								menu += orderSubDetail.getSub_name() + orderSubDetail.getSub_amount();
+							}
+							menu += ")";
+						}
+					}
+					reviewDto.setReview_menu(menu);
+				}
+				// value세팅
+				if(reviewDto != null) {
+					List<ReviewImgDto> reviewImgList = reviewDao.reviewImg(reviewDto.getNo());
+					map.put(reviewDto, reviewImgList);
+					}
+				}
 			}
-		}
 		return map;
-	}
+		}
+//		// value 세팅
+//		for(OrdersDto orderDto : orderList) {
+//			if(reviewDto != null) {
+//				System.out.println("reviewDto="+reviewDto);
+//				List<ReviewImgDto> reviewImgList = reviewDao.reviewImg(reviewDto.getNo());
+//				System.out.println("reviewImgList="+reviewImgList);
+//				for(ReviewImgDto reviewImgDto : reviewImgList) {
+//					if(reviewImgDto != null)
+//					map.get(reviewDto).add(reviewImgDto);
+//				}
+//			}
+//		}
+		
+//	}
 
 	// 모달창정보 불러오기
 	@Override

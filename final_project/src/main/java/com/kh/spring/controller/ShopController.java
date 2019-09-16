@@ -73,7 +73,7 @@ public class ShopController {
 		// 메뉴정보
 		model.addAttribute("map", shopService.menuList(no)); 
 		// 리뷰정보
-		System.out.println(shopService.reviewList(no));
+		System.out.println("reveiwList="+shopService.reviewList(no));
 		model.addAttribute("review_map", shopService.reviewList(no));
 		// 약관정보
 		model.addAttribute("terms1", termsDao.terms1());

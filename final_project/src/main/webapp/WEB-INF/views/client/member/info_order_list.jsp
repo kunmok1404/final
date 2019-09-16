@@ -12,14 +12,25 @@
 		
 		// 주문취소버튼 클릭시
 		$(".order-cancel").click(function(){
-			var result = alert("주문을 취소하시겠습니까?");
-			console.log(result);
+			var result =confirm("주문을 취소하시겠습니까?");
+			var $this = $(this);
+			var order_code = $(this).attr("data-no");
 			if(result){
-				alert("취소누름");
-				location.href="${pageContext.request.contextPath}";
+				$.ajax({
+					url : "${pageContext.request.contextPath}/member/cancel",
+					data : {
+						order_code : order_code,
+					},
+					success : function(response){
+						alert(response);
+						$this.parent().prev().text("취소완료").css("color","red").removeClass("text-info");
+						$this.remove();
+					}
+				})
 			}
-		})
 		
+		})
+	
 	})
 	
 
@@ -70,7 +81,7 @@
                 		<a href="${pageContext.request.contextPath}/review/write?order_code=${order_map.get('no')}" class="btn btn-sm btn-primary">리뷰작성</a>
                 	</c:if>
                 	<c:if test="${order_map.get('order_status') eq '접수대기'}">
-                		<a class="btn btn-sm btn-danger order-cancel text-white">주문취소</a>
+                		<a class="btn btn-sm btn-danger order-cancel text-white" data-no="${order_map.get('no')}">주문취소</a>
                 	</c:if>
                 </td>
               </tr>

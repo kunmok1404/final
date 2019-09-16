@@ -217,7 +217,7 @@
 </script>
 
 <div class="container">
-	<form action="find_pw" method="post">
+	<form action="regist" method="post">
  	<div class="row">
        <div class="col-md-12">
          <div class="adminLogin-title">회원가입</div>

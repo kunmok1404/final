@@ -181,8 +181,8 @@
               <c:if test="${not empty review or review ne null}">
               <div class="review">
                 <div class="review-info">
-                  <div class="review-id">
-                    <span>${review.key.member_code}님</span>
+                  <div class="review-id font-weight-bold">
+                    <span>${review.key.member_id}님</span>
                     <div id="line-shop">
 		              <div class="line"></div>
 		            </div>
@@ -192,8 +192,8 @@
 		            </div>
                     <span>${review.key.regist_date}</span>
                   </div>
-                  <div class="review-menu">
-                    후라이드1(무1,콜라1 추가)/간장후라이드2(생맥주1 추가)
+                  <div class="review-menu font-weight-bold">
+                    ${review.key.review_menu}
                   </div>
                 </div>
                 <div class="review-content">

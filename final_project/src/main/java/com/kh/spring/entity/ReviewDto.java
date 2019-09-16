@@ -20,4 +20,6 @@ public class ReviewDto {
 	private String reply_content; // 답변내용
 	private String regist_date; //등록일
 	private String edit_date; // 수정일
+	private String member_id; // 회원아이디
+	private String review_menu; // 메뉴 합친것
 }
