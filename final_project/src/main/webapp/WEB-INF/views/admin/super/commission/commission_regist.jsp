@@ -7,7 +7,8 @@
     
     <div class="wrapper mt-3">
     <form method="post">
-    <table>
+    <div >
+    <table style=" margin: auto;" >
     	<tbody>
 			<tr class="table text-center">
 				<th class="table-primary">수수료율</th>
@@ -16,10 +17,14 @@
 			<tr class="table text-center">
 				<th class="table-primary">정산일</th>
 				<th><input type="number" min="0" max="29">일</th>
-			</tr>   
+			</tr> 
+			<tr class="table text-center">
+				<th colspan="2"><input type="submit" value="변경" class="btn btn-primary"></th>
+			</tr>  
     	</tbody>
     </table>
-    <input type="submit" value="변경">
+    
+    </div>
     </form>
     </div>
 <jsp:include page="/WEB-INF/views/template/admin/super/footer.jsp"></jsp:include>

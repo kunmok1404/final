@@ -66,7 +66,7 @@
 					</tr>
 					<tr>
 						<td><font color="red">결제금액</font></td>
-						<td>${orders.total_price + shop_info.delivery_price}원</td>
+						<td>${orders.total_price + shop_info.delivery_price - orders.discount_price}원</td>
 					</tr>
 					<tr>
 						<td>결제방식</td>
@@ -101,7 +101,7 @@
 		<hr>
 	</div>
 	<div align="center">
-		<h2>메인페이지로 이동</h2>
+		<h2><a href="${pageContext.request.contextPath}">메인페이지로 이동</a></h2>
 	</div>
 </div>
 <jsp:include page="/WEB-INF/views/template/client/footer.jsp"></jsp:include>

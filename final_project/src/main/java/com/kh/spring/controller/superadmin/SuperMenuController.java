@@ -34,9 +34,35 @@ public class SuperMenuController {
 	
 	// 메뉴 목록화면
 	@GetMapping("/list")
-	public String list(Model model) {
+	public String list(
+			@RequestParam(required = false) String sale_status,
+			@RequestParam(required = false) String apply_status,
+			@RequestParam(required = false) String type,
+			@RequestParam(required = false) String keyword,
+			@RequestParam(required = false, defaultValue = "1") 
+			int page,Model model) {
+
+		
+		int pagesize = 5;
+		int start = pagesize * page - (pagesize - 1);
+		int end = pagesize * page;
+		
+		int blocksize = 10;
+		int startBlock = (page - 1) / blocksize * blocksize + 1;
+		int endBlock = startBlock + (blocksize - 1);
+		int count = menuDao.menuCount(sale_status,apply_status,type, keyword);
+		int pageCount = (count - 1) / pagesize + 1;
+		if (endBlock > pageCount) {
+			endBlock = pageCount;
+		}
+		
+		model.addAttribute("startBlock", startBlock);
+		model.addAttribute("endBlock", endBlock);
 		//메뉴목록 조회
-		model.addAttribute("list", menuService.list());
+		
+		model.addAttribute("menu",menuDao.menulist(sale_status, apply_status, type, keyword,start,end));
+		model.addAttribute("menuCount",menuDao.menuCount(sale_status, apply_status, type, keyword));
+
 		return "admin/super/menu/list";
 	}
 	

@@ -34,7 +34,8 @@ public class SuperPointController {
 	
 	// 포인트 증정
 	@PostMapping("/send_point")
-	public String sendPoint(@ModelAttribute PointDetailDto pointDto) {
+	public String sendPoint(
+			@ModelAttribute PointDetailDto pointDto) {
 		System.out.println("pointDto="+pointDto);
 		pointDao.sendPoint(pointDto);
 		return "redirect:list";
