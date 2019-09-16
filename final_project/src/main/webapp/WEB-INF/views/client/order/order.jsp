@@ -133,14 +133,57 @@ $(function(){
 
 	$(".total").text(menu_price+sub_price);
 	$("#total_price").val(menu_price+sub_price);
-});
 
+});
+	$(function(){
+			var price = parseInt($(".final_price").text());
+		$("#usepoint").click(function(){
+			var point = $("input[name=point]").val();
+			var mypoint = parseInt($(".mypoint").text());
+			if(point>mypoint){
+				alert("남은 포인트보다 많이 쓰실수 없습니다");
+				$("input[name=point]").val(0);
+			}else{				
+			$(".discount_price").text(point);
+			$(".discount_price").val(point);
+			$(".final_price").text(price-point+"원");
+			$(".final").val(price-point);
+			$("#po").attr("disabled",true);
+			$("#co").attr("disabled",true);
+			}
+		});
+		
+		$("#couponset").click(function(){
+			var price = parseInt($(".final_price").text());
+			var discount = parseInt($("#discou").val());
+			var max = parseInt($("#dismax").val());
+			var mycou = parseInt($("#mycou").text());
+			if(price>max){
+				$(".discount_price").text(price*(discount/100));
+				$(".discount_price").val(price*(discount/100));
+				$(".final_price").text(price-(price*(discount/100))+"원");
+				$(".final").val(price-(price*(discount/100)));
+				$("#mycou").text(mycou-1);
+				$("#po").attr("disabled",true);
+				$("#co").attr("disabled",true);
+			}
+			else{
+				alert("총 값이 쿠폰의 사용가능액 보다 낮습니다");			
+			}
+		})
+	});
 
 
 
 //신용카드 결제시 변경되는 값
 
 </script>
+<style>
+ .modal > .wrapper{
+ 	background-color: white;
+ }
+
+</style>
 <jsp:include page="/WEB-INF/views/template/client/header.jsp"></jsp:include>
 <div class="container">
 <div align="center">
@@ -158,8 +201,7 @@ $(function(){
 		<label for="address">
 			<h3>주소</h3>
 		</label>
-		<button>기본주소로 설정</button>
-		<button>새 주소</button>
+		<button type="button">새 주소</button>
 		<div>
 			<input type="text" readonly="readonly" value="${memberDto.post}" disabled><br>
 			<input type="text" readonly="readonly" value="${memberDto.basic_addr}" disabled><br>
@@ -280,29 +322,31 @@ $(function(){
 			<thead>
 				<tr>
 					<th>합계</th>
-					<th>할인 금액</th>
 					<th>배송비</th>
+					<th>할인금액</th>
 					<th>최종결제금액</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
 					<td><span class="total"></span>원</td>
-					<td>0원<input type="hidden" name="discount_price" value="0"></td>
 					<td>${shopDto.delivery_price}원</td>
-					<td>${total_price + shopDto.delivery_price}원
-					<input type="hidden" name="total-price" value="${total_price + shopDto.delivery_price}"></td>
+					<td><span class="discount_price">0</span>원<input type="hidden" class="discount_price" name="discount_price" value="0"></td>
+					<td class="final_price">${total_price + shopDto.delivery_price}원</td>
 				</tr>
 			</tbody>
+				<input type="hidden" class="final" name="total-price" value="${total_price + shopDto.delivery_price}">
 
 			<tfoot>
 				<tr>
 					<th>쿠폰</th>
-					<th><font color="red">${coupon}</font>장보유</th>
+					<th><font color="red"><span id="mycou">${coupon}</span></font>장보유</th>
+					<th><button type="button" class="btn btn-sm btn-info" id="po" data-toggle="modal" data-target="#coup" data-no="${memberDto.no}">사용하기</button></th>
 				</tr>
 				<tr>
 					<th>포인트</th>
-					<th>${memberDto.point}원사용가능</th>
+					<th><font color="blue">${point}</font>원사용가능</th>
+					<th><button type="button" class="btn btn-sm btn-info" id="co" data-toggle="modal" data-target="#apply" data-no="${memberDto.no}">사용하기</button></th>
 				</tr>
 			</tfoot>
 		</table>
@@ -327,4 +371,85 @@ $(function(){
 	<br> <button type="button" class="button" id="check" disabled="">주문완료</button>
 </form>
 </div>
+
+	<!-- 포인트 모달 시작-->
+    <div class="modal" id="apply">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+            <!-- 모달 헤더 -->
+            <div class="modal-header">
+                <h4 class="modal-title">포인트 사용</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- 모달 바디 -->
+            <div class="modal-body">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr class="text-center">
+                            <td class="table-secondary">보유 포인트 금액:<span class="mypoint">${point}</span></td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="number" name="point" class="form-control" placeholder="금액을 입력하세요."><br>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- 모달 푸터 -->
+            <div class="modal-footer">
+                <button type="button" id="usepoint" class="btn btn-danger" data-dismiss="modal">확인</button>
+            </div>
+            </div>
+         </div>
+     </div>
+     <!-- 포인트 모달 끝 -->
+     <!-- 쿠폰 모달 시작-->
+    <div class="modal"  id="coup">
+		<div class="wrapper">
+      <div class="container">
+        <div class="col-md-12 myInfo-title">
+          <div id="myInfo-wrapper">
+            <div class="myInfo-line"></div>
+          </div>
+          <span>나의 쿠폰</span>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-12">
+          <table class="table table-hamburg text-center myInfo-table">
+            <thead>
+              <tr class="">
+                <td style="width: 30%">쿠폰명</td>
+                <td style="width: 20%">조건</td>
+                <td style="width: 20%">사용기한</td>
+              </tr>
+            </thead>
+            <tbody>
+              <c:forEach var="couponDto" items="${coupon_list}">
+              <tr>
+                <td><button data-dismiss="modal" class="btn btn-sm btn-info" type="button" id="couponset" value="${couponDto.no}">${couponDto.name}</button>
+                <input type="hidden" id="discou" value="${couponDto.discount_price}">
+                <input type="hidden" id="dismax" value="${couponDto.max_price}"></td>
+                <c:choose>
+                	<c:when test="${couponDto.discount_type eq '할인금액'}">
+                	<td style="color:blue;">전&nbsp메뉴&nbsp${couponDto.discount_price}원&nbsp할인
+                	</td>
+                	</c:when>
+                	<c:otherwise>
+                	<td style="color:blue;">
+                		전&nbsp메뉴&nbsp${couponDto.discount_price}%&nbsp할인(최대${couponDto.max_price}원)
+                	</td>
+                	</c:otherwise>
+                </c:choose>
+                <td>${couponDto.start_date}<br>~&nbsp${couponDto.finish_date}</td>
+              </tr>
+              </c:forEach>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+     </div>
+     <!-- 포인트 모달 끝 -->
 <jsp:include page="/WEB-INF/views/template/client/footer.jsp"></jsp:include>

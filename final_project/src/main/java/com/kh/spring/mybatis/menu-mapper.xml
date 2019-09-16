@@ -141,6 +141,142 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 	<select id="menuDetailLoader" resultType="CategoryDto"> -->
 <!-- 		select * from category where shop_code = #{shop_code} -->
 <!-- 	</select> -->
+	<!-- 주문 갯수를 불러오는 코드 -->
+	<select id="menuCount" parameterType="map" resultType="int">
+		<![CDATA[
+		select count(*) from menu_list	
+		]]>
+			<if test="sale_status =='all' or apply_status =='all'">
+			<choose>
+			<when test="type !=null and keyword != null and apply_status == '' and sale_status ==''">
+				where ${type} like '%'||#{keyword}||'%'
+			</when>
+			<when test="sale_status !=null and apply_staus = '' and type =='' and keyword == ''">
+				where sale_status = #{sale_status}
+			</when>
+			<when test="apply_status !=null and sale_staus = '' and type =='' and keyword == ''">
+				where apply_status = #{apply_status}
+			</when>
+			<when test="apply_status !=null and sale_status =='' and type !=null and keyword != null">
+				where ${type} like '%'||#{keyword}||'%' and apply_status = #{apply_status}
+			</when>
+			<when test="apply_status =='' and sale_status !=null and type !=null and keyword != null">
+				where ${type} like '%'||#{keyword}||'%' and sale_status = #{sale_status}
+			</when>
+			<when test="apply_status !=null and sale_status !=null and type !=null and keyword != null">
+				where ${type} like '%'||#{keyword}||'%' and sale_status = #{sale_status} and apply_status = #{apply_status}
+			</when>
+			<otherwise> 
+			</otherwise>
+		</choose>
+			</if>
+	</select>	
+	<!-- 주문 리스트를 불러오는 코드 -->
+	<select id="menuList" parameterType="map" resultType="shopMenuVo">
+		<![CDATA[
+		select * from 
+		(select rownum rn,A.*from(
+		select DISTINCT * from menu_list
+		]]>
+		<if test="sale_status =='all' or apply_status =='all'">
+		<choose>
+			<when test="type !=null and keyword != null and apply_status == '' and sale_status ==''">
+				where ${type} like '%'||#{keyword}||'%'
+			</when>
+			<when test="sale_status !=null and apply_staus = '' and type =='' and keyword == ''">
+				where sale_status = #{sale_status}
+			</when>
+			<when test="apply_status !=null and sale_staus = '' and type =='' and keyword == ''">
+				where apply_status = #{apply_status}
+			</when>
+			<when test="apply_status !=null and sale_status =='' and type !=null and keyword != null">
+				where ${type} like '%'||#{keyword}||'%' and apply_status = #{apply_status}
+			</when>
+			<when test="apply_status =='' and sale_status !=null and type !=null and keyword != null">
+				where ${type} like '%'||#{keyword}||'%' and sale_status = #{sale_status}
+			</when>
+			<when test="apply_status !=null and sale_status !=null and type !=null and keyword != null">
+				where ${type} like '%'||#{keyword}||'%' and sale_status = #{sale_status} and apply_status = #{apply_status}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+		</if>
+		<![CDATA[
+		order by no desc
+		)A)where rn >= #{start} and rn <=#{end}
+		]]> 
+	</select>
+	
+	<!-- 매장 번호 불러오는 코드 -->
+	<select id="getshopcode" parameterType="int" resultType="int">
+		select shop_code from member where no = #{member_code}
+	</select>
+	<!-- 점주 메뉴 갯수를 불러오는 코드 -->
+	<select id="shopmenuCount" parameterType="map" resultType="int">
+		<![CDATA[
+		select count(*) from menu_list where shop_code = #{shop_code}	
+		]]>
+			<if test="sale_status =='all' or apply_status =='all'">
+			<choose>
+			<when test="type !=null and keyword != null and apply_status == '' and sale_status ==''">
+				and ${type} like '%'||#{keyword}||'%'
+			</when>
+			<when test="sale_status !=null and apply_staus = '' and type =='' and keyword == ''">
+				and sale_status = #{sale_status}
+			</when>
+			<when test="apply_status !=null and sale_staus = '' and type =='' and keyword == ''">
+				and apply_status = #{apply_status}
+			</when>
+			<when test="apply_status !=null and sale_status =='' and type !=null and keyword != null">
+				and ${type} like '%'||#{keyword}||'%' and apply_status = #{apply_status}
+			</when>
+			<when test="apply_status =='' and sale_status !=null and type !=null and keyword != null">
+				and ${type} like '%'||#{keyword}||'%' and sale_status = #{sale_status}
+			</when>
+			<when test="apply_status !=null and sale_status !=null and type !=null and keyword != null">
+				and ${type} like '%'||#{keyword}||'%' and sale_status = #{sale_status} and apply_status = #{apply_status}
+			</when>
+			<otherwise> 
+			</otherwise>
+		</choose>
+			</if>
+	</select>	
+	<select id="shopmenuList" parameterType="map" resultType="shopMenuVo">
+		<![CDATA[
+		select * from 
+		(select rownum rn,A.*from(
+		select DISTINCT * from menu_list where shop_code = #{shop_code}
+		]]>
+		<if test="sale_status =='all' or apply_status =='all'">
+		<choose>
+			<when test="type !=null and keyword != null and apply_status == '' and sale_status ==''">
+				and ${type} like '%'||#{keyword}||'%'
+			</when>
+			<when test="sale_status !=null and apply_staus = '' and type =='' and keyword == ''">
+				and sale_status = #{sale_status}
+			</when>
+			<when test="apply_status !=null and sale_staus = '' and type =='' and keyword == ''">
+				and apply_status = #{apply_status}
+			</when>
+			<when test="apply_status !=null and sale_status =='' and type !=null and keyword != null">
+				and ${type} like '%'||#{keyword}||'%' and apply_status = #{apply_status}
+			</when>
+			<when test="apply_status =='' and sale_status !=null and type !=null and keyword != null">
+				and ${type} like '%'||#{keyword}||'%' and sale_status = #{sale_status}
+			</when>
+			<when test="apply_status !=null and sale_status !=null and type !=null and keyword != null">
+				and ${type} like '%'||#{keyword}||'%' and sale_status = #{sale_status} and apply_status = #{apply_status}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+		</if>
+		<![CDATA[
+		order by no desc
+		)A)where rn >= #{start} and rn <=#{end}
+		]]> 
+	</select>
 	
 </mapper>
  

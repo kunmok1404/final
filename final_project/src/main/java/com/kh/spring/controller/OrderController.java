@@ -32,7 +32,10 @@ import com.kh.spring.entity.OrderDetailListVo;
 import com.kh.spring.entity.OrderSubDetail;
 import com.kh.spring.entity.OrdersDto;
 import com.kh.spring.entity.SubMenuDto;
+import com.kh.spring.repository.CouponDao;
 import com.kh.spring.repository.OrdersDao;
+import com.kh.spring.service.CouponService;
+import com.kh.spring.service.PointService;
 
 @Controller
 @RequestMapping("/order")
@@ -40,6 +43,12 @@ public class OrderController {
 
 	@Autowired
 	private OrdersDao orderDao;
+	@Autowired
+	private PointService pointservice;
+	@Autowired
+	private CouponService couponservice;
+	@Autowired
+	private CouponDao couponDao;
 	
 	@PostMapping("/cart_delete")
 	public String cartdelete(@RequestParam int no) {
@@ -49,6 +58,9 @@ public class OrderController {
 	
 	@GetMapping("/mycart")
 	public String cart(HttpSession session, Model model){
+		if(session.getAttribute("member_code")==null) {
+			System.out.println("로그인 해 주세요");
+		}else {
 		int member_code = (int) session.getAttribute("member_code");
 		if(member_code>0) {
 			int shop_code = orderDao.cart(member_code);
@@ -58,6 +70,7 @@ public class OrderController {
 					model.addAttribute("shopDto", orderDao.shopInfo(shop_code));
 					session.setAttribute("shop_code", shop_code);		
 				}	
+		}
 		}
 		return "client/order/cart";
 	}
@@ -97,6 +110,9 @@ public class OrderController {
 		}
 		//주 메뉴의 번호를 전부 불러다가
 		List<CartDto> cartDto = orderDao.cartlist(member_code);
+		model.addAttribute("coupon_list", couponservice.list(member_code));
+		model.addAttribute("coupon", couponDao.getCouponCount(member_code));
+		model.addAttribute("point",pointservice.getMyPoint(member_code));
 		model.addAttribute("cartDto", cartDto);
 		model.addAttribute("shopDto", orderDao.shopInfo(shop_code));
 		session.setAttribute("shop_code", shop_code);
@@ -112,7 +128,9 @@ public class OrderController {
 		int member_code = (int) session.getAttribute("member_code");
 		int shop_code = (int) session.getAttribute("shop_code");
 		orderDao.cartinput(vo);
-
+		model.addAttribute("coupon_list", couponservice.list(member_code));
+		model.addAttribute("coupon", couponDao.getCouponCount(member_code));
+		model.addAttribute("point",pointservice.getMyPoint(member_code));
 		model.addAttribute("shopDto", orderDao.shopInfo(shop_code));
 		model.addAttribute("cartList", orderDao.cartlist(member_code));
 		model.addAttribute("memberDto", orderDao.memberSearch(member_code));
@@ -131,7 +149,7 @@ public class OrderController {
 			   HttpSession session, Model model) {
 		
 		int member_code = (int) session.getAttribute("member_code");
-
+		
 		int cart_seq = orderDao.getcartseq();
 		//메인 메뉴 넣는 코드
 		int cartamount = cartdto.getMenu_amount();
@@ -158,6 +176,7 @@ public class OrderController {
 			orderDao.cartinsert(submenudtolist);
 		}
 		List<CartDto> cartDto = orderDao.cartlist(member_code);
+		model.addAttribute("point",pointservice.getMyPoint(member_code));
 		model.addAttribute("shopDto", orderDao.shopInfo(shop_code));
 		model.addAttribute("cartList", cartDto);
 		model.addAttribute("memberDto", orderDao.memberSearch(member_code));
@@ -175,6 +194,7 @@ public class OrderController {
 		int member_code = (int) session.getAttribute("member_code");
 		int shop_code = (int) session.getAttribute("shop_code");
 		int total_price = (int) session.getAttribute("total_price");
+		int discount_price = ordersDto.getDiscount_price();
 		int order_code = orderDao.getseq();
 		OrdersDto orderDto = OrdersDto.builder()
 				.no(order_code)
@@ -199,7 +219,9 @@ public class OrderController {
 		}
 	
 		orderDao.cartDelete(member_code);
-		
+		if(discount_price >0) {
+		orderDao.usepoint(member_code,discount_price);
+		}
 		model.addAttribute("shop_info", orderDao.shopInfo(shop_code));
 		model.addAttribute("orders", orderDao.orderResult(order_code));
 		model.addAttribute("order_detail", orderDao.myOrderDetailList(order_code));
@@ -223,6 +245,8 @@ public class OrderController {
 		int order_code = orderDao.getseq();
 		int no = orderDao.getdetseq();
 		int quantity = orderDao.getQuantity(member_code);
+		int discount_price = ordersDto.getDiscount_price();
+		
 
 //		사용자가 보낸 정보에 추가 정보를 작성하여 api 호출
 //		추가할 정보:가맹점 코드,주문번호,회원id,비과세,성공취소실패주소
@@ -257,6 +281,7 @@ public class OrderController {
 
 //		vo안에 있는 tid를 결제 최종 승인 요청에서 사용할수 있도록 저장하고
 //		결제 승인시 나머지를 db에 저장 처리
+		
 		session.setAttribute("total_price", total_price);// 총액
 		session.setAttribute("shop_code", shop_code);// 샵 코드 저장
 		session.setAttribute("member_code", member_code);// 멤버 코드 저장
@@ -266,6 +291,7 @@ public class OrderController {
 		session.setAttribute("ordersDto", ordersDto);
 		session.setAttribute("payInfo", kakaopay);
 		session.setAttribute("partner_user_id", partner_user_id);
+		session.setAttribute("discount_price", discount_price);
 
 //		결제 페이지로 연동시킴
 
@@ -279,6 +305,7 @@ public class OrderController {
 		int shop_code = (int) session.getAttribute("shop_code");
 		int order_code = (int) session.getAttribute("order_no");
 		int member_code = (int) session.getAttribute("member_code");
+		int discount_price = (int) session.getAttribute("discount_price");
 		OrderDetailListVo vo = (OrderDetailListVo) session.getAttribute("OrderDetailListVo");
 		OrdersDto ordersDto = (OrdersDto) session.getAttribute("ordersDto");
 		OrdersDto orderDto = OrdersDto.builder().no(order_code).member_code(member_code).shop_code(shop_code)
@@ -297,7 +324,9 @@ public class OrderController {
 			}
 		}
 		orderDao.cartDelete(member_code);
-		
+		if(discount_price >0) {
+			orderDao.usepoint(member_code, discount_price);
+		}
 
 		model.addAttribute("shop_info", orderDao.shopInfo(shop_code));
 		model.addAttribute("orders", orderDao.orderResult(order_code));
@@ -338,6 +367,7 @@ public class OrderController {
 		session.removeAttribute("OrderSubDetailListVo");
 		session.removeAttribute("ordersDto");
 		session.removeAttribute("order_detail_no");
+		session.removeAttribute("discount_price");
 
 		return "/client/order/success";
 	}
@@ -348,6 +378,7 @@ public class OrderController {
 		int shop_code = (int) session.getAttribute("shop_code");
 		int order_code = (int) session.getAttribute("order_no");
 		int member_code = (int) session.getAttribute("member_code");
+		int discount_price = (int) session.getAttribute("discount_price");
 		OrderDetailListVo vo = (OrderDetailListVo) session.getAttribute("OrderDetailListVo");
 		OrdersDto ordersDto = (OrdersDto) session.getAttribute("ordersDto");
 		OrdersDto orderDto = OrdersDto.builder().no(order_code).member_code(member_code).shop_code(shop_code)
@@ -366,7 +397,9 @@ public class OrderController {
 			}
 		}
 		orderDao.cartDelete(member_code);
-		
+		if(discount_price >0) {
+		orderDao.usepoint(member_code, discount_price);
+		}
 		model.addAttribute("shop_info", orderDao.shopInfo(shop_code));
 		model.addAttribute("orders", orderDao.orderResult(order_code));
 		model.addAttribute("order_detail", orderDao.myOrderDetailList(order_code));
@@ -378,6 +411,13 @@ public class OrderController {
 	@GetMapping("credit_success")
 	public String credit_success() {
 		return "/client/order/success";
+	}
+	
+	@PostMapping("use_point")
+	public String use_point(@RequestParam int point,Model model) {
+		
+		
+		return "";
 	}
 
 }
