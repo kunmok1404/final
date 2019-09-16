@@ -5,16 +5,16 @@
 
 <jsp:include page="/WEB-INF/views/template/client/info_top_menu.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/template/client/left/my_info_left.jsp"></jsp:include>
-	
-<table>
-  <tr>
+		<div class="wrapper mt-3">
+<table class="table table-hamburg table-hover">
+  <tr class="table-primary text-center">
   	<th>매장이미지</th>
     <th>매장명</th>
     <th>평점</th>
     <th>찜한 날짜</th>
   </tr>
 <c:forEach var="shop" items="${shop }">
-  <tr>
+  <tr class="table text-center">
   	<td>
   	<img class="review-img" src="${pageContext.request.contextPath}/member/shop_img?files_code=${shop.shop_img}">
   	</td>
@@ -28,5 +28,4 @@
   </tr>
 </c:forEach>
 </table>
-
-<jsp:include page="/WEB-INF/views/template/client/footer.jsp"></jsp:include>
+</div>
