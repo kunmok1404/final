@@ -153,14 +153,7 @@
 	    		<td>${ndto.read}	</td>
 			</tr>
 			</c:forEach>
-		<!-- 글쓰기 버튼 -->
-		<tfoot>
-			<tr>
-			<td colspan="8" align="center" >
-				<a href="write" class="write-btn">등&nbsp;&nbsp;록</a>
-			</td>
-			</tr>
-		</tfoot>
+		
     	</tbody>
     </table>
 
