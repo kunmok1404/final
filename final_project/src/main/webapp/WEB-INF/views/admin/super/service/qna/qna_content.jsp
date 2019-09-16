@@ -35,7 +35,7 @@
 
 				<tr>
 					<th class=notice-th><span>카테고리</span></th>
-					<th class=notice-th2><span>${qdto.category}</span></th>
+					<th class=notice-th2><span>${qdto.category_name}</span></th>
 					<th class=notice-th><span>진열여부</span></th>
 					<th class=notice-th2><span>${qdto.use_yn}</span></th>
 				</tr>

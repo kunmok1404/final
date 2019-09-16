@@ -86,7 +86,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 <!-- 테이블에서 qna정보조회 -->
 	<select id="qna_info" parameterType="int" resultType="qnaDto">
-		select * from qna where no = #{no} order by no desc
+		select A.NO
+			     ,A.CATEGORY
+			     ,(SELECT NAME
+			          FROM CATEGORY
+			      WHERE NO = A.CATEGORY
+			        AND WORK_TYPE = 'qna_category') AS CATEGORY_NAME
+			     , A.QUESTION
+			     , A.ANSWER
+			     , A.REGIST_DATE
+			     , A.EDIT_DATE
+			     , A.USE_YN
+			     , A.WRITER
+			     , A.EDITOR 
+		FROM QNA A
+	  WHERE NO = #{no} 
+	  ORDER BY NO DESC
 	</select>
 	
 	<!-- qna시쿼스 번호 생성 -->
