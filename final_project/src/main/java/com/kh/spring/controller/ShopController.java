@@ -62,7 +62,7 @@ public class ShopController {
 		int end = page * size;
 		int start = end - size + 1;
 		System.out.println("count="+shopDao.getShopCount(cat_no));
-		model.addAttribute("shop_list", shopService.ajaxPaging(start, end, cat_no));
+		model.addAttribute("shop_list", shopDao.ajaxPaging(start, end, cat_no));
 		
 		return "client/shop/part";
 	}

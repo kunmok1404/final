@@ -38,15 +38,21 @@
 					</tr>
 					<tr>	
 						<td colspan="2">
-						<c:forEach var="order_sub" items="${order_sub_detail}">
-							<c:if test="${order_detail.no eq order_sub.no}">
-									-${order_sub.sub_type}<br>
-									-${order_sub.sub_title}<br>
-									-${order_sub.sub_name} x ${order_sub.sub_amount} 개
+						-필수<br>
+						<c:forEach var="order_sub" items="${order_detail.list}">
+							<c:if test="${order_sub.sub_type eq '필수'}">
+									${order_sub.sub_name} x ${order_sub.sub_amount} 개
 									${order_sub.sub_price} 원<br>
 							</c:if>
 						</c:forEach>
-								</td>
+						-선택<br>
+						<c:forEach var="order_sub" items="${order_detail.list}">
+							<c:if test="${order_sub.sub_type eq '선택'}">
+									${order_sub.sub_name} x ${order_sub.sub_amount} 개
+									${order_sub.sub_price} 원<br>
+							</c:if>
+						</c:forEach>
+						</td>
 					</tr>			
 				</c:forEach>
 					<tr>
@@ -92,6 +98,10 @@
 				</tr>
 			</tbody>
 		</table>
+		<hr>
+	</div>
+	<div align="center">
+		<h2>메인페이지로 이동</h2>
 	</div>
 </div>
 <jsp:include page="/WEB-INF/views/template/client/footer.jsp"></jsp:include>
