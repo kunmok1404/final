@@ -114,10 +114,15 @@ public class MemberDaoImpl implements MemberDao {
 		return sqlSession.selectList("member.search", param);
 	}
 	
-	//관리자 회원 정보 상세 보기
+	//관리자 회원 정보 상세 보기 리스트
 	@Override
 	public List<MemberInfoVO> info(int no) {
 		return sqlSession.selectList("member.info", no);
+	}
+	
+//	관리자 회원 정보 상세 보기
+	public MemberInfoVO infoVO(int no) {
+		return sqlSession.selectOne("member.infoVO", no);
 	}
 	
 	//관리자 회원 탈퇴 기능
@@ -199,13 +204,18 @@ public class MemberDaoImpl implements MemberDao {
 		return sqlSession.selectList("member.get_member_list");
 	}
 
+	@Override
+	public MemberInfoVO detail(int no) {
+		return sqlSession.selectOne("member.infoVO", no);
+	}
+
 	
 
 	////
-//	@Override
-//	public MemberDto findPassword(MemberDto memberDto) {
-//		return sqlSession.selectOne("member.find_pw", memberDto);
-//	}
+	@Override
+	public MemberDto findPassword(MemberDto memberDto) {
+		return sqlSession.selectOne("member.find_pw", memberDto);
+	}
 
 }
 

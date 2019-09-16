@@ -6,6 +6,48 @@
 <jsp:include page="/WEB-INF/views/template/admin/super/left/left_member.jsp"></jsp:include>
 
 
+<!-- <script> -->
+    
+// 	$(function(){
+// 		//목표 : 페이지 번호를 누르면 해당하는 번호의 페이지로 이동처리
+// 		// 이동은 form을 전송하는 것으로 대체
+// 		$(".navigator-page").click(function(e){
+// 			e.preventDefault();
+// 			var p = $(this).text();
+// 			move(p);
+// 		});
+	
+// 		//이동 함수
+// 		function move(no){
+// 			//input[name=page]에 no를 설정한 뒤 form을 전송
+// 			$("input[name=page]").val(no);
+// 			$("form").submit();
+// 		}
+		
+// 		$(".page_block").click(function(e){
+// 			e.preventDefault();
+// 			var p = $(this).text();
+// 			switch(p){
+// 				case '<':
+// 					move(parseInt(page)-1);
+// 				break;
+// 				case '<<':
+// 					move(parseInt(startBlock)-1);
+// 				break;
+// 				case '>':
+// 					move(parseInt(page)+1);
+// 				break;
+// 				case '>>':
+// 					move(parseInt(endBlock)+1);
+// 				break;
+// 			}
+    		
+//     	})
+    
+<!--     </script> -->
+
+
+
 <div class="wrapper mt-3">
 
 	<div class="top-title">
@@ -86,7 +128,7 @@
 							<th>전화번호</th>
 							<th>쿠폰</th>
 							<th>포인트</th>
-							<th>사용금액</th>
+							<th>총 사용금액</th>
 							<th>가입일</th>
 							<th>비고</th>
 						</tr>
@@ -116,6 +158,43 @@
 		</c:choose>
 	</div>
 	<!-- 회원 목록 끝 -->
-</div>
+	
+<!-- 	<!-- 페이징 --> -->
+<!-- 	<ul class="navigator"> -->
+<%-- 	<%-- 이전 구간 링크 --%> --%>
+<%-- 	<c:if test="${(not (page eq 1))&& not empty page && page>=6}"> --%>
+<%-- 	<li><a href="list?page=${startBlock-1}" class='page_block'>&lt;&lt;</a></li> --%>
+<%-- 	</c:if> --%>
+	
+<%-- 	<%-- 이전 페이지 링크(pno - 1) --%> --%>
+<%-- 	<c:if test="${not (page eq 1)&& not empty page}"> --%>
+<%-- 	<li><a href="list?page=${page-1}" class='page_block'>&lt;</a></li> --%>
+<%-- 	</c:if> --%>
+	
+<%-- 	<%-- 페이지 출력 --%> --%>
+<%-- 	<c:forEach var="i" begin="${startBlock}" end="${endBlock}"> --%>
+<%-- 		<c:choose> --%>
+<%-- 			<c:when test="${page==i}"> --%>
+<%-- 				<li class="active">${i}</li> --%>
+<%-- 			</c:when> --%>
+<%-- 			<c:otherwise> --%>
+<%-- 				<c:if test="${i>0}"> --%>
+<%-- 					<li><a href="list?page=${i}" class="navigator-page">${i}</a></li> --%>
+<%-- 				</c:if> --%>
+<%-- 				</c:otherwise> --%>
+<%-- 			</c:choose> --%>
+<%-- 		</c:forEach> --%>
+	
+<%-- 		<%-- 다음 페이지 링크(pno + 1) --%> --%>
+<%-- 		<c:if test="${not (page eq pageCount)}"> --%>
+<%-- 			<li><a href="list?page=${page+1}" class='page_block'>&gt;</a></li> --%>
+<%-- 		</c:if> --%>
+	
+<%-- 		<%-- 다음 구간 --%> --%>
+<%-- 		<c:if test="${(not (page eq pageCount)) && pageCount>=5}"> --%>
+<%-- 			<li><a href="list?page=${endBlock+1}" class='page_block'>&gt;&gt;</a></li> --%>
+<%-- 		</c:if> --%>
+<!-- 	</ul> -->
+<!-- </div> -->
 
 <jsp:include page="/WEB-INF/views/template/admin/super/footer.jsp"></jsp:include>

@@ -76,7 +76,7 @@ public class EmailServiceImpl implements EmailService{
 
 	//이메일 실험
 //	@Override
-//	public void find_pw(MemberDto memberDto) throws MessagingException {
+//	public void find_pw(MemberDto memberDto) {
 //		//인증번호 생성
 //		String no = randomStringService.generate(128);
 //		String email = memberDto.getEmail()+"@"+memberDto.getEmail_address();
@@ -96,7 +96,7 @@ public class EmailServiceImpl implements EmailService{
 //		helper.setSubject("뭐먹지 비빌번호 변경 메일 입니다.");
 //		String address = ServletUriComponentsBuilder
 //							.fromCurrentContextPath();
-//							.port(8080)
+//							.port(8081)
 //							.path("/member/new_pw")
 //							.queryParam("no", memberDto.getNo())
 //							.queryParam("no", no)
