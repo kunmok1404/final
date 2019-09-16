@@ -56,6 +56,11 @@ public class ShopOnoDaoImpl implements ShopOnoDao{
 		return sqlSession.selectList("shopono.super_shopono_list2_ceo", param);
 	}
 
+	@Override
+	public int getOnoSeq() {
+		return sqlSession.selectOne("shopono.ono_seq");
+	}
+
 
 	
 }

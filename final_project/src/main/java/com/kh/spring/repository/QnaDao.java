@@ -22,7 +22,7 @@ public interface QnaDao {
 
 
 
-	List<QnaDao> superlist(String apply_status, String keyword_type, String keyword, String start_date, String end_date, String yn, int i, int j);
+	List<QnaDto> superlist(String apply_status, String keyword_type, String keyword, String start_date, String end_date, String yn, int i, int j);
 
 
 

@@ -93,18 +93,13 @@
           <span class="qna-number">자주하는 질문</span>
             <span class="shop-filter">
               <span class="qna-dropdown">
-                <a class="btn btn-default dropdown-toggle" href="javascript:selectItem('')" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  전   체
-                </a>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                  <a class="dropdown-item" href="javascript:selectItem('1')">주문접수</a>
-                  <a class="dropdown-item" href="javascript:selectItem('2')">주문확인</a>
-                  <a class="dropdown-item" href="#">주문취소/변경</a>
-                  <a class="dropdown-item" href="#">서비스이용</a>
-                  <a class="dropdown-item" href="#">결제</a>
-                  <a class="dropdown-item" href="#">가맹 및 기타</a>
-                  <a class="dropdown-item" href="#">뭐먹지 슈퍼클럽</a>
-                </div>
+      
+               <select name="category" required>
+								<option value="">선택하세요</option>
+								<c:forEach var="category_list" items="${category_list}">
+									<option value="${category_list.no}">${category_list.name}</option>
+								</c:forEach>
+						</select>
               </span>
             </span>
           </div>
@@ -136,8 +131,8 @@
     			<td>${qdto.no}</td>
     			<td>
     			<%--말멀리 있을때 []붙여서 출력 --%>
-    			<c:if test ="${not empty qdto.category}">
-    			[${qdto.category}]
+    			<c:if test ="${not empty qdto.categoryName}">
+    			[${qdto.categoryName}]
     			</c:if>
     			</td>
     			
