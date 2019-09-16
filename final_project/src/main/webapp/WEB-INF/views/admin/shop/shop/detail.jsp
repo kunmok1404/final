@@ -181,7 +181,8 @@
       			<td class="text-left">
       				<select name="category" class="form-control" required>
       					<c:forEach var="food" items="${menu_list}">
-						<option value="${food.no}" ${food.name eq '${categoryDto.name}'?'selected':'' }>${food.name}</option>
+      					
+						<option value="${food.no}" ${food.name eq categoryDto.name?'selected':'' }>${food.name}</option>
 						</c:forEach>
 					</select>
    				</td>

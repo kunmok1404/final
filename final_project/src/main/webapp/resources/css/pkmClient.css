@@ -311,7 +311,7 @@ table {
 
 /*리뷰*/
 .review{
-    background-color:#ffffff;
+    background-color:white;
     border:1px solid lightgray;
 	min-height:400px;
 }
@@ -328,6 +328,7 @@ table {
     padding-left:10px;
     padding-top:8px;
     height: 40px;
+    color:#3118BA;
 }
 .review-menu{
     color: red;
@@ -828,4 +829,13 @@ input[name=remember]{
 	font-size:1.3rem;
 }
 
+/*장바구니*/
+.my-cart table{
+	min-height:400px;
+	backgroung-color:yellow;
+}
+.my-cart table td{
+	height:50px;
+	backgroung-color:yellow;
+}
 

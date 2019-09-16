@@ -19,6 +19,7 @@ import com.kh.spring.entity.PointDetailDto;
 import com.kh.spring.entity.ShopDto;
 import com.kh.spring.entity.SubMenuDto;
 import com.kh.spring.entity.TotalVo;
+import com.kh.spring.vo.OrderCountVO;
 import com.kh.spring.vo.OrderVo;
 
 //주문 관련 Dao impl
@@ -350,6 +351,17 @@ public class OrdersDaoimpl implements OrdersDao{
 		return sqlsession.selectOne("order.getshopcode",member_code);
 	}
 
+	// 주문취소 클릭시
+	@Override
+	public void orderCancel(int order_code) {
+		sqlsession.update("order.orderCancel",order_code);
+	}
+
+	@Override
+	public List<OrderCountVO> getCount(int shop_code) {
+		return sqlsession.selectList("order.orderCount", shop_code);
+	}
+
 	@Override
 	public PointDetailDto getpoint(int member_code) {
 		return sqlsession.selectOne("order.getpoint",member_code);
@@ -363,7 +375,6 @@ public class OrdersDaoimpl implements OrdersDao{
 		sqlsession.insert("order.usepoint",map);
 		
 	}
-
 
 
 }

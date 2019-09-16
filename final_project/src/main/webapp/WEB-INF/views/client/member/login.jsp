@@ -11,7 +11,6 @@
 <script src="${pageContext.request.contextPath}/resources/js/cryptojs/components/sha256-min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/password-encoder.js"></script>
 
-
 <div class="container">
 
  	<form action="login" method="post" class="login_form">

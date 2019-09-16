@@ -5,7 +5,6 @@
 <jsp:include page="/WEB-INF/views/template/admin/super/header.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/template/admin/super/left/left_member.jsp"></jsp:include>
 
-
 <div class="wrapper mt-3">
 
 	<div class="top-title">
@@ -114,8 +113,9 @@
 				</table>
 			</c:otherwise>
 		</c:choose>
-	</div>
+	</div><br><br><br>
 	<!-- 회원 목록 끝 -->
+	
 </div>
 
 <jsp:include page="/WEB-INF/views/template/admin/super/footer.jsp"></jsp:include>

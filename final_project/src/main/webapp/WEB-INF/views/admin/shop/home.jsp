@@ -3,6 +3,33 @@
 <jsp:include page="/WEB-INF/views/template/admin/shop/header.jsp"></jsp:include>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
 
+<script>
+   	$(function(){
+   		setInterval(checkOrderCount, 5000);
+   	});
+   	
+   	function checkOrderCount(){
+   		console.log("checkOrderCount");
+   		$.ajax({
+   			url:"${pageContext.request.contextPath}/shop_admin/update_orders_status",
+   			type:"get",
+   			success:function(resp){
+   				$(".today-order-content").text("0");
+   				for(var i=0; i < resp.length; i++){
+   					console.log(resp[i].order_status, resp[i]['order_status']);
+   					
+   					$(".today-order-content").filter(function(){
+   						return $(this).data("status") == resp[i].order_status;
+   					}).text(resp[i].cnt);
+   				} 
+   			},
+   			error:function(e){
+   				console.log(e);
+   			}
+   		});
+   	}
+   </script>
+
 <!--shop_admin home 컨텐츠-->
     <div class="shop-wrapper">
       <div class="row">
@@ -114,10 +141,10 @@
                   <td class="today-order-title">취소</td>
                 </tr>
                 <tr>
-                  <td class="today-order-content">10</td>
-                  <td class="today-order-content text-info">7</td>
-                  <td class="today-order-content text-primary">20</td>
-                  <td class="today-order-content text-danger">2</td>
+                  <td data-status="접수대기" class="today-order-content">10</td>
+                  <td data-status="조리중" class="today-order-content text-info">7</td>
+                  <td data-status="배달완료" class="today-order-content text-primary">20</td>
+                  <td data-status="취소" class="today-order-content text-danger">2</td>
                 </tr>
               </tbody>
             </table>

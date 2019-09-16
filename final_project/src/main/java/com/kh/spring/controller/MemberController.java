@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.spring.entity.CertDto;
 import com.kh.spring.entity.MemberDto;
@@ -180,7 +181,6 @@ public class MemberController {
 			//System.out.println(result.getPw());
 			//로그인 성공 여부
 			boolean ok = BCrypt.checkpw(memberDto.getPw(), result.getPw());
-			System.out.println(ok);
 			if(BCrypt.checkpw(memberDto.getPw(), result.getPw())) {
 				session.setAttribute("member_code", result.getNo());
 				if(result.getShop_code() > 0) {
@@ -528,8 +528,15 @@ public class MemberController {
 		return reviewService.shopimg(files_code);
 	}
 	
-	
-	
+	// 나의정보 주문취소 클릭시
+	@GetMapping("/cancel")
+	@ResponseBody
+	public String cancel(@RequestParam int order_code) {
+		System.out.println("order_code="+order_code);
+		ordersDao.orderCancel(order_code);
+		System.out.println("다 취소?");
+		return "주문이 취소되었습니다.";
+	}
 	
 	
 	

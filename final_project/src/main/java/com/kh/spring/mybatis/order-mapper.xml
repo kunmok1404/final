@@ -71,7 +71,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- 나의정보 주문내역 -->
 	<select id="my_order_list" parameterType="int" resultType="ordersDto">
-		select * from orders where member_code=#{member_code}
+		select * from orders where member_code=#{member_code} order by no desc
 	</select>
 	
 	<!-- 나의정보 주문메뉴명 1개 -->
@@ -445,6 +445,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<select id="week_ago" resultType="string">
 	SELECT SYSDATE - 7 FROM DUAL
+	</select>
+	<!-- 나의정보 주문취소 클릭시 -->
+	<update id="orderCancel" parameterType="int">
+		update orders set order_status = '취소완료' where no = #{order_code}
+	</update>
+	
+	<select id="orderCount" parameterType="int" resultType="com.kh.spring.vo.OrderCountVO">
+		select order_status, count(*) cnt from orders where shop_code = #{shop_code} group by order_status order by order_status asc
 	</select>
 	
 	<!-- member_code로 point 조회 -->
