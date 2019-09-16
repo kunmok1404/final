@@ -273,7 +273,8 @@ public class MemberController {
 		System.out.println(exist);
 		if(exist) {
 			emailService.sendCertificationpw(memberDto.getEmail());
-			return "redirect:find_pw_result";//새로운 기능으로 전송(?이게 뭐야?)
+//			emailService.find_pw(memberDto);
+			return "redirect:find_pw_result";
 		}
 		else {
 			return "redirect:find_pw?error";//실패시 오류

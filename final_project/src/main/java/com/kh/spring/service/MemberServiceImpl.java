@@ -42,14 +42,18 @@ public class MemberServiceImpl implements MemberService{
 		return info_list;
 	}
 
-	//super_admin 회원 관리 목록 상세보기 - 총 사용 금액 불러오기
+	//super_admin 회원 관리 상세보기 - 총 사용 금액 불러오기
 	@Override
 	public MemberInfoVO detail(int no) {
 		//사람Dao
+		MemberInfoVO memberInfoVO = memberDao.detail(no);
 		//total DAO
+		int total_price = memberDao.total_price(no);
 		
 		//dto.settotal
-		return null;
+		memberInfoVO.setTotal_price(total_price);
+		
+		return memberInfoVO;
 	}
 
 	
