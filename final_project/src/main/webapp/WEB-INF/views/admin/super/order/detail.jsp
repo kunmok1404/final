@@ -55,24 +55,20 @@ $(function(){
 				<tr>
 					<td>주문 메뉴</td>
 					<td colspan="3">
-						<c:forEach var="order_list" items="${orderDetail}">
+						<c:forEach var="order" items="${orderDetail}">
 						<table class="table">
 								<tr>
-									<td>${order_list.menu_name}</td>
-									<td>X ${order_list.menu_amount}</td>
-									<td>${order_list.menu_price}원</td>
+									<td>${order.menu_name}</td>
+									<td>X ${order.menu_amount}</td>
+									<td>${order.menu_price}원</td>
 								</tr>
-								<c:choose>
-									<c:when test="${order_list.sub_name !=null}">
-									<tr> 
-										<td>${order_list.sub_name}</td>
-										<td>X ${order_list.sub_amount}</td>
-										<td>+ ${order_list.sub_price}원</td>	
+									<tr>
+									<c:forEach var="order_sub" items="${order.list}">
+										<td>${order_sub.sub_name}</td>
+										<td>X ${order_sub.sub_amount}</td>
+										<td>+ ${order_sub.sub_price}원</td>	
+									</c:forEach>
 									</tr>
-									</c:when>
-									<c:otherwise>
-									</c:otherwise>
-								</c:choose>
 						</table>
 					</c:forEach>
 					</td>

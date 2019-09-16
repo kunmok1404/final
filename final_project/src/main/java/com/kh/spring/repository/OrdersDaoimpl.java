@@ -304,27 +304,50 @@ public class OrdersDaoimpl implements OrdersDao{
 	}
 
 
-//	@Override
-//	public OrdersDto shoporderResult(int no, int shop_code) {
-//		Map<String, Object> map = new HashMap<>();
-//		map.put("no", no);
-//		map.put("shop_code", shop_code);
-//		return sqlsession.selectOne("order.shop_order_result",map);
-//	}
+	@Override
+	public OrdersDto shoporderResult(int no, int shop_code) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("no", no);
+		map.put("shop_code", shop_code);
+		return sqlsession.selectOne("order.shop_order_result",map);
+	}
 
-//	@Override
-//	public int shopordersCount(String status, String type, String keyword) {
-//		Map<String, Object> param = new HashMap<>();
-//		if(status!=null) {
-//		param.put("status", status);			
-//		}
-//		if(type!=null && keyword!=null) {
-//		param.put("type", type);
-//		param.put("keyword", keyword);
-//		}	
-//		return sqlsession.selectOne("order.shopOrdersCount",param);
-//	}
+	@Override
+	public int shopordersCount(int shop_code,String status, String type, String keyword) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("shop_code", shop_code);
+		if(status!=null) {
+		param.put("status", status);			
+		}
+		if(type!=null && keyword!=null) {
+		param.put("type", type);
+		param.put("keyword", keyword);
+		}	
+		return sqlsession.selectOne("order.shopOrdersCount",param);
+	}
 
+	@Override
+	public List<OrdersDto> shoporderslist(int shop_code, String status, String type, String keyword, int i,
+			int j) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("shop_code",shop_code);
+		//검색일경우 검색어를 mybatis에 전달
+		if(status!=null) {
+		param.put("status", status);			
+		}
+		if(type!=null && keyword!=null) {
+		param.put("type", type);
+		param.put("keyword", keyword);
+		}	
+		param.put("start", i);
+		param.put("end", j);
+		return sqlsession.selectList("order.shopordersList",param);
+	}
+
+	@Override
+	public int getshopcode(int member_code) {
+		return sqlsession.selectOne("order.getshopcode",member_code);
+	}
 
 
 

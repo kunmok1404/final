@@ -61,8 +61,10 @@ public interface OrdersDao {
 	SubMenuDto getsubmenu(int checkmenu, int shop_code);
 	int cart(int member_code);
 	List<OrdersDto> getShopOrderList(int no);
-//	int shopordersCount(String status, String type, String keyword);
-//	OrdersDto shoporderResult(int no, int shop_code);
+	int shopordersCount(int shop_code,String status, String type, String keyword);
+	OrdersDto shoporderResult(int no, int shop_code);
+	List<OrdersDto> shoporderslist(int shop_code, String status, String type, String keyword, int start, int end);
+	int getshopcode(int member_code);
 	
 
 }
