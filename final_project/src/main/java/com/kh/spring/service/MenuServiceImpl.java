@@ -75,7 +75,7 @@ public class MenuServiceImpl implements MenuService {
 		// member_code로 회원정보 구하기
 		MemberDto memberDto = memberDao.getInfo(member_code);
 		// shop_code로 menu정보 구하기
-		List<MenuDto> list = menuDao.shopMenuList(memberDto.getShop_code());
+		List<MenuDto> list = menuDao.sMenuList(memberDto.getShop_code());
 		List<ShopMenuVO> menu_list = new ArrayList<>();
 		// 내용 다시 세팅
 		for(MenuDto menuDto : list) {
