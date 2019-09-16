@@ -81,7 +81,7 @@
         <div class="top-menu">
           <ul>
             <li ${url == '/shop_admin/notice/list' ? 'class="active"' : ''}><a href="${pageContext.request.contextPath}/shop_admin/notice/list">공지사항</a></li>
-            <li><a href="#">매장관리</a></li>
+            <li ${url == '/shop_admin/shop/detail' ? 'class="active"' : ''}><a href="${pageContext.request.contextPath}/shop_admin/shop/detail">매장관리</a></li>
             <li ${url == '/shop_admin/menu/list' ? 'class="active"' : ''}><a href="${pageContext.request.contextPath}/shop_admin/menu/list">메뉴관리</a></li>
             <li><a href="${pageContext.request.contextPath}/shop_admin/order/list">주문관리</a></li>
             <li ${url == '/shop_admin/chart/order' ? 'class="active"' : ''}><a href="${pageContext.request.contextPath}/shop_admin/chart/order">통계</a></li>

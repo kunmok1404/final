@@ -179,92 +179,107 @@ $(function(){
 
 </script>
 
-<style>
-	
-	.info_change{
-		width: 800px;
-		margin: auto;
-		min-height: 500;
-	}
-	
-	.legend{
-		text-align: center;
-	}
-	
-</style>
+<div class="container">
 
+ 	<form action="info_change" method="post">
+ 	<div class="row">
+       <div class="col-md-12">
+         <div class="adminLogin-title">개인정보수정</div>
+       </div>
+     </div><hr class="hr"><br>
+     
+     <div class="row">
+            <div class="offset-1 col-md-10">
+                <table class="table table-borderless mt-5 text-center login-table">
+                  <tbody>
+                  	 <tr>
+                        <td class="text-right"><span class="admin-id font-weight-bold mr-3">아이디</span></td>
+                        <td class="idpw-2 text-secondary font-weight-bold" style="font-size:1.5rem">
+                        	${memberDto.id}
+                        	<input type="hidden" name="no" value="${memberDto.no}">
+                        </td>
+                    </tr>
+	                <tr>
+						<td class="text-right"><span class="admin-id font-weight-bold mr-3">새 비밀번호</span></td>
+						<td>
+							<input type="password" class="form-control" onblur="checkPW();" id="pw" name="new_pw" pattern="^[a-zA-Z0-9!@#$\-_]{8,15}$">
+							<div class="pwD"></div>
+						</td>
+					</tr>
+					<tr>
+						<td class="text-right"><span class="admin-id font-weight-bold mr-3">새 비밀번호 확인</span></td>
+						<td>
+							<input type="password" class="form-control" id="pw_check" name="pw_check" pattern="^[a-zA-Z0-9!@#$\-_]{8,15}$">
+							<div class="pw_checkD"></div>
+						</td>
+					</tr>
+	                    <tr>
+	                        <td class="text-right"><span class="admin-id font-weight-bold mr-3">비밀번호</span></td>
+	                        <td>
+	                        	<input type="hidden" value="${memberDto.id}" name="id">
+								<input type="password" name="pw" id="pw" class="form-control" placeholder="비밀번호를 입력해주세요." required>
+	                        </td>
+	                    </tr>
+	                    <tr>
+                        <td class="text-right"><span class="admin-id font-weight-bold mr-3">이메일</span></td>
+                        <td >
+                            <input type="text" name="email" class="form-control" placeholder="이메일" pattern="^[a-zA-Z0-9!@#$\-_.]{6,15}$" required>
+                        </td>
+                        <td width="5%">@</td>
+                        <td>
+                        	<input type="text" name="email_address" id="email_address" class="form-control" pattern="^.*?\..*?$" required>
+                        </td>
+                        <td>
+                        	<select id="email_address_option" class="form-control">
+								<option>--이메일 선택--</option>
+								<option>naver.com</option>
+								<option>gmail.com</option>
+								<option>daum.net</option>
+								<option>nate.com</option>
+								<option>yahoo.com</option>
+							</select>
+							<div class="emailD"></div>
+                        </td>
+                    </tr>
+                    <tr>
+						<td class="text-right"><span class="admin-id font-weight-bold mr-3">휴대폰</span></td>
+						<td>
+							<input type="tel" class="form-control" name="phone" value="${memberDto.phone}" pattern="^01[016-9][0-9]{7,8}$" required>
+							<div class="phoneD"></div>
+						</td>
+					</tr>
+					<tr>
+						<td class="text-right" rowspan="3"><span class="admin-id font-weight-bold mr-3">주소</span></td>
+						<td>
+							<input type="text" class="form-control" name="post" value="${memberDto.post}"required readonly>
+						</td>
+						<td><input type="button" class="btn btn-secondary ml-3" name="post_find" value="주소찾기"></td>
+					</tr>
+					<tr>
+						<td>
+							<input type="text" class="form-control" name="basic_addr" value="${memberDto.basic_addr}" required readonly>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<input type="text" class="form-control" name="detail_addr" value="${memberDto.detail_addr}" required>	
+						</td>
+					</tr>
+                  </tbody>
+                </table>
+            </div>
+          </div>
+          
+          <br><br><br><hr class="hr">
+          
+          <div class="text-center mt-5">
+          	<input type="submit" value="정보수정" class="btn btn-primary btn-lg" name="change_info_btn">
+   	  		<a href="delete" class="btn btn-danger ml-3 btn-lg">회원탈퇴</a>
+   	  	  </div>
+   	  </form>
+   	  
+   	  
+ </div><br><br><br><br><br>
 
-<div class="info_change">
-	<form action="info_change" method="post">
-		<br><br>
-		<legend class="legend">개인 정보 수정</legend>
-		<hr>
-		<table class="table table-bordered">
-			<tbody>
-				<tr>
-					<td>아이디</td>
-					<td>
-						${memberDto.id}
-						<input type="hidden" name="no" value="${memberDto.no}">
-					</td>
-				</tr>
-				<tr>
-					<td>새 비밀번호</td>
-					<td>
-						<input type="password" value="" onblur="checkPW();" id="pw" name="new_pw" pattern="^[a-zA-Z0-9!@#$\-_]{8,15}$">
-						<div class="pwD"></div>
-					</td>
-				</tr>
-				<tr>
-					<td>새 비밀번호 확인</td>
-					<td>
-						<input type="password" value="" id="pw_check" name="pw_check" pattern="^[a-zA-Z0-9!@#$\-_]{8,15}$">
-						<div class="pw_checkD"></div>
-					</td>
-				</tr>
-				<tr>
-					<td>이메일</td>
-					<td>
-						<input type="text" name="email" value="${memberDto.email}" pattern="^[a-zA-Z0-9!@#$\-_.]{8,16}$" required>
-						<span>@</span>
-						<input type="text" name="email_address" id="email_address" value="${memberDto.email_address}" pattern="^.*?\..*?$" requried>
-						<select id="email_address_option">
-							<option>--이메일 선택--</option>
-							<option value="">직접입력</option>
-							<option>naver.com</option>
-							<option>gmail.com</option>
-							<option>daum.net</option>
-							<option>nate.com</option>
-							<option>yahoo.com</option>
-						</select>
-						<div class="emailD"></div>
-					</td>
-				</tr>
-				<tr>
-					<td>휴대폰</td>
-					<td>
-						<input type="tel" name="phone" value="${memberDto.phone}" pattern="^01[016-9][0-9]{7,8}$" required>
-						<div class="phoneD"></div>
-					</td>
-				</tr>
-				<tr>
-					<td>주소</td>
-					<td>
-						<input type="text" name="post" value="${memberDto.post}" required readonly>
-						<input type="button" name="post_find" value="주소 찾기"><br>
-						<input type="text" name="basic_addr" value="${memberDto.basic_addr}" required readonly><br>
-						<input type="text" name="detail_addr" value="${memberDto.detail_addr}" required>	
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2">
-						<input type="submit" value="정보수정" name="change_info_btn">
-						<a href="delete"><input type="button" value="회원탈퇴"></a>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</form>
-</div>
 
 <jsp:include page="/WEB-INF/views/template/client/footer.jsp"></jsp:include>

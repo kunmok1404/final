@@ -12,58 +12,47 @@
 
 </script>
 
-<style>
+<div class="container">
 
-	.info_check{
-		width: 700px;
-		margin: auto;
-		min-height: 500px;
-		text-align: center;
-	}
-	
-	.pwcheck{
-		text-align: center;
-	}
-	
-	.info_check table{
-		width: 80%;
-		margin-left: 10%;
-	}
-
-</style>
-
-<div class="info_check">
 	<form action="info_check" method="post">
-		<br><br>
-		<legend>개인 정보 수정</legend>
-		<hr>
-		<table class="table table-bordered">
-			<tbody>
-				<tr>
-					<th class="pwcheck" colspan="2">비밀번호 재확인</th>
-				</tr>
-				<tr>
-					<td class="pwcheck" colspan="2">고객님의 정보를 안전하게 보호하기 위해 비밀번호를 다시 한번 입력해주세요.</td>
-				</tr>
-				<tr>
-					<td><label for="id">아이디</label></td>
-					<td >${memberDto.id}</td>
-				</tr>
-				<tr>
-					<td><label for="pw">비밀번호</label></td>
-					<td colspan="1">
-						<input type="hidden" value="${memberDto.id}" name="id">
-						<input type="password" name="pw" id="pw" placeholder="비밀번호를 입력해주세요." required>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2">
-						<input type="submit" value="확인" name="pwcheck">
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</form>
-</div>
+ 	<div class="row">
+       <div class="col-md-12">
+         <div class="adminLogin-title">개인정보수정</div>
+       </div>
+     </div><hr class="hr"><br>
+     
+     <div class="row">
+            <div class="offset-4 col-md-4">
+                <table class="table table-borderless mt-5 text-center login-table">
+                  <tbody>
+                    <tr>
+                        <td class="text-right"><span class="admin-id font-weight-bold mr-3">아이디</span></td>
+                        <td class="idpw-2 text-secondary font-weight-bold" style="font-size:1.5rem">
+                        	${memberDto.id}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><span class="admin-id font-weight-bold mr-3">비밀번호</span></td>
+                        <td>
+                        	<input type="hidden" value="${memberDto.id}" name="id">
+							<input type="password" name="pw" id="pw" class="form-control" placeholder="비밀번호를 입력해주세요." required>
+                        </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </div>
+          
+          <div class="text-center mt-3">
+   	  		<input type="submit" value="확인" class="btn btn-danger" style="width:300px" name="pwcheck">
+   	  	  </div>
+          
+   	  </form><br><br><br><hr class="hr">
+   	  
+   	  
+   	  
+ </div><br><br><br><br><br>
+
+
 
 <jsp:include page="/WEB-INF/views/template/client/footer.jsp"></jsp:include>

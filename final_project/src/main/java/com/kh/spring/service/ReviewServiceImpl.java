@@ -35,8 +35,8 @@ public class ReviewServiceImpl implements ReviewService {
 	public int ReviewRegist(ReviewDto reviewDto) {
 		
 		// 리뷰 시퀀스 생성 및 설정
-		int review_no = reviewDao.getReviewSeq();
-		reviewDto.setNo(review_no);
+		int review_code = reviewDao.getReviewSeq();
+		reviewDto.setNo(review_code);
 		
 		// 리뷰테이블에 글정보 등록
 		reviewDao.write(reviewDto);
@@ -44,31 +44,32 @@ public class ReviewServiceImpl implements ReviewService {
 		// 주문테이블에 리뷰작성상태 변경
 		reviewDao.reviewStatus(reviewDto.getOrder_code());
 		
-		return review_no;
+		return review_code;
 	}
 	
-	// 리뷰등록
+	// 리뷰관련 파일등록
 	@Override
 	public void fileRegist(MultipartFile file, ReviewDto reviewDto) throws IllegalStateException, IOException {
 		
-		// 파일 시퀀스 생성
-		int files_no = reviewDao.getFilesSeq();
-		
-		// 파일테이블에 리뷰 이미지정보 등록
-		String save_name = file.getOriginalFilename() + "-" + System.currentTimeMillis();
-		reviewDao.fileRegist(FilesDto.builder()
-										.no(files_no)
-										.file_type(file.getContentType())
-										.upload_name(file.getOriginalFilename())
-										.save_name(save_name)
-										.file_size(file.getSize()).build()
-				);
-		// 실제 파일 저장 코드
-		File target = new File("D:/upload/kh15", save_name);
-		file.transferTo(target); //물리적 위치에 저장하는 명령
-		
-		// 리뷰 이미지 테이블에 등록
-		reviewDao.writeReviewImg(reviewDto.getNo(),files_no);
+		// 파일이 있다면 등록
+		if(!file.isEmpty()) {
+			// 파일 시퀀스 생성
+			int files_code = reviewDao.getFilesSeq();
+			// 리뷰 이미지 테이블에 등록
+			reviewDao.insertReviewImg(files_code, reviewDto.getNo());
+			// 파일테이블에 리뷰 이미지정보 등록
+			String save_name = file.getOriginalFilename() + "-" + System.currentTimeMillis();
+			reviewDao.fileRegist(FilesDto.builder()
+											.no(files_code)
+											.file_type(file.getContentType())
+											.upload_name(file.getOriginalFilename())
+											.save_name(save_name)
+											.file_size(file.getSize()).build()
+					);
+			// 실제 파일 저장 코드
+			File target = new File("D:/upload/kh15", save_name);
+			file.transferTo(target); //물리적 위치에 저장하는 명령
+		}
 	}
 
 	// 리뷰정보 조회

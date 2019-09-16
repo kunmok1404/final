@@ -76,20 +76,7 @@
       <table class="table table-hamburg mt-3 menu-regist-table">
       	<tbody>
       		<tr>
-      			<td class="table-secondary text-center" width="20%"><span>음식&nbsp카테고리</span></td>
-      			<td class="text-left">
-      				<span class="text-left pl-2">
-      					<select name="food_category" class="form-control" required>
-	  						<option>선택</option>
-	  						<c:forEach var="category" items="${food_list}">
-	  							<option>${category.name}</option>
-	  						</c:forEach>
-	  					</select>
-      				</span>
-      			</td>
-      		</tr>
-      		<tr>
-      			<td class="table-secondary text-center"><span>메뉴&nbsp카테고리</span></td>
+      			<td class="table-secondary text-center" width="20%"><span>메뉴&nbsp카테고리</span></td>
       			<td class="text-left">
       				<span class="text-left pl-2">
       					<select name="menu_category" class="form-control" required>
@@ -124,7 +111,7 @@
 	  	<tbody>
 	  		<tr>
       			<td class="table-secondary text-center" width="20%">메뉴&nbsp목록이미지</td>
-      			<td class="text-left"><input type="file" name="menu_list_img" class="form-control" placeholder="메뉴명을 입력하세요."></td>
+      			<td class="text-left" width="50%"><input type="file" name="menu_list_img" class="form-control" placeholder="메뉴명을 입력하세요."></td>
       			<td class="category-img" width=100px;></td>
       		</tr>
       		<tr>
@@ -163,7 +150,7 @@
 							<tr class="radio_template">
 		                        <td><input type="text" class="form-control radio_name"></td>
 		                        <td>
-		                        	<input type="number" class="form-control radio_price" min="1">
+		                        	<input type="number" class="form-control radio_price" min="0">
 		                        </td>
 		                        <td><button class="btn_delete btn-block btn-secondary del">-삭제</button></td>
 		                    </tr>
@@ -195,7 +182,7 @@
 							<tr class="check_template">
 		                        <td><input type="text" class="form-control check_name"></td>
 		                        <td>
-		                        	<input type="number" class="form-control check_price" min="1">
+		                        	<input type="number" class="form-control check_price" min="0">
 		                        </td>
 		                        <td><button class="btn_delete btn-block btn-secondary del">-삭제</button></td>
 		                    </tr>

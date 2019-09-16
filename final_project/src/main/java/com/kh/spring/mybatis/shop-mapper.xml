@@ -44,7 +44,9 @@ PUBLIC "//mybatis.org//DTD Mapper 3.0//EN"
  	
  	<!--매장상세 메뉴목록 -->
  	<select id="menu" parameterType="int" resultType="menuDto">
- 		select * from menu where shop_code=#{no}
+ 		select * from menu 
+ 			where 
+ 		shop_code=#{no} and apply_status='승인완료' and sale_status='판매중'
  	</select>
  	
  	<!-- 서브메뉴 메뉴명 -->
@@ -67,7 +69,7 @@ PUBLIC "//mybatis.org//DTD Mapper 3.0//EN"
  						#{bank},#{account_number},#{account_name},#{shop_name},#{shop_phone},#{zip_code},
  						#{basic_addr},#{detail_addr},#{content},sysdate,null,null,
  						'계약종료','승인대기',#{min_price},#{min_time},#{delivery_price}
- 						,TO_DATE(#{start_time},'HH24:MI'),TO_DATE(#{finish_time},'HH24:MI'),null,0,0,#{shop_img},#{business_regist},#{sale_regist},0)
+ 						,TO_DATE(#{start_time},'HH24:MI'),TO_DATE(#{finish_time},'HH24:MI'),null,0,0,#{shop_img},#{business_file},#{sale_file},0)
  	</insert>
  	
  	<select id="getno" parameterType="shopDto" resultType="int">
@@ -99,11 +101,14 @@ PUBLIC "//mybatis.org//DTD Mapper 3.0//EN"
 				zip_code = #{zip_code},
 				basic_addr = #{basic_addr},
 				detail_addr = #{detail_addr},
+				content=#{content},
+				contract_status=#{contract_status},
+				apply_status=#{apply_status},
 				min_price = #{min_price},
+				min_time=#{min_time},
 				delivery_price = #{delivery_price},
 				start_time = TO_DATE(#{start_time},'HH24:MI'),
-				finish_time = TO_DATE(#{finish_time},'HH24:MI'),
-				shop_img = #{shop_img}
+				finish_time = TO_DATE(#{finish_time},'HH24:MI')
 			where
 				no = #{no} 
 	</update>
@@ -162,7 +167,7 @@ PUBLIC "//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="all" resultType="shopDto">
-		select * from shop 
+		select * from shop where apply_status='승인완료' and contract_status='계약중'
 	</select>
 	<select id="search_name" resultType="shopDto" parameterType="map">
 		select * from shop where shop_name like '%'||#{shop_name}||'%'

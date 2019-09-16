@@ -12,4 +12,5 @@ public class FoodCategoryVO {
 	private int category_code; // 카테고리 코드
 	private int image_code;
 	private MultipartFile category_img; // 이미지 정보
+	private int shop_code;//매장코드
 }

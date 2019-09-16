@@ -17,12 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kh.spring.entity.OrdersDto;
 import com.kh.spring.entity.ReviewDto;
-import com.kh.spring.entity.ReviewImgDto;
+import com.kh.spring.repository.CouponDao;
+import com.kh.spring.repository.MemberDao;
 import com.kh.spring.repository.OrdersDao;
 import com.kh.spring.repository.ReviewDao;
 import com.kh.spring.service.OrderService;
+import com.kh.spring.service.PointService;
 import com.kh.spring.service.ReviewService;
 
 @Controller
@@ -37,13 +38,24 @@ public class ReviewController {
 	private OrderService orderService;
 	@Autowired
 	private ReviewService reviewService;
+	@Autowired
+	private MemberDao memberDao;
+	@Autowired
+	private CouponDao couponDao;
+	@Autowired
+	private PointService pointService;
 	
 	//나의 리뷰 목록
 	@GetMapping("/list")
 	public String my_review(HttpSession session,Model model) {
-		//int member_code = (int)session.getAttribute("member_code");
-		int member_code = 1;
+		int member_code = (int)session.getAttribute("member_code");
 		model.addAttribute("list", reviewService.list(member_code));
+		// 회원정보(상단메뉴용)
+		model.addAttribute("memberDto", memberDao.getInfo(member_code));
+		// 쿠폰갯수(상단메뉴용)
+		model.addAttribute("coupon", couponDao.getCouponCount(member_code));
+		// 현재포인트(상단메뉴용)
+		model.addAttribute("point", pointService.getMyPoint(member_code));
 		return "client/member/info_review_list";
 	}
 	
@@ -73,15 +85,14 @@ public class ReviewController {
 		reviewDto.setOrder_code(order_code);
 		
 		// 리뷰정보 등록
-		int review_no = reviewService.ReviewRegist(reviewDto);
-		reviewDto.setNo(review_no);
+		int review_code = reviewService.ReviewRegist(reviewDto);
+		reviewDto.setNo(review_code);
 		
 		//images의 정보를 꺼내어 DB에 저장하면서 파일로도 저장
 		for(MultipartFile file : images) {
 			reviewService.fileRegist(file, reviewDto);
 		}
-		model.addAttribute("review_no",review_no);
-		return "redirect:content";
+		return "redirect:list";
 	}
 	
 	@GetMapping("/content")
@@ -109,7 +120,7 @@ public class ReviewController {
 		public ResponseEntity<ByteArrayResource> reviewImg(
 						@RequestParam int files_code) throws IOException{
 		return reviewService.reviewImg(files_code);
-		}
+	}
 	
 	// 리뷰 수정
 	@GetMapping("/edit")

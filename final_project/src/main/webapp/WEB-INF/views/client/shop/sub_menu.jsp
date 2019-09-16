@@ -121,8 +121,8 @@
    
 </script>
 
-    <div class="modal-img">
-        <img src="https://placeimg.com/466/250/any">
+    <div class="modal-img text-center">
+        <img src="${pageContext.request.contextPath}/review/review_img?files_code=${menuDto.detail_img}">
     </div>
     <div class="modal-menuName border-bottom">
       <h4>${menuDto.name}</h4>

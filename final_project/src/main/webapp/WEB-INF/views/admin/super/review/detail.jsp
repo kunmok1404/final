@@ -51,7 +51,7 @@
 		<div id="terms-wrapper">
           <div class="terms-line"></div>
         </div>
-	    <span>리뷰상세화면</span>
+	    <span class="font-weight-bold">후기상세화면</span>
       </div>
 
       <div class="row mt-3">
@@ -61,7 +61,7 @@
               <tr>
                 <td class="review-title">매&nbsp장</td>
                 <td class="review-content">
-                  <img src="https://placeimg.com/100/100/any">
+                  <img class="review_detail_img" src="${pageContext.request.contextPath}/review/review_img?files_code=${shopDto.shop_img}">
                   <span>${shopDto.shop_name}</span>
                 </td>
               </tr>
@@ -70,66 +70,66 @@
                 <td class="review-content">
                   <table class="table table-borderless">
 	                  <tbody>
-	                  	 <c:forEach var="order_distinct" items="${order_distinct}">
-	                      <tr>
-	                          <td class="Detail-menu">
-	                              <span>${order_distinct.menu_name} x ${order_distinct.menu_amount}</span>
-	                          </td>
-	                          <td class="Detail-menu-price">
-	                              <span>${order_distinct.menu_price}원</span>
-	                          </td>
-	                      </tr>
-	                      </c:forEach>
+<%-- 	                  	 <c:forEach var="order_distinct" items="${order_distinct}"> --%>
+<!-- 	                      <tr> -->
+<!-- 	                          <td class="Detail-menu"> -->
+<%-- 	                              <span>${order_distinct.menu_name} x ${order_distinct.menu_amount}</span> --%>
+<!-- 	                          </td> -->
+<!-- 	                          <td class="Detail-menu-price"> -->
+<%-- 	                              <span>${order_distinct.menu_price}원</span> --%>
+<!-- 	                          </td> -->
+<!-- 	                      </tr> -->
+<%-- 	                      </c:forEach> --%>
 	                      
-						  <c:set var="loop1Flag" value="true"></c:set>
-						  <c:forEach var="order_detail" items="${order_detail_list}">	
-	                      <tr>
-	                          <td class="Detail-menu-title">
-	                          	 <c:if test="${loop1Flag && order_detail.sub_type eq '필수'}">
-                                 	<span>[${order_detail.title}]</span>
-                                	<c:set var="loop1Flag" value="false" />
-   	                             </c:if>
-	                          </td>
-	                      </tr>
-	                      </c:forEach>
+<%-- 						  <c:set var="loop1Flag" value="true"></c:set> --%>
+<%-- 						  <c:forEach var="order_detail" items="${order_detail_list}">	 --%>
+<!-- 	                      <tr> -->
+<!-- 	                          <td class="Detail-menu-title"> -->
+<%-- 	                          	 <c:if test="${loop1Flag && order_detail.sub_type eq '필수'}"> --%>
+<%--                                  	<span>[${order_detail.title}]</span> --%>
+<%--                                 	<c:set var="loop1Flag" value="false" /> --%>
+<%--    	                             </c:if> --%>
+<!-- 	                          </td> -->
+<!-- 	                      </tr> -->
+<%-- 	                      </c:forEach> --%>
 	                      
-	                      <c:forEach var="order_detail" items="${order_detail_list}">
-	                       <c:if test="${order_detail.sub_type eq '필수'}">
-	                        <tr>
-	                            <td class="Detail-subMenu-name">
-	                                <span>-${order_detail.sub_name} :</span>
-	                            </td>
-	                            <td class="Detail-subMenu-price">
-	                                <span>+${order_detail.sub_price}원</span>
-	                            </td>
-	                        </tr>
-	                       </c:if>
-	                      </c:forEach>
+<%-- 	                      <c:forEach var="order_detail" items="${order_detail_list}"> --%>
+<%-- 	                       <c:if test="${order_detail.sub_type eq '필수'}"> --%>
+<!-- 	                        <tr> -->
+<!-- 	                            <td class="Detail-subMenu-name"> -->
+<%-- 	                                <span>-${order_detail.sub_name} :</span> --%>
+<!-- 	                            </td> -->
+<!-- 	                            <td class="Detail-subMenu-price"> -->
+<%-- 	                                <span>+${order_detail.sub_price}원</span> --%>
+<!-- 	                            </td> -->
+<!-- 	                        </tr> -->
+<%-- 	                       </c:if> --%>
+<%-- 	                      </c:forEach> --%>
 	                      
-	                      <c:set var="loop1Flag" value="true"></c:set>
-						  <c:forEach var="order_detail" items="${order_detail_list}">	
-	                      <tr>
-                     	     <td class="Detail-menu-title">
-                      	       <c:if test="${loop1Flag && order_detail.sub_type eq '선택'}">
-                               <span>[${order_detail.title}]</span>
-                               <c:set var="loop1Flag" value="false" />
-	    	 			       </c:if>
-                             </td>
-	                       </tr>
-	                      </c:forEach>
+<%-- 	                      <c:set var="loop1Flag" value="true"></c:set> --%>
+<%-- 						  <c:forEach var="order_detail" items="${order_detail_list}">	 --%>
+<!-- 	                      <tr> -->
+<!--                      	     <td class="Detail-menu-title"> -->
+<%--                       	       <c:if test="${loop1Flag && order_detail.sub_type eq '선택'}"> --%>
+<%--                                <span>[${order_detail.title}]</span> --%>
+<%--                                <c:set var="loop1Flag" value="false" /> --%>
+<%-- 	    	 			       </c:if> --%>
+<!--                              </td> -->
+<!-- 	                       </tr> -->
+<%-- 	                      </c:forEach> --%>
 	                      
-	                      <c:forEach var="order_detail" items="${order_detail_list}">
-	                       <c:if test="${order_detail.sub_type eq '선택'}">
-	                        <tr>
-	                            <td class="Detail-subMenu-name">
-	                                <span>-${order_detail.sub_name} :</span>
-	                            </td>
-	                            <td class="Detail-subMenu-price">
-	                                <span>+${order_detail.sub_price}원</span>
-	                            </td>
-	                        </tr>
-	                       </c:if>
-	                      </c:forEach>
+<%-- 	                      <c:forEach var="order_detail" items="${order_detail_list}"> --%>
+<%-- 	                       <c:if test="${order_detail.sub_type eq '선택'}"> --%>
+<!-- 	                        <tr> -->
+<!-- 	                            <td class="Detail-subMenu-name"> -->
+<%-- 	                                <span>-${order_detail.sub_name} :</span> --%>
+<!-- 	                            </td> -->
+<!-- 	                            <td class="Detail-subMenu-price"> -->
+<%-- 	                                <span>+${order_detail.sub_price}원</span> --%>
+<!-- 	                            </td> -->
+<!-- 	                        </tr> -->
+<%-- 	                       </c:if> --%>
+<%-- 	                      </c:forEach> --%>
 	                      
 	                  </tbody>
 	              </table>

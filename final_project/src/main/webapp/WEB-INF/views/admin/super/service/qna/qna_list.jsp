@@ -69,7 +69,7 @@
 		<div id="terms-wrapper">
           <div class="terms-line"></div>
         </div>
-		<span>자주하는 질문</span>
+		<span class="font-weight-bold" style="font-size:1.2rem;">자주하는 질문</span>
       </div>
      
 	  <!-- 검색목록창 시작 -->
@@ -83,13 +83,9 @@
 	  				<td width="40%">
 	  					<select name="apply_status" class="form-control">
 	  						<option>전체</option>
-								<option value=1>주문접수</option>
-								<option value=2>주문확인</option>
-								<option value=3>주문취소/변경</option>
-								<option value=4>서비스이용</option>
-								<option value=5>결제</option>
-								<option value=6>가맹 및 기타</option>
-								<option value=7>뭐먹지 슈퍼클럽</option>
+								<c:forEach var="category" items="${category_list}">
+								<option>${category.name}</option>
+								</c:forEach>
 	  					</select>
 	  				</td>
 	  				<td width="10%" class="table-active">키워드 검색</td>

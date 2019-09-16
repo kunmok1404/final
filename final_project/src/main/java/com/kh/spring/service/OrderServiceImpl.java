@@ -39,14 +39,14 @@ public class OrderServiceImpl implements OrderService {
 			map.put("shop_name", shopDto.getShop_name()); 
 			
 			// 주문번호로 메뉴명1개, 총메뉴갯수 구한후 세팅
-			System.out.println("orderDto.getNo()="+orderDto.getNo());
 			OrderDetailDto menu_name = ordersDao.menuName(orderDto.getNo());
-			System.out.println("menu_name="+menu_name);
 			int menu_count = ordersDao.menuCount(orderDto.getNo());
 			map.put("menu_name",menu_name.getMenu_name());
 			map.put("menu_count",menu_count);
 			
-			map.put("order_date",orderDto.getOrder_date()); // 주문일시
+			// 시간 자르기
+			String time = orderDto.getOrder_date().substring(0, 16);
+			map.put("order_date",time); // 주문일시
 			map.put("order_status",orderDto.getOrder_status()); //주문상태
 			map.put("review_status",orderDto.getReview_status()); //주문상태
 			list.add(map);

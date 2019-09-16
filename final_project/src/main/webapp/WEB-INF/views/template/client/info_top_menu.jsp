@@ -5,29 +5,29 @@
       <!--나의정보 헤더-->
       <div class="row my-header">
         <div class="col-md-2 component">
-          <span class="my-info">CutyBoy</span>
-          <span class="my-title">님</span>
+          <span class="my-info">${memberDto.id}</span>
+          <span class="my-title font-weight-bold">님</span>
         </div>
         <div id="myInfo-wrapper">
           <div class="myInfo-line"></div>
         </div>
         <div class="col-md-2">
-            <span class="my-title">등급 :</span>
-            <span class="my-info">골드</span>
+            <span class="my-title font-weight-bold">등 급 :</span>
+            <span class="my-info">&nbsp${memberDto.grade}</span>
         </div>
         <div id="myInfo-wrapper">
           <div class="myInfo-line"></div>
         </div>
         <div class="col-md-2">
-            <span class="my-title">쿠폰 :</span>
-            <span class="my-info">3개</span>
+            <span class="my-title font-weight-bold">쿠 폰 :</span>
+            <span class="my-info">&nbsp${coupon}개</span>
         </div>
         <div id="myInfo-wrapper">
           <div class="myInfo-line"></div>
         </div>
         <div class="col-md-2">
-            <span class="my-title">포인트 :</span>
-            <span class="my-info">0pt</span>
+            <span class="my-title font-weight-bold">포인트 :  </span>
+            <span class="my-info">&nbsp${point} pt</span>
         </div>
       </div>
     </div>

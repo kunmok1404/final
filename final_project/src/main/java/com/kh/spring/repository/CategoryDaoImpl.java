@@ -65,4 +65,34 @@ public class CategoryDaoImpl implements CategoryDao {
 		return sqlSession.selectOne("category.menuCategoryInfo", menu_code);
 	}
 
+	// MenuCategory 수정
+	@Override
+	public void updateMenuCategoryInfo(FoodCategoryVO foodDto) {
+		sqlSession.update("category.updateMenuCategory", foodDto);
+	}
+
+	// MenuCategory 등록
+	@Override
+	public void insertMenuCategryInfo(FoodCategoryVO foodDto) {
+		sqlSession.insert("category.insertMenuCategory",foodDto);
+	}
+
+	// 자주하는 질문 카테고리 조회
+	@Override
+	public List<CategoryDto> getQnaCategory() {
+		return sqlSession.selectList("category.qnaCategoryList");
+	}
+
+	// 자주하는질문 카테고리 수정
+	@Override
+	public void updateQnaCategory(FoodCategoryVO foodDto) {
+		sqlSession.update("category.updateQnaCategory", foodDto);
+	}
+
+	// 자주하는질문 카테고리 등록
+	@Override
+	public void insertQnaCategory(FoodCategoryVO foodDto) {
+		sqlSession.insert("category.insertQnaCategory", foodDto);
+	}
+
 }

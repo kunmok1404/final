@@ -61,29 +61,78 @@
           <table class="table table-hamburg">
             <tbody>
               <tr>
-                <td class="review-title" rowspan="2">매&nbsp장</td>
+                <td class="review-title">매&nbsp장</td>
                 <td class="review-content">
-                  <img class="shop-list-img" src="${pageContext.request.contextPath}/review/review_img?files_code=${shopDto.shop_img}">
+                  <img src="https://placeimg.com/100/100/any">
+                  <span>${shopDto.shop_name}</span>
                 </td>
-              </tr>
-              <tr>
-              	<td class="shop-name-title"><span class="font-weight-bold align-middle shop-name-title pl-5">${shopDto.shop_name}</span></td>
               </tr>
               <tr>
                 <td class="review-title">메&nbsp뉴</td>
                 <td class="review-content">
                   <table class="table table-borderless">
 	                  <tbody>
-	                  	 <c:forEach var="order_menu" items="${order_detail_list}">
-                            <tr>
-                                <td class="Detail-menu">
-                                    <span>${order_menu.menu_name} x ${order_menu.menu_amount}</span>
-                                </td>
-                                <td class="Detail-menu-price">
-                                    <span>${order_menu.menu_price}원</span>
-                                </td>
-                            </tr>
-                        </c:forEach>
+	                  	 <c:forEach var="order_distinct" items="${order_distinct}">
+	                      <tr>
+	                          <td class="Detail-menu">
+	                              <span>${order_distinct.menu_name} x ${order_distinct.menu_amount}</span>
+	                          </td>
+	                          <td class="Detail-menu-price">
+	                              <span>${order_distinct.menu_price}원</span>
+	                          </td>
+	                      </tr>
+	                      </c:forEach>
+	                      
+						  <c:set var="loop1Flag" value="true"></c:set>
+						  <c:forEach var="order_detail" items="${order_detail_list}">	
+	                      <tr>
+	                          <td class="Detail-menu-title">
+	                          	 <c:if test="${loop1Flag && order_detail.sub_type eq '필수'}">
+                                 	<span>[${order_detail.title}]</span>
+                                	<c:set var="loop1Flag" value="false" />
+   	                             </c:if>
+	                          </td>
+	                      </tr>
+	                      </c:forEach>
+	                      
+	                      <c:forEach var="order_detail" items="${order_detail_list}">
+	                       <c:if test="${order_detail.sub_type eq '필수'}">
+	                        <tr>
+	                            <td class="Detail-subMenu-name">
+	                                <span>-${order_detail.sub_name} :</span>
+	                            </td>
+	                            <td class="Detail-subMenu-price">
+	                                <span>+${order_detail.sub_price}원</span>
+	                            </td>
+	                        </tr>
+	                       </c:if>
+	                      </c:forEach>
+	                      
+	                      <c:set var="loop1Flag" value="true"></c:set>
+						  <c:forEach var="order_detail" items="${order_detail_list}">	
+	                      <tr>
+                     	     <td class="Detail-menu-title">
+                      	       <c:if test="${loop1Flag && order_detail.sub_type eq '선택'}">
+                               <span>[${order_detail.title}]</span>
+                               <c:set var="loop1Flag" value="false" />
+	    	 			       </c:if>
+                             </td>
+	                       </tr>
+	                      </c:forEach>
+	                      
+	                      <c:forEach var="order_detail" items="${order_detail_list}">
+	                       <c:if test="${order_detail.sub_type eq '선택'}">
+	                        <tr>
+	                            <td class="Detail-subMenu-name">
+	                                <span>-${order_detail.sub_name} :</span>
+	                            </td>
+	                            <td class="Detail-subMenu-price">
+	                                <span>+${order_detail.sub_price}원</span>
+	                            </td>
+	                        </tr>
+	                       </c:if>
+	                      </c:forEach>
+	                      
 	                  </tbody>
 	              </table>
                 </td>
@@ -91,7 +140,7 @@
               <tr>
                 <td class="review-text">별&nbsp점</td>
                 <td class="review-content">
-                  <input type="number" name="score" min="0" max="5" class="form-control" required>
+                  <input type="number" name="score" class="form-control" required>
                 </td>
               </tr>
               <tr>
