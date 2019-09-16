@@ -61,7 +61,6 @@
          $(".total-price").text(order.total);
 //          $("input[name=menu_price]").val(order.total);
          var result = $("input[name=menu_price]").val();
-         alert(result);
          order.sub_total=0;
          order.menu_total =0;
       })

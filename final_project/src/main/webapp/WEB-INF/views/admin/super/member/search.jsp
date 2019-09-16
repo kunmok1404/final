@@ -116,5 +116,6 @@
 	</div><br><br><br>
 	<!-- 회원 목록 끝 -->
 	
+</div>
 
 <jsp:include page="/WEB-INF/views/template/admin/super/footer.jsp"></jsp:include>

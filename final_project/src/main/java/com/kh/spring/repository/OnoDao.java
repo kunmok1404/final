@@ -58,6 +58,8 @@ public interface OnoDao {
 
 	int supercount(String apply_status, String keyword_type, String keyword, String start_date, String end_date);
 
+	void write2(OnoDto onoDto);
+
 //	List<OnoDto> superlist_ceo(String apply_status, String keyword_type, String keyword, String start_date,
 //			String end_date, int i, int j, String type);
 //

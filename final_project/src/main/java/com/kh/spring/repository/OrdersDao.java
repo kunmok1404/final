@@ -12,6 +12,7 @@ import com.kh.spring.entity.MemberDto;
 import com.kh.spring.entity.OrderDetailDto;
 import com.kh.spring.entity.OrderSubDetail;
 import com.kh.spring.entity.OrdersDto;
+import com.kh.spring.entity.PointDetailDto;
 import com.kh.spring.entity.ShopDto;
 import com.kh.spring.entity.SubMenuDto;
 import com.kh.spring.entity.TotalVo;
@@ -68,4 +69,6 @@ public interface OrdersDao {
 	int getshopcode(int member_code);
 	void orderCancel(int order_code);
 	List<OrderCountVO> getCount(int shop_code);
+	PointDetailDto getpoint(int member_code);
+	void usepoint(int member_code, int discount_price);
 }

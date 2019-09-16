@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.spring.entity.NoticeDto;
 import com.kh.spring.entity.OnoDto;
 import com.kh.spring.entity.QnaDto;
+import com.kh.spring.vo.QnaCategoryVO;
 
 public interface ServiceService {
 
@@ -28,6 +29,15 @@ public interface ServiceService {
 	QnaDto qnaInfo(int no);
 
 	int write(QnaDto qnaDto);
+
+	int OnoRegist2(OnoDto onoDto);
+
+	List<QnaCategoryVO> superlist(String apply_status, String keyword_type, String keyword, String start_date, String end_date,
+			String yn, int start, int end);
+
+	List<QnaCategoryVO> list(String category, int start, int end, String use_yn);
+
+
 
 
 

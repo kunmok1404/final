@@ -94,7 +94,6 @@
 			$("form").submit(function(e){
 				var result = $("#allCheck").prop("checked");
 				if(result){
-					alert("넘어갑니다");
 				}
 				else{
 					e.preventDefault();

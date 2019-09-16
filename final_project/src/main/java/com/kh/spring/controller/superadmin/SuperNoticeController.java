@@ -110,8 +110,8 @@ public class SuperNoticeController {
 	public String write(HttpSession session, @ModelAttribute NoticeDto noticeDto,
 			Model model) {
 		//글등록
-		String id = "test1";
-		noticeDto.setWriter(id);
+//		String id = "test1";
+//		noticeDto.setWriter(id);
 		int no = serviceService.write(noticeDto);
 		
 //		noticeDao.write(noticeDto); 
@@ -132,6 +132,7 @@ public class SuperNoticeController {
 	@GetMapping("/edit")
 	public String edit(@RequestParam int no, Model model) {
 		model.addAttribute("sndto", noticeDao.get(no));
+		
 		return "admin/super/service/notice/edit";
 	}
 	

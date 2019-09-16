@@ -15,6 +15,7 @@ import com.kh.spring.entity.MemberDto;
 import com.kh.spring.entity.OrderDetailDto;
 import com.kh.spring.entity.OrderSubDetail;
 import com.kh.spring.entity.OrdersDto;
+import com.kh.spring.entity.PointDetailDto;
 import com.kh.spring.entity.ShopDto;
 import com.kh.spring.entity.SubMenuDto;
 import com.kh.spring.entity.TotalVo;
@@ -359,6 +360,20 @@ public class OrdersDaoimpl implements OrdersDao{
 	@Override
 	public List<OrderCountVO> getCount(int shop_code) {
 		return sqlsession.selectList("order.orderCount", shop_code);
+	}
+
+	@Override
+	public PointDetailDto getpoint(int member_code) {
+		return sqlsession.selectOne("order.getpoint",member_code);
+	}
+
+	@Override
+	public void usepoint(int member_code, int discount_price) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("member_code", member_code);
+		map.put("point", discount_price);
+		sqlsession.insert("order.usepoint",map);
+		
 	}
 
 

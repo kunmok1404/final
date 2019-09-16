@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:include page="/WEB-INF/views/template/admin/super/header.jsp"></jsp:include>
-<jsp:include page="/WEB-INF/views/template/admin/super/left/left_review.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/template/admin/shop/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/template/admin/shop/left/left_review.jsp"></jsp:include>
 <script>
 $(function(){
 	$(".navigator-no").click(function(e) {
@@ -104,7 +104,7 @@ $(function(){
 	  				<td>${list.no}</td>
 	  				<td>${list.company_name}</td>
 	  				<td>${list.name}</td>
-	  				<td class="over-text"><a href="${pageContext.request.contextPath}/super_admin/order/detail?no=${list.no}" class="text-primary">${list.title}</a></td>
+	  				<td class="over-text"><a href="${pageContext.request.contextPath}/shop_admin/order/detail?no=${list.no}" class="text-primary">${list.title}</a></td>
 	  				<td>${list.pay_method}</td>
 	  				<td>${list.total_price}</td>
 	  				<td>${list.id}</td>
@@ -156,4 +156,4 @@ $(function(){
 	  	</div>
 	  </div>
 	</div>			
-<jsp:include page="/WEB-INF/views/template/admin/super/footer.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/template/admin/shop/footer.jsp"></jsp:include>
