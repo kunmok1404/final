@@ -2,8 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<jsp:include page="/WEB-INF/views/template/admin/super/header.jsp"></jsp:include>
-<jsp:include page="/WEB-INF/views/template/admin/super/left/left_review.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/template/admin/shop/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/template/admin/shop/left/left_review.jsp"></jsp:include>
 
 <script>
 $(function(){
@@ -77,13 +77,13 @@ $(function(){
 					<td>배송비</td>
 					<td>${shop_del.delivery_price}</td>
 					<td>결제금액</td>
-					<td>${orders.total_price - orders.discount_price -shop_del.delivery_price}원</td>
+					<td>${orders.total_price}원</td>
 				</tr>
 				<tr>
 					<td>할인금액</td>
 					<td>${orders.discount_price}</td>
 					<td>총 결제 금액</td>
-					<td>${orders.total_price}</td>
+					<td>${orders.total_price-orders.discount_price+shop_del.delivery_price}</td>
 				</tr>
 					
 				<tr>

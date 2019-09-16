@@ -65,6 +65,10 @@
 						<td>${shop_info.delivery_price}원</td>
 					</tr>
 					<tr>
+						<td>할인된 요금</td>
+						<td>${orders.discount_price}원</td>
+					</tr>
+					<tr>
 						<td><font color="red">결제금액</font></td>
 						<td>${orders.total_price + shop_info.delivery_price - orders.discount_price}원</td>
 					</tr>

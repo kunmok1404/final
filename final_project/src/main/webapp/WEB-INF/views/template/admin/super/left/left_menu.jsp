@@ -5,7 +5,7 @@
   <div class="left">
     <ul>
       <li><a href="${pageContext.request.contextPath}/super_admin/menu/list" ${url == '/shop_admin/menu/list' ? 'class="on"' : ''}>메뉴 목록</a></li>
-      <li><a href="#" >승인대기중<br>(00건)</a></li>
+      <li><a href="#" >승인대기중<br>(${menuCount}건)</a></li>
     </ul>
   </div>  
   <!--left 메뉴 끝--> 

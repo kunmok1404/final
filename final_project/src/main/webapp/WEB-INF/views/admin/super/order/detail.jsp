@@ -75,15 +75,15 @@ $(function(){
 				</tr>
 				<tr>
 					<td>배송비</td>
-					<td>${shop_del.delivery_price}</td>
+					<td>${shop.delivery_price}</td>
 					<td>결제금액</td>
-					<td>${orders.total_price - orders.discount_price -shop_del.delivery_price}원</td>
+					<td>${orders.total_price}원</td>
 				</tr>
 				<tr>
 					<td>할인금액</td>
 					<td>${orders.discount_price}</td>
 					<td>총 결제 금액</td>
-					<td>${orders.total_price}</td>
+					<td>${orders.total_price-orders.discount_price+shop.delivery_price}</td>
 				</tr>
 					
 				<tr>
