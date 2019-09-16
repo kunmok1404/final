@@ -10,11 +10,11 @@
     <script src="https://code.jquery.com/jquery-latest.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.ckeditor.com/4.12.1/standard/ckeditor.js"></script>
     <script src="https://cdn.tiny.cloud/1/6ftday8a7jg29iewicngy31mxruhwuo468au005jb6npig7g/tinymce/5/tinymce.min.js"></script>
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/pkmClient.css" rel="stylesheet">
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2c2ba04f24dbd55e914c1d24e55dfaa7&libraries=services"></script>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 </head>
 
 <style>
@@ -147,7 +147,11 @@
 	              <li>
 	                <a href="${pageContext.request.contextPath}/notice/list" class="mr-2"" class="mr-2">고객센터</a>
 	              </li>
-	              <li><img src="${pageContext.request.contextPath}/resources/image/shopping-cart.png"></li>
+	              <li>
+	              	 <a href="${pageContext.request.contextPath}/order/mycart">
+	              <img src="${pageContext.request.contextPath}/resources/image/shopping-cart.png">
+	             	 </a>
+				  </li>
 	            </ul>          	
           	</c:when>
           	<c:otherwise>
@@ -173,7 +177,11 @@
 	              <li>
 	                <a href="${pageContext.request.contextPath}/notice/list" class="mr-2"" class="mr-2">고객센터</a>
 	              </li>
-	              <li><img src="${pageContext.request.contextPath}/resources/image/shopping-cart.png"></li>
+	              <li>
+	              	<a href="${pageContext.request.contextPath}/order/mycart">
+	            	  <img src="${pageContext.request.contextPath}/resources/image/shopping-cart.png">
+	              	</a>
+	              </li>
 	            </ul>
           	</c:otherwise>
           </c:choose>

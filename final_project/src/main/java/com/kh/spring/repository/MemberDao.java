@@ -36,7 +36,9 @@ public interface MemberDao {
 	List<MemberDto> getMemberList();
 	List<MemberInfoVO> info(int no);
 	int total_price(int no);
+	void shopMemberApply(MemberDto memberDto);
+	void applyShop(int shop_code);
 	//
-	MemberDto findPassword(MemberDto memberDto);
+//	MemberDto findPassword(MemberDto memberDto);
 
 }

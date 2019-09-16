@@ -7,7 +7,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="search" parameterType="int" resultType="memberDto">
 		select * from member where no = #{member_code}
 	</select>
-
+	<!-- 장바구니에 그냥 접속시 샵번호를 불러오는 코드 -->
+	<select id="cart" parameterType="int" resultType="int">
+		select distinct nvl(shop_code, 0) as shop_code from cart where member_code = #{member_code}
+	</select>
+	<!-- 장바구니 시퀀스 받아오는 코드 -->
+	<select id="getcartseq" resultType="int">
+		select cart_seq.nextval from dual
+	</select>
+	<!-- 장바구니에 메인메뉴를 넣는 코드 -->
+	<insert id="cartmenuinsert" parameterType="cartDto">
+	 	insert into cart values(#{no},#{member_code},#{shop_code},#{title},#{menu_name},#{menu_amount},
+	 	#{menu_price},sysdate)
+	</insert>
+	<!-- 주문시 받아온 번호로 서브메뉴를 조회하는 코드 -->
+	<select id="getsubmenu" parameterType="map" resultType="submenuDto">
+		select * from sub_menu where shop_code = #{shop_code} and no = #{no}
+	</select>
+	<!-- 주문 입력 코드 -->
+	<insert id="subinsert" parameterType="submenuDto">
+		insert into cart_sub_menu values(#{no},#{type},#{title},#{name},#{price},1)
+	</insert>
 	<!-- '자기'의 카트에 존재하는 메인 메뉴의 코드를 출력하는 코드 -->
 	
 	<resultMap type="cartDto" id="cartlist">
@@ -72,15 +92,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="menu_count" parameterType="int" resultType="int">
 		select count(menu_name) from order_detail where order_code=#{no}
 	</select>
-
+	
+	<resultMap type="orderDetailDto" id="my_order_detail">
+		<result property="order_code" column="order_code"/>
+		<result property="no" column="no"/>
+		<result property="title" column="title"/>
+		<result property="menu_name" column="menu_name"/>
+		<result property="menu_amount" column="menu_amount"/>
+		<result property="menu_price" column="menu_price"/>
+		<collection property="list" column="no" javaType="java.util.ArrayList" ofType="orderSubDetail"
+		select="my_order_sub_detail"/>
+	</resultMap>
+	
 	<!-- 나의정보 주문상세 -->
-	<select id="my_order_detail" parameterType="map" resultType="orderDetailDto">
+	<select id="my_order_detail" parameterType="int" resultMap="my_order_detail">
 		select * from order_detail 
 			where 
 		order_code = #{order_code}
 	</select>
 	<!-- 나의정보 추가메뉴 주문 상세 -->
-	<select id="my_order_sub_detail" parameterType="map" resultType="orderSubDetail">
+	<select id="my_order_sub_detail"  resultType="orderSubDetail">
 		select * from order_sub_detail where no = #{no}
 	</select>
 	<!-- 나의주문정보조회 -->
@@ -308,6 +339,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</choose>
 			</if>
 	</select>
+	<!-- 매장 주인의 주문 개수를 불러오는 코드 [뷰 만들어야함] -->
+<!-- 	<select id="shopOrdersCount" parameterType="int" resultType="int"> -->
+<!-- 	<![CDATA[ -->
+<!-- 		select count(*) from order_list	 -->
+<!-- 		]]> -->
+<!-- 			<if test="status !='all'"> -->
+<!-- 			<choose> -->
+<!-- 			<when test="type !=null and keyword != null and status ==''"> -->
+<!-- 				where ${type} like '%'||#{keyword}||'%' -->
+<!-- 			</when> -->
+<!-- 			<when test="status !=null and type =='' and keyword == ''"> -->
+<!-- 				where order_status = #{status} -->
+<!-- 			</when> -->
+<!-- 			<when test="status !=null and type != null and keyword != null"> -->
+<!-- 				where ${type} like '%'||#{keyword}||'%' and order_status = #{status} -->
+<!-- 			</when> -->
+<!-- 			<otherwise>  -->
+<!-- 			</otherwise> -->
+<!-- 		</choose> -->
+<!-- 			</if> -->
+<!-- 			where  -->
+<!-- 	</select> -->
+	<!-- 매장 주인이 주문 정보를 개별로 불러오는 코드 -->
+<!-- 	<select id=""> -->
+<!-- 		select * from order_detail where order_code = #{no} and shop_code = #{shop_code} -->
+<!-- 	</select> -->
+	<!-- 매장 점주가 주문 확인시 보여줄 코드 -->
+<!-- 	<select id="shop_order_result" parameterType="map" resultType="ordersDto"> -->
+<!-- 		select * from orders where no = #{no} and shop_code = #{shop_code} -->
+<!-- 	</select>	 -->
 	<!-- 관리자가 주문 정보를 개별로 불러오는 코드 -->
 	<select id="orderDetail" parameterType="int" resultType="orderDetailDto">
 		select * from order_detail where order_code = #{no}
@@ -324,4 +385,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="setStatus" parameterType="map">
 		update orders set order_status = #{order_status} where no = #{no}
 	</update>
+	<!-- 쿠폰 갯수 조회 -->
+	<select id="getcoupon" parameterType="int" resultType="int">
+		select count(*) from issue where member_code = #{member_code}
+	</select>
+	<!-- Shop_code로 매장별 주문내역 조회 -->
+	<select id="getShopOrderList" parameterType="int" resultType="ordersDto">
+		select * from orders where shop_code=#{shop_code}
+	</select>
+	
 </mapper>

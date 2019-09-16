@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,9 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.spring.entity.MemberDto;
 import com.kh.spring.entity.ShopDto;
+import com.kh.spring.repository.MemberDao;
 import com.kh.spring.repository.MenuDao;
 import com.kh.spring.repository.ShopDao;
+import com.kh.spring.repository.TermsDao;
 import com.kh.spring.service.MenuService;
 import com.kh.spring.service.ShopService;
 
@@ -33,6 +37,10 @@ public class ShopController {
 	private MenuService menuService;
 	@Autowired
 	private ShopDao shopDao;
+	@Autowired
+	private TermsDao termsDao;
+	@Autowired
+	private MemberDao memberDao;
 	
 	// 매장목록
 	@RequestMapping("/list")
@@ -40,7 +48,9 @@ public class ShopController {
 		model.addAttribute("cat_no", cat_no);
 		model.addAttribute("cat_list", shopDao.catList()); // 음식카테고리 목록
 		model.addAttribute("shop_list", shopDao.shop()); // 검색 주소목록
-		
+		model.addAttribute("terms1", termsDao.terms1());
+		model.addAttribute("terms2", termsDao.terms2());	
+		model.addAttribute("shop_count", shopDao.getShopCount(cat_no)); //매장갯수
 		return "client/shop/shop_list";
 	}
 	
@@ -51,8 +61,8 @@ public class ShopController {
 		int size = 10;
 		int end = page * size;
 		int start = end - size + 1;
-		List<ShopDto> shop_list = shopDao.ajaxPaging(start, end, cat_no);	
-		model.addAttribute("shop_list", shop_list);
+		System.out.println("count="+shopDao.getShopCount(cat_no));
+		model.addAttribute("shop_list", shopDao.ajaxPaging(start, end, cat_no));
 		
 		return "client/shop/part";
 	}
@@ -72,7 +82,6 @@ public class ShopController {
 	public String sub_menu(@RequestParam int menu_code,
 			@RequestParam int shop_code,
 			Model model) {
-		System.out.println("shop_code="+shop_code);
 		// 메뉴코드 넘기기
 		model.addAttribute("menu_code", menu_code);
 		model.addAttribute("map", shopService.sub_menu(menu_code));
@@ -92,14 +101,19 @@ public class ShopController {
 
 	// 입점문의 페이지
 	@GetMapping("/explan")
-	public String explan() {
+	public String explan(Model model) {
+		model.addAttribute("terms1", termsDao.terms1());
+		model.addAttribute("terms2", termsDao.terms2());	
 		return "client/order/shop_explan";
 	}
 	
 
 	// 입점문의 신청페이지(get)
 	@GetMapping("/shop_regist")
-	public String order_regist() {
+	public String order_regist(Model model) {
+		model.addAttribute("category", shopDao.catList());
+		model.addAttribute("terms1", termsDao.terms1());
+		model.addAttribute("terms2", termsDao.terms2());	
 		return "client/order/shop_regist";
 	}
 
@@ -107,11 +121,28 @@ public class ShopController {
 	@PostMapping("/shop_regist")
 	public String order_regist(
 								@ModelAttribute ShopDto shopDto,
-								@RequestParam MultipartFile business,
-								@RequestParam MultipartFile img,
-								@RequestParam MultipartFile sale) throws IllegalStateException, IOException {
-		shopService.regist(shopDto,business,img,sale);
-		return "client/order/shop_regist";
+								@ModelAttribute MemberDto memberDto,
+								@RequestParam MultipartFile business_file,
+								@RequestParam MultipartFile sale_file,
+								@RequestParam MultipartFile logo) throws IllegalStateException, IOException {
+		
+		// shop_code 생성
+		int shop_code = shopDao.getShopSeq();
+		memberDto.setShop_code(shop_code);
+		shopDto.setNo(shop_code);
+		
+		//memberDto 안에 있는 pw를 변경(BCrypt)
+		String origin = memberDto.getPw();
+		String encrypt = BCrypt.hashpw(origin, BCrypt.gensalt());
+		memberDto.setPw(encrypt);
+		
+		// 회원가입(승인상태는 '승인대기'로)
+		memberDao.shopMemberApply(memberDto);
+		
+		// 매장정보 등록
+		shopService.regist(shopDto,business_file,sale_file,logo);
+		
+		return "client/order/shop_regist_result";
 		
 	}
 }

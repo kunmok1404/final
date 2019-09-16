@@ -25,5 +25,6 @@ public interface ReviewDao {
 	int searchNumber();
 	void replyRegist(ReviewDto reply_content);
 	void updateReplyStatus(ReviewDto reviewDto);
+	ReviewDto getReivewInfo(int no);
 
 }

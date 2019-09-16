@@ -65,7 +65,7 @@
 					<tr>
 						<td width="10%" class="table-active">회원 상태</td>
 						<td width="40%">
-							<select name="status">
+							<select name="status" class="form-control">
 								<option>전체</option>
 								<option>일반</option>
 								<option>블랙</option>
@@ -102,7 +102,7 @@
 					<tr>
 					<tr>
 						<td colspan="4" align="right">
-							<input type="submit" value="검색">
+							<input class="btn btn-secondary" type="submit" value="검색">
 						</td>
 					</tr>
 				</tbody>

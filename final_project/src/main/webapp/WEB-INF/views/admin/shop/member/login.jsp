@@ -32,7 +32,7 @@
         <nav class="navbar navbar-default">
           <div class="container-fluid">
             <div class="navbar-header">
-              <a class="navbar-brand" href="${pageContext.request.contextPath}/shop_admin">
+              <a class="navbar-brand" href="${pageContext.request.contextPath}">
                 <img alt="Brand" src="${pageContext.request.contextPath}/resources/image/logo.jpg">
               </a>
             </div>

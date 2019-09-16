@@ -9,14 +9,28 @@ PUBLIC "//mybatis.org//DTD Mapper 3.0//EN"
  	<select id="list" parameterType="map" resultType="shopDto">
 		select * from
 	    (select rownum rn, TMP.* from 
-	        (select * from shop
- 			where no between #{start} and #{end}
+	        (select * from shop 
+	        where apply_status='승인완료' and contract_status='계약중'
  			<if test="cat_no > 0">
  				and category = #{cat_no}
  			</if>)TMP
 	    )
-		where rn between 1 and 10
+		where rn between #{start} and #{end}
  	</select>
+ 	
+ 	<!-- 매장갯수 조회 -->
+ 	<select id="getShopCount" parameterType="int" resultType="int">
+ 		select count(*) from shop 
+ 		where apply_status='승인완료' and contract_status='계약중'
+ 		<if test="cat_no > 0">
+ 			and category = #{cat_no}
+ 		</if>
+ 	</select>
+ 	
+ 	<!--shop테이블 시퀀스 구하기 -->
+	<select id="shop_seq" resultType="int">
+		select shop_seq.nextval from dual
+	</select>
  	
  	<!-- 카테고리 목록 -->
  	<select id="category" resultType="foodCategoryDto">
@@ -42,13 +56,18 @@ PUBLIC "//mybatis.org//DTD Mapper 3.0//EN"
  	<select id="sub_menu" parameterType="int" resultType="subMenuDto">
  		select * from sub_menu where menu_code=#{menu_no}
  	</select>
+ 	
+ 	<!-- 매장정보삭제 -->
+ 	<delete id="deleteShop" parameterType="int">
+ 		delete shop where no=#{shop_code}
+ 	</delete>
  
  	<insert id="regist" parameterType="shopDto">
- 		insert into shop values(shop_seq.nextval,#{category},#{company_name},#{company_code},#{ceo},#{ceo_phone},
+ 		insert into shop values(#{no},#{category},#{company_name},#{company_code},#{ceo},#{ceo_phone},
  						#{bank},#{account_number},#{account_name},#{shop_name},#{shop_phone},#{zip_code},
  						#{basic_addr},#{detail_addr},#{content},sysdate,null,null,
- 						null,'대기',#{min_price},#{min_time},#{delivery_price}
- 						,TO_DATE(#{start_time},'HH24:MI'),TO_DATE(#{finish_time},'HH24:MI'),null,#{location_y},#{location_x},#{shop_img},#{business_regist},#{sale_regist})
+ 						'계약종료','승인대기',#{min_price},#{min_time},#{delivery_price}
+ 						,TO_DATE(#{start_time},'HH24:MI'),TO_DATE(#{finish_time},'HH24:MI'),null,0,0,#{shop_img},#{business_regist},#{sale_regist},0)
  	</insert>
  	
  	<select id="getno" parameterType="shopDto" resultType="int">
@@ -57,11 +76,13 @@ PUBLIC "//mybatis.org//DTD Mapper 3.0//EN"
  	
  	<insert id="files_regist" parameterType="filesDto">
  		insert into files values(#{no},#{file_type},#{upload_name},#{save_name},
- 								#{size},sysdate,sysdate)
+ 								#{file_size},sysdate,sysdate)
  	</insert>
+ 	
  	<select id="seq" resultType="int">
 		select files_seq.nextval from dual
 	</select>
+	
 	<update id="edit" parameterType="shopDto">
 		update shop
 			set

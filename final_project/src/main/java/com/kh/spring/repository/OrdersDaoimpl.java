@@ -16,6 +16,7 @@ import com.kh.spring.entity.OrderDetailDto;
 import com.kh.spring.entity.OrderSubDetail;
 import com.kh.spring.entity.OrdersDto;
 import com.kh.spring.entity.ShopDto;
+import com.kh.spring.entity.SubMenuDto;
 import com.kh.spring.entity.TotalVo;
 import com.kh.spring.vo.OrderVo;
 
@@ -245,6 +246,84 @@ public class OrdersDaoimpl implements OrdersDao{
 	public int getdetseq() {
 		return sqlsession.selectOne("order.order_det_seq");
 	}
+
+	@Override
+	public int getcoupon(int member_code) {
+		return sqlsession.selectOne("order.getcoupon",member_code);
+	}
+
+	@Override
+	public SubMenuDto getmenu(int radiomenu,int shop_code) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("shop_code", shop_code);
+		map.put("no", radiomenu);
+		return sqlsession.selectOne("order.getsubmenu",map);
+	}
+
+	@Override
+	public void cartinsert(SubMenuDto getmenu) {
+		sqlsession.insert("order.subinsert",getmenu);
+		
+	}
+
+	@Override
+	public int getcartseq() {
+		return sqlsession.selectOne("order.getcartseq");
+	}
+
+	@Override
+	public void cartmenuinsert(CartDto cartdto) {
+		sqlsession.insert("order.cartmenuinsert",cartdto);
+		
+	}
+
+	@Override
+	public SubMenuDto getsubmenu(int checkmenu, int shop_code) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("no", checkmenu);
+		map.put("shop_code", shop_code);
+		return sqlsession.selectOne("order.getsubmenu",map);
+	}
+
+	@Override
+	public int cart(int member_code) {
+		int value = 0;
+		try {
+			value = sqlsession.selectOne("order.cart",member_code);			
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return value;
+
+	}
+	// shop_code로 해당 주문내역 전부조회
+	@Override
+	public List<OrdersDto> getShopOrderList(int shop_code) {
+		return sqlsession.selectList("order.getShopOrderList", shop_code);
+	}
+
+
+//	@Override
+//	public OrdersDto shoporderResult(int no, int shop_code) {
+//		Map<String, Object> map = new HashMap<>();
+//		map.put("no", no);
+//		map.put("shop_code", shop_code);
+//		return sqlsession.selectOne("order.shop_order_result",map);
+//	}
+
+//	@Override
+//	public int shopordersCount(String status, String type, String keyword) {
+//		Map<String, Object> param = new HashMap<>();
+//		if(status!=null) {
+//		param.put("status", status);			
+//		}
+//		if(type!=null && keyword!=null) {
+//		param.put("type", type);
+//		param.put("keyword", keyword);
+//		}	
+//		return sqlsession.selectOne("order.shopOrdersCount",param);
+//	}
 
 
 

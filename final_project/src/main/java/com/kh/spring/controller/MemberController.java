@@ -126,7 +126,9 @@ public class MemberController {
 
 	// 로그인(GET)
 	@GetMapping("/login")
-	public String login() {
+	public String login(Model model) {
+		model.addAttribute("terms1", termsDao.terms1());
+		model.addAttribute("terms1", termsDao.terms2());
 		return "client/member/login";
 	}
 
@@ -175,12 +177,11 @@ public class MemberController {
 		if(result != null) {
 			// 2. BCrypt의 비교명령을 이용하여 비교 후 처리
 			//입력한 비밀번호
-			System.out.println(memberDto.getPw());
+			//System.out.println(memberDto.getPw());
 			//암호화된 비밀번호
-			System.out.println(result.getPw());
+			//System.out.println(result.getPw());
 			//로그인 성공 여부
 			boolean ok = BCrypt.checkpw(memberDto.getPw(), result.getPw());
-			System.out.println(ok);
 			if(BCrypt.checkpw(memberDto.getPw(), result.getPw())) {
 				session.setAttribute("member_code", result.getNo());
 				if(result.getShop_code() > 0) {

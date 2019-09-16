@@ -204,18 +204,31 @@ public class MemberDaoImpl implements MemberDao {
 		return sqlSession.selectList("member.get_member_list");
 	}
 
+	//super_admin 회원 상세 보기
 	@Override
 	public MemberInfoVO detail(int no) {
 		return sqlSession.selectOne("member.infoVO", no);
 	}
 
+	// 업주 입점신청시 가회원가입
+	@Override
+	public void shopMemberApply(MemberDto memberDto) {
+		sqlSession.insert("member.shop_apply_regist", memberDto);
+	}
+
+	// 매장승인시 업주회원정보 승인상태변경(승인대기 -> 승인완료)
+	@Override
+	public void applyShop(int shop_code) {
+		sqlSession.update("member.shop_apply_ok", shop_code);
+	}
+
 	
 
-	////
-	@Override
-	public MemberDto findPassword(MemberDto memberDto) {
-		return sqlSession.selectOne("member.find_pw", memberDto);
-	}
+	////비밀번호 찾기 실험
+//	@Override
+//	public MemberDto findPassword(MemberDto memberDto) {
+//		return sqlSession.selectOne("member.find_pw", memberDto);
+//	}
 
 }
 

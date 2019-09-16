@@ -4,78 +4,67 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<script>
+$(function(){
+   // 로그인 버튼 클릭시
+   $(".login-btn").click(function(){
+      $(".login_form").submit();
+   })
+})
+</script>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/cryptojs/components/core-min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/cryptojs/components/sha256-min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/password-encoder.js"></script>
 
-<style>
+<div class="container">
 
-	.login{
-		width: 400px;
-		margin: auto;
-	}
-	
-	.legend{
-		text-align: center;
-	}
-
-</style>
-
-<div class="login">
- 	<form action="login" method="post">
- 	<br>
-	<legend class="legend">로그인</legend>
-	<hr>
- 		<table class="table table-bordered">
- 			<tbody>
-				<tr>
-					<td colspan ="4"></td>
-				</tr>
-				<!-- 아이디, 로그인 버튼 -->
-				<tr>
-					<td><label for="id">아이디</label></td>
-					<td >
-						<input type="text" name="id" id="id" placeholder="아이디를 입력해주세요." value="${cookie.saveID.value}" required>
-					</td>
-					<td colspan="2" rowspan="2">
-						<input type="submit" name="login" value="로그인">
-					</td>
-				</tr>
-				<!-- 비밀번호 -->
-				<tr>
-					<td><label for="pw">비밀번호</label></td>
-					<td colspan="1">
-						<input type="password" name="pw" id="pw" placeholder="비밀번호를 입력해주세요." required>
-					</td>
-				</tr>
-				<!-- 아이디 저장 checkbox -->
-				<tr align="center">
-					<td colspan="4">
-						<input type="checkbox" name="remember" ${not empty cookie.saveID?"checked":""}>
-						<label for="saveID">아이디 저장하기</label>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2">
-						<a href="${pageContext.request.contextPath}/member/find_id"><input type="button" value="아이디 찾기" name="findID"></a>
-					</td>
-					<td colspan="2">
-						<a href="${pageContext.request.contextPath}/member/find_pw"><input type="button" value="비밀번호 찾기" name="findPW"></a>
-					</td>
-				</tr>
-				<tr>	
-					<td colspan="2">	
-						<a href="${pageContext.request.contextPath}/member/regist"><input type="button" value="회원가입" name="regist"></a>
-					</td>
-					<td colspan="2">	
-						<a href="${pageContext.request.contextPath}"><input type="button" value="홈으로" name="main"></a>
-					</td>
-				</tr>
- 			</tbody>
- 		</table>
- 	</form>
-</div>
+ 	<form action="login" class="login_form" method="post">
+ 	<div class="row">
+       <div class="col-md-12">
+         <div class="adminLogin-title">로그인</div>
+       </div>
+     </div>
+     
+     <div class="row">
+            <div class="offset-3 col-md-6">
+                <table class="table table-borderless mt-5 text-center login-table">
+                  <tbody>
+                    <tr>
+                        <td width="20%" class="text-right"><span class="admin-id font-weight-bold">아이디</span></td>
+                        <td class="idpw">
+                          <input type="text" name="id" class="form-control ml-3" placeholder="아이디를 입력해주세요."> 
+                        </td>
+                        <td rowspan="2" class="login-btn font-weight-bold login-btn ml-3">로그인</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><span class="admin-id font-weight-bold">비밀번호</span></td>
+                        <td class="idpw">
+                          <input type="password" name="pw" class="form-control ml-3" placeholder="비밀번호를 입력해주세요."> 
+                        </td>
+                    </tr>
+                    <!-- 아이디 저장 checkbox -->
+					<tr>
+						<td colspan="4" class="text-left">
+							<input type="checkbox" name="remember" ${not empty cookie.saveID?"checked":""}>
+							<span class="save-id text-secondary">아이디 저장하기</span>
+						</td>
+					</tr>
+                  </tbody>
+                </table>
+            </div>
+          </div>
+   	  </form>
+   	  
+   	  <div class="text-center">
+   	  		<a href="${pageContext.request.contextPath}/member/find_id" class="btn btn-info ml-5">아이디 찾기</a>
+   	  		<a href="${pageContext.request.contextPath}/member/find_pw" class="btn btn-info ml-3">비밀번호 찾기</a>
+   	  		<a href="${pageContext.request.contextPath}/member/regist" class="btn btn-info ml-3">회원가입</a>
+   	  		<a href="${pageContext.request.contextPath}" class="btn btn-info ml-3">홈으로</a>
+   	  </div>
+   	  
+ </div><br><br><br><br><br>
+     
 
 <jsp:include page="/WEB-INF/views/template/client/footer.jsp"></jsp:include>

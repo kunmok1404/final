@@ -16,7 +16,7 @@
             
         </c:forEach> 
     </ul>
-    </div>
+    </div><br><br><br><br><br>
     
    
     <jsp:include page="/WEB-INF/views/template/client/footer.jsp"></jsp:include>

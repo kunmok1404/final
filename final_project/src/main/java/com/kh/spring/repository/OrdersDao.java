@@ -13,6 +13,7 @@ import com.kh.spring.entity.OrderDetailDto;
 import com.kh.spring.entity.OrderSubDetail;
 import com.kh.spring.entity.OrdersDto;
 import com.kh.spring.entity.ShopDto;
+import com.kh.spring.entity.SubMenuDto;
 import com.kh.spring.entity.TotalVo;
 import com.kh.spring.vo.OrderVo;
 //주문 관련 Dao
@@ -52,6 +53,16 @@ public interface OrdersDao {
 	void orderSubDetailInput(OrderSubDetail ordersubdetail);
 	List<OrderSubDetail> myOrderSubDetailList(int no);
 	int getdetseq();
+	int getcoupon(int member_code);
+	SubMenuDto getmenu(int radiomenu,int shop_code);
+	void cartinsert(SubMenuDto getmenu);
+	int getcartseq();
+	void cartmenuinsert(CartDto cartdto);
+	SubMenuDto getsubmenu(int checkmenu, int shop_code);
+	int cart(int member_code);
+	List<OrdersDto> getShopOrderList(int no);
+//	int shopordersCount(String status, String type, String keyword);
+//	OrdersDto shoporderResult(int no, int shop_code);
 	
 
 }
