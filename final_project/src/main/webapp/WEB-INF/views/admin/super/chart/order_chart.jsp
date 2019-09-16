@@ -224,9 +224,9 @@ $(function(){
 		</form>
 <div id="chartdiv"></div>
 <input type="hidden" value="${order_date.size() }" class="data_size">
-	<table border="1">
+	<table border="1" style="width: 100%">
 		<thead>
-			<tr align="center">
+			<tr align="center" class="table-primary text-center">
 				<th>년/월/일</th>
 				<th>주문건수</th>
 				<th>취소건수</th>
@@ -241,11 +241,11 @@ $(function(){
 					<input type="hidden" value="${data.t3 }" class="t3${data.rownum }">
 				${data.t1 }/${data.t2 }/${data.t3 }</td>
 				<td>
-				<input type="text" value="${data.cut }번" class="data${data.rownum } dise" readonly></td>
+				<input type="text" value="${data.cut }번" class="data${data.rownum } dise" readonly style="width: 100%"></td>
 				<td>
-				<input type="text" value="${cancel.get(data.rownum-1) }번" class="cancel${data.rownum } dise" readonly></td>
+				<input type="text" value="${cancel.get(data.rownum-1) }번" class="cancel${data.rownum } dise" readonly style="width: 100%"></td>
 				<td>
-				<input type="text" value="${sussce.get(data.rownum-1) }번" class="sussce${data.rownum } dise" readonly></td>
+				<input type="text" value="${sussce.get(data.rownum-1) }번" class="sussce${data.rownum } dise" readonly style="width: 100%"></td>
 			</tr>
 </c:forEach>
 		</tbody>
