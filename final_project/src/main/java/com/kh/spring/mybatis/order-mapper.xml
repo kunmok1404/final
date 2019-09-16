@@ -447,24 +447,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	SELECT SYSDATE - 7 FROM DUAL
 	</select>
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	<!-- member_code로 point 조회 -->
+	<select id="getpoint" parameterType="int" resultType="pointDetailDto">
+		select * from point_detail where member_code = #{member_code} and use_yn = '적립'
+	</select>
+	<!-- point 사용시 처리 -->
+	<insert id="usepoint" parameterType="map">
+		insert into point_detail values(#{member_code},'사용',#{point},sysdate,null)
+	</insert>
 </mapper>

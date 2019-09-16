@@ -12,6 +12,7 @@ import com.kh.spring.entity.CategoryDto;
 import com.kh.spring.entity.MenuDto;
 import com.kh.spring.entity.SubMenuDto;
 import com.kh.spring.vo.MenuRegistVO;
+import com.kh.spring.vo.ShopMenuVO;
 
 @Repository
 public class MenuDaoImpl implements MenuDao {
@@ -29,12 +30,6 @@ public class MenuDaoImpl implements MenuDao {
 	@Override
 	public CategoryDto getCategoryInfo(int menu_category) {
 		return sqlSession.selectOne("menu.menu_category",menu_category);
-	}
-
-	// shop_admin 메뉴목록 구하기
-	@Override
-	public List<MenuDto> shopMenuList(int shop_code) {
-		return sqlSession.selectList("menu.shopList",shop_code);
 	}
 
 	// 메뉴승인버튼 클릭시
@@ -136,4 +131,101 @@ public class MenuDaoImpl implements MenuDao {
 		sqlSession.delete("menu.subMenuDelete",map);
 	}
 
+	@Override
+	public int menuCount(String sale_status, String apply_status, String type, String keyword) {
+		Map<String, Object> param = new HashMap<>();
+		try {
+		if(apply_status!=null) {
+		param.put("apply_status", apply_status);
+		}
+		if(sale_status!=null) {
+		param.put("sale_status", sale_status);			
+		}
+		if(type!=null && keyword!=null) {
+		param.put("type", type);
+		param.put("keyword", keyword);
+		}	
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return sqlSession.selectOne("menu.menuCount",param);
+		
+	}
+
+	@Override
+	public List<ShopMenuVO> menulist(String sale_status, String apply_status, String type, String keyword, int i,
+			int j) {
+		Map<String, Object> param = new HashMap<>();
+		//검색일경우 검색어를 mybatis에 전달
+		try{
+			
+		if(sale_status!=null) {
+			param.put("sale_status", sale_status);			
+		}
+		if(apply_status!=null){
+			param.put("apply_status", apply_status);
+		}
+		if(type!=null && keyword!=null) {
+		param.put("type", type);
+		param.put("keyword", keyword);
+		}	
+		param.put("start", i);
+		param.put("end", j);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return sqlSession.selectList("menu.menuList",param);
+	}
+
+	@Override
+	public int getshopcode(int member_code) {
+		return sqlSession.selectOne("menu.getshopcode",member_code);
+	}
+
+	@Override
+	public int shopMenuCount(int shop_code, String sale_status, String apply_status, String type, String keyword) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("shop_code", shop_code);
+		try {
+		if(apply_status!=null) {
+		param.put("apply_status", apply_status);
+		}
+		if(sale_status!=null) {
+		param.put("sale_status", sale_status);			
+		}
+		if(type!=null && keyword!=null) {
+		param.put("type", type);
+		param.put("keyword", keyword);
+		}	
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return sqlSession.selectOne("menu.shopmenuCount",param);
+	}
+
+	@Override
+	public List<ShopMenuVO> shopMenuList(int shop_code, String sale_status, String apply_status, String type, String keyword,int start,int end) {
+		Map<String, Object> param = new HashMap<>();
+		//검색일경우 검색어를 mybatis에 전달
+		param.put("shop_code",shop_code);
+		if(sale_status!=null) {
+			param.put("sale_status", sale_status);			
+		}
+		if(apply_status!=null){
+			param.put("apply_status", apply_status);
+		}
+		if(type!=null && keyword!=null) {
+		param.put("type", type);
+		param.put("keyword", keyword);
+		}	
+		param.put("start", start);
+		param.put("end", end);
+		return sqlSession.selectList("menu.shopmenuList",param);
+
+}
+
+	@Override
+	public List<MenuDto> sMenuList(int shop_code) {
+		return sqlSession.selectList("menu.shopList",shop_code);
+	}
 }

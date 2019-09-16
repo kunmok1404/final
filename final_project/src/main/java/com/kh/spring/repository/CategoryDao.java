@@ -22,5 +22,7 @@ public interface CategoryDao {
 	List<CategoryDto> getQnaCategory();
 	void updateQnaCategory(FoodCategoryVO foodDto);
 	void insertQnaCategory(FoodCategoryVO foodDto);
+	List<CategoryDto> getOnoCategory();
+	CategoryDto getQnaCategoryInfo(int qna_code);
 
 }

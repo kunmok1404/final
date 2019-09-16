@@ -242,6 +242,13 @@ public class OnoImpl implements OnoDao{
 	}
 
 
+	@Override
+	public void write2(OnoDto onoDto) {
+		sqlSession.insert("shopono.ono_ceo_write", onoDto);
+		
+	}
+
+
 
 
 

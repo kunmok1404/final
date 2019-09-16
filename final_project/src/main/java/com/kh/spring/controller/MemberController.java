@@ -180,6 +180,7 @@ public class MemberController {
 			//System.out.println(result.getPw());
 			//로그인 성공 여부
 			boolean ok = BCrypt.checkpw(memberDto.getPw(), result.getPw());
+			System.out.println(ok);
 			if(BCrypt.checkpw(memberDto.getPw(), result.getPw())) {
 				session.setAttribute("member_code", result.getNo());
 				if(result.getShop_code() > 0) {

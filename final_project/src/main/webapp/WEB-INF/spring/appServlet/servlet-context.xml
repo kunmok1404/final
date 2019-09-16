@@ -61,6 +61,7 @@
 			<mapping path="/member/info_check"/>
 			<mapping path="/member/info_change"/>
 			<mapping path="/ono/list"/>
+			<mapping path="/order/mycart"/>
 			<beans:bean class="com.kh.spring.interceptor.LoginInterceptor"></beans:bean>
 		</interceptor>
 		<!-- 업주 설정 -->

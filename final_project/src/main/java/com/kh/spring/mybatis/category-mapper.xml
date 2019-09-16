@@ -84,6 +84,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		)
 	</insert>
 	
+	<!-- 고객1:1 카테고리 조회 -->
+	<select id="onoCategoryList" resultType="categoryDto">
+		select * from category where work_type='qna_category' order by sort_seq asc
+	</select>
+	
+	<!-- Qna코드로 카테고리 info 조회 -->
+	<select id="getQnaCategoryInfo" parameterType="int" resultType="categoryDto">
+		select * from category where no = #{qna_code}
+	</select>
+	
 </mapper>
  
  

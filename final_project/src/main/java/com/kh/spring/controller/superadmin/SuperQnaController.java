@@ -22,6 +22,7 @@ import com.kh.spring.repository.QnaDao;
 import com.kh.spring.service.CategoryService;
 import com.kh.spring.service.ServiceService;
 import com.kh.spring.vo.FoodCategoryList;
+import com.kh.spring.vo.QnaCategoryVO;
 
 @Controller
 @RequestMapping("/super_admin/qna")
@@ -79,7 +80,7 @@ public class SuperQnaController {
 		// 자주하는질문 카테고리
 		model.addAttribute("category_list", categoryDao.getQnaCategory());
 	
-		List<QnaDao> list = qnaDao.superlist(apply_status, keyword_type, keyword,start_date, end_date, yn, start, end);
+		List<QnaCategoryVO> list = serviceService.superlist(apply_status, keyword_type, keyword,start_date, end_date, yn, start, end);
 		model.addAttribute("list", list);
 		return "admin/super/service/qna/qna_list";
 	}
@@ -97,7 +98,11 @@ public class SuperQnaController {
 		//답변대기 개수
 		int count_reply = qnaDao.count_reply();
 		model.addAttribute("count_reply",count_reply);
-				
+		
+		// 자주하는질문 카테고리
+		model.addAttribute("category_list", categoryDao.getQnaCategory());
+		
+		
 		return "admin/super/service/qna/qna_content";
 	}
 	
@@ -122,9 +127,10 @@ public class SuperQnaController {
 	public String write(HttpSession session, @ModelAttribute QnaDto qnaDto,
 			Model model) {
 		//글등록
-		//int super_code = (int)session.getAttribute("member_code");
-		int super_code = 64;
+//		int super_code = (int)session.getAttribute("member_code");
+//		int super_code = 64;
 //		qnaDto.setWriter(super_code);
+		System.out.println(qnaDto);
 		int no = serviceService.write(qnaDto);
 		
 		model.addAttribute("no",no);
@@ -157,6 +163,8 @@ public class SuperQnaController {
 				//답변대기 개수
 				int count_reply = qnaDao.count_reply();
 				model.addAttribute("count_reply",count_reply);
+				// 자주하는질문 카테고리
+				model.addAttribute("category_list", categoryDao.getQnaCategory());
 		return "admin/super/service/qna/qna_edit";
 	}
 	

@@ -1,12 +1,13 @@
-package com.kh.spring.entity;
+package com.kh.spring.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @Builder @AllArgsConstructor @NoArgsConstructor
-public class QnaDto {
+public class QnaCategoryVO {
 	 private int no; 				//글번호
 	 private int category; 	//카테고리
 	 private String question; 	//질문
@@ -16,7 +17,5 @@ public class QnaDto {
 	 private String use_yn;		//보여주기 여부
 	 private String writer;		//작성자
 	 private String editor;		//수정자
-
-
-	 
+	 private String categoryName; // 카테고리 이름
 }

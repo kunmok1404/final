@@ -64,7 +64,7 @@ public class QnaDaoImpl implements QnaDao{
 	}
 
 	@Override
-	public List<QnaDao> superlist(String apply_status, String keyword_type, String keyword,String start_date, String end_date, String yn, int i, int j) {
+	public List<QnaDto> superlist(String apply_status, String keyword_type, String keyword,String start_date, String end_date, String yn, int i, int j) {
 		Map<String, Object> param = new HashMap<>();
 		param.put("apply_status", apply_status);
 		param.put("keyword_type", keyword_type);

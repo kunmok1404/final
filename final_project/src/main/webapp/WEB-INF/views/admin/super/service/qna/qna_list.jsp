@@ -141,8 +141,8 @@
 	  				<td>번호</td>
 	  				<td>질문	</td>
 	  				<th>카테고리</th>
-	  				<td>득록일</td>
-	  				<td>수정일</td>
+	  				<td>등록일</td>
+<!-- 	  				<td>수정일</td> -->
 	  				<td>진열여부</td>
 	  				<td>편집</td>
 	  			</tr>
@@ -155,9 +155,9 @@
     				<a href="qna_content?no=${qdto.no}">
 						${qdto.question}
 					</a></td>
-	  				<td>${qdto.category}</td>
+	  				<td>${qdto.categoryName}</td>
 	  				<td>${qdto.regist_date}</td>
-	  				<td>${qdto.edit_date}</td>
+<%-- 	  				<td>${qdto.edit_date}</td> --%>
 	  				<td>${qdto.use_yn}</td>
 	  				<td><a href="qna_delete?no=${qdto.no}"><button class="btn btn-sm btn-danger">삭제</button></a></td>
 	  			</tr>

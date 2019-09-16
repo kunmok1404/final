@@ -11,6 +11,13 @@
 	rel="stylesheet">
 <%-- <script src="${pageContext.request.contextPath}/resources/js/ckeditor.js"></script> --%>
 <script>
+	$(function(){
+		var category ="${qdto.category}";
+		$("select[name=category]").val(category);
+		
+	});
+</script>
+<script>
 	// 	$(function(){
 	// 	    ClassicEditor
 	// 	            .create( document.querySelector( 'textarea[name=content]' ) )
@@ -114,13 +121,9 @@
 						<th class=notice-th>카테고리</th>
 						<th class=notice-th2><select name="category" required>
 								<option value="">선택하세요</option>
-								<option value=1>주문접수</option>
-								<option value=2>주문확인</option>
-								<option value=3>주문취소/변경</option>
-								<option value=4>서비스이용</option>
-								<option value=5>결제</option>
-								<option value=6>가맹 및 기타</option>
-								<option value=7>뭐먹지 슈퍼클럽</option>
+								<c:forEach var="category_list" items="${category_list}">
+									<option>${category_list.name}</option>
+								</c:forEach>
 						</select></th>
 					<tr>
 						<th class=notice-th>제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목</th>
