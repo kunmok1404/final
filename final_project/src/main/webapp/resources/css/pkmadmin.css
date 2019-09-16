@@ -165,16 +165,10 @@ a{
 }
 .review-img img{
     padding: 5px;
-    float:left;
     background-color: #ffffff;
 	width: 50%;
     height:200px;
     cursor:pointer;
-}
-.review-img::after{
-    content:"";
-    display:block;
-    clear:both;
 }
 .review-id{
     font-size: 1.2rem;
@@ -190,6 +184,9 @@ a{
 }
 .review-content{
     padding: 5px 25px;
+}
+.review_detail_img{
+	width:100px;
 }
 
 /*리뷰 작성*/
@@ -236,16 +233,10 @@ a{
 	cursor:pointer;
     border:1px solid lightgray;
     padding: 5px;
-    float:left;
     background-color: #ffffff;
 	width: 403px;
-    height:200px;
-    cursor:pointer;
-}
-.review-img::after{
-    content:"";
-    display:block;
-    clear:both;
+    display:flex;
+    flex-wrap:wrap;    
 }
 .table td, .table th {
     vertical-align: middle;
@@ -262,8 +253,8 @@ a{
 	width:100px;
 }
 .category-img img{
-	width:100px;
-	height:100px;
+	width:222px;
+	height:109px;
 }
 
 /*포인트 상세화면 */
@@ -286,8 +277,8 @@ a{
 	width:70%;
 }
 .menu-img{
-	width:100px;
-	height:100px;
+	width:222px;
+	height:109px;
 }
 
 /*shop_admin login */
@@ -307,6 +298,7 @@ a{
     font-size: 1.5rem;
     color:whitesmoke;
     padding: 10px;
+    cursor:pointer;
 }
 .login-table td{
     vertical-align: middle;

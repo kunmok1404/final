@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.spring.entity.FoodCategoryDto;
 import com.kh.spring.entity.Pageing;
 import com.kh.spring.entity.ShopDto;
+import com.kh.spring.repository.CategoryDao;
 import com.kh.spring.repository.ShopDao;
 import com.kh.spring.service.AdminService;
 import com.kh.spring.service.ShopService;
@@ -26,15 +29,15 @@ public class SuperShopController {
 
 	@Autowired
 	AdminService adminService;
-	
 	@Autowired
 	ShopDao shopDao;
-	
 	@Autowired
 	private ShopService shopService;
+	@Autowired
+	private CategoryDao categoryDao;
 	
 //	매장목록페이지
-	@GetMapping("/shop_info")
+	@GetMapping("/list")
 	public String shop_info(Model model,
 			@RequestParam(defaultValue="1") int curPage,
 			@RequestParam(defaultValue = "") String keyword,
@@ -107,13 +110,16 @@ public class SuperShopController {
 		return "admin/super/shop/shop_info";
 	}
 	
-	
+	// 매장정보 상세화면 이동
 	@GetMapping("/detail")
 	public String detail(
 					@RequestParam int no,
 					Model model	) {
-		model.addAttribute("shop", shopDao.shopInfo(no));
-		
+		ShopDto shopDto = shopDao.shopInfo(no);
+		model.addAttribute("shop", shopDto);
+		// food_category 조회
+		model.addAttribute("menu_list", categoryDao.getFoodCategoryList());
+		model.addAttribute("categoryDto",categoryDao.getFoodCategoryInfo(shopDto.getCategory()));
 		return "admin/super/shop/detail";
 	}
 	
@@ -124,11 +130,19 @@ public class SuperShopController {
 				@RequestParam MultipartFile img,
 				Model model
 			) throws IllegalStateException, IOException {
+	
 		shopService.edit(shopDto,img);
 		
 		model.addAttribute("shop",shopDao.shopInfo(shopDto.getNo()));
 		model.addAttribute("no", shopDto.getNo());
-		return  "redirect:detail";
+		return  "redirect:list";
+	}
+	
+	// 리뷰이미지 불러오기
+	@GetMapping("/download")
+		public ResponseEntity<ByteArrayResource> reviewImg(
+						@RequestParam int files_code) throws IOException{
+		return shopService.download(files_code);
 	}
 	
 }

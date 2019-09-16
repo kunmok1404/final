@@ -2,10 +2,7 @@ package com.kh.spring.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.Cookie;
@@ -18,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,15 +24,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.kh.spring.entity.CertDto;
 import com.kh.spring.entity.MemberDto;
 import com.kh.spring.entity.MyshopDto;
+import com.kh.spring.entity.OrderDetailDto;
+import com.kh.spring.entity.OrderSubDetail;
 import com.kh.spring.entity.OrdersDto;
 import com.kh.spring.entity.ShopDto;
 import com.kh.spring.repository.CertDao;
+import com.kh.spring.repository.CouponDao;
 import com.kh.spring.repository.MemberDao;
 import com.kh.spring.repository.OrdersDao;
 import com.kh.spring.repository.ShopDao;
 import com.kh.spring.repository.TermsDao;
 import com.kh.spring.service.EmailService;
 import com.kh.spring.service.OrderService;
+import com.kh.spring.service.PointService;
 import com.kh.spring.service.ReviewService;
 
 @Controller
@@ -45,24 +45,22 @@ public class MemberController {
 
 	@Autowired
 	private MemberDao memberDao;
-	
 	@Autowired
 	private EmailService emailService;
-	
 	@Autowired
 	private OrderService oderService;
-	
 	@Autowired
 	private OrdersDao ordersDao;
-
 	@Autowired
 	private ShopDao shopDao;
-	
 	@Autowired
 	private ReviewService reviewService;
-	
 	@Autowired
 	private TermsDao termsDao;
+	@Autowired
+	private CouponDao couponDao;
+	@Autowired
+	private PointService pointService;
 	
 	// 회원가입 기능(GET)
 	@GetMapping("/regist")
@@ -434,14 +432,17 @@ public class MemberController {
 		return "client/member/delete";
 	}
 	
-	
-	
-	
 	// 나의정보 클릭시 나의주문내역
 	@GetMapping("/info_order_list")
 	public String infoOrderList(HttpSession session, Model model) {
 		int member_code = (int)session.getAttribute("member_code");
 		model.addAttribute("order_list",oderService.myOrderList(member_code));
+		// 회원정보(상단메뉴용)
+		model.addAttribute("memberDto", memberDao.getInfo(member_code));
+		// 쿠폰갯수(상단메뉴용)
+		model.addAttribute("coupon", couponDao.getCouponCount(member_code));
+		// 현재포인트(상단메뉴용)
+		model.addAttribute("point", pointService.getMyPoint(member_code));
 		return "client/member/info_order_list";
 	}
 	
@@ -451,12 +452,17 @@ public class MemberController {
 	public String infoOrderDetail(HttpSession session, Model model,
 					@RequestParam int order_code) {
 		int member_code = (int)session.getAttribute("member_code");
-		System.out.println("member_code=session"+member_code);
-		// 주문상세 목록
-		model.addAttribute("order_detail_list",ordersDao.myOrderDetailList(order_code));
 		// 주문정보
 		OrdersDto ordersDto = ordersDao.orderInfo(order_code);
 		model.addAttribute("orderDto", ordersDto);
+		// 메인메뉴 목록
+		List<OrderDetailDto> orderDetailList = ordersDao.myOrderDetailList(order_code);
+		model.addAttribute("order_detail_list",orderDetailList);
+		// 서브메뉴 목록
+		for(OrderDetailDto orderDetailDto : orderDetailList) {
+			List<OrderSubDetail> orderSubList = ordersDao.myOrderSubDetailList(orderDetailDto.getNo());
+		}
+		//model.addAttribute("map", orderService.getOrderSubList());
 		// 주문메뉴명
 		model.addAttribute("order_distinct", ordersDao.orderDistinct(order_code));
 		// 매장정보
@@ -502,7 +508,13 @@ public class MemberController {
 	}
 	}
 	model.addAttribute("list", list);
-		model.addAttribute("shop", shop);
+	model.addAttribute("shop", shop);
+	// 회원정보(상단메뉴용)
+	model.addAttribute("memberDto", memberDao.getInfo(member_code));
+	// 쿠폰갯수(상단메뉴용)
+	model.addAttribute("coupon", couponDao.getCouponCount(member_code));
+	// 현재포인트(상단메뉴용)
+	model.addAttribute("point", pointService.getMyPoint(member_code));
 
 		return "client/member/myshop";
 	}

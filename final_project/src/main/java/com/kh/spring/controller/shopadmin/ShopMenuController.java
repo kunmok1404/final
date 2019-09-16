@@ -17,9 +17,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.kh.spring.repository.CategoryDao;
 import com.kh.spring.repository.FilesDao;
 import com.kh.spring.repository.MenuDao;
+import com.kh.spring.service.CategoryService;
 import com.kh.spring.service.MenuService;
 import com.kh.spring.vo.CheckMenuVOList;
-import com.kh.spring.vo.MenuDetailVO;
+import com.kh.spring.vo.FoodCategoryList;
 import com.kh.spring.vo.MenuRegistVO;
 import com.kh.spring.vo.RadioMenuVOList;
 @RequestMapping("/shop_admin/menu")
@@ -34,6 +35,8 @@ public class ShopMenuController {
 	private CategoryDao categoryDao;
 	@Autowired
 	private FilesDao filesDao;
+	@Autowired
+	private CategoryService categoryService;
 	
 	// 메뉴 목록화면
 	@GetMapping("/list")
@@ -47,10 +50,7 @@ public class ShopMenuController {
 	// 메뉴등록화면 이동
 	@GetMapping("/regist")
 	public String regist(HttpSession session, Model model) {
-		//int shop_code = (int)session.getAttribute("shop_code");
-		int shop_code = 1;
-		// Food_categry 조회
-		model.addAttribute("food_list", categoryDao.getFoodCategoryList());
+		int shop_code = (int)session.getAttribute("shop_code");
 		// Menu_category 조회
 		model.addAttribute("menu_list", categoryDao.getMenuCategory(shop_code));
 		return "admin/shop/menu/regist";
@@ -64,7 +64,6 @@ public class ShopMenuController {
 					HttpSession session
 			) throws IllegalStateException, IOException {
 		int shop_code = (int)session.getAttribute("shop_code");
-		System.out.println("shop_code="+ shop_code);
 		menuRegistVO.setShop_code(shop_code);
 		menuService.menuRegist(menuRegistVO,radioMenuVOList,checkMenuVOList);
 		
@@ -79,8 +78,7 @@ public class ShopMenuController {
 					@RequestParam int menu_code,
 					HttpSession session
 			) throws IllegalStateException, IOException {
-		//int shop_code = (int)session.getAttribute("shop_code");
-		int shop_code = 1;
+		int shop_code = (int)session.getAttribute("shop_code");
 		menuRegistVO.setShop_code(shop_code);
 		
 		menuService.menuUpdate(menu_code, menuRegistVO,radioMenuVOList,checkMenuVOList);
@@ -88,12 +86,21 @@ public class ShopMenuController {
 		return "redirect:list";
 	}
 	
-	// 메뉴 승인버튼 클릭
-	@GetMapping("/apply_menu")
-	@ResponseBody
-	public String applyMenu(@RequestParam int menu_code) {
-		menuDao.applyMenu(menu_code);
-		return "승인이 완료되었습니다.";
+	// 메뉴카테고리 관리 이동
+	@GetMapping("/category")
+	public String category(Model model,HttpSession session) {
+		int shop_code = (int)session.getAttribute("shop_code");
+		model.addAttribute("cat_list",categoryDao.getMenuCategory(shop_code));
+		return "admin/shop/menu/category";
+	}
+	
+	// 메뉴카테고리 수정/등록
+	@PostMapping("/category")
+	public String registCategory(Model model, HttpSession session,
+			@ModelAttribute FoodCategoryList food_list) {
+		int shop_code = (int)session.getAttribute("shop_code");
+		categoryService.updateMenuCategory(food_list,shop_code);
+		return "redirect:category";
 	}
 	
 	// 메뉴 삭제버튼 클릭시

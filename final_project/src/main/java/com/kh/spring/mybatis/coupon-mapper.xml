@@ -39,6 +39,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into issue values(#{coupon_code},#{member_code},sysdate)
 	</insert>
 	
-	
+	<!-- 쿠폰갯수 구하기 -->
+	<select id="getCouponCount" parameterType="int" resultType="int">
+		select count(*) from issue where member_code=#{member_code}
+	</select>
 	
 </mapper>

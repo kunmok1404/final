@@ -57,4 +57,11 @@ public class CouponDaoImpl implements CouponDao {
 		sqlSession.insert("coupon.all", map);
 		
 	}
+
+	// 쿠폰 갯수 구하기
+	@Override
+	public int getCouponCount(int member_code) {
+		Integer result = sqlSession.selectOne("coupon.getCouponCount", member_code);
+		return result == null ? 0 : result;
+	}
 }

@@ -58,7 +58,7 @@
 		<div id="terms-wrapper">
           <div class="terms-line"></div>
         </div>
-		<span>업주 1:1 문의</span>
+		<span class="font-weight-bold" style="font-size:1.2rem;">업주 1:1 문의</span>
       </div>
      
 	  <!-- 검색목록창 시작 -->

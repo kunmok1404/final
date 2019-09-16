@@ -211,6 +211,12 @@ public class MemberDaoImpl implements MemberDao {
 		sqlSession.update("member.shop_apply_ok", shop_code);
 	}
 
+	// 매장삭제시 업주정보 삭제
+	@Override
+	public void deleteShopMember(int shop_code) {
+		sqlSession.delete("member.deleteShopMember", shop_code);
+	}
+
 	
 
 	////

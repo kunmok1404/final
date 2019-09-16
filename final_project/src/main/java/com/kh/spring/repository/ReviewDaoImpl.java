@@ -3,6 +3,7 @@ package com.kh.spring.repository;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -118,6 +119,15 @@ public class ReviewDaoImpl implements ReviewDao {
 	public ReviewDto getReivewInfo(int order_code) {
 		ReviewDto result = sqlSession.selectOne("review.getReivewInfo", order_code);
 		return result ;
+	}
+
+	// 리뷰이미지 테이블에 등록
+	@Override
+	public void insertReviewImg(int files_code, int review_code) {
+		Map<String, Object> map = new TreeMap<String, Object>();
+		map.put("files_code", files_code);
+		map.put("review_code", review_code);
+		sqlSession.insert("review.insertReviewImg", map);
 	}
 
 }

@@ -10,9 +10,18 @@
 <script src="${pageContext.request.contextPath}/resources/js/cryptojs/components/sha256-min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/password-encoder.js"></script>
 
+<script>
+	$(function(){
+		// 로그인 버튼 클릭시
+		$(".login-btn").click(function(){
+			$(".login_form").submit();
+		})
+	})
+</script>
+
 <div class="container">
 
- 	<form action="login" method="post">
+ 	<form action="login" method="post" class="login_form">
  	<div class="row">
        <div class="col-md-12">
          <div class="adminLogin-title">로그인</div>

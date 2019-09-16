@@ -8,27 +8,6 @@
 
 	$(function(){
 		
-		// 승인버튼 클릭시
-		$(".apply_menu").click(function(){
-			var result = confirm("승인하시겠습니까?");
-			var $this = $(this);
-			var menu_code = $(this).attr("data-no");
-			if(result){
-				$.ajax({
-					url : "${pageContext.request.contextPath}/shop_admin/menu/apply_menu",
-					data : {
-						menu_code : menu_code,
-					},
-					success : function(response){
-						alert(response);
-						$this.parent().prev().prev().prev().text("승인완료").css("color","#58A2B8").removeClass("text-danger");
-						$this.remove();
-					}
-				})
-			}
-			
-		})
-		
 		// 삭제버튼 클릭시
 		$(".delete_menu").click(function(){
 			var result = confirm("메뉴를 삭제하시겠습니까?");
@@ -36,7 +15,7 @@
 			var menu_code = $(this).attr("data-no");
 			if(result){
 				$.ajax({
-					url : "${pageContext.request.contextPath}/shop_admin/menu/delete_menu",
+					url : "${pageContext.request.contextPath}/super_admin/menu/delete_menu",
 					data : {
 						menu_code : menu_code,
 					},

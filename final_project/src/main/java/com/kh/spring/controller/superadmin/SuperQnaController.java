@@ -16,24 +16,28 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.spring.entity.QnaDto;
+import com.kh.spring.repository.CategoryDao;
 import com.kh.spring.repository.OnoDao;
 import com.kh.spring.repository.QnaDao;
+import com.kh.spring.service.CategoryService;
 import com.kh.spring.service.ServiceService;
+import com.kh.spring.vo.FoodCategoryList;
 
 @Controller
 @RequestMapping("/super_admin/qna")
 public class SuperQnaController {
 	@Autowired
 	private SqlSession sqlSession;
-	
 	@Autowired
 	private ServiceService serviceService;
-	
 	@Autowired
 	private OnoDao onoDao;
-	
 	@Autowired
 	private QnaDao qnaDao;
+	@Autowired
+	private CategoryDao categoryDao;
+	@Autowired
+	private CategoryService categoryService;
 	
 	//목록
 	@GetMapping("/qna_list")
@@ -71,8 +75,10 @@ public class SuperQnaController {
 		model.addAttribute("startBlock", startBlock);
 		model.addAttribute("endBlock", endBlock);
 		model.addAttribute("pageCount", pageCount);
-	
 		
+		// 자주하는질문 카테고리
+		model.addAttribute("category_list", categoryDao.getQnaCategory());
+	
 		List<QnaDao> list = qnaDao.superlist(apply_status, keyword_type, keyword,start_date, end_date, yn, start, end);
 		model.addAttribute("list", list);
 		return "admin/super/service/qna/qna_list";
@@ -106,6 +112,9 @@ public class SuperQnaController {
 		int count_reply = qnaDao.count_reply();
 		model.addAttribute("count_reply",count_reply);
 		
+		// 자주하는질문 카테고리
+		model.addAttribute("category_list", categoryDao.getQnaCategory());
+		
 		return "admin/super/service/qna/qna_write";
 	}
 	
@@ -120,6 +129,13 @@ public class SuperQnaController {
 		
 		model.addAttribute("no",no);
 		
+		//답변대기 개수
+		int count_reply_ceo = qnaDao.count_reply_ceo();
+		model.addAttribute("count_reply_ceo",count_reply_ceo);
+				
+		//답변대기 개수
+		int count_reply = qnaDao.count_reply();
+		model.addAttribute("count_reply",count_reply);
 
 		
 		return "redirect:qna_content";
@@ -149,7 +165,29 @@ public class SuperQnaController {
 		qnaDao.edit(qnaDto);
 		model.addAttribute("no", qnaDto.getNo());
 		
-
 		return "redirect:qna_content";
 	}
+	
+	// 자주하는 질문카테고리 이동
+	@GetMapping("/category")
+	public String category(Model model) {
+		model.addAttribute("cat_list",categoryDao.getQnaCategory());
+		//답변대기 개수
+		int count_reply_ceo = qnaDao.count_reply_ceo();
+		model.addAttribute("count_reply_ceo",count_reply_ceo);
+				
+		//답변대기 개수
+		int count_reply = qnaDao.count_reply();
+		model.addAttribute("count_reply",count_reply);
+		return "admin/super/service/qna/category";
+	}
+	
+	// 자주하는 질문카테고리 수정/등록
+	@PostMapping("/category")
+	public String registCategory(Model model,
+			@ModelAttribute FoodCategoryList food_list) {
+		categoryService.updateQnaCategory(food_list);
+		return "redirect:category";
+	}
+	
 }

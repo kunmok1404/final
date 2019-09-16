@@ -81,7 +81,8 @@
 	    <span>메뉴기본정보</span>
       </div>
       
-      <form action="${pageContext.request.contextPath}/shop_admin/menu/update" class="edit-form" method="post" enctype="multipart/form-data">
+      <form action="${pageContext.request.contextPath}/super_admin/menu/update" class="edit-form" method="post" enctype="multipart/form-data">
+      <input type="hidden" name="shop_code" value="${menuDto.shop_code}">
       <table class="table table-hamburg mt-3 menu-regist-table">
       	<tbody>
       		<tr>

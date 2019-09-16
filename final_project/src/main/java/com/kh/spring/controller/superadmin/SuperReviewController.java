@@ -45,11 +45,11 @@ public class SuperReviewController {
 		//매장정보 조회
 		model.addAttribute("shopDto", orderService.orderInfo(reviewDto.getOrder_code()));
 		// 주문상세 목록
-		model.addAttribute("order_detail_list",ordersDao.myOrderDetailList(reviewDto.getOrder_code()));
+		//model.addAttribute("order_detail_list",ordersDao.myOrderDetailList(reviewDto.getOrder_code()));
 		// 주문정보
 		model.addAttribute("orderDto", ordersDao.orderInfo(reviewDto.getOrder_code()));
 		// 주문메뉴명
-		model.addAttribute("order_distinct", ordersDao.orderDistinct(reviewDto.getOrder_code()));
+//		model.addAttribute("order_distinct", ordersDao.orderDistinct(reviewDto.getOrder_code()));
 		model.addAttribute("order_code",reviewDto.getOrder_code());
 		// 이미지코드 조회
 		model.addAttribute("img_list", reviewDao.reviewImg(review_code));

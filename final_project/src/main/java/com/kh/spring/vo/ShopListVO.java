@@ -12,7 +12,8 @@ public class ShopListVO {
 	private String shop_name; // 매장명
 	private int min_price; // 최소주문금
 	private String min_time; // 예상배달시간
-	private int score; //평균평점
+	private double score; //평균평점
 	private int review; //리뷰갯수
+	private int shop_img; // 매장로고 이미지코드
 	
 }

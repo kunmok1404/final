@@ -12,7 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- FoodCategory조회 -->
 	<select id="getFoodCategory" parameterType="int" resultType="foodCategoryDto">
-		select * from food_category where no=#{category_code}
+		select * from food_category where no=#{category_code} order by sort_seq asc
 	</select>
 	
 	<!-- FoodCategory 업데이트(이미지 빼고) -->
@@ -38,18 +38,52 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- FoodCategory 전체 리스트 -->
 	<select id="foodCategoryList" resultType="foodCategoryDto">
-		select * from food_category
+		select * from food_category order by sort_seq asc
 	</select>
+	
+	<!-- MenuCategory 업데이트 -->
+	<update id="updateMenuCategory" parameterType="foodCategoryVO">
+		update category set 
+			name=#{cat_name}, sort_seq=#{sort_no}
+		where no=#{category_code}
+	</update>
+	
+	<!-- MenuCategory 등록 -->
+	<insert id="insertMenuCategory" parameterType="foodCategoryVO">
+		insert into category values(
+			category_seq.nextval, #{cat_name}, #{sort_no}, 'menu_category', #{shop_code} 
+		)
+	</insert>
 	
 	<!-- MenuCategory 목록(매장코드로) -->
 	<select id="menuCategoryList" parameterType="int" resultType="categoryDto">
-		select * from category where shop_code=#{shop_code}
+		select * from category where shop_code=#{shop_code} order by sort_seq asc
 	</select>
 	
 	<!-- MenuCategory Dto(메뉴코드로) -->
 	<select id="menuCategoryInfo" parameterType="int" resultType="categoryDto">
-		select * from category where no=#{menu_code}
+		select * from category where no=#{menu_code} order by sort_seq asc
 	</select>
+	
+	<!-- 자주하는 질문 카테고리 조회 -->
+	<select id="qnaCategoryList" resultType="categoryDto">
+		select * from category where work_type='qna_category' order by sort_seq asc
+	</select>
+	
+	<!-- 자주하는질문 카테고리 수정 -->
+	<update id="updateQnaCategory" parameterType="foodCategoryVO">
+		update category set
+			name=#{cat_name}, sort_seq=#{sort_no}
+		where no=#{category_code} 
+	</update>
+	
+	<!-- 자주하는질문 카테고리 등록 -->
+	<insert id="insertQnaCategory" parameterType="foodCategoryVO">
+		insert into category values(
+			category_seq.nextval, #{cat_name}, #{sort_no}, 'qna_category', null 
+		)
+	</insert>
+	
 </mapper>
  
  

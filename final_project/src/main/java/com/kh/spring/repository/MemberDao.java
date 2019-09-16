@@ -37,5 +37,6 @@ public interface MemberDao {
 	int total_price(int no);
 	void shopMemberApply(MemberDto memberDto);
 	void applyShop(int shop_code);
+	void deleteShopMember(int shop_code);
 
 }

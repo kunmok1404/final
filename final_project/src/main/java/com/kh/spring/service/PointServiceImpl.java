@@ -78,4 +78,15 @@ public class PointServiceImpl implements PointService {
 		return memberPointVO;
 	}
 
+	// 나의 현재포인트 구하기
+	@Override
+	public int getMyPoint(int member_code) {
+		// 총적립 포인트 조회 
+		int total_point = pointDao.getTotalPoint(member_code);
+		// 총사용 포인트 조회
+		int use_point = pointDao.getUsePoint(member_code);
+		
+		return total_point-use_point;
+	}
+
 }

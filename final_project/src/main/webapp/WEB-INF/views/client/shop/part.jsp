@@ -19,17 +19,17 @@
 	  <div class="menu-info">
 	    <div class="shop-name">${shop.shop_name}</div>
 	    <div class="shop-score">
-	    	<span>평점</span>
+	    	<span class="text-danger font-weight-bold">평&nbsp점 : ${shop.score}&nbsp점</span>
 	    	<div id="line-shop">
               <div class="line"></div>
             </div>
-	    	<span class="shop-review">리뷰243</span>
+	    	<span class="shop-review text-info font-weight-bold">리&nbsp뷰&nbsp&nbsp${shop.review}&nbsp개</span>
 	    </div>
-	    <div class="min-price">
-	    	<span>최소주문금액 : 9000원</span>
+	    <div class="min-price font-weight-bold">
+	    	<span>최소주문금액 : ${shop.min_price}&nbsp원</span>
 	    </div>
-	    <div class="delivery-time">
-	    	<span>예상배달시간 : 40~50분</span>
+	    <div class="delivery-time font-weight-bold">
+	    	<span>예상배달시간 : ${shop.min_time}&nbsp</span>
 	    </div>
 	  </div>
 	</li>

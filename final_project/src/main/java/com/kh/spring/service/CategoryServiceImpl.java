@@ -98,4 +98,44 @@ public class CategoryServiceImpl implements CategoryService {
 			}
 		}
 	}
-}
+
+	// 메뉴카테고리 등록 및 수정
+	@Override
+	public void updateMenuCategory(FoodCategoryList food_list, int shop_code) {
+
+		List<FoodCategoryVO> list = food_list.getCategory();
+		for(FoodCategoryVO foodDto: list) {
+			// 카테고리 코드가 있으면 업데이트 없으면 추가
+			if(foodDto.getCategory_code() != 0) {
+				
+			    // MenuCategory업데이트
+			    categoryDao.updateMenuCategoryInfo(foodDto);
+			} else {
+				// MenuCategory에 신규정보추가
+				foodDto.setShop_code(shop_code);
+				categoryDao.insertMenuCategryInfo(foodDto);
+			}
+			
+		  }
+	   }
+
+	// 자주하는질문 카테고리 등록/수정
+	@Override
+	public void updateQnaCategory(FoodCategoryList food_list) {
+		List<FoodCategoryVO> list = food_list.getCategory();
+		for(FoodCategoryVO foodDto: list) {
+			// 카테고리 코드가 있으면 업데이트 없으면 추가
+			if(foodDto.getCategory_code() != 0) {
+			    // MenuCategory업데이트
+			    categoryDao.updateQnaCategory(foodDto);
+			} else {
+				// MenuCategory에 신규정보추가
+				categoryDao.insertQnaCategory(foodDto);
+			}
+		  }
+		}
+	
+	
+	
+	
+	}

@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-    <jsp:include page="/WEB-INF/views/template/admin/super/header.jsp"></jsp:include>
-    <jsp:include page="/WEB-INF/views/template/admin/super/left/left_shop.jsp"></jsp:include>    
+    <jsp:include page="/WEB-INF/views/template/admin/shop/header.jsp"></jsp:include>
+    <jsp:include page="/WEB-INF/views/template/admin/shop/left/left_shop.jsp"></jsp:include>    
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	<style>
 		.regist {

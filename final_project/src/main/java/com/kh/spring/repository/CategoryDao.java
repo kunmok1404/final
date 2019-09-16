@@ -17,5 +17,10 @@ public interface CategoryDao {
 	List<FoodCategoryDto> getFoodCategoryList();
 	List<CategoryDto> getMenuCategory(int shop_code);
 	CategoryDto getMenuCategoryInfo(int menu_code);
+	void updateMenuCategoryInfo(FoodCategoryVO foodDto);
+	void insertMenuCategryInfo(FoodCategoryVO foodDto);
+	List<CategoryDto> getQnaCategory();
+	void updateQnaCategory(FoodCategoryVO foodDto);
+	void insertQnaCategory(FoodCategoryVO foodDto);
 
 }

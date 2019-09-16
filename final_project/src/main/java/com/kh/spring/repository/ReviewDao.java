@@ -26,5 +26,6 @@ public interface ReviewDao {
 	void replyRegist(ReviewDto reply_content);
 	void updateReplyStatus(ReviewDto reviewDto);
 	ReviewDto getReivewInfo(int no);
+	void insertReviewImg(int files_code, int no);
 
 }

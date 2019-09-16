@@ -23,7 +23,6 @@ import com.kh.spring.repository.TermsDao;
 import com.kh.spring.service.MenuService;
 import com.kh.spring.service.ShopService;
 
-
 // 매장
 @Controller
 @RequestMapping("/shop")
@@ -47,7 +46,6 @@ public class ShopController {
 	public String list(Model model,@RequestParam int cat_no, @RequestParam(required = false) String keyword) {
 		model.addAttribute("cat_no", cat_no);
 		model.addAttribute("cat_list", shopDao.catList()); // 음식카테고리 목록
-		model.addAttribute("shop_list", shopDao.shop()); // 검색 주소목록
 		model.addAttribute("terms1", termsDao.terms1());
 		model.addAttribute("terms2", termsDao.terms2());	
 		model.addAttribute("shop_count", shopDao.getShopCount(cat_no)); //매장갯수
@@ -61,9 +59,7 @@ public class ShopController {
 		int size = 10;
 		int end = page * size;
 		int start = end - size + 1;
-		System.out.println("count="+shopDao.getShopCount(cat_no));
 		model.addAttribute("shop_list", shopService.ajaxPaging(start, end, cat_no));
-		
 		return "client/shop/part";
 	}
 	
@@ -72,7 +68,15 @@ public class ShopController {
 	public String detail(@RequestParam int no, Model model) {
 		model.addAttribute("cat_list", shopDao.catList()); 
 		model.addAttribute("shopDto", shopDao.shopInfo(no));
+		model.addAttribute("shopVO", shopService.shopInfoVO(no));
+		// 메뉴정보
 		model.addAttribute("map", shopService.menuList(no)); 
+		// 리뷰정보
+		System.out.println(shopService.reviewList(no));
+		model.addAttribute("review_map", shopService.reviewList(no));
+		// 약관정보
+		model.addAttribute("terms1", termsDao.terms1());
+		model.addAttribute("terms2", termsDao.terms2());	
 		model.addAttribute("shop_code", no);
 		return "client/shop/shop_detail";
 	}
@@ -122,8 +126,8 @@ public class ShopController {
 	public String order_regist(
 								@ModelAttribute ShopDto shopDto,
 								@ModelAttribute MemberDto memberDto,
-								@RequestParam MultipartFile business_file,
-								@RequestParam MultipartFile sale_file,
+								@RequestParam MultipartFile business_regist,
+								@RequestParam MultipartFile sale_regist,
 								@RequestParam MultipartFile logo) throws IllegalStateException, IOException {
 		
 		// shop_code 생성
@@ -140,7 +144,7 @@ public class ShopController {
 		memberDao.shopMemberApply(memberDto);
 		
 		// 매장정보 등록
-		shopService.regist(shopDto,business_file,sale_file,logo);
+		shopService.regist(shopDto,business_regist,sale_regist,logo);
 		
 		return "client/order/shop_regist_result";
 		

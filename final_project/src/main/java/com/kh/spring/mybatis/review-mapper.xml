@@ -94,4 +94,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="super_reply_status" parameterType="reviewDto">
 		update review set reply_status='답변완료' where no=#{no}
 	</update>
+
+	<!-- 리뷰이미지 테이블에 등록 -->
+	<insert id="insertReviewImg" parameterType="map">
+		insert into review_img values(
+			#{review_code}, #{files_code}
+		)
+	</insert>
 </mapper>

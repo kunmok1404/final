@@ -10,5 +10,6 @@ public interface PointService {
 	List<PointDetailDto> list(int member_code);
 	List<MemberPointVO> getPointList();
 	MemberPointVO getPointInfo(int member_code);
+	int getMyPoint(int member_code);
 
 }

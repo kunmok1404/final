@@ -21,174 +21,152 @@
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2c2ba04f24dbd55e914c1d24e55dfaa7&libraries=services"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script>
-        $(function(){
-            $(".save").click(function(e){
-            	 e.preventDefault;
+        
+    	$(function(){
+    		
+    		$(".save").click(function(e){
+           	 	e.preventDefault;
                 var mapContainer = document.getElementById('maps'), // 지도를 표시할 div 
                 mapOption = {
                     center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
                     level: 3 // 지도의 확대 레벨
                 };  
-
-            // 지도를 생성합니다    
-            var map = new kakao.maps.Map(mapContainer, mapOption); 
-
-            // 주소-좌표 변환 객체를 생성합니다
-            var geocoder = new kakao.maps.services.Geocoder();
-
-            // 주소로 좌표를 검색합니다
-            geocoder.addressSearch($("#sample6_address").val(), function(result, status) {
-
-                // 정상적으로 검색이 완료됐으면 
-//                  if (status === kakao.maps.services.Status.OK) {
-
-//                     var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-// 					var ydg = result[0].y;
-// 					var xdg = result[0].x;
-// 					$(".location_y").val(ydg);
-// 					$(".location_x").val(xdg);
-//                     // 결과값으로 받은 위치를 마커로 표시합니다
-//                     var marker = new kakao.maps.Marker({
-//                         map: map,
-//                         position: coords
-//                     });
-
-                    // 인포윈도우로 장소에 대한 설명을 표시합니다
-                    var infowindow = new kakao.maps.InfoWindow({
-                        content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
-                    });
-                    infowindow.open(map, marker);
-
-                    // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-                    map.setCenter(coords);
-                } 
-            });    
-                 
-            });
-            
-          //아이디 정규표현식 검사 후 메세지 출력
-        	function checkID(){
-        		var id = $("#id").value();
-        		var regex = /^[a-zA-Z0-9!@#$\-_]{6,15}$/;
-        		
-        		//정규표현식을 id값 검사
-        		var result = regex.test(id);
-        		var div = $(".idD");
-        		
-        		//형식에 맞으면 중복확인 버튼 활성화
-        		if(result){
-        			div.innerHTML = ""
-        			$(".id-check").prop("disabled", false)
-        		}
-        		//형식에 맞지 않으면 메세지 출력 후, 중복확인 버튼 비활성화
-        		else{
-        			div.innerHTML = "<font color = 'red' size = '2'>6~15자의 영문/숫자로 입력헤주세요.</font>"
-        		}
-        	}
-        	
-        	
-        	//비밀번호 정규표현식 검사 후 메세지 출력
-        	function checkPW(){
-        		var pw = document.querySelector("#pw").value;
-        		var regex = /^[a-zA-Z0-9!@#$\-_]{8,15}$/;
-        		
-        		//정규표현식으로 pw값 검사
-        		var result = regex.test(pw);
-        		var div = document.querySelector(".pwD");
-        		
-        		//형식에 맞으면 통과
-        		if(result){
-        			div.innerHTML = ""
-        		}
-        		//형식에 맞지 않으면 메세지 출력
-        		else{
-        			div.innerHTML = "<font color = 'red' size = '2'>8~15자의 영문 대소문자, 숫자, 특수기호(!@#$-_)로 입력해주세요.ㅋㅋㅋ</font>"
-        		}
-        	}
-        	
-        	$("#shop_regist").prop("disabled", true);
-        	
-        	//id 입력창에 click 이벤트가 발생하면 ajax 통신으로 중복검사 수행
-    		//요청 url : /member/id_check.do
-    		$(".id-check").click(function(e){
-    			e.preventDefault();
-    			$.ajax({
-    				url:"${pageContext.request.contextPath}/member/id_check",
-    				data:{id:$("input[name=id]").val()},
-    				dataType:"text",
-    				success:function(resp){
-    					if(resp=="N"){
-    						window.alert("이미 사용중인 아이디입니다.");
-    						$("input[name=id]").select();
-    					}
-    					else{
-    						window.alert("사용 가능한 아이디입니다.");
-    						//alert에서 확인버튼을 누르면 가입버튼을 활성화한다.
-    						//중복검사 후 사용가능한 아이디면 가입버튼 활성화
-    						$("#shop_regist").prop('disabled', false);
-    					}
-    				}
-    			});
-    		});
-        	
-        	
-        	//pw 입력창에 blur 이벤트가 발생하면 ajax통신으로 checkPW(정규표현식 검사)실행
-    		$("input[name=pw]").blur(function(){
-    			checkPW();
-    		});
+   	           var map = new kakao.maps.Map(mapContainer, mapOption); 
+   	           var geocoder = new kakao.maps.services.Geocoder();
+   	           geocoder.addressSearch($("#sample6_address").val(), function(result, status) {
+   	
+   	                   // 인포윈도우로 장소에 대한 설명을 표시합니다
+   	           var infowindow = new kakao.maps.InfoWindow({
+   	               content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
+   	           });
+   	           infowindow.open(map, marker);
+   	
+   	           // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+   	           map.setCenter(coords);
+               	});
+              });
     		
-    		//pw_check 입력창에 blur 이벤트가 발생하면 ajax통신으로 PWOK(비빌번호 확인)실행
-    		$("input[name=pw_check]").blur(function(){
-    			PWOK();
-    		});
-        	
-        	//비밀번호 확인값 비밀번호값과 일치한지 검사
-        	function PWOK(){
-        		var pw = document.querySelector("#pw").value;
-        		var pw_check = document.querySelector("#pw_check").value;
-        		
-        		var div = document.querySelector(".pw_checkD");
-        		
-        		//일치하면 통과
-        		if($("#pw").val() == $("#pw_check").val()){
-        			div.innerHTML = ""
-        		}
-        		//일치하지 않으면 메세지 출력
-        		else{
-        			div.innerHTML = "<font color = 'red' size = '2'>비밀번호가 일치하지 않습니다.</font>"
-        		}
-        	}
-            
-        	// 이미지 미리보기
-    		$("input[type=file]").change(function(e){
-    			var $this = $(this);
-                
-                if(this.files && this.files[0]){
-                    //읽기 도구 생성
-                    var reader = new FileReader();
-                    
-                    //읽기 완료시 할 작업을 예약 설정
-                    reader.onload = function(data){//data : 파일 정보
-                        var img = $("<img/>").attr("src", data.target.result);
-                        $this.next().empty();
-                        $this.next().append(img);
-                    };
-                    	reader.readAsDataURL(this.files[0]);
-                }
-               })
-               
-           var options = {
-		toolbar:[
-				{ name: 'paragraph', items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language' ] },
-				'/',
-				{ name: 'styles', items: [ 'Styles', 'Format', 'Font', 'FontSize' ] },
-				{ name: 'colors', items: [ 'TextColor', 'BGColor' ] },
-			]
-		};
-		CKEDITOR.replace( 'content', options);
-        	
-        	
-        });
+   	      //아이디 정규표현식 검사 후 메세지 출력
+	    	function checkID(){
+	    		var id = $("#id").value();
+	    		var regex = /^[a-zA-Z0-9!@#$\-_]{6,15}$/;
+	    		
+	    		//정규표현식을 id값 검사
+	    		var result = regex.test(id);
+	    		var div = $(".idD");
+	    		
+	    		//형식에 맞으면 중복확인 버튼 활성화
+	    		if(result){
+	    			div.innerHTML = ""
+	    			$(".id-check").prop("disabled", false)
+	    		}
+	    		//형식에 맞지 않으면 메세지 출력 후, 중복확인 버튼 비활성화
+	    		else{
+	    			div.innerHTML = "<font color = 'red' size = '2'>6~15자의 영문/숫자로 입력헤주세요.</font>"
+	    		}
+	    	}
+   	      
+	    	//비밀번호 정규표현식 검사 후 메세지 출력
+	    	function checkPW(){
+	    		var pw = document.querySelector("#pw").value;
+	    		var regex = /^[a-zA-Z0-9!@#$\-_]{8,15}$/;
+	    		
+	    		//정규표현식으로 pw값 검사
+	    		var result = regex.test(pw);
+	    		var div = document.querySelector(".pwD");
+	    		
+	    		//형식에 맞으면 통과
+	    		if(result){
+	    			div.innerHTML = ""
+	    		}
+	    		//형식에 맞지 않으면 메세지 출력
+	    		else{
+	    			div.innerHTML = "<font color = 'red' size = '2'>8~15자의 영문 대소문자, 숫자, 특수기호(!@#$-_)로 입력해주세요.ㅋㅋㅋ</font>"
+	    		}
+	    	}
+	    	
+	    	$("#shop_regist").prop("disabled", true);
+	    	
+	    	//id 입력창에 click 이벤트가 발생하면 ajax 통신으로 중복검사 수행
+			//요청 url : /member/id_check.do
+			$(".id-check").click(function(e){
+				e.preventDefault();
+				$.ajax({
+					url:"${pageContext.request.contextPath}/member/id_check",
+					data:{id:$("input[name=id]").val()},
+					dataType:"text",
+					success:function(resp){
+						if(resp=="N"){
+							window.alert("이미 사용중인 아이디입니다.");
+							$("input[name=id]").select();
+						}
+						else{
+							window.alert("사용 가능한 아이디입니다.");
+							//alert에서 확인버튼을 누르면 가입버튼을 활성화한다.
+							//중복검사 후 사용가능한 아이디면 가입버튼 활성화
+							$("#shop_regist").prop('disabled', false);
+						}
+					}
+				});
+			});
+			
+			//pw 입력창에 blur 이벤트가 발생하면 ajax통신으로 checkPW(정규표현식 검사)실행
+			$("input[name=pw]").blur(function(){
+				checkPW();
+			});
+			
+			//pw_check 입력창에 blur 이벤트가 발생하면 ajax통신으로 PWOK(비빌번호 확인)실행
+			$("input[name=pw_check]").blur(function(){
+				PWOK();
+			});
+	    	
+	    	//비밀번호 확인값 비밀번호값과 일치한지 검사
+	    	function PWOK(){
+	    		var pw = document.querySelector("#pw").value;
+	    		var pw_check = document.querySelector("#pw_check").value;
+	    		
+	    		var div = document.querySelector(".pw_checkD");
+	    		
+	    		//일치하면 통과
+	    		if($("#pw").val() == $("#pw_check").val()){
+	    			div.innerHTML = ""
+	    		}
+	    		//일치하지 않으면 메세지 출력
+	    		else{
+	    			div.innerHTML = "<font color = 'red' size = '2'>비밀번호가 일치하지 않습니다.</font>"
+	    		}
+	    	}
+	    	
+	    	// 이미지 미리보기
+			$("input[type=file]").change(function(e){
+				var $this = $(this);
+	            
+	            if(this.files && this.files[0]){
+	                //읽기 도구 생성
+	                var reader = new FileReader();
+	                
+	                //읽기 완료시 할 작업을 예약 설정
+	                reader.onload = function(data){//data : 파일 정보
+	                    var img = $("<img/>").attr("src", data.target.result);
+	                    $this.next().empty();
+	                    $this.next().append(img);
+	                };
+	                	reader.readAsDataURL(this.files[0]);
+	            }
+	        })
+	    	
+	        var options = {
+					toolbar:[
+							{ name: 'paragraph', items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language' ] },
+							'/',
+							{ name: 'styles', items: [ 'Styles', 'Format', 'Font', 'FontSize' ] },
+							{ name: 'colors', items: [ 'TextColor', 'BGColor' ] },
+						]
+					};
+			CKEDITOR.replace('content', options);
+   	      
+    		
+    	})
         
         
     </script> 
@@ -228,13 +206,13 @@
       		<tr>
       			<td class="table-secondary text-center title">사업자등록증사본</td>
       			<td class="text-left">
-      				<input type="file" name="business_file" class="form-control">
+      				<input type="file" name="business_regist" class="form-control" required>
       			</td>
       		</tr>
       		<tr>
       			<td class="table-secondary text-center title">영업등록증사본</td>
       			<td class="text-left">
-      				<input type="file" name="sale_file" class="form-control">
+      				<input type="file" name="sale_regist" class="form-control" required>
       			</td>
       		</tr>
       		<tr>
@@ -277,7 +255,7 @@
       		<tr>
       			<td class="table-secondary text-center title">매장로고</td>
       			<td class="text-left">
-      				<input type="file" name="logo" class="form-control">
+      				<input type="file" name="logo" class="form-control" required>
       				<span class="category-img ml-5"></span>
       			</td>
       		</tr>

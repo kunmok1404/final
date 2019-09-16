@@ -14,7 +14,7 @@
 			var menu_code = $(this).attr("data-no");
 			if(result){
 				$.ajax({
-					url : "${pageContext.request.contextPath}/shop_admin/menu/apply_menu",
+					url : "${pageContext.request.contextPath}/super_admin/menu/apply_menu",
 					data : {
 						menu_code : menu_code,
 					},

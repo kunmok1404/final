@@ -86,41 +86,38 @@
       <div class="container">
         <!--매장 정보-->
         <div class="shop-info offset-2 col-8">
-          <table>
+          <table class="table table-borderless">
             <tbody>
               <tr>
-                <td class="shop-detail-img">
-                    <img src="https://placeimg.com/100/100/any">
+                <td>
+			       <img class="shop-list-img" src="${pageContext.request.contextPath}/review/review_img?files_code=${shopDto.shop_img}">
                 </td>
                 <td class="shop-detail-info">
                   <table>
                     <tbody>
                       <tr>
-                        <td class="shop-detail-name">${shopDto.shop_name}
+                        <td class="shop-name">${shopDto.shop_name}
                         <input class="shop_no" type="hidden" value="${shopDto.no}">
                         </td>
                       </tr>
-                      <tr>
-                        <td class="shop-detail-score">
-                        	평점 4.8
-                        	<div id="line-shop">
+                      <tr style="height:50px;">
+                        <td class="text-danger font-weight-bold"	>
+                        	평점 ${shopVO.score}
+                        	<div id="line-shop" class="ml-4">
 				              <div class="line"></div>
 				            </div>
                         </td>
-                        <td class="shop-detail-review">리뷰43
-                        	<div id="line-shop">
-				              <div class="line"></div>
-				            </div>
-				        </td>
-				        <td ><div class="like">
-				        	<input type="hidden" value="off" class="like_val">
-				        	<img  src="${pageContext.request.contextPath}/resources/image/like_off.png" width="20" height="20">
+                        <td class="shop-review text-info font-weight-bold">리뷰&nbsp${shopVO.review}</td>
+				        <td >
+				        	<div class="like">
+					        	<input type="hidden" value="off" class="like_val">
+					        	<img  src="${pageContext.request.contextPath}/resources/image/like_off.png" width="30" height="30">
 				        	</div>
 				        </td>
                       </tr>
-                      <tr>
-                        <td class="shop-detail-minPrice">최소주문금액 : ${shopDto.min_price}원</td>
-                        <td class="shop-detail-delTime">배달시간 : ${shopDto.min_time}분</td>
+                      <tr style="height:50px;">
+                        <td class="shop-detail-minPrice font-weight-bold">최소주문금액 : ${shopDto.min_price}원</td>
+                        <td colspan="2" class="shop-detail-delTime font-weight-bold" style="padding-left:10%" width="65%">예상배달시간 : ${shopDto.min_time}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -135,13 +132,13 @@
           <!--메뉴 탭-->
           <ul class="nav nav-tabs">
             <li class="nav-item border border-bottom-0">
-              <a class="nav-link active" data-toggle="tab" href="#qwe">메뉴</a>
+              <a class="nav-link active tab-text" data-toggle="tab" href="#qwe">메&nbsp뉴</a>
             </li>
             <li class="nav-item border border-bottom-0">
-              <a class="nav-link" data-toggle="tab" href="#asd">클린리뷰3</a>
+              <a class="nav-link tab-text" data-toggle="tab" href="#asd">후&nbsp기(${shopVO.review})</a>
             </li>
             <li class="nav-item border border-bottom-0">
-              <a class="nav-link" data-toggle="tab" href="#zxc">정보</a>
+              <a class="nav-link tab-text" data-toggle="tab" href="#zxc">정&nbsp보</a>
             </li>
           </ul>
           <div class="tab-content">
@@ -153,25 +150,25 @@
                   ${menu_category.key}
                 </div>
                  	<!--메뉴내용-->
-                	<c:forEach var="menu" items="${menu_category.value}">
 	                <table class="table menu-content">
 	                  <tbody>
+                	<c:forEach var="menu" items="${menu_category.value}">
 	                    <tr class="border-bottom" data-toggle="modal" data-target="#myModal" data-menu="${menu.no}">
-	                      <td>
+	                      <td width="70%">
 	                        <div class="menu-name">
-	                          ${menu.name}${menu.no}
+	                          ${menu.name}
 	                        </div>
 	                        <div class="menu-price">
-	                          ${menu.price}
+	                          ${menu.price}원
 	                        </div>
 	                      </td>
-	                      <td class="menu-img">
-	                          <img src="https://placeimg.com/100/100/any">
+	                      <td>
+	                          <img class="menu-img float-right" src="${pageContext.request.contextPath}/review/review_img?files_code=${menu.basic_img}">
 	                      </td>
 	                    </tr>
+	                </c:forEach>
 	                  </tbody>
 	                </table>
-	                </c:forEach>
                 </c:forEach>
                 
               </div>
@@ -179,71 +176,44 @@
             
             <!-- 리뷰탭 -->
             <div class="tab-pane fade" id="asd">
-            
+            	
+              <c:forEach var="review" items="${review_map}">
+              <c:if test="${not empty review or review ne null}">
               <div class="review">
                 <div class="review-info">
                   <div class="review-id">
-                    <span>CutyBoy님</span>
+                    <span>${review.key.member_code}님</span>
                     <div id="line-shop">
 		              <div class="line"></div>
 		            </div>
-                    <span>4.5점</span>
+                    <span>${review.key.score}점</span>
                     <div id="line-shop">
 		              <div class="line"></div>
 		            </div>
-                    <span>2019.08.01</span>
+                    <span>${review.key.regist_date}</span>
                   </div>
                   <div class="review-menu">
                     후라이드1(무1,콜라1 추가)/간장후라이드2(생맥주1 추가)
                   </div>
                 </div>
-                <div class="review-img">
-                  <img src="https://placeimg.com/300/200/any">
-                  <img src="https://placeimg.com/300/200/any">
-                </div>
                 <div class="review-content">
-                  맛있는데 배송느림.맛있는데 배송느림.맛있는데 배송느림.맛있는데 배송느림.맛있는데 배송느림.
-                  맛있는데 배송느림.맛있는데 배송느림.맛있는데 배송느림.맛있는데 배송느림.
-                  맛있는데 배송느림.맛있는데 배송느림.맛있는데 배송느림.맛있는데 배송느림.
-                  맛있는데 배송느림.맛있는데 배송느림.맛있는데 배송느림.맛있는데 배송느림.
-                </div>
-              </div>
-              
-              <div class="review">
-                <div class="review-info">
-                  <div class="review-id">
-                    <span>CutyBoy님</span>
-                    <div id="line-shop">
-		              <div class="line"></div>
-		            </div>
-                    <span>4.5점</span>
-                    <div id="line-shop">
-		              <div class="line"></div>
-		            </div>
-                    <span>2019.08.01</span>
-                  </div>
-                  <div class="review-menu">
-                    후라이드1(무1,콜라1 추가)/간장후라이드2(생맥주1 추가)
-                  </div>
+                  ${review.key.content}
                 </div>
                 <div class="review-img">
-                  <img src="https://placeimg.com/300/200/any">
-                  <img src="https://placeimg.com/300/200/any">
-                </div>
-                <div class="review-content">
-                  맛있는데 배송느림.맛있는데 배송느림.맛있는데 배송느림.맛있는데 배송느림.맛있는데 배송느림.
-                  맛있는데 배송느림.맛있는데 배송느림.맛있는데 배송느림.맛있는데 배송느림.
-                  맛있는데 배송느림.맛있는데 배송느림.맛있는데 배송느림.맛있는데 배송느림.
-                  맛있는데 배송느림.맛있는데 배송느림.맛있는데 배송느림.맛있는데 배송느림.
+                  <c:forEach var="reviewImg" items="${review.value}">
+                  <img src="${pageContext.request.contextPath}/review/review_img?files_code=${reviewImg.files_no}">
+                  </c:forEach>
                 </div>
               </div>
+              </c:if>
+              </c:forEach>
               
             </div>
             
             <!-- 정보탭 -->
             <div class="tab-pane fade" id="zxc">
               <div class="info">
-                정보
+                ${shopDto.content}
               </div>
             </div>
           </div>
