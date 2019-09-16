@@ -283,7 +283,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</choose> 
 		<![CDATA[
 		where ORDER_DATE between 
-		to_date(#{start}) and to_date(#{end})) 
+		to_date(#{start}, 'yy-mm-dd') and to_date(#{end}, 'yy-mm-dd')) 
 		GROUP BY ROLLUP(TO_CHAR(order_date, 'yy') ,TO_CHAR(order_date, 'mm') ,TO_CHAR(order_date, 'dd'))
 		HAVING GROUPING_ID(TO_CHAR(order_date, 'yy') ,TO_CHAR(order_date, 'mm') ,TO_CHAR(order_date, 'dd')) IN (0, 4) 
 		ORDER BY TO_CHAR(order_date, 'yy') aSC
@@ -433,5 +433,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getshopcode" parameterType="int" resultType="int">
 		select shop_code from member where no = #{member_code}
 	</select>
+	
+	<select id="today" resultType="string">
+	SELECT SYSDATE + 1 FROM DUAL
+	</select>
+	<select id="yesterday" resultType="string">
+	SELECT SYSDATE - 1 FROM DUAL
+	</select>
+	<select id="month_ago" resultType="string">
+	SELECT ADD_MONTHS(SYSDATE, -1) FROM DUAL
+	</select>
+	<select id="week_ago" resultType="string">
+	SELECT SYSDATE - 7 FROM DUAL
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 </mapper>

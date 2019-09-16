@@ -19,15 +19,15 @@
                             <tr><td class="text-center home-title" colspan="2">메뉴등록 현황</td></tr>
                             <tr>
                               <td width="50%" class="text-right"><span class="home-content">총 등록수 :</span></td>
-                              <td><span class="home-content">50건</span></td>
+                              <td><span class="home-content">${all.size() }건</span></td>
                             </tr>
                             <tr>
                               <td class="text-right"><span class="home-content text-primary">승인 완료 :</span></td>
-                              <td><span class="home-content text-primary">45건</span></td>
+                              <td><span class="home-content text-primary">${sus.size() }건</span></td>
                             </tr>
                             <tr>
                               <td class="text-right"><span class="home-content text-danger">승인 대기 :</span></td>
-                              <td><span class="home-content text-danger">5건</span></td>
+                              <td><span class="home-content text-danger">${dagi.size()}건</span></td>
                             </tr>
                           </tbody>
                         </table>
@@ -49,15 +49,15 @@
                                 <tr><td class="text-center home-title" colspan="2">회원 현황</td></tr>
                                 <tr>
                                   <td width="50%" class="text-right"><span class="home-content">총 가입자  :</span></td>
-                                  <td><span class="home-content">1000명</span></td>
+                                  <td><span class="home-content">${memberall.size() }명</span></td>
                                 </tr>
                                 <tr>
-                                  <td class="text-right"><span class="home-content text-primary">탈퇴회원 :</span></td>
-                                  <td><span class="home-content text-primary">50명</span></td>
+                                  <td class="text-right"><span class="home-content text-primary">블랙회원 :</span></td>
+                                  <td><span class="home-content text-primary">${membernagam.size() }명</span></td>
                                 </tr>
                                 <tr>
-                                  <td class="text-right"><span class="home-content text-danger">오늘 가입자 :</span></td>
-                                  <td><span class="home-content text-danger">5건</span></td>
+                                  <td class="text-right"><span class="home-content text-danger">회원 :</span></td>
+                                  <td><span class="home-content text-danger">${memberday.size() }명</span></td>
                                 </tr>
                               </tbody>
                             </table>
@@ -79,15 +79,15 @@
                                 <tr><td class="text-center home-title" colspan="2">매출 현황</td></tr>
                                 <tr>
                                   <td width="30%" class="text-right"><span class="home-content text-right">이번달 :</span></td>
-                                  <td><span class="home-content">5,000,000원</span></td>
+                                  <td><span class="home-content">${month }원</span></td>
                                 </tr>
                                 <tr>
                                   <td class="text-right"><span class="home-content text-primary">이번주 :</span></td>
-                                  <td><span class="home-content text-primary">1,500,000원</span></td>
+                                  <td><span class="home-content text-primary">${week }원</span></td>
                                 </tr>
                                 <tr>
                                   <td class="text-right"><span class="home-content text-danger">오늘 :</span></td>
-                                  <td><span class="home-content text-danger">350,000원</span></td>
+                                  <td><span class="home-content text-danger">${day }원</span></td>
                                 </tr>
                               </tbody>
                             </table>
@@ -115,15 +115,15 @@
                       <tbody>
                         <tr>
                           <td class="super-sub-title">총 매장수:</td>
-                          <td class="super-sub-title">1000개</td>
+                          <td class="super-sub-title">${apply_all }개</td>
                         </tr>
                         <tr>
-                          <td class="super-sub-title text-danger">승인대기:</td>
-                          <td class="super-sub-title text-danger">10건</td>
+                          <td class="super-sub-title text-danger">승인완료:</td>
+                          <td class="super-sub-title text-danger">${apply_sus }건</td>
                         </tr>
                         <tr>
-                          <td class="super-sub-title text-info">오늘 입점신청:</td>
-                          <td class="super-sub-title text-info">7건</td>
+                          <td class="super-sub-title text-info">승인대기:</td>
+                          <td class="super-sub-title text-info">${apply_dagi }건</td>
                         </tr>
                       </tbody>
                     </table>
@@ -136,16 +136,16 @@
                     <table class="table table-borderless">
                       <tbody>
                         <tr>
-                          <td class="super-sub-title">총 주문건수:</td>
-                          <td class="super-sub-title">1000건</td>
+                          <td class="super-sub-title">이번달 주문건수:</td>
+                          <td class="super-sub-title">${date_month }건</td>
                         </tr>
                         <tr>
-                          <td class="super-sub-title text-primary">이번달 주문건수:</td>
-                          <td class="super-sub-title text-primary">300건</td>
+                          <td class="super-sub-title text-primary">이번주 주문건수:</td>
+                          <td class="super-sub-title text-primary">${date_week }건</td>
                         </tr>
                         <tr>
                           <td class="super-sub-title text-info">오늘 주문건수:</td>
-                          <td class="super-sub-title text-info">15건</td>
+                          <td class="super-sub-title text-info">${date_day }건</td>
                         </tr>
                       </tbody>
                     </table>
