@@ -17,28 +17,33 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.spring.entity.CategoryDto;
 import com.kh.spring.entity.FilesDto;
 import com.kh.spring.entity.NoticeDto;
 import com.kh.spring.entity.OnoDto;
 import com.kh.spring.entity.QnaDto;
+import com.kh.spring.repository.CategoryDao;
 import com.kh.spring.repository.NoticeDao;
 import com.kh.spring.repository.OnoDao;
 import com.kh.spring.repository.QnaDao;
+import com.kh.spring.repository.ShopOnoDao;
+import com.kh.spring.vo.QnaCategoryVO;
 
 @Service
 public class ServiceServiceImpl implements ServiceService {
 
 	@Autowired
 	private NoticeDao noticeDao;
-	
 	@Autowired
 	private OnoDao onoDao;
-	
+	@Autowired
+	private ShopOnoDao shoponoDao;
 	@Autowired
 	private SqlSession sqlSession;
-
 	@Autowired
 	private QnaDao qnaDao;
+	@Autowired
+	private CategoryDao categoryDao;
 
 	@Override
 	@Transactional
@@ -138,13 +143,78 @@ public class ServiceServiceImpl implements ServiceService {
 	public int write(QnaDto qnaDto) {
 		int no = qnaDao.getSequenceNumber();
 		 qnaDto.setNo(no);
+//		 System.out.println("qnaDto="+qnaDto);
 		qnaDao.insert( qnaDto);
 		return no;
 	}
+	@Override
+	public int OnoRegist2(OnoDto onoDto) {
+		// ono 시퀀스 생성 및 설정
+				int ono_no = shoponoDao.getOnoSeq();
+				onoDto.setNo(ono_no);
+				
+				// ono테이블에 글정보 등록
+				onoDao.write2(onoDto);
+				
+				return ono_no;
+	}
+	
+	// 자주하는 질문 목록 조회
+	@Override
+	public List<QnaCategoryVO> superlist(String apply_status, String keyword_type, String keyword, String start_date,
+			String end_date, String yn, int start, int end) {
+		List<QnaDto> list = qnaDao.superlist(apply_status, keyword_type, keyword, start_date, end_date, yn, start, end);
+		List<QnaCategoryVO> newList = new ArrayList<>();
+		// 하나씩 값을 꺼내서 카테고리 이름 조회 후 세팅
+		for(QnaDto qnaDto : list) {
+			CategoryDto categoryDto = categoryDao.getQnaCategoryInfo(qnaDto.getCategory());
+			System.out.println("categoryDto=" +categoryDto);
+			if(categoryDto != null) {
+			QnaCategoryVO qnaCategoryVO = QnaCategoryVO.builder()
+												.no(qnaDto.getNo())
+												.category(qnaDto.getCategory())
+												.question(qnaDto.getQuestion())
+												.answer(qnaDto.getAnswer())
+												.regist_date(qnaDto.getRegist_date())
+												.edit_date(qnaDto.getEdit_date())
+												.use_yn(qnaDto.getUse_yn())
+												.writer(qnaDto.getWriter())
+												.edit_date(qnaDto.getEdit_date())
+												.categoryName(categoryDto.getName()).build();
+			newList.add(qnaCategoryVO);
+			}
+		}
+		return newList;
+	}
+	@Override
+	public List<QnaCategoryVO> list(String category, int start, int end, String use_yn) {
+		List<QnaDto> list = qnaDao.list(category,start, end, use_yn);
+		List<QnaCategoryVO> newList = new ArrayList<>();
+		// 하나씩 값을 꺼내서 카테고리 이름 조회 후 세팅
+		for(QnaDto qnaDto : list) {
+			CategoryDto categoryDto = categoryDao.getQnaCategoryInfo(qnaDto.getCategory());
+			System.out.println("categoryDto=" +categoryDto);
+			if(categoryDto != null) {
+			QnaCategoryVO qnaCategoryVO = QnaCategoryVO.builder()
+												.no(qnaDto.getNo())
+												.category(qnaDto.getCategory())
+												.question(qnaDto.getQuestion())
+												.answer(qnaDto.getAnswer())
+												.regist_date(qnaDto.getRegist_date())
+												.edit_date(qnaDto.getEdit_date())
+												.use_yn(qnaDto.getUse_yn())
+												.writer(qnaDto.getWriter())
+												.edit_date(qnaDto.getEdit_date())
+												.categoryName(categoryDto.getName()).build();
+			newList.add(qnaCategoryVO);
+			}		
+		}
+		return newList;
+	}
 
-
+}
 
 	
 
 
-}
+

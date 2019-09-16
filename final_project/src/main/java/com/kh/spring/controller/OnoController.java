@@ -19,7 +19,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.spring.entity.OnoDto;
+import com.kh.spring.repository.CategoryDao;
 import com.kh.spring.repository.OnoDao;
+import com.kh.spring.repository.QnaDao;
 import com.kh.spring.service.ServiceService;
 
 //1:1 문의
@@ -29,6 +31,12 @@ public class OnoController {
 	
 	@Autowired
 	private OnoDao onoDao;
+	
+	@Autowired
+	private CategoryDao categoryDao;
+	
+	@Autowired
+	private QnaDao qnaDao;
 	
 	@Autowired
 	private ServiceService serviceService;
@@ -63,6 +71,9 @@ public class OnoController {
 		model.addAttribute("endBlock", endBlock);
 		model.addAttribute("pageCount", pageCount);
 		
+		//카테고리 
+		model.addAttribute("category_list", categoryDao.getOnoCategory());
+		
 		List<OnoDto> list = onoDao.list(start, end, member_code);
 		
 //		System.out.println(list.size());
@@ -73,7 +84,9 @@ public class OnoController {
 	
 	//[2]글쓰기 및 파일업로드
 	@GetMapping("/write")
-	public String write() {
+	public String write(Model model) {
+		// 카테고리
+		model.addAttribute("category_list", categoryDao.getQnaCategory());
 		return "client/service/ono/write";
 	}
 	
@@ -110,9 +123,10 @@ public class OnoController {
 								@RequestParam List<MultipartFile> images,
 								
 								HttpSession session, Model model) throws IllegalStateException, IOException {
-		//int member_code = (int)session.getAttribute("member_code");
-		int member_code = 1;
-		int shop_code = 1;
+		int member_code = (int)session.getAttribute("member_code");
+		int shop_code = (int)session.getAttribute("shop_code");
+//		int member_code = 1;
+//		int shop_code = 1;
 		onoDto.setMember_code(member_code);
 		onoDto.setShop_code(shop_code);
 		//글등록
@@ -122,6 +136,9 @@ public class OnoController {
 		for(MultipartFile file : images) {
 			serviceService.fileRegist(file,onoDto);
 		}
+		
+		
+		
 		model.addAttribute("ono_code", ono_no);
 		return "redirect:content";
 	}
@@ -148,6 +165,8 @@ public class OnoController {
 	@GetMapping("/edit")
 	public String edit(@RequestParam int ono_code, Model model) {
 		model.addAttribute("odto",onoDao.onoInfo(ono_code));
+		// 자주하는질문 카테고리
+				model.addAttribute("category_list", categoryDao.getQnaCategory());
 		return "client/service/ono/edit";
 	}
 	
@@ -158,33 +177,4 @@ public class OnoController {
 		return "redirect:content";
 	}
 	
-
-	
-	
-	
-	
-	
-//	@GetMapping("/download")
-//	public ResponseEntity<ByteArrayResource> download(@RequestParam String save_name) throws IOException {
-//		FilesDto filesDto = serviceService.get(save_name);
-////		System.out.println(filesDto);
-//		
-//		if(filesDto == null) {
-//			return ResponseEntity.notFound().build();
-//		}
-//		
-//		File target = new File("D:/upload/kh15", filesDto.getSave_name());
-////		System.out.println(target.getAbsolutePath());
-////		System.out.println(target.exists());
-//		byte[]data = FileUtils.readFileToByteArray(target);
-//		ByteArrayResource resource = new ByteArrayResource(data);
-//		
-//		return ResponseEntity.ok()
-//											.contentType(MediaType.APPLICATION_OCTET_STREAM)
-//											.header(HttpHeaders.CONTENT_DISPOSITION,
-//													"attachment; filename="+URLEncoder.encode(filesDto.getUpload_name(), "UTF-8"))
-//											.contentLength(data.length)
-//											.body(resource);
-//	}
-
-}
+	}

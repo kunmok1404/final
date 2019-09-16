@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.spring.entity.QnaDto;
+import com.kh.spring.repository.CategoryDao;
 import com.kh.spring.repository.QnaDao;
+import com.kh.spring.service.ServiceService;
+import com.kh.spring.vo.QnaCategoryVO;
 
 //자주하는질문
 @Controller
@@ -27,7 +30,10 @@ public class QnaController {
 	
 	@Autowired
 	private QnaDao qnaDao;
-	
+	@Autowired
+	private CategoryDao categoryDao;
+	@Autowired
+	private ServiceService serviceService;
 	//[1] 목록
 	@GetMapping("/list")
 	public String list(Model model,
@@ -51,8 +57,13 @@ public class QnaController {
 		model.addAttribute("endBlock", endBlock);
 		model.addAttribute("pageCount", pageCount);
 		
+		// 자주하는질문 카테고리
+		model.addAttribute("category_list", categoryDao.getQnaCategory());
+			
 		String use_yn="n";
-		List<QnaDto> list = qnaDao.list(category, start, end,use_yn);
+		List<QnaCategoryVO> list = serviceService.list(category, start, end, use_yn);
+		
+//		List<QnaDto> list = qnaDao.list(category, start, end,use_yn);
 		model.addAttribute("list", list);
 		
 		

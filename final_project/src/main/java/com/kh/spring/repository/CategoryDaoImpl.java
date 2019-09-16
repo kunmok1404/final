@@ -95,4 +95,17 @@ public class CategoryDaoImpl implements CategoryDao {
 		sqlSession.insert("category.insertQnaCategory", foodDto);
 	}
 
+	@Override
+	public List<CategoryDto> getOnoCategory() {
+		return sqlSession.selectList("category.onoCategoryList");
+	}
+
+	// 카테고리 코드로 카테고리 Dto 조회
+	@Override
+	public CategoryDto getQnaCategoryInfo(int qna_code) {
+		return sqlSession.selectOne("category.getQnaCategoryInfo", qna_code);
+	}
+
+
+
 }
