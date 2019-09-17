@@ -11,11 +11,14 @@
 <script src="${pageContext.request.contextPath}/resources/js/password-encoder.js"></script>
 
 <script>
-   $(function(){
-      $(".login-btn").click(function(){
-         $(".login_form").submit();
-      })
+
+$(function(){
+   // 로그인 버튼 클릭시
+   $(".login-btn").click(function(){
+      $(".login_form").submit();
    })
+})
+
 </script>
 
 <div class="container">

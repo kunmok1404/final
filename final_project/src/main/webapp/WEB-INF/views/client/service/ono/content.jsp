@@ -33,7 +33,7 @@
 					<th class=notice-th><span>작성자</span></th>
 					<th class=notice-th2><span>${onoDto.member_code}</span></th>
 					<th class=notice-th><span>카테고리</span></th>
-					<th class=notice-th2><span>${onoDto.category}</span></th>
+					<th class=notice-th2><span>${onoDto.category_name}</span></th>
 				</tr>
 				<tr>
 					<th class=notice-th><span>작성일</span></th>

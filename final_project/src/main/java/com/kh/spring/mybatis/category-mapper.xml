@@ -67,7 +67,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 자주하는 질문 카테고리 조회 -->
 	<select id="qnaCategoryList" resultType="categoryDto">
-		select * from category where work_type='qna_category' order by sort_seq asc
+		select NO
+		         ,NAME
+		 from category 
+	   where work_type='qna_category' 
+	    order by sort_seq asc
 	</select>
 	
 	<!-- 자주하는질문 카테고리 수정 -->
