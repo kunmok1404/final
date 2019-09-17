@@ -70,7 +70,7 @@
     			<td>
     			<%-- 말머리는 있을 때에만 [] 를 붙여서 출력한다. --%>
 				<c:if test="${not empty odto.category}">
-				[${odto.category}] 
+				[${odto.category_name}] 
 				</c:if>
     			</td>
     			<td>

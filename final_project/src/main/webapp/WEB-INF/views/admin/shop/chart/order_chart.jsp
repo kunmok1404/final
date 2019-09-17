@@ -172,9 +172,9 @@ $(function(){
 		</form>
 <div id="chartdiv"></div>
 <input type="hidden" value="${order_date.size() }" class="data_size">
-	<table border="1">
+	<table border="1" style="width: 100%">
 		<thead>
-			<tr align="center">
+			<tr align="center" class="table-primary text-center">
 				<th>년/월/일</th>
 				<th>주문건수</th>
 				<th>취소건수</th>

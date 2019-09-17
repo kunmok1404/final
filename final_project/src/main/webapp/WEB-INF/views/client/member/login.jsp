@@ -3,19 +3,22 @@
 <jsp:include page="/WEB-INF/views/template/client/header.jsp"></jsp:include>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<script>
-	$(function(){
-		$(".login-btn").click(function(){
-			$(".login_form").submit();
-		})
-	})
-</script>
-
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/cryptojs/components/core-min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/cryptojs/components/sha256-min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/password-encoder.js"></script>
+
+<script>
+
+$(function(){
+   // 로그인 버튼 클릭시
+   $(".login-btn").click(function(){
+      $(".login_form").submit();
+   })
+})
+
+</script>
 
 <div class="container">
 
@@ -48,6 +51,7 @@
 						<td colspan="4" class="text-left">
 							<input type="checkbox" name="remember" ${not empty cookie.saveID?"checked":""}>
 							<span class="save-id text-secondary">아이디 저장하기</span>
+							<input type="submit">로그인
 						</td>
 					</tr>
                   </tbody>

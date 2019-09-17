@@ -45,15 +45,15 @@
                             <tr><td class="text-center home-title" colspan="2">메뉴등록 현황</td></tr>
                             <tr>
                               <td width="50%" class="text-right"><span class="home-content">총 등록수 :</span></td>
-                              <td><span class="home-content">50건</span></td>
+                              <td><span class="home-content">${all }건</span></td>
                             </tr>
                             <tr>
                               <td class="text-right"><span class="home-content text-primary">승인 완료 :</span></td>
-                              <td><span class="home-content text-primary">45건</span></td>
+                              <td><span class="home-content text-primary">${sus }건</span></td>
                             </tr>
                             <tr>
                               <td class="text-right"><span class="home-content text-danger">승인 대기 :</span></td>
-                              <td><span class="home-content text-danger">5건</span></td>
+                              <td><span class="home-content text-danger">${dagi }건</span></td>
                             </tr>
                           </tbody>
                         </table>
@@ -74,16 +74,16 @@
                               <tbody>
                                 <tr><td class="text-center home-title" colspan="2">주문 현황</td></tr>
                                 <tr>
-                                  <td width="50%" class="text-right"><span class="home-content">총 주문수  :</span></td>
-                                  <td><span class="home-content">1000건</span></td>
+                                  <td width="50%" class="text-right"><span class="home-content">이번 달 :</span></td>
+                                  <td><span class="home-content">${date_month }건</span></td>
                                 </tr>
                                 <tr>
-                                  <td class="text-right"><span class="home-content text-primary">이번 달 :</span></td>
-                                  <td><span class="home-content text-primary">500건</span></td>
+                                  <td class="text-right"><span class="home-content text-primary">이번 주 :</span></td>
+                                  <td><span class="home-content text-primary">${date_week }건</span></td>
                                 </tr>
                                 <tr>
-                                  <td class="text-right"><span class="home-content text-danger">이번 주 :</span></td>
-                                  <td><span class="home-content text-danger">70건</span></td>
+                                  <td class="text-right"><span class="home-content text-danger">오늘  :</span></td>
+                                  <td><span class="home-content text-danger">${date_day }건</span></td>
                                 </tr>
                               </tbody>
                             </table>
@@ -105,15 +105,15 @@
                                 <tr><td class="text-center home-title" colspan="2">매출 현황</td></tr>
                                 <tr>
                                   <td width="30%" class="text-right"><span class="home-content text-right">이번달 :</span></td>
-                                  <td><span class="home-content">5,000,000원</span></td>
+                                  <td><span class="home-content">${month}원</span></td>
                                 </tr>
                                 <tr>
                                   <td class="text-right"><span class="home-content text-primary">이번주 :</span></td>
-                                  <td><span class="home-content text-primary">1,500,000원</span></td>
+                                  <td><span class="home-content text-primary">${week}원</span></td>
                                 </tr>
                                 <tr>
                                   <td class="text-right"><span class="home-content text-danger">오늘 :</span></td>
-                                  <td><span class="home-content text-danger">350,000원</span></td>
+                                  <td><span class="home-content text-danger">${day}원</span></td>
                                 </tr>
                               </tbody>
                             </table>

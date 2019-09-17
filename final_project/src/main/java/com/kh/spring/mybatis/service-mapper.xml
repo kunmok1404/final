@@ -140,14 +140,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 <!-- 1:1문의 목록기능-->
 	<select id="ono_list" parameterType="map" resultType="onoDto">
-		select * from(
-			select rownum rn, A.* from (
-				
-				select * from OneAndOne 
-				 where member_code=#{member_code} order by no desc
-			
-			)A
-		) where rn between #{start} and #{end}
+		SELECT * 
+		 FROM(
+			           SELECT ROWNUM RN
+			                       , A.NO
+			                       ,A.MEMBER_CODE
+			                       ,A.SHOP_CODE
+			                       ,A.TITLE
+			                       ,A.CONTENT
+			                       ,A.REGIST_DATE
+			                       ,A.EDIT_DATE
+			                       ,A.REPLY_STATUS
+			                       ,A.REPLY_CONTENT
+			                       ,A.TYPE
+			                       ,A.CATEGORY
+			                       ,(SELECT NAME
+			                           FROM CATEGORY
+			                         WHERE NO = A.CATEGORY
+			                               AND WORK_TYPE = 'qna_category') AS CATEGORY_NAME 
+                        FROM (
+				                        SELECT * 
+				                          FROM ONEANDONE 
+				                        WHERE MEMBER_CODE=#{member_code} ORDER BY NO DESC
+			                         )A
+		        ) WHERE RN BETWEEN #{start} AND #{end}
 	</select>
 	
 	<select id="ono_count"  resultType="int">
@@ -173,7 +189,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 				#{category} -->
 <!-- 			) -->
 		insert into OneAndOne values(
-			#{no}, #{member_code},#{shop_code},
+			#{no}, #{member_code}, null,
 			#{title}, #{content}, sysdate, sysdate, '답변대기', '고객님 빠른시일내에 답변드리겠습니다.',
 			'고객', #{category})
 	</insert>
@@ -209,7 +225,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 <!-- 테이블에서 리뷰정보조회 -->
 	<select id="ono_info" parameterType="int" resultType="onoDto">
-		select * from OneAndOne where no = #{ono_code} order by no desc
+		SELECT A.NO
+                      ,A.MEMBER_CODE
+                      ,A.SHOP_CODE
+                      ,A.TITLE
+                      ,A.CONTENT
+                      ,A.REGIST_DATE
+                      ,A.EDIT_DATE
+                      ,A.REPLY_STATUS
+                      ,A.REPLY_CONTENT
+                      ,A.TYPE
+                      ,A.CATEGORY
+                      ,(SELECT NAME
+                          FROM CATEGORY
+                        WHERE NO = A.CATEGORY
+                              AND WORK_TYPE = 'qna_category') AS CATEGORY_NAME  
+		   FROM ONEANDONE A
+		 WHERE NO = #{ono_code} 
+		 ORDER BY NO DESC
 	</select>
 	
 <!-- 이미지코드 조회 -->
