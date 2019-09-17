@@ -198,7 +198,7 @@
       					<tbody>
       						<tr>
       							<td colspan="2">
-      								<input type="text" name="radio_title" value="${sub_title.radio_title}" class="form-control" placeholder="Ex)소스선택(필수)">
+      								<input type="text" name="radio_title" value="${sub_title.radio_title}" class="form-control" placeholder="Ex)소스선택(필수)" required>
       							</td>
       						</tr>
       						<tr class="table-primary text-center">
@@ -216,9 +216,9 @@
 		                    </c:forEach>
       						<!-- 필수메뉴 템플릿 -->
 							<tr class="radio_template">
-		                        <td><input type="text" class="form-control radio_name"></td>
+		                        <td><input type="text" class="form-control radio_name" required></td>
 		                        <td>
-		                        	<input type="number" class="form-control radio_price" min="1">
+		                        	<input type="number" class="form-control radio_price" min="1" required>
 		                        </td>
 		                        <td><button class="btn_delete btn-block btn-secondary del">-삭제</button></td>
 		                    </tr>
@@ -239,7 +239,7 @@
       					<tbody>
       						<tr>
       							<td colspan="2">
-      								<input type="text" name="check_title" value="${sub_title.check_title}" class="form-control" placeholder="Ex)추가메뉴(선택)">
+      								<input type="text" name="check_title" value="${sub_title.check_title}" class="form-control" placeholder="Ex)추가메뉴(선택)" required>
       							</td>
       						</tr>
       						<tr class="table-primary text-center">
@@ -257,9 +257,9 @@
 		                    </c:forEach>
       						<!-- 추가메뉴 템플릿 -->
 							<tr class="check_template">
-		                        <td><input type="text" class="form-control check_name"></td>
+		                        <td><input type="text" class="form-control check_name" required></td>
 		                        <td>
-		                        	<input type="number" class="form-control check_price" min="1">
+		                        	<input type="number" class="form-control check_price" min="1" required>
 		                        </td>
 		                        <td><button class="btn_delete btn-block btn-secondary del">-삭제</button></td>
 		                    </tr>

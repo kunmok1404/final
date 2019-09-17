@@ -228,6 +228,12 @@ public class MemberDaoImpl implements MemberDao {
 		sqlSession.delete("member.deleteShopMember", shop_code);
 	}
 
+	// shop관리자 
+	@Override
+	public MemberDto getShopMemberInfo(int shop_code) {
+		return sqlSession.selectOne("member.getShopMemberInfo", shop_code);
+	}
+
 	
 
 	////비밀번호 찾기 실험

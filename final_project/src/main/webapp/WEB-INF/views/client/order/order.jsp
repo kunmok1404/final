@@ -173,6 +173,12 @@ $(function(){
 		})
 	});
 
+	$(function(){
+		$(".pay_active").click(function(){
+			$(".pay_active").removeClass("btn btn-primary");
+			$(this).addClass("btn btn-primary");
+		})
+	})
 
 
 //신용카드 결제시 변경되는 값
@@ -355,12 +361,12 @@ $(function(){
 	<!-- 토글로 이미지 변경하여 표시 -->
 	<input type="hidden" class="pay_method" name="pay_method" value="pay">
 	<h3>현장결제</h3>
-	<button type="button" id="credit" onclick="change_pay_c();">신용카드</button>
-	<button type="button" id="money" onclick="change_pay_m();">현금</button>
+	<button type="button" id="credit" class="pay_active" onclick="change_pay_c();">신용카드</button>
+	<button type="button" id="money" class="pay_active" onclick="change_pay_m();">현금</button>
 	<br>
 	<h3>미리 결제</h3>
-	<button type="button" id="kakaopay" onclick="change_pay_kakao();">카카오페이</button>
-	<button type="button" id="credit_card" onclick="change_pay_credit();">신용카드</button>
+	<button type="button" id="kakaopay" class="pay_active" onclick="change_pay_kakao();">카카오페이</button>
+	<button type=" utton" id="credit_card" class="pay_active" onclick="change_pay_credit();">신용카드</button>
 	<hr>
 	<div>
 		<input type="checkbox" id="okcheck" disabled>

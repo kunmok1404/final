@@ -123,7 +123,7 @@ public class ShopMenuController {
 			@ModelAttribute FoodCategoryList food_list) {
 		int shop_code = (int)session.getAttribute("shop_code");
 		categoryService.updateMenuCategory(food_list,shop_code);
-		return "redirect:category";
+		return "redirect:list";
 	}
 	
 	// 메뉴 삭제버튼 클릭시

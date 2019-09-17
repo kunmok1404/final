@@ -3,7 +3,13 @@
 <jsp:include page="/WEB-INF/views/template/client/header.jsp"></jsp:include>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<script>
+	$(function(){
+		$(".login-btn").click(function(){
+			$(".login_form").submit();
+		})
+	})
+</script>
 
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>

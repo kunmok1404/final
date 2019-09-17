@@ -111,12 +111,12 @@
 	  	<tbody>
 	  		<tr>
       			<td class="table-secondary text-center" width="20%">메뉴&nbsp목록이미지</td>
-      			<td class="text-left" width="50%"><input type="file" name="menu_list_img" class="form-control" placeholder="메뉴명을 입력하세요."></td>
+      			<td class="text-left" width="50%"><input type="file" name="menu_list_img" class="form-control" placeholder="메뉴명을 입력하세요." required></td>
       			<td class="category-img" width=100px;></td>
       		</tr>
       		<tr>
       			<td class="table-secondary text-center" width="20%">메뉴&nbsp상세이미지</td>
-      			<td class="text-left"><input type="file" name="menu_detail_img" class="form-control" placeholder="메뉴명을 입력하세요."></td>
+      			<td class="text-left"><input type="file" name="menu_detail_img" class="form-control" placeholder="메뉴명을 입력하세요." required></td>
       			<td class="category-img" width=100px;></td>
       		</tr>
 	  	</tbody>
@@ -139,7 +139,7 @@
       					<tbody>
       						<tr>
       							<td colspan="2">
-      								<input type="text" name="radio_title" class="form-control" placeholder="Ex)소스선택(필수)">
+      								<input type="text" name="radio_title" class="form-control" placeholder="Ex)소스선택(필수)" required>
       							</td>
       						</tr>
       						<tr class="table-primary text-center">
@@ -148,9 +148,9 @@
       						</tr>
       						<!-- 필수메뉴 템플릿 -->
 							<tr class="radio_template">
-		                        <td><input type="text" class="form-control radio_name"></td>
+		                        <td><input type="text" class="form-control radio_name" required></td>
 		                        <td>
-		                        	<input type="number" class="form-control radio_price" min="0">
+		                        	<input type="number" class="form-control radio_price" min="0" required>
 		                        </td>
 		                        <td><button class="btn_delete btn-block btn-secondary del">-삭제</button></td>
 		                    </tr>
@@ -171,7 +171,7 @@
       					<tbody>
       						<tr>
       							<td colspan="2">
-      								<input type="text" name="check_title" class="form-control" placeholder="Ex)추가메뉴(선택)">
+      								<input type="text" name="check_title" class="form-control" placeholder="Ex)추가메뉴(선택)" required>
       							</td>
       						</tr>
       						<tr class="table-primary text-center">
@@ -180,9 +180,9 @@
       						</tr>
       						<!-- 추가메뉴 템플릿 -->
 							<tr class="check_template">
-		                        <td><input type="text" class="form-control check_name"></td>
+		                        <td><input type="text" class="form-control check_name" required></td>
 		                        <td>
-		                        	<input type="number" class="form-control check_price" min="0">
+		                        	<input type="number" class="form-control check_price" min="0" required>
 		                        </td>
 		                        <td><button class="btn_delete btn-block btn-secondary del">-삭제</button></td>
 		                    </tr>
@@ -198,14 +198,14 @@
       		</tr>
       		<tr class="text-center">
       			<td colspan="4">
-      				<input type="submit" width="5%" class="btn btn-primary" value="등록">
-      				<a href="${pageContext.request.contextPath}/shop_admin/menu/list" class="btn btn-secondary">목록</a>
+      				<input type="submit" width="200px" class="btn btn-lg btn-primary" value="등록">
+      				<a href="${pageContext.request.contextPath}/shop_admin/menu/list" class="btn btn-lg btn-secondary">목록</a>
       			</td>
       		</tr>
 	  	</tbody>
 	  </table>
 	  </form>
-	   	      
+	   <br><br><br><br><br><br>  
      </div>
       
 

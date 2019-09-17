@@ -96,7 +96,7 @@
 	  			<c:forEach var="reviewVO" items="${list}">
 	  			<tr class="text-center">
 	  				<td>${reviewVO.no}</td>
-	  				<td class="over-text"><a href="${pageContext.request.contextPath}/super_admin/review/detail?review_code=${reviewVO.no}" class="text-primary">${reviewVO.title}</a></td>
+	  				<td class="over-text"><a href="${pageContext.request.contextPath}/shop_admin/review/detail?review_code=${reviewVO.no}" class="text-primary">${reviewVO.title}</a></td>
 	  				<td>${reviewVO.shop_name}</td>
 	  				<td>${reviewVO.read}</td>
 	  				<td>${reviewVO.score}</td>
