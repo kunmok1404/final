@@ -1,11 +1,15 @@
 package com.kh.spring.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.spring.entity.TotalVo;
+import com.kh.spring.repository.MenuDao;
 import com.kh.spring.repository.OrdersDao;
 import com.kh.spring.vo.OrderVo;
 
@@ -17,6 +21,12 @@ public class SuperHomeServiceImpl implements SuperHomeService{
 	
 	@Autowired
 	AdminService adminService;
+	
+	@Autowired
+	private MenuDao menuDao;
+	
+	@Autowired
+	SqlSession sqlsession;
 	
 	
 	@Override
@@ -103,6 +113,37 @@ public class SuperHomeServiceImpl implements SuperHomeService{
 		tot_day += list.get(i).getCut();
 		}
 		return tot_day;
+	}
+
+	@Override
+	public int shopMenuCount_all(int shop_code) {
+		Map<Object, Object> map = new HashMap<>();
+		map.put("shop_code", shop_code);
+		
+		int count = sqlsession.selectOne("menu.apply_all", map);
+		return count;
+	}
+
+	@Override
+	public int shopMenuCount_dagi(int shop_code) {
+		Map<Object, Object> map = new HashMap<>();
+		String apply_status = "승인대기";
+		map.put("shop_code", shop_code);
+		map.put("apply_status", apply_status);		
+		
+		int count = sqlsession.selectOne("menu.apply_count", map);
+		return count;
+	}
+
+	@Override
+	public int shopMenuCount_sus(int shop_code) {
+		String apply_status = "승인완료";
+		Map<Object, Object> map = new HashMap<>();
+		map.put("shop_code", shop_code);
+		map.put("apply_status", apply_status);
+		
+		int count = sqlsession.selectOne("menu.apply_count", map);
+		return count;
 	}
 
 

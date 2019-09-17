@@ -479,10 +479,19 @@ public class MemberController {
 	}
 	
 	@GetMapping("/like")
-	public String like(@RequestParam int shop_code,@RequestParam int member_code) {
-		memberDao.like(MyshopDto.builder().member_code(member_code).shop_code(shop_code).build());
+	public String like(@RequestParam String shop_code,@RequestParam String member_code) {
+		int member = Integer.parseInt(member_code);
+		int shop = Integer.parseInt(shop_code);
+		memberDao.like(MyshopDto.builder().member_code(member).shop_code(shop).build());
 		return "client/shop/shop_detail";
 	}
+	
+	@PostMapping("/like")
+	public void like(@ModelAttribute MyshopDto myshopDto) {
+		memberDao.like(myshopDto);
+	}
+	
+	
 	
 	@PostMapping("/unlike")
 	public void unlike(@ModelAttribute MyshopDto myshopDto) {
@@ -490,8 +499,10 @@ public class MemberController {
 	}
 	
 	@GetMapping("/unlike")
-	public String unlike(@RequestParam int shop_code,@RequestParam int member_code) {
-		memberDao.unlike(MyshopDto.builder().member_code(member_code).shop_code(shop_code).build());
+	public String unlike(@RequestParam String shop_code,@RequestParam String member_code) {
+		int member = Integer.parseInt(member_code);
+		int shop = Integer.parseInt(shop_code);
+		memberDao.unlike(MyshopDto.builder().member_code(member).shop_code(shop).build());
 		return "client/shop/shop_detail";
 	}
 	
@@ -505,9 +516,9 @@ public class MemberController {
 	List<ShopDto> shop = new ArrayList<>();
 	for (int i = 0; i < list.size(); i++) {
 		shop_code.add(list.get(i).getShop_code());
-	for (int j = 0; i < shop_code.size(); j++) {
-		shop.add(shopDao.myshop(shop_code.get(j)));
-	}
+		for (int j = 0; j < shop_code.size(); j++) {
+			shop.add(shopDao.myshop(shop_code.get(j)));
+		}
 	}
 	model.addAttribute("list", list);
 	model.addAttribute("shop", shop);
