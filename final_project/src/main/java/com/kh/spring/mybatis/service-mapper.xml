@@ -168,7 +168,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 				#{category} -->
 <!-- 			) -->
 		insert into OneAndOne values(
-			#{no}, #{member_code},#{shop_code},
+			#{no}, #{member_code}, null,
 			#{title}, #{content}, sysdate, sysdate, '답변대기', '고객님 빠른시일내에 답변드리겠습니다.',
 			'고객', #{category})
 	</insert>
