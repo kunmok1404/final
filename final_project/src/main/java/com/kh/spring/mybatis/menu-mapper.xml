@@ -278,6 +278,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]> 
 	</select>
 	
+	
+	<select id="apply_count" parameterType="map" resultType="int">
+	select count(*) from menu where shop_code = #{shop_code} and apply_status = #{apply_status}	
+	</select>
+	<select id="apply_all" parameterType="map" resultType="int">
+	select count(*) from menu where shop_code = #{shop_code}	
+	</select>
 </mapper>
  
  
