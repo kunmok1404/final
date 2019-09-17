@@ -47,7 +47,7 @@
 						<select name="category" required>
 							<option value="">선택하세요</option>
 								<c:forEach var="category_list" items="${category_list}">
-									<option>${category_list.name}</option>
+									<option value="${category_list.no}">${category_list.name}</option>
 								</c:forEach>
 						</select>
 					</th>

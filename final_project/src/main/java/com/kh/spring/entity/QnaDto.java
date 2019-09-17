@@ -8,7 +8,8 @@ import lombok.NoArgsConstructor;
 @Data @Builder @AllArgsConstructor @NoArgsConstructor
 public class QnaDto {
 	 private int no; 				//글번호
-	 private int category; 	//카테고리
+	 private int category; 	//카테고리코드
+	 private String category_name; 	//카테고리명
 	 private String question; 	//질문
 	 private String answer;	//답변
 	 private String regist_date; 		//작성날짜
