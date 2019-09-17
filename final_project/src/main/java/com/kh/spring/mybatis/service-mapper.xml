@@ -89,6 +89,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		) where rn between #{start} and #{end}
 	</select>
 	
+	<!-- shop_home 공지사항 목록기능-->
+	<select id="notice_shop_home" resultType="noticeDto">
+		select * from(
+			select rownum rn, A.* from (
+				select * from notice
+				   where status='업주'
+				order by no desc
+			)A
+		) where rn between 1 and 5
+	</select>
+	
+	<!-- super_home 공지사항 목록기능-->
+	<select id="notice_super_home" resultType="noticeDto">
+		select * from(
+			select rownum rn, A.* from (
+				select * from notice
+				order by no desc
+			)A
+		) where rn between 1 and 5
+	</select>
+	
 <!-- "업주" 공지사항 [중요]만 위에표시-->	
 	<select id="notice_list4"  resultType="noticeDto">
 				select * from notice

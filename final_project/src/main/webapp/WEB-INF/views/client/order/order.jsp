@@ -180,6 +180,12 @@ $(function(){
 		})
 	});
 
+	$(function(){
+		$(".pay_active").click(function(){
+			$(".pay_active").removeClass("btn btn-primary");
+			$(this).addClass("btn btn-primary");
+		})
+	})
 
 
 //신용카드 결제시 변경되는 값

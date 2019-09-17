@@ -62,7 +62,7 @@
 		            </div>
 		            <div class="header-button"> 
 		              <span class="owner"><a href="#"></a></span>
-		              <span class="loginTime"><a href="#">최종접속일자 :<span class="date"></span></a></span>
+		              <span class="loginTime"><a href="#">최종접속일자 :<span class="text-white">&nbsp${sessionScope.memberDto.latest_login}</span></a></span>
 		              <a href="${pageContext.request.contextPath}/super_admin/member/logout" class="btn btn-light btn-sm">로그아웃</a>
 		              <a href="#" class="btn btn-light btn-sm" id="client-site">뭐먹지 바로가기</a>
 		            </div>

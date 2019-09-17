@@ -58,6 +58,7 @@
               </tr>
             </thead>
             <tbody>
+              <c:if test="${not empty order_list}">
               <c:forEach var="order_map" items="${order_list}">
               <tr>
                 <td>${order_map.get("no")}</td>
@@ -86,6 +87,7 @@
                 </td>
               </tr>
               </c:forEach>
+              </c:if>
             </tbody>
           </table>
         </div>
