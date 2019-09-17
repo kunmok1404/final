@@ -4,6 +4,12 @@
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
 <script>
+$(function(){
+    $(".pay_active").click(function(){
+       $(".pay_active").removeClass("btn btn-primary");
+       $(this).addClass("btn btn-primary");
+    })
+ })
 
 //카드 결제시 수정되는 값
 function change_pay_c(){
@@ -63,6 +69,7 @@ $(function(){
 	
 	
 	$(".button").click(function(e){
+		var total = $(".final").val();
 		var check = $(".button").attr("id");
 		e.preventDefault();
 		if(check == "kakao"){
@@ -74,7 +81,7 @@ $(function(){
 		}
 		else{
 			var IMP = window.IMP;
-
+			console.log(total);
 			IMP.init('imp47420056');
 
 			IMP.request_pay({
@@ -82,7 +89,7 @@ $(function(){
 			    pay_method : 'card',
 			    merchant_uid : 'merchant_' + new Date().getTime(),
 			    name : '치킨',
-			    amount : '${total_price}',
+			    amount : total,
 			    buyer_email : '${memberDto.email}',
 			    buyer_name : '${memberDto.id}',
 			    buyer_tel : '${memberDto.phone}',
@@ -355,12 +362,12 @@ $(function(){
 	<!-- 토글로 이미지 변경하여 표시 -->
 	<input type="hidden" class="pay_method" name="pay_method" value="pay">
 	<h3>현장결제</h3>
-	<button type="button" id="credit" onclick="change_pay_c();">신용카드</button>
-	<button type="button" id="money" onclick="change_pay_m();">현금</button>
+	<button type="button" class="pay_active" id="credit" onclick="change_pay_c();">신용카드</button>
+	<button type="button" class="pay_active" id="money" onclick="change_pay_m();">현금</button>
 	<br>
 	<h3>미리 결제</h3>
-	<button type="button" id="kakaopay" onclick="change_pay_kakao();">카카오페이</button>
-	<button type="button" id="credit_card" onclick="change_pay_credit();">신용카드</button>
+	<button type="button" class="pay_active" id="kakaopay" onclick="change_pay_kakao();">카카오페이</button>
+	<button type="button" class="pay_active" id="credit_card" onclick="change_pay_credit();">신용카드</button>
 	<hr>
 	<div>
 		<input type="checkbox" id="okcheck" disabled>
