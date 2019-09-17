@@ -415,7 +415,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<!-- 주문 번호로 샵의 배달비를 불러오는 코드 -->
 	<select id="shopDelivery" parameterType="int" resultType="ShopDto">
-		select delivery_price from shop where no = (select member_code from orders where no = #{no})
+		select delivery_price from shop where no = (select shop_code from orders where no = #{no})
 	</select>
 	<!--  주문 상태 변경 -->
 	<update id="setStatus" parameterType="map">

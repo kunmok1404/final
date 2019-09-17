@@ -51,7 +51,7 @@ public class SuperOrderController {
 		model.addAttribute("orderDetail",ordersDao.orderDetail(no));
 		model.addAttribute("orders", ordersDao.orderResult(no));
 		model.addAttribute("orderMember",ordersDao.orderMember(no));
-		model.addAttribute("shop_del",ordersDao.orderDelivery(no));
+		model.addAttribute("shop",ordersDao.orderDelivery(no));
 		
 		return "admin/super/order/detail";
 	}
