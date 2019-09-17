@@ -32,6 +32,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  		select * from member where id=#{id}
  	</select>
  	
+ 	<!-- 업주아이디 조회 -->
+ 	<select id="getShopMemberInfo" parameterType="int" resultType="memberDto">
+ 		select * from member where shop_code = #{shop_code}
+ 	</select>
+ 	
  	<!-- 비밀번호 암호화 적용 전 로그인 -->
  	<select id="login" parameterType="memberDto" resultType="memberDto">
  		select * from member where id = #{id} and pw = #{pw}

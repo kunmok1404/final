@@ -78,6 +78,7 @@ public class SuperMemberController {
 				if(result.getType().equals("관리자")) {
 					session.setAttribute("member_code", result.getNo());
 					session.setAttribute("type", result.getType());
+					session.setAttribute("memberDto", result);
 				}
 				else {
 					return "admin/login_auth";//권한 없음 페이지로 전송
@@ -113,6 +114,7 @@ public class SuperMemberController {
 		//세션으로 데이터 받아와서 지우기
 		session.removeAttribute("member_code");
 		session.removeAttribute("type");
+		session.removeAttribute("memberDto");
 		return "redirect:/super_admin";
 	}
 	

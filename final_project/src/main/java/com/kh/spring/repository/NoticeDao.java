@@ -32,6 +32,10 @@ public interface NoticeDao {
 
 	void edit(NoticeDto noticeDto);
 
+	List<NoticeDto> shopHomeNotice();
+
+	List<NoticeDto> superHomeNotice();
+
 
 
 

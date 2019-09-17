@@ -40,5 +40,6 @@ public interface MemberDao {
 	void applyShop(int shop_code);
 	void deleteShopMember(int shop_code);
 //	MemberDto findPassword(MemberDto memberDto);
+	MemberDto getShopMemberInfo(int shop_code);
 
 }

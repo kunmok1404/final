@@ -14,6 +14,7 @@
     <link href="${pageContext.request.contextPath}/resources/css/pkmadmin.css" rel="stylesheet">
     <script>
       $(function(){
+    	  
         // top-menu 하이라이트 효과
         $(".top-menu ul li").click(function(){
           $(".top-menu ul li").removeClass("active");
@@ -49,8 +50,8 @@
               				</a>
             			</div>
             			<div class="header-button"> 
-              				<span class="owner">*안녕하세요. 박근목 사장님!</span>
-              				<span class="loginTime">최종접속일자 : 2019.08.10 17:30</span>
+              				<span class="owner text-white">*안녕하세요. <span class="font-weight-bold">${sessionScope.memberDto.id}</span>&nbsp사장님!</span>
+              				<span class="loginTime text-white">최종접속일자 : <span id="login_date">${sessionScope.memberDto.latest_login}</span></span>
               				<a href="${pageContext.request.contextPath}/shop_admin/member/logout" class="btn btn-light btn-sm">로그아웃</a>
               				<button class="btn btn-light btn-sm" id="client-site">뭐먹지 바로가기</button>
             			</div>

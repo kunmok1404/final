@@ -27,10 +27,11 @@ public class OrderServiceImpl implements OrderService {
 	public List<Map<String, Object>> myOrderList(int member_code) {
 		//Order 테이블 내역 
 		List<OrdersDto> order_list = ordersDao.myOrderList(member_code);
-		
 		// List추출 후 Map에 세팅
 		List<Map<String, Object>> list = new ArrayList<>();
 		for(int i = 0; i < order_list.size(); i++) {
+			if(order_list.get(i) != null) {
+			System.out.println("order_list.get(i)="+order_list.get(i));
 			Map<String, Object> map = new HashMap<>();
 			OrdersDto orderDto = order_list.get(i);
 			map.put("no", orderDto.getNo()); // 주문번호
@@ -50,6 +51,7 @@ public class OrderServiceImpl implements OrderService {
 			map.put("order_status",orderDto.getOrder_status()); //주문상태
 			map.put("review_status",orderDto.getReview_status()); //주문상태
 			list.add(map);
+			}
 		}
 		return list;
 	}

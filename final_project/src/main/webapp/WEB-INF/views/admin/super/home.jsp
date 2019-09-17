@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
     <jsp:include page="/WEB-INF/views/template/admin/super/header.jsp"></jsp:include>
     
     
@@ -167,7 +167,7 @@
                           공지사항
                       </td>
                       <td width="20%" class="text-right">
-                        <a href="#" class="text-secondary today-order">더보기</a>
+                        <a href="${pageContext.request.contextPath}/super_admin/notice/list" class="text-secondary today-order">더보기</a>
                       </td>
                     </tr>
                   </tbody>
@@ -175,26 +175,12 @@
             </div>
             <table class="table table-striped table-hover mt-3 today-table">
               <tbody>
+                <c:forEach var="notice" items="${notice_List}">
                 <tr>
-                  <td class="today-notice-content">수수료율 정책 변경 공지사항</td>
-                  <td class="today-notice-content text-secondary text-center">2019-08-01</td>
+                  <td class="today-notice-content"><a href="${pageContext.request.contextPath}/super_admin/notice/content?no=${notice.no}">${notice.title}</a></td>
+                  <td class="today-notice-content text-secondary text-center">${notice.regist_date}</td>
                 </tr>
-                <tr>
-                  <td class="today-notice-content">신규입점 정책에 관한 공지</td>
-                  <td class="today-notice-content text-secondary text-center">2019-07-20</td>
-                </tr>
-                <tr>
-                  <td class="today-notice-content">메뉴 등록시 주의사항 공지</td>
-                  <td class="today-notice-content text-secondary text-center">2019-06-30</td>
-                </tr>
-                <tr>
-                  <td class="today-notice-content">배송비 수수료에 관한 공지</td>
-                  <td class="today-notice-content text-secondary text-center">2019-05-03</td>
-                </tr>
-                <tr>
-                  <td class="today-notice-content">1:1문의 답변관련 공지</td>
-                  <td class="today-notice-content text-secondary text-center">2019-04-15</td>
-                </tr>
+                </c:forEach>
               </tbody>
             </table>
         </div>
