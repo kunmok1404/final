@@ -17,5 +17,6 @@ public class OnoDto {
 	 private String reply_status;	//답변상태
 	 private String reply_content;	//답변내용
 	 private String type;					//문의구분(고객/업주)
-	 private String category;			//카테고리
+	 private String category;			//카테고리코드
+	 private String category_name;			//카테고리명
 }
