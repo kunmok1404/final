@@ -2,7 +2,6 @@ package com.kh.spring.repository;
 
 import java.util.List;
 
-import com.kh.spring.entity.CategoryDto;
 import com.kh.spring.entity.FilesDto;
 import com.kh.spring.entity.FoodCategoryDto;
 import com.kh.spring.entity.MenuDto;

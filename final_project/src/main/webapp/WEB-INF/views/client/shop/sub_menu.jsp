@@ -202,6 +202,7 @@
       </span>원
     </div>
          <input type="hidden" name="menu_price" value="${menuDto.price}">
+         <input type="hidden" name="total_price" value="${menuDto.price}">
     <div>
       <input type="submit" class="btn" id="go_cart" value="장바구니 추가">
       <input type="submit" class="btn" id="go_order" value="주문하기">

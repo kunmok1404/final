@@ -146,6 +146,7 @@ public class OrderController {
 			   @RequestParam int shop_code,
 			   @RequestParam int radiomenu,
 			   @RequestParam List<Integer> checkmenu,
+			   @RequestParam int total_price,
 			   HttpSession session, Model model) {
 		
 		int member_code = (int) session.getAttribute("member_code");
@@ -176,6 +177,7 @@ public class OrderController {
 			orderDao.cartinsert(submenudtolist);
 		}
 		List<CartDto> cartDto = orderDao.cartlist(member_code);
+		model.addAttribute("total_price", total_price);
 		model.addAttribute("point",pointservice.getMyPoint(member_code));
 		model.addAttribute("shopDto", orderDao.shopInfo(shop_code));
 		model.addAttribute("cartList", cartDto);
