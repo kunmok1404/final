@@ -148,6 +148,7 @@ $(function(){
 			$(".discount_price").val(point);
 			$(".final_price").text(price-point+"원");
 			$(".final").val(price-point);
+			$(".coandpo").val(1);
 			$("#po").attr("disabled",true);
 			$("#co").attr("disabled",true);
 			}
@@ -336,7 +337,7 @@ $(function(){
 				</tr>
 			</tbody>
 				<input type="hidden" class="final" name="total-price" value="${total_price + shopDto.delivery_price}">
-
+				<input type="hidden" class="coandpo" name="coandpo" value="0">
 			<tfoot>
 				<tr>
 					<th>쿠폰</th>

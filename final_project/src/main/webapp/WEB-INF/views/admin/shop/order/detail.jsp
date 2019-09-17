@@ -2,8 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<jsp:include page="/WEB-INF/views/template/admin/super/header.jsp"></jsp:include>
-<jsp:include page="/WEB-INF/views/template/admin/super/left/left_review.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/template/admin/shop/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/template/admin/shop/left/left_review.jsp"></jsp:include>
 
 <script>
 $(function(){
