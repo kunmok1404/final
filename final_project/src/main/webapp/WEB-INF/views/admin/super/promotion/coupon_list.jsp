@@ -19,10 +19,14 @@ $(function() {
 })
 	$(".all").click(function() {
 	var coupon_code = $(this).parent().siblings(".no").children().val();
+	var start_date = $(this).parent().siblings(".date").children(".start").val();
+	var finish_date = $(this).parent().siblings(".date").children(".finish").val();
 	$.ajax({
 		url:"${pageContext.request.contextPath}/super_admin/coupon/all",
 		data : {
 			coupon_code : coupon_code,
+			start_date : start_date,
+			finish_date : finish_date,
 		},
 		success:function(response){
 			alert("전체 발급 되었습니다.");
@@ -32,7 +36,9 @@ $(function() {
 
 	$(".issue").click(function() {
 		var coupon_code = $(this).parent().siblings(".no").children().val();
-		location.href = '${pageContext.request.contextPath}/super_admin/coupon/search?coupon_code='+coupon_code;
+		var start_date = $(this).parent().siblings(".date").children(".start").val();
+		var finish_date = $(this).parent().siblings(".date").children(".finish").val();
+		location.href = '${pageContext.request.contextPath}/super_admin/coupon/search?coupon_code='+coupon_code+'&start_date='+start_date+'&finish_date='+finish_date;
 	})
 
 
@@ -128,7 +134,9 @@ $(function() {
 	  				<td>${coupon.issue_type }</td>
 	  				<td>${coupon.discount_type }</td>
 	  				<td>${coupon.discount_price }%<br>(${coupon.max_price }원 까지)</td>
-	  				<td>${coupon.start_date }<br>~<br>${coupon.finish_date }</td>
+	  				<td class="date">${coupon.start_date } <input type="hidden" value="${coupon.start_date }" class="start">
+	  				<br>~<br>${coupon.finish_date }
+	  				<input type="hidden" value="${coupon.finish_date }" class="finish"></td>
 	  				<td>${coupon.issue_date }</td>
 	  				<td>${coupon.issue_status }</td>
 	  				<td>

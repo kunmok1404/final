@@ -12,7 +12,7 @@ public interface CouponDao {
 	CouponDto getCouponInfo(int coupon_code);
 	List<CouponDto> getCoupon();
 	void finish(int no);
-	void all(int member_code,int coupon_code);
+	void all(int member_code,int coupon_code,String start_date,String finish_date);
 	int getCouponCount(int member_code);
-
+	void auto(int member_code, int coupon_code,String start_date,String finish_date);
 }

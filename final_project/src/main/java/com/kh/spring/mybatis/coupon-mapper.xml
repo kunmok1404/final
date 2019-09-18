@@ -8,8 +8,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="regist" parameterType="couponDto">
 		insert into coupon values(
 			coupon_seq.nextval, #{name}, #{issue_type}, #{discount_type},
-			#{discount_price}, #{max_price}, SYSDATE, (SELECT SYSDATE + #{finish_date} FROM DUAL), 
-			'발급중', SYSDATE, SYSDATE, #{auto_type}, #{issue_date}
+			#{discount_price}, #{max_price}, #{start_date}, #{finish_date}, 
+			'발급중', SYSDATE, SYSDATE, #{auto_type}, #{issue_date},#{period}
 		)
 	</insert>
 	
@@ -28,7 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<!-- 사용기간이 종료 되었는지 -->
 	<select id="issue"  parameterType="map" resultType="int">
-		SELECT #{finish_date} - SYSDATE FROM DUAL;
+		SELECT #{finish_date} - SYSDATE FROM DUAL
 	</select>
 	<!-- 사용상태 변경 -->
 	<update id="finish" parameterType="map">
@@ -36,12 +36,47 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<insert id="all" parameterType="map">
-		insert into issue values(#{coupon_code},#{member_code},sysdate)
+		insert into issue values(#{coupon_code},#{member_code},#{start_date},'n',#{finish_date})
 	</insert>
+	
+	<insert id="auto" parameterType="map">
+		insert into issue values(#{coupon_code},#{member_code},#{start_date},'n',#{finish_date})
+	</insert>
+	
+	<select id="sysdate" resultType="string">
+		SELECT SYSDATE FROM DUAL
+	</select>
+	
+	<select id="period" resultType="string">
+		SELECT SYSDATE+${period } FROM DUAL
+	</select>
+	
 	
 	<!-- 쿠폰갯수 구하기 -->
 	<select id="getCouponCount" parameterType="int" resultType="int">
 		select count(*) from issue where member_code=#{member_code}
+	</select>
+	
+	<select id="couponlist" resultType="couponDto">
+		select * from coupon where auto_type = 'vip'
+	</select>
+	<select id="coupon3" resultType="couponDto">
+		select * from coupon where auto_type = 'vip' and grade_type = '3'
+	</select>
+	<select id="coupon2" resultType="couponDto">
+		select * from coupon where auto_type = 'vip' and grade_type = '2'
+	</select>
+	<select id="coupon1" resultType="couponDto">
+		select * from coupon where auto_type = 'vip' and grade_type = '1'
+	</select>
+	<select id="couponregist" resultType="couponDto">
+		select * from coupon where auto_type = 'now'
+	</select>
+	<select id="couponstart" resultType="couponDto">
+		select * from coupon where auto_type = 'week'
+	</select>
+	<select id="couponway" resultType="couponDto">
+		select * from coupon where auto_type = 'month'
 	</select>
 	
 </mapper>

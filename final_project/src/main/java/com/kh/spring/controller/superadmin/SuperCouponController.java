@@ -2,17 +2,18 @@ package com.kh.spring.controller.superadmin;
 
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.spring.entity.CouponDto;
 import com.kh.spring.entity.MemberDto;
+import com.kh.spring.entity.UsergradeDto;
 import com.kh.spring.repository.CouponDao;
 import com.kh.spring.repository.MemberDao;
 import com.kh.spring.vo.MemberInfoVO;
@@ -26,9 +27,14 @@ public class SuperCouponController {
 	@Autowired
 	private MemberDao memberDao;
 	
+	@Autowired
+	private SqlSession sqlsession;
+	
 	// 쿠폰 등록
 	@GetMapping("/regist")
-	public String regist() {
+	public String regist(Model model) {
+		List<UsergradeDto> grade = sqlsession.selectList("member.usergrade"); 
+		model.addAttribute("grade",grade);
 		return "admin/super/promotion/coupon_regist";
 	}
 	
@@ -54,11 +60,10 @@ public class SuperCouponController {
 		}
 	// 전체 발급
 		@GetMapping("/all")
-		public String all(@RequestParam int coupon_code) {
+		public String all(@RequestParam int coupon_code,String start_date,String finish_date) {
 			List<MemberDto> list = memberDao.member_code();
 			for (int i = 0; i < list.size(); i++) {
-				System.out.println(list.get(i).getNo());
-				couponDao.all(list.get(i).getNo(), coupon_code);
+				couponDao.all(list.get(i).getNo(), coupon_code,start_date,finish_date);
 			}
 		return "admin/super/promotion/coupon_list";
 	}
@@ -84,12 +89,14 @@ public class SuperCouponController {
 	@PostMapping("/search")
 	public String search(
 			@RequestParam(required = false) int coupon_code,
-			@RequestParam String member_code
+			@RequestParam String member_code,
+			@RequestParam(required = false)String start_date,
+			@RequestParam(required = false)String finish_date
 			) {
 		String[] test = member_code.split(",");
 		for (int i = 0; i < test.length; i++) {		
 			int no = Integer.parseInt(test[i]);
-			couponDao.all(no, coupon_code);
+			couponDao.all(no, coupon_code,start_date,finish_date);
 		}
 		return "redirect:/super_admin/coupon/list";
 	}	

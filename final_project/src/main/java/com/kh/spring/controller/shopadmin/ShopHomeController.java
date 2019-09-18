@@ -1,6 +1,5 @@
 package com.kh.spring.controller.shopadmin;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -14,18 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.kh.spring.repository.CategoryDao;
-import com.kh.spring.repository.MemberDao;
-import com.kh.spring.repository.MenuDao;
 import com.kh.spring.repository.OrdersDao;
 import com.kh.spring.repository.ShopDao;
 import com.kh.spring.service.AdminService;
-import com.kh.spring.service.MemberService;
-import com.kh.spring.service.MenuService;
 import com.kh.spring.service.SuperHomeService;
-import com.kh.spring.vo.MemberInfoVO;
 import com.kh.spring.vo.OrderCountVO;
-import com.kh.spring.vo.ShopMenuVO;
 
 // 매장관리자
 @Controller
@@ -46,19 +38,6 @@ public class ShopHomeController {
 	
 	@Autowired
 	SuperHomeService superHomeService;
-	
-	@Autowired
-	private MenuService menuService; 
-	@Autowired
-	private MenuDao menuDao;
-	@Autowired
-	private CategoryDao categoryDao;
-	
-	@Autowired
-	private MemberDao memberDao;
-	
-	@Autowired
-	private MemberService memberService;
 
 	//메인화면
 	@GetMapping({"","/"})
