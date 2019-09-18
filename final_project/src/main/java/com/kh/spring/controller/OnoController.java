@@ -124,11 +124,11 @@ public class OnoController {
 								
 								HttpSession session, Model model) throws IllegalStateException, IOException {
 		int member_code = (int)session.getAttribute("member_code");
-		int shop_code = (int)session.getAttribute("shop_code");
+//		int shop_code = (int)session.getAttribute("shop_code");
 //		int member_code = 1;
 //		int shop_code = 1;
 		onoDto.setMember_code(member_code);
-		onoDto.setShop_code(shop_code);
+//		onoDto.setShop_code(shop_code);
 		//글등록
 		int ono_no = serviceService.OnoRegist(onoDto);
 		onoDto.setNo(ono_no);

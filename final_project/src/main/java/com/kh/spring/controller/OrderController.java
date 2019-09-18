@@ -49,12 +49,15 @@ public class OrderController {
 	@Autowired
 	private CouponService couponservice;
 	@Autowired
+
 	private CouponDao couponDao;
 	
-	@PostMapping("/cart_delete")
+	@GetMapping("/cart_delete")
+	@ResponseBody
 	public String cartdelete(@RequestParam int no) {
 		orderDao.cartInnerDelete(no);
-		return "/mycart";
+		return "메뉴를 삭제합니다.";
+
 	}
 	@PostMapping("/cart_check")
 	public boolean check(HttpSession session,int shop_code) {
@@ -297,6 +300,11 @@ public class OrderController {
 		KakaopayReturnVo kakaopay = template.postForObject(uri, send, KakaopayReturnVo.class);
 
 //		vo안에 있는 tid를 결제 최종 승인 요청에서 사용할수 있도록 저장하고
+		
+
+//		사용자가 보낸 정보에 추가 정보를 작성하여 api 호출
+//		추가할 정보:가맹점 코드,주문번호,회원id,비과세,성공취소실패주소
+
 //		결제 승인시 나머지를 db에 저장 처리
 		
 		session.setAttribute("coandpo", coandpo);
