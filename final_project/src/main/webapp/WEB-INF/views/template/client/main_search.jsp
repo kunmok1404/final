@@ -49,8 +49,7 @@
                  
             });
           
-        		$(".border").click(function(){
-        			
+        		$(".food_category").click(function(){
         			location.href = "shop/list?cat_no="+$(this).attr("data-food");
         		});
         });

@@ -287,11 +287,9 @@ public class OrderController {
 		params.add("quantity", String.valueOf(quantity));
 		params.add("total_amount", String.valueOf(total_amount));
 		params.add("tax_free_amount", "0");
-
 		params.add("approval_url", "http://${pageContext.request.contextPath}/order/success");
 		params.add("cancel_url", "http://${pageContext.request.contextPath}/order/pay/kakao/fail");
-		params.add("fail_url", "http://${pageContext.request.contextPath}/order/pay/kakao/cancel");
-
+		params.add("fail_url", "http://${pageContext.request.contextPath}/order/kakao/cancel");
 
 //		headers와 params를 합쳐서 전송할 객체를 생성
 		HttpEntity<MultiValueMap<String, String>> send = new HttpEntity<MultiValueMap<String, String>>(params, headers);
@@ -302,6 +300,11 @@ public class OrderController {
 		KakaopayReturnVo kakaopay = template.postForObject(uri, send, KakaopayReturnVo.class);
 
 //		vo안에 있는 tid를 결제 최종 승인 요청에서 사용할수 있도록 저장하고
+		
+
+//		사용자가 보낸 정보에 추가 정보를 작성하여 api 호출
+//		추가할 정보:가맹점 코드,주문번호,회원id,비과세,성공취소실패주소
+
 //		결제 승인시 나머지를 db에 저장 처리
 		
 		session.setAttribute("coandpo", coandpo);

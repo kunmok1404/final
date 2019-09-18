@@ -56,17 +56,47 @@
            })
 		
        	// 삭제버튼 클릭시
-		new_template.find(".del").click(function(){
-			$(this).parents("tr").remove();
-		});
-	           
+// 		new_template.find(".del").click(function(){
+// 			$(this).parents("tr").remove();
+// 		});
 		})
 		
+		$(".btn_delete").click(function(){
+   			$(this).closest("tr").remove();
+   		})
 		//처음 표시되는 버튼에 적용할 이벤트
 // 		$(".del").click(function(){
 // 			$(this).parents("tr").remove();
 // 		})
+
+		
 	})
+	
+	//순서 보정
+	function changeIndex(condition, value){
+		//5 이상만 value를 증가
+		$(".table").find("tbody").find("tr").each(function(){			
+			var index = parseInt($(this).find("input").eq(1).val()) - 1;
+			var newIndex = index + value;//이 숫자가 변경시킬 값
+			
+			if(condition - 1 <= index){
+//	 			console.log(index, newIndex);
+				var cat_name = $(this).find("input").eq(0);
+				var sort_no = $(this).find("input").eq(1);
+				var category_code = $(this).find("input").eq(2);
+				var category_img = $(this).find("input").eq(3);
+				
+				
+				cat_name.attr("name", "category["+newIndex+"].cat_name");
+				sort_no.attr("name", "category["+newIndex+"].sort_no");
+				sort_no.val(newIndex + 1);
+				category_code.attr("name", "category["+newIndex+"].category_code");
+				category_img.attr("name", "category["+newIndex+"].category_img");
+				
+//	 			console.log(sort_no.get(0));
+			}
+		});
+	}
 </script>
 
         <!-- 카테고리 관리 시작 -->
