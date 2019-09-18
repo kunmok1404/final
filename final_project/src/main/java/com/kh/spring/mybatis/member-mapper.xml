@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	<!-- 회원가입 regist(등록) -->
  	<insert id="regist" parameterType="memberDto">
  		insert into member values(member_seq.nextval, null, #{id}, #{pw}, #{email}, #{phone}, 
- 				#{post}, #{basic_addr}, #{detail_addr}, '일반', '고객','일반', sysdate, sysdate, sysdate, 0, '승인완료', #{email_address}, null)
+ 				#{post}, #{basic_addr}, #{detail_addr}, '일반', '고객','3', sysdate, sysdate, sysdate, 0, '승인완료', #{email_address}, null)
  	</insert>
  	
  	<!-- 매장입점신청 업주회원가입 가등록(승인대기) -->
@@ -317,5 +317,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteShopMember" parameterType="int">
 		delete member where shop_code=#{shop_code}
 	</delete>
+	
+	
+	<select id="member_all" resultType="memberDto">
+		select * from member
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
  </mapper>

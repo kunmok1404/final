@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.kh.spring.repository.CategoryDao;
 import com.kh.spring.repository.MemberDao;
 import com.kh.spring.repository.MenuDao;
@@ -41,7 +40,7 @@ public class ShopHomeController {
 	@Autowired
 	private NoticeDao noticeDao;
 	@Autowired
-	AdminService adminService;
+	AdminService adminService;	
 	@Autowired
 	private MenuService menuService; 
 	@Autowired
@@ -56,7 +55,6 @@ public class ShopHomeController {
 	private SqlSession sqlsession;
 	@Autowired
 	private SuperHomeService superHomeService;
-	
 	//메인화면
 	@GetMapping({"","/"})
 	public String home(HttpSession httpsession,

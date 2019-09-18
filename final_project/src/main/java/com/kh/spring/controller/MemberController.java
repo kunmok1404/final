@@ -2,13 +2,16 @@ package com.kh.spring.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.spring.entity.CertDto;
+import com.kh.spring.entity.CouponDto;
 import com.kh.spring.entity.MemberDto;
 import com.kh.spring.entity.MyshopDto;
 import com.kh.spring.entity.OrderDetailDto;
@@ -62,6 +66,8 @@ public class MemberController {
 	private CouponDao couponDao;
 	@Autowired
 	private PointService pointService;
+	@Autowired
+	private SqlSession sqlsession;
 	
 	// 회원가입 기능(GET)
 	@GetMapping("/regist")
@@ -86,8 +92,18 @@ public class MemberController {
 		memberDto.setPw(encrypt);
 
 		boolean result = memberDao.regist(memberDto);
-		System.out.println(result);
 		if (result) {
+			MemberDto mdto = memberDao.id_check(memberDto.getId());
+			List<CouponDto> coupon = sqlsession.selectList("coupon.couponregist");
+			if (coupon != null) {
+				String sysdate = sqlsession.selectOne("coupon.sysdate");
+				Map<String, Object> map = new HashMap<>();
+				for (int i = 0; i < coupon.size(); i++) {					
+					map.put("period", coupon.get(i).getPeriod());
+					String period = sqlsession.selectOne("coupon.period", map);
+					couponDao.auto(mdto.getNo(), coupon.get(i).getNo(),sysdate,period);
+				}
+			}
 			return "redirect:regist_result";
 		} 
 		else {
