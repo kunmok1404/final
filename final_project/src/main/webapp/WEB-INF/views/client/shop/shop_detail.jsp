@@ -20,7 +20,7 @@
         $(".menu-toggle").first().click();
         
         // 메뉴클릭시 서브메뉴 호출
-        $(".border-bottom").click(function(){
+        $(".shop_detail_info").click(function(){
         	var menu_code = $(this).attr("data-menu"); // 메뉴번호
         	var shop_code = $(".shop_no").val();
         	// ajax통신
@@ -153,7 +153,7 @@
 	                <table class="table menu-content">
 	                  <tbody>
                 	<c:forEach var="menu" items="${menu_category.value}">
-	                    <tr class="border-bottom" data-toggle="modal" data-target="#myModal" data-menu="${menu.no}">
+	                    <tr class="border-bottom shop_detail_info" data-toggle="modal" data-target="#myModal" data-menu="${menu.no}">
 	                      <td width="70%">
 	                        <div class="menu-name">
 	                          ${menu.name}

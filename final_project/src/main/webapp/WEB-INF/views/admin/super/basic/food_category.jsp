@@ -57,6 +57,7 @@
 		
        	// 삭제버튼 클릭시
 		new_template.find(".del").click(function(){
+			
 			$(this).parents("tr").remove();
 		});
 	           

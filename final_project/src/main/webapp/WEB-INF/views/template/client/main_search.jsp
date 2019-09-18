@@ -49,10 +49,9 @@
                  
             });
           
-        		$(".border").click(function(){
-        			
-        			location.href = "shop/list?cat_no="+$(this).attr("data-food");
-        		});
+//         		$(".border").click(function(){
+//         			location.href = "shop/list?cat_no="+$(this).attr("data-food");
+//         		});
         });
     </script> 
     
