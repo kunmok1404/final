@@ -12,10 +12,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import com.kh.spring.repository.CategoryDao;
+import com.kh.spring.repository.MemberDao;
+import com.kh.spring.repository.MenuDao;
+import com.kh.spring.repository.NoticeDao;
+//github.com/kunmok1404/final
 import com.kh.spring.repository.OrdersDao;
 import com.kh.spring.repository.ShopDao;
 import com.kh.spring.service.AdminService;
+import com.kh.spring.service.MemberService;
+import com.kh.spring.service.MenuService;
+import com.kh.spring.service.ShopService;
 import com.kh.spring.service.SuperHomeService;
 import com.kh.spring.vo.OrderCountVO;
 
@@ -26,19 +33,28 @@ public class ShopHomeController {
 	
 	@Autowired
 	ShopDao shopDao;
-	
 	@Autowired
 	OrdersDao orderDao;
-	
 	@Autowired
-	SqlSession sqlsession;
-	
+	private ShopService shopService;
 	@Autowired
-	AdminService adminService;
-	
+	private NoticeDao noticeDao;
 	@Autowired
-	SuperHomeService superHomeService;
-
+	AdminService adminService;	
+	@Autowired
+	private MenuService menuService; 
+	@Autowired
+	private MenuDao menuDao;
+	@Autowired
+	private CategoryDao categoryDao;
+	@Autowired
+	private MemberDao memberDao;
+	@Autowired
+	private MemberService memberService;
+	@Autowired
+	private SqlSession sqlsession;
+	@Autowired
+	private SuperHomeService superHomeService;
 	//메인화면
 	@GetMapping({"","/"})
 	public String home(HttpSession httpsession,
@@ -51,6 +67,7 @@ public class ShopHomeController {
 			@RequestParam(required = false) String type,
 			@RequestParam(required = false) String keyword,
 			Model model) {
+		
 		String no = String.valueOf(httpsession.getAttribute("shop_code"));
 		int shop_code = (int)httpsession.getAttribute("shop_code");			
 				String today = sqlsession.selectOne("order.today");
@@ -62,6 +79,7 @@ public class ShopHomeController {
 				String start=month_ago.substring(0, 10);
 				String week_agodate=week_ago.substring(0, 10);
 				
+				model.addAttribute("notice_List", noticeDao.shopHomeNotice());
 				model.addAttribute("day",superHomeService.today(no, yesterdaydate, end));
 				model.addAttribute("month",superHomeService.month(no, start, end));
 				model.addAttribute("week",superHomeService.week(no, week_agodate, end));
@@ -90,6 +108,7 @@ public class ShopHomeController {
 		List<OrderCountVO> result = orderDao.getCount(shop_code);
 		return result;
 	}
+
 }
 	
 

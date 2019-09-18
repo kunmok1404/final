@@ -165,7 +165,7 @@ $(function(){
 	  			<c:forEach var="menuVO" items="${menu}">
 	  			<tr class="text-center">
 	  				<td>${menuVO.no}</td>
-	  				<td class="over-text"><a href="${pageContext.request.contextPath}/super_admin/menu/detail?menu_code=${menuVO.no}" class="text-primary">${menuVO.name}</a></td>
+	  				<td class="over-text"><a href="${pageContext.request.contextPath}/shop_admin/menu/detail?menu_code=${menuVO.no}" class="text-primary">${menuVO.name}</a></td>
 	  				<td>${menuVO.menu_category}</td>
 	  				<td>${menuVO.shop_name}</td>
 	  				<c:choose>

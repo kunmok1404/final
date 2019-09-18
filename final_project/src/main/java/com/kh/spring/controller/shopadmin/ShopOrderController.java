@@ -29,6 +29,7 @@ public class ShopOrderController {
 		int member_code = (int) session.getAttribute("member_code");
 		int shop_code = ordersDao.getshopcode(member_code);
 		
+		System.out.println(shop_code);
 		int pagesize = 5;
 		int start = pagesize * page - (pagesize - 1);
 		int end = pagesize * page;

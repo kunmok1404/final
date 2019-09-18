@@ -109,6 +109,18 @@ public class NoticeDaoImpl implements NoticeDao{
 		sqlSession.update("superservice.notice_edit", noticeDto);
 	}
 
+	// shop_home 공지사항목록
+	@Override
+	public List<NoticeDto> shopHomeNotice() {
+		return sqlSession.selectList("service.notice_shop_home");
+	}
+
+	// super_home 공지사항목록
+	@Override
+	public List<NoticeDto> superHomeNotice() {
+		return sqlSession.selectList("service.notice_super_home");
+	}
+
 
 
 

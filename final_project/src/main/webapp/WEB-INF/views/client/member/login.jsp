@@ -51,7 +51,7 @@ $(function(){
 					<tr>
 						<td colspan="4" class="text-left">
 							<input type="checkbox" name="remember" ${not empty cookie.saveID?"checked":""}>
-							<span class="save-id text-secondary">아이디 저장하기</span>
+							<span class="save-id text-secondary">아이디 저장하기</span>					
 						</td>
 					</tr>
                   </tbody>

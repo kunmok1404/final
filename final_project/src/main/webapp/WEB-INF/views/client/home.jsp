@@ -10,7 +10,7 @@
         <li class="border" style="height:203px;" data-food="0"><p>전체보기</p>
         <img style="height:120px;" src="${pageContext.request.contextPath}/resources/image/all_category1.png"></li>
          <c:forEach var="category" items="${category}">
-        	<li class="border" data-food="${category.no}"><p>${category.name}</p>
+        	<li class="food_category" data-food="${category.no}"><p>${category.name}</p>
         <img src="${pageContext.request.contextPath}/review/review_img?files_code=${category.img}">
         </li>
             

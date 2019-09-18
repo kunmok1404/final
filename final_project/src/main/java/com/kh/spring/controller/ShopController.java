@@ -3,6 +3,8 @@ package com.kh.spring.controller;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
@@ -43,7 +45,7 @@ public class ShopController {
 	
 	// 매장목록
 	@RequestMapping("/list")
-	public String list(Model model,@RequestParam int cat_no, @RequestParam(required = false) String keyword) {
+	public String list(Model model,@RequestParam(required = false) int cat_no){
 		model.addAttribute("cat_no", cat_no);
 		model.addAttribute("cat_list", shopDao.catList()); // 음식카테고리 목록
 		model.addAttribute("terms1", termsDao.terms1());
@@ -55,7 +57,7 @@ public class ShopController {
 	// 더보기 기능
 	@GetMapping("/part")
 	public String part(@RequestParam(required = false, defaultValue = "1") int page,
-					int cat_no, Model model) {
+					@RequestParam int cat_no, Model model) {
 		int size = 10;
 		int end = page * size;
 		int start = end - size + 1;
@@ -84,10 +86,13 @@ public class ShopController {
 	
 	// 메뉴클릭 후 모달창정보
 	@GetMapping("/sub_menu")
-	public String sub_menu(@RequestParam int menu_code,
-			@RequestParam int shop_code,
+	public String sub_menu(HttpSession session,
+			@RequestParam int menu_code,
+			@RequestParam int shop_code,	
 			Model model) {
 		// 메뉴코드 넘기기
+		int member_code = (int) session.getAttribute("member_code");
+		model.addAttribute("shop_menu_code",shopDao.getShopCode(member_code));
 		model.addAttribute("menu_code", menu_code);
 		model.addAttribute("map", shopService.sub_menu(menu_code));
 		model.addAttribute("menuDto",shopDao.menuName(menu_code));
@@ -149,5 +154,12 @@ public class ShopController {
 		
 		return "client/order/shop_regist_result";
 		
+	}
+	
+	// 매장조건검색
+	@GetMapping("/shop_search")
+	public String shop_search(@RequestParam String shop_search) {
+		
+		return "client/order/shop_regist_result";
 	}
 }

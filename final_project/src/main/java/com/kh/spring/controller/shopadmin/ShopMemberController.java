@@ -46,6 +46,7 @@ public class ShopMemberController {
 					session.setAttribute("member_code", result.getNo());
 					session.setAttribute("shop_code", result.getShop_code());
 					session.setAttribute("type", result.getType());
+					session.setAttribute("memberDto", result);
 				}
 				else {
 					return "admin/login_auth";//권한 없음 페이지로 전송
@@ -82,6 +83,7 @@ public class ShopMemberController {
 		session.removeAttribute("member_code");
 		session.removeAttribute("shop_code");
 		session.removeAttribute("type");
+		session.removeAttribute("memberDto");
 		return "redirect:/shop_admin";
 	}
 	

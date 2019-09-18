@@ -103,13 +103,17 @@
 			
 			$(".cartdelete").click(function(){
 				var no = $(this).val();
-				alert("삭제하겠습니다");
+// 				var location = "${pageContext.request.contextPath}/order/mycart";
 				$.ajax({
-					type : 'post',
+					type : 'get',
 					url : 'cart_delete',
 					data: {no:no},
+					success:function(response){
+						alert(response);
+						window.location.reload();
+					}
 					});
-						location.reload();
+						
 				});		
 	});
 	

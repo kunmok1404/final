@@ -9,16 +9,14 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.kh.spring.entity.ShopDto;
-import com.kh.spring.entity.TotalVo;
 import com.kh.spring.repository.CategoryDao;
 import com.kh.spring.repository.MemberDao;
 import com.kh.spring.repository.MenuDao;
+import com.kh.spring.repository.NoticeDao;
 import com.kh.spring.repository.OrdersDao;
 import com.kh.spring.repository.ShopDao;
 import com.kh.spring.service.AdminService;
@@ -26,7 +24,6 @@ import com.kh.spring.service.MemberService;
 import com.kh.spring.service.MenuService;
 import com.kh.spring.service.SuperHomeService;
 import com.kh.spring.vo.MemberInfoVO;
-import com.kh.spring.vo.OrderVo;
 import com.kh.spring.vo.ShopMenuVO;
 
 
@@ -58,12 +55,12 @@ public class SuperHomeController {
 	private MenuDao menuDao;
 	@Autowired
 	private CategoryDao categoryDao;
-	
 	@Autowired
 	private MemberDao memberDao;
-	
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private NoticeDao noticeDao;
 	
 	// 메인
 	@RequestMapping({"","/"})
@@ -105,31 +102,25 @@ public class SuperHomeController {
 		String yesterdaydate=yesterday.substring(0, 10);
 		String start=month_ago.substring(0, 10);
 		String week_agodate=week_ago.substring(0, 10);
-		System.out.println(start);
-		System.out.println(yesterdaydate);
-		System.out.println(yesterdaydate);
 		model.addAttribute("day",superHomeService.today(no, yesterdaydate, end));
-
 		model.addAttribute("month",superHomeService.month(no, start, end));
-
 		model.addAttribute("week",superHomeService.week(no, week_agodate, end));
-				
 		model.addAttribute("apply_all",superHomeService.apply_all());
 		model.addAttribute("apply_dagi",superHomeService.apply_dagi());
 		model.addAttribute("apply_sus",superHomeService.apply_sus());
-		
 		model.addAttribute("date_day",superHomeService.date_today(no, yesterdaydate, end));
-
 		model.addAttribute("date_month",superHomeService.date_month(no, start, end));
-
 		model.addAttribute("date_week",superHomeService.date_week(no, week_agodate, end));
-		
 		model.addAttribute("memberday", memberday);
 		model.addAttribute("membernagam", membernagam);
 		model.addAttribute("memberall", memberall);
 		model.addAttribute("all", all);
 		model.addAttribute("dagi", dagi);
 		model.addAttribute("sus", sus);
+		
+		// 공지사항
+		model.addAttribute("notice_List", noticeDao.superHomeNotice());
+		
 		return "admin/super/home";
 	}
 	
@@ -143,5 +134,6 @@ public class SuperHomeController {
 		return week_agodate;
 	}
 
+	
 	
 }

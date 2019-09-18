@@ -123,8 +123,7 @@ $(function(){
 					  					<select name="type" class="form-control">
 					  						<option value="name">메뉴명</option>
 					  						<option value="no">메뉴코드</option>
-					  						<option value="">매장명</option>
-					  						<option value="">전화번호</option>
+					  						<option value="shop_name">매장명</option>
 					  					</select>
 					  				</td>
 					  				<td>
@@ -147,7 +146,7 @@ $(function(){
 	  <!-- 리뷰목록 시작 -->
 	  <div class="list-wrapper table-responsive">
 	  <div class="search-number">
-	  	<p>총 0건</p>
+	  	<p>총 ${menuCount}건</p>
 	  </div>
 	  	<table class="table table-hamburg table-hover">
 	  		<tbody>

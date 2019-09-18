@@ -157,4 +157,18 @@ public class ShopDaoImpl implements ShopDao {
 		return sqlSession.selectOne("shop.getShopCount",cat_no);
 	}
 
+
+	@Override
+	public int getShopCode(int member_code) {
+		int value = 0;
+		try {
+			value = sqlSession.selectOne("shop.getShopCode",member_code);			
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return value;
+			
+	}
+
 }

@@ -665,8 +665,9 @@ footer{
 }
 .where-text{
 	text-align:center;
-	font-size:1.3rem;
-	color:#fcfcfc;
+	font-size:1.5rem;
+	font-weight:bold;
+	color:white;
 }
 .search-btn{
 	text-align:center;
@@ -838,4 +839,7 @@ input[name=remember]{
 	height:50px;
 	backgroung-color:yellow;
 }
+
+/*결제화면*/
+
 
