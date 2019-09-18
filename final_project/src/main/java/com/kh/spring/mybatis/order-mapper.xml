@@ -463,4 +463,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="usepoint" parameterType="map">
 		insert into point_detail values(#{member_code},'사용',#{point},sysdate,null)
 	</insert>
+	<!-- 카트에 있는 샵 코드 체크용 코드 -->
+	<select id="cartcheck" parameterType="map" resultType="int">
+		select count(*) from cart where member_code = #{member_code} and shop_code =#{shop_code}
+	</select>
 </mapper>

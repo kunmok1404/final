@@ -125,4 +125,4 @@
 
 
 
-<jsp:include page="/WEB-INF/views/template/admin/super/footer.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/template/admin/shop/footer.jsp"></jsp:include>

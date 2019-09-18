@@ -3,6 +3,8 @@ package com.kh.spring.controller;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
@@ -87,10 +89,13 @@ public class ShopController {
 	
 	// 메뉴클릭 후 모달창정보
 	@GetMapping("/sub_menu")
-	public String sub_menu(@RequestParam int menu_code,
-			@RequestParam int shop_code,
+	public String sub_menu(HttpSession session,
+			@RequestParam int menu_code,
+			@RequestParam int shop_code,	
 			Model model) {
 		// 메뉴코드 넘기기
+		int member_code = (int) session.getAttribute("member_code");
+		model.addAttribute("shop_menu_code",shopDao.getShopCode(member_code));
 		model.addAttribute("menu_code", menu_code);
 		model.addAttribute("map", shopService.sub_menu(menu_code));
 		model.addAttribute("menuDto",shopDao.menuName(menu_code));
