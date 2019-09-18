@@ -68,9 +68,9 @@
 		
 		<!-- Logging -->
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
 			<version>${org.slf4j-version}</version>
+			<artifactId>slf4j-api</artifactId>
+			<groupId>org.slf4j</groupId>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>

@@ -177,5 +177,9 @@ PUBLIC "//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="apply_shop" parameterType="int">
 		update shop set apply_status='승인완료' where no=#{shop_code}
 	</update>
+	<!-- 카트에 같은 매장 번호가 있는지 검색 -->
+	<select id="getShopCode" parameterType="int" resultType="int">
+		select shop_code from cart where member_code = #{member_code}
+	</select>
 	
  </mapper>
