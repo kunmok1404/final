@@ -267,9 +267,9 @@ public class OrderController {
 		params.add("quantity", String.valueOf(quantity));
 		params.add("total_amount", String.valueOf(total_amount));
 		params.add("tax_free_amount", "0");
-		params.add("approval_url", "http://localhost:8082/spring/order/success");
-		params.add("cancel_url", "http://localhost:8082/sts27/pay/kakao/fail");
-		params.add("fail_url", "http://localhost:8082/sts27/pay/kakao/cancel");
+		params.add("approval_url", "http://${pageContext.request.contextPath}/order/success");
+		params.add("cancel_url", "http://${pageContext.request.contextPath}/order/pay/kakao/fail");
+		params.add("fail_url", "http://${pageContext.request.contextPath}/order/pay/kakao/cancel");
 
 //		headers와 params를 합쳐서 전송할 객체를 생성
 		HttpEntity<MultiValueMap<String, String>> send = new HttpEntity<MultiValueMap<String, String>>(params, headers);
