@@ -39,13 +39,12 @@
 	})
 	
 	// 함수 구현 : /part로 비동기 통신을 보내는 함수
-	function request(page, cat_no, keyword){
+	function request(page, cat_no){
 		$.ajax({
 			url:"${pageContext.request.contextPath}/shop/part",
 			data : {
 				page : page,
 				cat_no : cat_no,
-				keyword : keyword
 			},
 			success:function(response){
 				$(".shop-list").append(response);
@@ -63,9 +62,9 @@
 })
 </script>
 
-	<form class="go_search" action="${pageContext.request.contextPath}/shop/list">
-		<input type="hidden" name="keyword">
-	</form>
+<%-- 	<form class="go_search" action="${pageContext.request.contextPath}/shop/list"> --%>
+<!-- 		<input type="hidden" name="keyword"> -->
+<!-- 	</form> -->
 
     <!--매장목록전체-->
     <div class="shop">

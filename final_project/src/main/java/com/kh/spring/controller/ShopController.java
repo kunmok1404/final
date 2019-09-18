@@ -45,25 +45,22 @@ public class ShopController {
 	
 	// 매장목록
 	@RequestMapping("/list")
-	public String list(Model model,@RequestParam(required = false) int cat_no, @RequestParam(required = false) String keyword) {
+	public String list(Model model,@RequestParam(required = false) int cat_no){
 		model.addAttribute("cat_no", cat_no);
 		model.addAttribute("cat_list", shopDao.catList()); // 음식카테고리 목록
 		model.addAttribute("terms1", termsDao.terms1());
 		model.addAttribute("terms2", termsDao.terms2());	
 		model.addAttribute("shop_count", shopDao.getShopCount(cat_no)); //매장갯수
-		model.addAttribute("keyword", keyword);
 		return "client/shop/shop_list";
 	}
 	
 	// 더보기 기능
 	@GetMapping("/part")
 	public String part(@RequestParam(required = false, defaultValue = "1") int page,
-					@RequestParam(required = false) String keyword,
 					@RequestParam int cat_no, Model model) {
 		int size = 10;
 		int end = page * size;
 		int start = end - size + 1;
-		System.out.println("part:keyword="+keyword);
 		model.addAttribute("shop_list", shopService.ajaxPaging(start, end, cat_no));
 		
 		return "client/shop/part";
