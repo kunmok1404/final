@@ -30,4 +30,5 @@ public interface ShopDao {
 	int getShopSeq();
 	void deleteShop(int shop_code);
 	int getShopCount(int cat_no);
+	int getShopCode(int member_code);
 }

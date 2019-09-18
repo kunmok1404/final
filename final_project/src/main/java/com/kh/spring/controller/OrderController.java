@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import com.kh.spring.KakaoPay.KakaoPaySuccessVO;
@@ -53,7 +54,21 @@ public class OrderController {
 	@PostMapping("/cart_delete")
 	public String cartdelete(@RequestParam int no) {
 		orderDao.cartInnerDelete(no);
-		return "/cart";
+		return "/mycart";
+	}
+	@PostMapping("/cart_check")
+	public boolean check(HttpSession session,int shop_code) {
+		int member_code = (int) session.getAttribute("member_code");
+		int result = orderDao.cartcheck(member_code,shop_code);
+		boolean ok = result>0;
+		return ok;
+	}
+	
+	@GetMapping("/reInputCart")
+	@ResponseBody
+	public String reInputCart(@RequestParam int member_code) {
+		orderDao.cartDelete(member_code);
+		return "장바구니에 메뉴가 담겼습니다.";
 	}
 	
 	@GetMapping("/mycart")
@@ -110,13 +125,10 @@ public class OrderController {
 		}
 		//주 메뉴의 번호를 전부 불러다가
 		List<CartDto> cartDto = orderDao.cartlist(member_code);
-		model.addAttribute("coupon_list", couponservice.list(member_code));
-		model.addAttribute("coupon", couponDao.getCouponCount(member_code));
-		model.addAttribute("point",pointservice.getMyPoint(member_code));
 		model.addAttribute("cartDto", cartDto);
 		model.addAttribute("shopDto", orderDao.shopInfo(shop_code));
 		session.setAttribute("shop_code", shop_code);
-		return "client/order/cart";
+		return "redirect:mycart";
 	}
 
 

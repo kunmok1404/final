@@ -71,4 +71,5 @@ public interface OrdersDao {
 	List<OrderCountVO> getCount(int shop_code);
 	PointDetailDto getpoint(int member_code);
 	void usepoint(int member_code, int discount_price);
+	int cartcheck(int member_code, int shop_code);
 }

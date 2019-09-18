@@ -31,7 +31,6 @@
     				shop_code : shop_code
     			},
     			success:function(response){
-    				console.log(response);
     				$(".modal-body").empty();
     				$(".modal-body").append(response);
     			}
@@ -153,6 +152,7 @@
 	                <table class="table menu-content">
 	                  <tbody>
                 	<c:forEach var="menu" items="${menu_category.value}">
+                	<input type="hidden" name="shop_code" value="${menu.shop_code}">
 	                    <tr class="border-bottom" data-toggle="modal" data-target="#myModal" data-menu="${menu.no}">
 	                      <td width="70%">
 	                        <div class="menu-name">
