@@ -82,7 +82,7 @@
 	  				<td width="10%" class="table-active">카테고리</td>
 	  				<td width="40%">
 	  					<select name="apply_status" class="form-control">
-	  						<option value = "">전체</option>
+	  						<option>전체</option>
 								<c:forEach var="category_list" items="${category_list}">
 								<option value="${category_list.no}">${category_list.name}</option>
 								</c:forEach>
