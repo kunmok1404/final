@@ -51,10 +51,11 @@ public class OrderController {
 	@Autowired
 	private CouponDao couponDao;
 	
-	@PostMapping("/cart_delete")
+	@GetMapping("/cart_delete")
+	@ResponseBody
 	public String cartdelete(@RequestParam int no) {
 		orderDao.cartInnerDelete(no);
-		return "/mycart";
+		return "메뉴를 삭제합니다.";
 	}
 	@PostMapping("/cart_check")
 	public boolean check(HttpSession session,int shop_code) {

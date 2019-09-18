@@ -113,24 +113,24 @@
 		      var cart_shop_code = $("#cart_shop_code").val();
 		      var location = "${pageContext.request.contextPath}/order/cart";
 		      var ok = (cart_shop_code == shop_code);
-		      if(cart_shop_code==''){
+		      if(cart_shop_code==0){
 			  $(".test-form").attr("action", location);
 		      $(".test-form").submit();  
 			  location.reload();
-		      }else if(cart_shop_code == shop_code){
+		      }else if(ok){
 		    	  $(".test-form").attr("action", location);
 		    	  $(".test-form").submit();  
 			  location.reload();
 		      }else if(!ok){
-			var result = confirm("다른매장의 메뉴가 담겨있습니다. 확인하시면 지우고 새로 등록합니다.")
+				var result = confirm("다른매장의 메뉴가 담겨있습니다. 확인하시면 지우고 새로 등록합니다.")
 		      	if(result){
 		      		$.ajax({type : 'get',
 		    		          url : '${pageContext.request.contextPath}/order/reInputCart',
 		    		          data: {member_code:member_code},
 		    		          success : function(response){
-						alert(response);
-						$(".test-form").attr("action", location);
-				    	 $(".test-form").submit();}
+							alert(response);
+							$(".test-form").attr("action", location);
+				    		$(".test-form").submit();}
 				         });
 		      	}
 			else{
