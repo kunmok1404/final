@@ -5,7 +5,7 @@
   <div class="left">
     <ul>
       <li><a href="search">회원목록</a></li>
-      <li><a href="#">회원등급관리</a></li>
+      <li><a href="${pageContext.request.contextPath}/super_admin/member/usergrade">회원등급관리</a></li>
     </ul>
   </div>  
   <!--left 메뉴 끝--> 

@@ -16,6 +16,7 @@ import com.kh.spring.entity.MemberDto;
 import com.kh.spring.entity.ShopDto;
 import com.kh.spring.entity.TotalVo;
 import com.kh.spring.entity.UsergradeDto;
+import com.kh.spring.repository.CouponDao;
 import com.kh.spring.repository.MemberDao;
 import com.kh.spring.repository.OrdersDao;
 import com.kh.spring.repository.ShopDao;
@@ -35,15 +36,18 @@ public class ScheduleServiceImpl implements ScheduleService{
 	@Autowired
 	OrdersDao ordersDao;
 	
+	@Autowired
+	private CouponDao couponDao;
+	
 	@Override
 	@Scheduled(cron = "0 0 0 1 * *")
 	public void work1() {
 		
 		List<MemberDto> list = sqlsession.selectList("member.member_code");
 		List<UsergradeDto> grade = memberDao.grade();
-		String soso = grade.get(0).getName();
-		String good = grade.get(1).getName();
-		String vip = grade.get(2).getName();
+		String soso = grade.get(0).getGrade();
+		String good = grade.get(1).getGrade();
+		String vip = grade.get(2).getGrade();
 		int grade1 = grade.get(1).getMin_order();
 		int grade2 = grade.get(2).getMin_order();
 		for (int i = 0; i < list.size(); i++) {
@@ -66,6 +70,39 @@ public class ScheduleServiceImpl implements ScheduleService{
 			sqlsession.update("member.update",map2);
 	
 		}
+		List<MemberDto> all = sqlsession.selectList("member.member_all");
+		List<CouponDto> coupon3 = sqlsession.selectList("coupon.coupon3");
+		List<CouponDto> coupon2 = sqlsession.selectList("coupon.coupon2");
+		List<CouponDto> coupon1 = sqlsession.selectList("coupon.coupon1");
+		for (int i = 0; i < all.size(); i++) {
+			if (sqlsession.selectList("coupon.couponlist") != null) {
+				String sysdate = sqlsession.selectOne("coupon.sysdate");
+				if (all.get(i).getGrade().equals("3")) {
+					for (int j = 0; j < coupon3.size(); j++) {	
+						Map<String, Object> map = new HashMap<>();
+						map.put("period", coupon3.get(i).getPeriod());
+						String period = sqlsession.selectOne("coupon.period", map);
+						couponDao.auto(all.get(i).getNo(), coupon3.get(j).getNo(),sysdate,period);
+				}
+				}else if (all.get(i).getGrade().equals("2")) {
+					for (int j = 0; j < coupon2.size(); j++) {	
+						Map<String, Object> map = new HashMap<>();
+						map.put("period", coupon2.get(i).getPeriod());
+						String period = sqlsession.selectOne("coupon.period", map);
+						couponDao.auto(all.get(i).getNo(), coupon2.get(j).getNo(),sysdate,period);
+				}
+				}else if (all.get(i).getGrade().equals("1")) {
+					for (int j = 0; j < coupon1.size(); j++) {	
+						Map<String, Object> map = new HashMap<>();
+						map.put("period", coupon1.get(i).getPeriod());
+						String period = sqlsession.selectOne("coupon.period", map);
+						couponDao.auto(all.get(i).getNo(), coupon1.get(j).getNo(),sysdate,period);
+				}
+				}		
+			}
+			
+		}
+	
 	}
 
 

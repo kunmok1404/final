@@ -50,14 +50,26 @@ public class CouponDaoImpl implements CouponDao {
 	}
 
 	@Override
-	public void all(int member_code, int coupon_code) {
+	public void all(int member_code, int coupon_code,String start_date,String finish_date) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("coupon_code", coupon_code);
 		map.put("member_code", member_code);
+		map.put("start_date", start_date);
+		map.put("finish_date", finish_date);
 		sqlSession.insert("coupon.all", map);
 		
 	}
-
+	
+	@Override
+	public void auto(int member_code, int coupon_code,String start_date,String finish_date) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("coupon_code", coupon_code);
+		map.put("member_code", member_code);
+		map.put("start_date", start_date);
+		map.put("finish_date", finish_date);
+		sqlSession.insert("coupon.auto", map);
+		
+	}
 	// 쿠폰 갯수 구하기
 	@Override
 	public int getCouponCount(int member_code) {

@@ -376,5 +376,13 @@ public class OrdersDaoimpl implements OrdersDao{
 		
 	}
 
+	@Override
+	public int cartcheck(int member_code, int shop_code) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("member_code", member_code);
+		map.put("shop_code", shop_code);
+		return  sqlsession.selectOne("order.cartcheck",map);
+	}
+
 
 }

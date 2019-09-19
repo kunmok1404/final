@@ -123,8 +123,7 @@ $(function(){
 					  					<select name="type" class="form-control">
 					  						<option value="name">메뉴명</option>
 					  						<option value="no">메뉴코드</option>
-					  						<option value="">매장명</option>
-					  						<option value="">전화번호</option>
+					  						<option value="shop_name">매장명</option>
 					  					</select>
 					  				</td>
 					  				<td>

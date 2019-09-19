@@ -56,12 +56,12 @@ $(function() {
 	 			<th>혜택 설정</th>
 	 			<td>
 	 				<span class="en1"><input type="text" name="discount_price">%</span>
-	 				<span class="en2"><input type="text" name="max_price">원</span>
+	 				<span class="en2"><span class="en1">최대</span><input type="text" name="max_price">원</span>
 	 			</td>
 	 		</tr>
 	 		<tr>
 	 			<th>사용기간</th>
-	 			<td>쿠폰발급일로부터 <input type="number" name="finish_date">사용 가능 기간</td>
+	 			<td><span class="en2">쿠폰발급일로부터 <input type="number" name="period">사용 가능 기간</span></td>
 	 		</tr>
 	 		<tr class="auto" style="display: none">
 	 			<th>자동 발급 종류</th>
@@ -69,19 +69,20 @@ $(function() {
 	 				<input type="radio"  name="auto_type" value="now" checked>회원가입 시<br>
 	 				<input type="radio"  name="auto_type" value="week">첫구매 시<br>
 	 				<input type="radio"  name="auto_type" value="month">구매 시 <br>
+	 				<input type="radio"  name="auto_type" value="vip">회원 등급 쿠폰<br>
 	 			</td>
 	 		</tr>
 	 		<tr>
-	 			<th>발급시기</th>
 	 			<td>
-	 				<input type="radio"  name="issue_date" value="now" checked>즉시발급
-	 				<input type="radio"  name="issue_date" value="week">매 주
-	 				<input type="radio"  name="issue_date" value="month">매 월
+	 				<c:forEach var="grade" items="${grade }">
+	 				<input type="checkbox"  name="grade_type" value="${grade.grade }">${grade.name }<br>
+	 				</c:forEach>
+	 				<input type="checkbox"  name="grade_type" value="4">모든등급 <br>
 	 			</td>
 	 		</tr>	
 	 		<tfoot>
 	 			<tr>
-	 				<th><input type="submit" value="발급"></th>
+	 				<th colspan="2"><input type="submit" value="발급"></th>
 	 			</tr>
 	 		</tfoot>
 	 	</table>

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import com.kh.spring.KakaoPay.KakaoPaySuccessVO;
@@ -48,12 +49,29 @@ public class OrderController {
 	@Autowired
 	private CouponService couponservice;
 	@Autowired
+
 	private CouponDao couponDao;
 	
-	@PostMapping("/cart_delete")
+	@GetMapping("/cart_delete")
+	@ResponseBody
 	public String cartdelete(@RequestParam int no) {
 		orderDao.cartInnerDelete(no);
-		return "/cart";
+		return "메뉴를 삭제합니다.";
+
+	}
+	@PostMapping("/cart_check")
+	public boolean check(HttpSession session,int shop_code) {
+		int member_code = (int) session.getAttribute("member_code");
+		int result = orderDao.cartcheck(member_code,shop_code);
+		boolean ok = result>0;
+		return ok;
+	}
+	
+	@GetMapping("/reInputCart")
+	@ResponseBody
+	public String reInputCart(@RequestParam int member_code) {
+		orderDao.cartDelete(member_code);
+		return "장바구니에 메뉴가 담겼습니다.";
 	}
 	
 	@GetMapping("/mycart")
@@ -110,13 +128,10 @@ public class OrderController {
 		}
 		//주 메뉴의 번호를 전부 불러다가
 		List<CartDto> cartDto = orderDao.cartlist(member_code);
-		model.addAttribute("coupon_list", couponservice.list(member_code));
-		model.addAttribute("coupon", couponDao.getCouponCount(member_code));
-		model.addAttribute("point",pointservice.getMyPoint(member_code));
 		model.addAttribute("cartDto", cartDto);
 		model.addAttribute("shopDto", orderDao.shopInfo(shop_code));
 		session.setAttribute("shop_code", shop_code);
-		return "client/order/cart";
+		return "redirect:mycart";
 	}
 
 
@@ -146,10 +161,11 @@ public class OrderController {
 			   @RequestParam int shop_code,
 			   @RequestParam int radiomenu,
 			   @RequestParam List<Integer> checkmenu,
+			   @RequestParam int total_price,
 			   HttpSession session, Model model) {
 		
 		int member_code = (int) session.getAttribute("member_code");
-		
+		orderDao.cartDelete(member_code);
 		int cart_seq = orderDao.getcartseq();
 		//메인 메뉴 넣는 코드
 		int cartamount = cartdto.getMenu_amount();
@@ -176,6 +192,7 @@ public class OrderController {
 			orderDao.cartinsert(submenudtolist);
 		}
 		List<CartDto> cartDto = orderDao.cartlist(member_code);
+		model.addAttribute("total_price", total_price);
 		model.addAttribute("point",pointservice.getMyPoint(member_code));
 		model.addAttribute("shopDto", orderDao.shopInfo(shop_code));
 		model.addAttribute("cartList", cartDto);
@@ -189,6 +206,7 @@ public class OrderController {
 	@PostMapping("/credit_order")
 	public String order(@ModelAttribute OrdersDto ordersDto,
 						@ModelAttribute OrderDetailListVo vo,
+						@RequestParam int coandpo,
 						HttpSession session,Model model) {
 
 		int member_code = (int) session.getAttribute("member_code");
@@ -219,7 +237,8 @@ public class OrderController {
 		}
 	
 		orderDao.cartDelete(member_code);
-		if(discount_price >0) {
+		
+		if(discount_price >0 && coandpo > 0) {
 		orderDao.usepoint(member_code,discount_price);
 		}
 		model.addAttribute("shop_info", orderDao.shopInfo(shop_code));
@@ -235,6 +254,7 @@ public class OrderController {
 	public String kakaopay(@RequestParam String item_name, 
 						   @RequestParam String partner_user_id,
 						   @RequestParam int total_amount, 
+						   @RequestParam int coandpo,
 						   @ModelAttribute OrdersDto ordersDto, 
 						   @ModelAttribute OrderDetailListVo vo,
 			HttpSession session, Model model) throws URISyntaxException {
@@ -267,9 +287,9 @@ public class OrderController {
 		params.add("quantity", String.valueOf(quantity));
 		params.add("total_amount", String.valueOf(total_amount));
 		params.add("tax_free_amount", "0");
-		params.add("approval_url", "http://localhost:8082/spring/order/success");
-		params.add("cancel_url", "http://localhost:8082/sts27/pay/kakao/fail");
-		params.add("fail_url", "http://localhost:8082/sts27/pay/kakao/cancel");
+		params.add("approval_url", "http://${pageContext.request.contextPath}/order/success");
+		params.add("cancel_url", "http://${pageContext.request.contextPath}/order/pay/kakao/fail");
+		params.add("fail_url", "http://${pageContext.request.contextPath}/order/kakao/cancel");
 
 //		headers와 params를 합쳐서 전송할 객체를 생성
 		HttpEntity<MultiValueMap<String, String>> send = new HttpEntity<MultiValueMap<String, String>>(params, headers);
@@ -280,8 +300,14 @@ public class OrderController {
 		KakaopayReturnVo kakaopay = template.postForObject(uri, send, KakaopayReturnVo.class);
 
 //		vo안에 있는 tid를 결제 최종 승인 요청에서 사용할수 있도록 저장하고
+		
+
+//		사용자가 보낸 정보에 추가 정보를 작성하여 api 호출
+//		추가할 정보:가맹점 코드,주문번호,회원id,비과세,성공취소실패주소
+
 //		결제 승인시 나머지를 db에 저장 처리
 		
+		session.setAttribute("coandpo", coandpo);
 		session.setAttribute("total_price", total_price);// 총액
 		session.setAttribute("shop_code", shop_code);// 샵 코드 저장
 		session.setAttribute("member_code", member_code);// 멤버 코드 저장
@@ -306,6 +332,7 @@ public class OrderController {
 		int order_code = (int) session.getAttribute("order_no");
 		int member_code = (int) session.getAttribute("member_code");
 		int discount_price = (int) session.getAttribute("discount_price");
+		int coandpo = (int) session.getAttribute("coandpo");
 		OrderDetailListVo vo = (OrderDetailListVo) session.getAttribute("OrderDetailListVo");
 		OrdersDto ordersDto = (OrdersDto) session.getAttribute("ordersDto");
 		OrdersDto orderDto = OrdersDto.builder().no(order_code).member_code(member_code).shop_code(shop_code)
@@ -324,7 +351,7 @@ public class OrderController {
 			}
 		}
 		orderDao.cartDelete(member_code);
-		if(discount_price >0) {
+		if(discount_price >0&& coandpo > 0) {
 			orderDao.usepoint(member_code, discount_price);
 		}
 
@@ -368,6 +395,7 @@ public class OrderController {
 		session.removeAttribute("ordersDto");
 		session.removeAttribute("order_detail_no");
 		session.removeAttribute("discount_price");
+		session.removeAttribute("coandpo");
 
 		return "/client/order/success";
 	}
@@ -379,6 +407,7 @@ public class OrderController {
 		int order_code = (int) session.getAttribute("order_no");
 		int member_code = (int) session.getAttribute("member_code");
 		int discount_price = (int) session.getAttribute("discount_price");
+		int coandpo = (int) session.getAttribute("coandpo");
 		OrderDetailListVo vo = (OrderDetailListVo) session.getAttribute("OrderDetailListVo");
 		OrdersDto ordersDto = (OrdersDto) session.getAttribute("ordersDto");
 		OrdersDto orderDto = OrdersDto.builder().no(order_code).member_code(member_code).shop_code(shop_code)
@@ -397,13 +426,23 @@ public class OrderController {
 			}
 		}
 		orderDao.cartDelete(member_code);
-		if(discount_price >0) {
+		if(discount_price >0&& coandpo > 0) {
 		orderDao.usepoint(member_code, discount_price);
 		}
 		model.addAttribute("shop_info", orderDao.shopInfo(shop_code));
 		model.addAttribute("orders", orderDao.orderResult(order_code));
 		model.addAttribute("order_detail", orderDao.myOrderDetailList(order_code));
 		model.addAttribute("memberDto", orderDao.memberSearch(member_code));
+		
+		session.removeAttribute("total_price");
+		session.removeAttribute("shop_code");
+		session.removeAttribute("order_no");
+		session.removeAttribute("OrderDetailListVo");
+		session.removeAttribute("OrderSubDetailListVo");
+		session.removeAttribute("ordersDto");
+		session.removeAttribute("order_detail_no");
+		session.removeAttribute("discount_price");
+		session.removeAttribute("coandpo");
 		
 		return "/client/order/success";
 	}
@@ -413,11 +452,5 @@ public class OrderController {
 		return "/client/order/success";
 	}
 	
-	@PostMapping("use_point")
-	public String use_point(@RequestParam int point,Model model) {
-		
-		
-		return "";
-	}
 
 }

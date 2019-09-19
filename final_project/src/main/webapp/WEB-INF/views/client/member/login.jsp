@@ -3,6 +3,7 @@
 <jsp:include page="/WEB-INF/views/template/client/header.jsp"></jsp:include>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/cryptojs/components/core-min.js"></script>
@@ -50,8 +51,7 @@ $(function(){
 					<tr>
 						<td colspan="4" class="text-left">
 							<input type="checkbox" name="remember" ${not empty cookie.saveID?"checked":""}>
-							<span class="save-id text-secondary">아이디 저장하기</span>
-							<input type="submit">로그인
+							<span class="save-id text-secondary">아이디 저장하기</span>					
 						</td>
 					</tr>
                   </tbody>

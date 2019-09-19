@@ -44,15 +44,27 @@
 			url:"${pageContext.request.contextPath}/shop/part",
 			data : {
 				page : page,
-				cat_no : cat_no
+				cat_no : cat_no,
 			},
 			success:function(response){
 				$(".shop-list").append(response);
 			}
 		})
 	}
+	
+	// 조건검색 처리
+// 	$(".dropdown_search").change(function(){
+// 		var keyword = $(".dropdown_search").val();
+// 		$("input[name=keyword]").val(keyword);
+// 		$(".go_search").submit();
+// 	})
+	
 })
 </script>
+
+<%-- 	<form class="go_search" action="${pageContext.request.contextPath}/shop/list"> --%>
+<!-- 		<input type="hidden" name="keyword"> -->
+<!-- 	</form> -->
 
     <!--매장목록전체-->
     <div class="shop">
@@ -62,18 +74,11 @@
           <div class="offset-1 col-md-10">
             <span class="shop-number">음식점 <span class="text-primary">${shop_count}</span>&nbsp곳을 찾았습니다.</span>
             <span class="shop-filter">
-              <span class="dropdown">
-                <a class="btn btn-default dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  조건 검색
-                </a>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                  <a class="dropdown-item" href="#">기본정렬순</a>
-                  <a class="dropdown-item" href="#">별점순</a>
-                  <a class="dropdown-item" href="#">리뷰 많은순</a>
-                  <a class="dropdown-item" href="#">최소주문금액순</a>
-                  <a class="dropdown-item" href="#">배달시간순</a>
-                </div>
-              </span>
+            		<select class="form-control-sm dropdown_search">
+            			<option selected value="">조건검색</option>
+            			<option>별점높은순</option>
+            			<option>리뷰많은순</option>
+            		</select>
             </span>
           </div>
         </div>

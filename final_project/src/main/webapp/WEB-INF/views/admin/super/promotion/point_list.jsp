@@ -8,8 +8,9 @@
 	$(function(){
 		
 		// 포인트 클릭시 멤버코드 설정
-		$("#point").click(function(){
+		$(".point").click(function(){
 			var no = $(this).attr("data-no");
+			console.log(no);
 			$("input[name=member_code]").val(no);
 		})
 		
@@ -99,7 +100,7 @@
 	  				<td class="text-info">+${pointVO.total_point}</td>
 	  				<td class="text-danger">-${pointVO.use_point}</td>
 	  				<td>${pointVO.present_point}</td>
-	  				<td><button class="btn btn-sm btn-info" id="point" data-toggle="modal" data-target="#apply" data-no="${pointVO.member_code}">포인트증정</button></td>
+	  				<td><button class="btn btn-sm btn-info point" data-toggle="modal" data-target="#apply" data-no="${pointVO.member_code}">포인트증정</button></td>
 	  			</tr>
 	  			</c:forEach>
 	  			
