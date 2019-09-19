@@ -271,8 +271,8 @@ public class MemberController {
 		boolean exist = memberDao.findPw(memberDto);
 		System.out.println(exist);
 		if(exist) {
-			emailService.sendCertificationpw(memberDto.getEmail());
-//			emailService.find_pw(memberDto);
+//			emailService.sendCertificationpw(memberDto.getEmail());
+			emailService.find_pw(memberDto);
 			return "redirect:find_pw_result";
 		}
 		else {

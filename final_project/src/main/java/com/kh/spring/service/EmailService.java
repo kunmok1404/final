@@ -13,10 +13,10 @@ public interface EmailService {
 	void sendCertificationid(String email) throws MessagingException;
 
 	//비밀번호 찾기
-	void sendCertificationpw(String email) throws MessagingException;
+//	void sendCertificationpw(String email) throws MessagingException;
 
 	//비밀번호 찾기
-//	void find_pw(MemberDto memberDto);
+	void find_pw(MemberDto memberDto) throws MessagingException;
 
 	
 }
