@@ -260,8 +260,8 @@ public class MemberController {
 			) throws MessagingException {
 		boolean exist = memberDao.findPw(memberDto);
 		if(exist) {
-			emailService.sendCertificationpw(memberDto.getEmail());
-//			emailService.find_pw(memberDto);
+//			emailService.sendCertificationpw(memberDto.getEmail());
+			emailService.find_pw(memberDto);
 			return "redirect:find_pw_result";
 		}
 		else {
