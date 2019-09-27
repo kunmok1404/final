@@ -23,7 +23,7 @@
 		<div id="terms-wrapper">
           <div class="terms-line"></div>
        </div>
-	   <span>약관관리</span>
+	   <span class="header-title">약관관리</span>
      </div>
      
 	  <!-- 약관 탭 -->

@@ -39,11 +39,11 @@ public class SuperMenuController {
 			@RequestParam(required = false) String apply_status,
 			@RequestParam(required = false) String type,
 			@RequestParam(required = false) String keyword,
-			@RequestParam(required = false, defaultValue = "1") 
-			int page,Model model) {
-
-		
-		int pagesize = 5;
+			@RequestParam(required = false) String start_date,
+			@RequestParam(required = false) String end_date,
+			@RequestParam(required = false, defaultValue = "1")int page,
+			Model model) {
+		int pagesize = 10;
 		int start = pagesize * page - (pagesize - 1);
 		int end = pagesize * page;
 		
@@ -55,12 +55,12 @@ public class SuperMenuController {
 		if (endBlock > pageCount) {
 			endBlock = pageCount;
 		}
-		
+		model.addAttribute("pageCount",pageCount);
 		model.addAttribute("startBlock", startBlock);
 		model.addAttribute("endBlock", endBlock);
 		//메뉴목록 조회
 		
-		model.addAttribute("menu",menuDao.menulist(sale_status, apply_status, type, keyword,start,end));
+		model.addAttribute("menu",menuService.list(sale_status, apply_status, type, keyword,start,end,start_date,end_date));
 		model.addAttribute("menuCount",menuDao.menuCount(sale_status, apply_status, type, keyword));
 
 		return "admin/super/menu/list";
@@ -131,7 +131,6 @@ public class SuperMenuController {
 	@GetMapping("/delete_menu")
 	@ResponseBody
 	public String deleteMenu(@RequestParam int menu_code) {
-		System.out.println("menu_code="+menu_code);
 		menuService.deleteMenu(menu_code);
 		return "삭제되었습니다.";
 	}

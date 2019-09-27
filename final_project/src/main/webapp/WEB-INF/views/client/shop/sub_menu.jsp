@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <script>
+
    $(function(){ 
 	      //수량 조절하면서 상품금액 변경
 	      $(".up").click(function(){
@@ -41,7 +42,6 @@
 	            sub_total:0,
 	            total:0
 	      }; 
-	      console.log("order",order);
 	      
 	      // 수량 조절시 계산
 	      $(".up-down").on("click",function(){ 
@@ -101,13 +101,13 @@
 //	          console.log("------------------- end -------------------------");
 //	       })
 	   $("#go_order").click(function(e){
-	      e.preventDefault();
+// 	      e.preventDefault();
 	      var location = "${pageContext.request.contextPath}/order/direct_order";
 	      $(".test-form").attr("action", location);
 	      $(".test-form").submit();
 	   });
 	   $("#go_cart").click(function(e){
-		      e.preventDefault();
+// 		      e.preventDefault();
 		      var member_code = ${member_code}
 		      var shop_code = ${menuDto.shop_code}
 		      var cart_shop_code = $("#cart_shop_code").val();
@@ -116,15 +116,15 @@
 		      if(cart_shop_code==0){
 			  $(".test-form").attr("action", location);
 		      $(".test-form").submit();  
-			  location.reload();
+// 			  location.reload();
 		      }else if(ok){
 		    	  $(".test-form").attr("action", location);
 		    	  $(".test-form").submit();  
-			  location.reload();
+// 			  location.reload();
 		      }else if(!ok){
 				var result = confirm("다른매장의 메뉴가 담겨있습니다. 확인하시면 지우고 새로 등록합니다.")
 		      	if(result){
-		      		$.ajax({type : 'get',
+		      		$.ajax({type : 'post',
 		    		          url : '${pageContext.request.contextPath}/order/reInputCart',
 		    		          data: {member_code:member_code},
 		    		          success : function(response){
@@ -227,7 +227,7 @@
          <input type="hidden" name="menu_price" value="${menuDto.price}">
          <input type="hidden" name="total_price" value="${menuDto.price}">
     <div>
-      <input type="submit" class="btn" id="go_cart" value="장바구니 추가">
-      <input type="submit" class="btn" id="go_order" value="주문하기">
+      <button type="button" class="btn" id="go_cart">장바구니 추가</button>
+      <button type="button" class="btn" id="go_order">주문하기</button>
     </div>          
     </form>

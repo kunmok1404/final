@@ -148,37 +148,6 @@ public class MemberController {
 	}
 
 	// 로그인(POST)
-//	@PostMapping("/login")
-//	public String login(
-//				@ModelAttribute MemberDto memberDto, 
-//				@RequestParam(required = false
-//			) String remember,
-//			HttpSession session, HttpServletResponse response,Model model) {
-//		// 암호화 적용 전 로그인
-//		MemberDto result = memberDao.login(memberDto);
-//		if (result != null) {
-//			session.setAttribute("member_code", result.getNo());
-//			session.setAttribute("type", result.getType());
-//			
-//			// 아이디 저장
-//			// 쿠키 객체를 만들고 체크 여부에 따라 시간 설정 후 response에 추가
-//			Cookie cookie = new Cookie("saveID", memberDto.getId());
-//			if (remember == null) {// 체크 안했을때
-//				cookie.setMaxAge(0);
-//			} 
-//			else {// 체크 했을때
-//				cookie.setMaxAge(4 * 7 * 24 * 60 * 60);// 4주
-//			}
-//			response.addCookie(cookie);
-//			return "redirect:/";
-//		} 
-//		else {
-//			model.addAttribute("fail", "fail");
-//			return "client/member/login";
-//		}
-//	}
-
-	// 로그인(POST)
 	@PostMapping("/login")
 	public String login(
 				@ModelAttribute MemberDto memberDto,
@@ -192,9 +161,7 @@ public class MemberController {
 		if(result != null) {
 			// 2. BCrypt의 비교명령을 이용하여 비교 후 처리
 			//입력한 비밀번호
-			//System.out.println(memberDto.getPw());
 			//암호화된 비밀번호
-			//System.out.println(result.getPw());
 			//로그인 성공 여부
 			boolean ok = BCrypt.checkpw(memberDto.getPw(), result.getPw());
 			if(BCrypt.checkpw(memberDto.getPw(), result.getPw())) {
@@ -228,7 +195,15 @@ public class MemberController {
 		}
 	}
 	
-
+	// 테스트 로그인
+	@GetMapping("/testLogin")
+	public String testLogin(HttpSession session) {
+		MemberDto result = memberDao.get("whehdrms");
+		System.out.println("result="+result);
+		session.setAttribute("member_code", result.getNo());
+		return "redirect:/";
+	}
+	
 	//로그아웃 기능
 	@GetMapping("/logout")
 	public String logout(
@@ -254,7 +229,6 @@ public class MemberController {
 			) throws MessagingException {
 		boolean exist = memberDao.findId(memberDto);
 		if(exist) {
-			System.out.println(memberDto.getId());
 			emailService.sendCertificationid(memberDto.getId());
 			return "redirect:find_id_result";//새로운 기능으로 전송(?이게 뭐야?)
 		}
@@ -285,7 +259,6 @@ public class MemberController {
 				@ModelAttribute MemberDto memberDto
 			) throws MessagingException {
 		boolean exist = memberDao.findPw(memberDto);
-		System.out.println(exist);
 		if(exist) {
 //			emailService.sendCertificationpw(memberDto.getEmail());
 			emailService.find_pw(memberDto);
@@ -429,7 +402,6 @@ public class MemberController {
 	public String info_change(
 				@ModelAttribute MemberDto memberDto			
 			) {
-//		System.out.println("???");
 		if(memberDto.getPw() != null) {
 			String origin = memberDto.getPw();
 			String encrypt = BCrypt.hashpw(origin, BCrypt.gensalt());
@@ -559,9 +531,7 @@ public class MemberController {
 	@GetMapping("/cancel")
 	@ResponseBody
 	public String cancel(@RequestParam int order_code) {
-		System.out.println("order_code="+order_code);
 		ordersDao.orderCancel(order_code);
-		System.out.println("다 취소?");
 		return "주문이 취소되었습니다.";
 	}
 	

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.spring.entity.CategoryDto;
 import com.kh.spring.entity.MenuDto;
 import com.kh.spring.entity.SubMenuDto;
+import com.kh.spring.vo.MenuListVO;
 import com.kh.spring.vo.MenuRegistVO;
 import com.kh.spring.vo.ShopMenuVO;
 
@@ -134,46 +135,26 @@ public class MenuDaoImpl implements MenuDao {
 	@Override
 	public int menuCount(String sale_status, String apply_status, String type, String keyword) {
 		Map<String, Object> param = new HashMap<>();
-		try {
-		if(apply_status!=null) {
 		param.put("apply_status", apply_status);
-		}
-		if(sale_status!=null) {
 		param.put("sale_status", sale_status);			
-		}
-		if(type!=null && keyword!=null) {
 		param.put("type", type);
 		param.put("keyword", keyword);
-		}	
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
 		return sqlSession.selectOne("menu.menuCount",param);
-		
 	}
 
 	@Override
-	public List<ShopMenuVO> menulist(String sale_status, String apply_status, String type, String keyword, int i,
-			int j) {
+	public List<MenuListVO> menulist(String sale_status, String apply_status, String type, String keyword, int start,
+			int end, String start_date, String end_date) {
 		Map<String, Object> param = new HashMap<>();
-		//검색일경우 검색어를 mybatis에 전달
-		try{
-			
-		if(sale_status!=null) {
 			param.put("sale_status", sale_status);			
-		}
-		if(apply_status!=null){
 			param.put("apply_status", apply_status);
-		}
-		if(type!=null && keyword!=null) {
-		param.put("type", type);
-		param.put("keyword", keyword);
-		}	
-		param.put("start", i);
-		param.put("end", j);
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
+			param.put("type", type);
+			param.put("keyword", keyword);
+			param.put("start", start);
+			param.put("end", end);
+			param.put("start_date", start_date);
+			param.put("end_date", end_date);
+			
 		return sqlSession.selectList("menu.menuList",param);
 	}
 
@@ -227,5 +208,10 @@ public class MenuDaoImpl implements MenuDao {
 	@Override
 	public List<MenuDto> sMenuList(int shop_code) {
 		return sqlSession.selectList("menu.shopList",shop_code);
+	}
+
+	@Override
+	public List<MenuDto> menulist() {
+		return sqlSession.selectList("menu.list");
 	}
 }

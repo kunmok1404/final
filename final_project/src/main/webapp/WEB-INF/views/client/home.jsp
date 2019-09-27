@@ -7,7 +7,7 @@
     <div class="card">
     <ul class="card-body">
     	
-        <li class="border" style="height:203px;" data-food="0"><p>전체보기</p>
+        <li class="border food_category" style="height:203px;" data-food="0"><p>전체보기</p>
         <img style="height:120px;" src="${pageContext.request.contextPath}/resources/image/all_category1.png"></li>
          <c:forEach var="category" items="${category}">
         	<li class="food_category" data-food="${category.no}"><p>${category.name}</p>

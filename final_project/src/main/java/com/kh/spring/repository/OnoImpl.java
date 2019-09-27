@@ -29,7 +29,6 @@ public class OnoImpl implements OnoDao{
 		param.put("start", i);
 		param.put("end", j);
 		
-		System.out.println(param);
 		return sqlSession.selectList("service.ono_list", param);
 	}
 
@@ -42,8 +41,6 @@ public class OnoImpl implements OnoDao{
 
 	@Override
 	public void write(OnoDto onoDto) {
-
-//		System.out.println(onoDto);
 
 		sqlSession.insert("service.ono_write", onoDto);
 	}
@@ -102,10 +99,8 @@ public class OnoImpl implements OnoDao{
 	//파일정보 조회
 	@Override
 	public FilesDto getFileInfo(int files_code) {
-		System.out.println(files_code);
 		return sqlSession.selectOne("service.filesDto", files_code);
 	}
-
 
 	@Override
 	public int supercount(String apply_status, String keyword_type, String keyword,String start_date, String end_date) {

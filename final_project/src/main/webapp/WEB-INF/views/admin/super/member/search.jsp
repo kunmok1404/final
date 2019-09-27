@@ -11,13 +11,13 @@
 		<div id="terms-wrapper">
 			<div class="terms-line"></div>
 		</div>
-		<span>회원 목록</span>
+		<span class="header-title">회원 목록</span>
 	</div>
 	
 	<!-- 검색 목록 창 시작 -->
 	<div>
 		<form action="search" method="get">
-			<table class="table table-sm">
+			<table class="table table-sm mt-3">
 				<tbody>
 					<tr>
 						<td width="10%" class="table-active">회원 상태</td>
@@ -75,6 +75,9 @@
 				<h3>검색 결과가 존재하지 않습니다.</h3>
 			</c:when>
 			<c:otherwise>
+				<div class="search-number">
+			  	   <p class="font-weight-bold">조회결과 : <span style="font-size:1.2rem;"class="text-danger font-weight-bold">${count}</span>&nbsp건</p>
+			    </div>
 				<table  class="table table-hamburg table-hover">
 					<thead>
 						<tr class="table-primary text-center">
@@ -115,6 +118,33 @@
 		</c:choose>
 	</div><br><br><br>
 	<!-- 회원 목록 끝 -->
+	
+	<!-- 페이징 -->
+	<div class="pagination text-center">
+		
+		<nav aria-label="Page navigation example text-center">
+		  <ul class="pagination">
+		  	<c:if test="${param.page ne 1}">
+		    <li class="page-item">
+		      <a class="page-link" href="search?page=${param.page-1}" aria-label="Previous">
+		        <span aria-hidden="true">&laquo;</span>
+		      </a>
+		    </li>
+		    </c:if>
+		    <c:forEach var="i" begin="${startBlock}" end="${endBlock}">
+		    <li ${param.page eq i ? 'class="page-item active"':'class="page-item"'}><a class="page-link" href="search?page=${i}">${i}</a></li>
+		    </c:forEach>
+		    <c:if test="${pageCount ne param.page}">
+		    <li class="page-item">
+		      <a class="page-link" href="search?page=${param.page+1}" aria-label="Next">
+		        <span aria-hidden="true">&raquo;</span>
+		      </a>
+		    </li>
+		    </c:if>
+		  </ul>
+		</nav>
+		
+	  	</div>
 	
 </div>
 

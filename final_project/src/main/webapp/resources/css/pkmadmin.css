@@ -409,11 +409,23 @@ a{
 /*매장관리*/
 .header-title{
 	font-weight: bold;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
 }
 .menu-regist-table .title{
 	font-weight: bold;
     font-size: 1.1rem;
     background-color:#bd444d;
     color:white;
+}
+
+/* 등급관리*/
+.grade_table{
+	width:50%;
+	font-size:1.2rem;
+	text-align:center;
+}
+
+/*페이징*/
+.pagination{
+	margin-left:20%;
 }

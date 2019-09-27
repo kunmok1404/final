@@ -193,32 +193,35 @@ $(function(){
 	  			
 	  		</tbody>
 	  	</table>
-	  		  	<div align="center">
-	  		  	<h4>
-		<c:if test="${not p.isFirstBlock()}">
-			<a href="list">&lt;&lt;</a>
-		</c:if>
-		<c:if test="${not p.isFirstPage()}">
-			<a href="list">&lt;</a>
-		</c:if>
-		<c:forEach var="i" begin="${startBlock}" end="${endBlock}">
-			<c:choose>
-				<c:when test="${param.page == i}">
-					<font color="red">${i}</font>
-				</c:when>
-				<c:otherwise>
-					<a href="#" class="navigator-no">${i}</a>
-				</c:otherwise>
-			</c:choose>
-		</c:forEach>
-		<c:if test="${not p.isLastPage()}">
-			<a href="list?${p.getNextPage()}">&gt;</a>
-		</c:if>
-		<c:if test="${not p.isLastBlock()}">
-			<a href="list?${p.getNextBlock()}">&gt;&gt;</a>
-		</c:if>
-	</h4>
-	  	</div>
+	  	
+	  	<!-- 페이징 처리 -->
+	  	<div align="center">
+  		  	<h4>
+				<c:if test="${not p.isFirstBlock()}">
+					<a href="list">&lt;&lt;</a>
+				</c:if>
+				<c:if test="${not p.isFirstPage()}">
+					<a href="list">&lt;</a>
+				</c:if>
+				<c:forEach var="i" begin="${startBlock}" end="${endBlock}">
+					<c:choose>
+						<c:when test="${param.page == i}">
+							<font color="red">${i}</font>
+						</c:when>
+						<c:otherwise>
+							<a href="#" class="navigator-no">${i}</a>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+				<c:if test="${not p.isLastPage()}">
+					<a href="list?${p.getNextPage()}">&gt;</a>
+				</c:if>
+				<c:if test="${not p.isLastBlock()}">
+					<a href="list?${p.getNextBlock()}">&gt;&gt;</a>
+				</c:if>
+			</h4>
+  		</div>
+	  	
 	  </div>
 	  <!-- 리뷰목록 끝 -->
 	</div>

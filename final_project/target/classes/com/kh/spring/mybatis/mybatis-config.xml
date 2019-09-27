@@ -48,6 +48,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         <typeAlias type="com.kh.spring.entity.ShopOnoDto" alias="shoponoDto"/>
         <typeAlias type="com.kh.spring.entity.CommissionDto" alias="commissionDto"/>
         <typeAlias type="com.kh.spring.entity.CommissionListDto" alias="commissionListDto"/>
+     	<typeAlias type="com.kh.spring.vo.MenuListVO" alias="menuListVO"/>
+     	<typeAlias type="com.kh.spring.vo.ShopListVO" alias="shopListVO"/>
      </typeAliases>
      
 

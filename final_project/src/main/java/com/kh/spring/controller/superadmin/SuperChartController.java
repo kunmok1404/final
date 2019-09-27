@@ -49,7 +49,6 @@ public class SuperChartController {
 			@RequestParam(value="no", required=false)  String no,
 			@RequestParam String start,
 			@RequestParam String end) {
-		System.out.println(start);
 		List<OrderVo> list =orderDao.date_day(no,start,end); 
 		List<Integer> cancel =new ArrayList<>();
 		List<Integer> sussce =new ArrayList<>();
@@ -82,8 +81,6 @@ public class SuperChartController {
 				@RequestParam(value="no", required=false)  String no,
 				@RequestParam String start,
 				@RequestParam String end) {
-			System.out.println(start);
-			System.out.println(end);
 			List<TotalVo> list =orderDao.sale_day(no,start,end); 
 			model.addAttribute("order_date",list);
 			return "admin/super/chart/sale_chart";

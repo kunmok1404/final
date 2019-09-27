@@ -10,7 +10,7 @@ import com.kh.spring.vo.MemberInfoVO;
 public interface MemberService {
 
 	List<MemberInfoVO> search(String status, String grade, String start_date, String end_date, String type,
-			String keyword);
+			String keyword, int start, int end);
 
 	MemberInfoVO detail(int no);
 

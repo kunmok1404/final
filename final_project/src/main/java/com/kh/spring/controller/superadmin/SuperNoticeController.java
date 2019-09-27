@@ -64,7 +64,6 @@ public class SuperNoticeController {
 		model.addAttribute("list", list);
 		
 		List<NoticeDto> list2 = noticeDao.list2();
-//		System.out.println("list2"+list2.size());
 		model.addAttribute("list2", list2);
 		
 		String status2 ="업주";
@@ -72,7 +71,6 @@ public class SuperNoticeController {
 		model.addAttribute("list3", list3);
 		
 		List<NoticeDto> list4 = noticeDao.list4();
-//		System.out.println("list4"+list4.size());
 		model.addAttribute("list4", list4);
 		
 	return "admin/super/service/notice/list"; //뷰 파일 리턴

@@ -74,6 +74,21 @@ public class ShopMemberController {
 		}
 	}
 	
+	// 테스트 로그인
+	@GetMapping("/testLogin")
+	 public String testLogin(HttpSession session) {
+		 MemberDto result = memberDao.get("onegrandma");
+		 String time = result.getLatest_login().substring(0,16);
+		 result.setLatest_login(time);
+		 session.setAttribute("member_code", result.getNo());
+		 session.setAttribute("shop_code", result.getShop_code());
+		 session.setAttribute("type", result.getType());
+		 session.setAttribute("memberDto", result);
+		 // 최종접속일자 갱신
+		 memberDao.updateLatestLogin(result.getNo());
+		 return "redirect:/shop_admin";
+	 }
+	
 	//로그아웃 기능
 	@GetMapping("/logout")
 	public String logout(

@@ -67,17 +67,16 @@ public class OrderController {
 		return ok;
 	}
 	
-	@GetMapping("/reInputCart")
+	@RequestMapping("/reInputCart")
 	@ResponseBody
 	public String reInputCart(@RequestParam int member_code) {
 		orderDao.cartDelete(member_code);
 		return "장바구니에 메뉴가 담겼습니다.";
 	}
 	
-	@GetMapping("/mycart")
+	@RequestMapping("/mycart")
 	public String cart(HttpSession session, Model model){
 		if(session.getAttribute("member_code")==null) {
-			System.out.println("로그인 해 주세요");
 		}else {
 		int member_code = (int) session.getAttribute("member_code");
 		if(member_code>0) {
@@ -92,7 +91,7 @@ public class OrderController {
 		}
 		return "client/order/cart";
 	}
-	@PostMapping("/cart")
+	@RequestMapping("/cart")
 	public String cart(@ModelAttribute CartDto cartdto,
 					   @RequestParam int shop_code,
 					   @RequestParam int radiomenu,
@@ -135,7 +134,7 @@ public class OrderController {
 	}
 
 
-	@PostMapping("/orderinput")
+	@RequestMapping("/orderinput")
 	public String cart(@ModelAttribute CartListVO vo,
 					   @ModelAttribute CartSubListVo vo2,
 					   HttpSession session, Model model, 
@@ -156,7 +155,7 @@ public class OrderController {
 	}
 	
 	//바로 주문시 나오는 페이지
-	@PostMapping("/direct_order")
+	@RequestMapping("/direct_order")
 	public String dorder(@ModelAttribute CartDto cartdto,
 			   @RequestParam int shop_code,
 			   @RequestParam int radiomenu,
@@ -325,7 +324,7 @@ public class OrderController {
 	}
 
 	// 결제에 성공 했을때,받은 데이터를 처리함
-	@GetMapping("/success")
+	@RequestMapping("/success")
 	public String success(@RequestParam String pg_token, HttpSession session, Model model) throws URISyntaxException {
 		int total_price = (int) session.getAttribute("total_price");
 		int shop_code = (int) session.getAttribute("shop_code");
@@ -400,7 +399,7 @@ public class OrderController {
 		return "/client/order/success";
 	}
 	
-	@GetMapping("card_success")
+	@RequestMapping("card_success")
 	public String card_success(HttpSession session, Model model) {
 		int total_price = (int) session.getAttribute("total_price");
 		int shop_code = (int) session.getAttribute("shop_code");
@@ -447,7 +446,7 @@ public class OrderController {
 		return "/client/order/success";
 	}
 	
-	@GetMapping("credit_success")
+	@RequestMapping("credit_success")
 	public String credit_success() {
 		return "/client/order/success";
 	}

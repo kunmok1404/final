@@ -130,7 +130,6 @@ public class SuperQnaController {
 //		int super_code = (int)session.getAttribute("member_code");
 //		int super_code = 64;
 //		qnaDto.setWriter(super_code);
-		System.out.println(qnaDto);
 		int no = serviceService.write(qnaDto);
 		
 		model.addAttribute("no",no);

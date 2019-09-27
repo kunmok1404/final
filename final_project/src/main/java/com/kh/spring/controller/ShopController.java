@@ -1,7 +1,7 @@
 package com.kh.spring.controller;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Enumeration;
 
 import javax.servlet.http.HttpSession;
 
@@ -45,8 +45,10 @@ public class ShopController {
 	
 	// 매장목록
 	@RequestMapping("/list")
-	public String list(Model model,@RequestParam(required = false) int cat_no){
+	public String list(Model model,@RequestParam(required = false) int cat_no,
+			@RequestParam(required = false) String keyword){
 		model.addAttribute("cat_no", cat_no);
+		model.addAttribute("keyword", keyword);
 		model.addAttribute("cat_list", shopDao.catList()); // 음식카테고리 목록
 		model.addAttribute("terms1", termsDao.terms1());
 		model.addAttribute("terms2", termsDao.terms2());	
@@ -57,11 +59,12 @@ public class ShopController {
 	// 더보기 기능
 	@GetMapping("/part")
 	public String part(@RequestParam(required = false, defaultValue = "1") int page,
-					@RequestParam int cat_no, Model model) {
+					@RequestParam int cat_no,
+					@RequestParam(required = false) String keyword, Model model) {
 		int size = 10;
 		int end = page * size;
 		int start = end - size + 1;
-		model.addAttribute("shop_list", shopService.ajaxPaging(start, end, cat_no));
+		model.addAttribute("shop_list", shopService.ajaxPaging(start, end, cat_no, keyword));
 		
 		return "client/shop/part";
 	}
@@ -75,7 +78,6 @@ public class ShopController {
 		// 메뉴정보
 		model.addAttribute("map", shopService.menuList(no)); 
 		// 리뷰정보
-		System.out.println("reveiwList="+shopService.reviewList(no));
 		model.addAttribute("review_map", shopService.reviewList(no));
 		// 약관정보
 		model.addAttribute("terms1", termsDao.terms1());
@@ -91,8 +93,13 @@ public class ShopController {
 			@RequestParam int shop_code,	
 			Model model) {
 		// 메뉴코드 넘기기
-		int member_code = (int) session.getAttribute("member_code");
-		model.addAttribute("shop_menu_code",shopDao.getShopCode(member_code));
+//	    Enumeration se = session.getAttributeNames();
+//	    if(se.hasMoreElements()){
+//	    	int member_code = (int) session.getAttribute("member_code");	
+//	    	model.addAttribute("shop_menu_code",shopDao.getShopCode(member_code));			
+//	    }
+		int member_code = (int) session.getAttribute("member_code");	
+    	model.addAttribute("shop_menu_code",shopDao.getShopCode(member_code));		
 		model.addAttribute("menu_code", menu_code);
 		model.addAttribute("map", shopService.sub_menu(menu_code));
 		model.addAttribute("menuDto",shopDao.menuName(menu_code));
