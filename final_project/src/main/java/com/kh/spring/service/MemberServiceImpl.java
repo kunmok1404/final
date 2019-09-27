@@ -24,15 +24,13 @@ public class MemberServiceImpl implements MemberService{
 	//super_admin 회원 관리 목록 - 총 사용 금액 불러오기
 	@Override
 	public List<MemberInfoVO> search(String status, String grade, String start_date, String end_date, String type,
-			String keyword) {
-		List<MemberInfoVO> list = memberDao.search(status, grade, start_date, end_date, type, keyword); //받아온거
+			String keyword, int start, int end) {
+		List<MemberInfoVO> list = memberDao.search(status, grade, start_date, end_date, type, keyword, start, end); //받아온거
 		List<MemberInfoVO> info_list = new ArrayList<>(); //새로 만든 그릇
 		//내용 다시 세팅
 		for(MemberInfoVO memberInfoVO : list) {
 			//총 사용 금액
 			int total_price = memberDao.total_price(memberInfoVO.getNo());
-			System.out.println(memberInfoVO.getNo());
-			System.out.println(total_price);
 			//다시 담기
 			memberInfoVO.setTotal_price(total_price);
 			

@@ -85,6 +85,7 @@
               <div class="offset-1 col-md-10">
                   <div class="login-text">
                     *불법적인 접근 또는 허가되지 않은 사용자가 접속을 시도할 경우 관계 법령에 의해 처벌 받을 수 있습니다.
+                  <a href="${pageContext.request.contextPath}/shop_admin/member/testLogin" class="ml-3 text-primary">(테스트 로그인)</a>
                   </div>
               </div>
           </div>

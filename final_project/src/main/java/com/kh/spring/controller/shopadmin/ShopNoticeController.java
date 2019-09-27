@@ -65,7 +65,6 @@ public class ShopNoticeController {
 		model.addAttribute("list3", list3);
 		
 		List<NoticeDto> list4 = noticeDao.list4();
-//		System.out.println("list4"+list4.size());
 		model.addAttribute("list4", list4);
 		
 	return "admin/shop/service/notice/list";

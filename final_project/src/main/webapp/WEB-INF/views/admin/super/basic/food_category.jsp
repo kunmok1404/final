@@ -104,7 +104,7 @@
 		   <div id="terms-wrapper">
              <div class="terms-line"></div>
 	       </div>
-	   	   <span>음식카테고리 관리</span>
+	   	   <span class="header-title">음식카테고리 관리</span>
 	   	   	<form action="${pageContext.request.contextPath}/super_admin/basic/food_category" method="post" enctype="multipart/form-data">
             <table class="table table-hamburg table-hover text-center mt-3" id="food-table">
                 <thead>

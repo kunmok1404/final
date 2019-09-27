@@ -132,7 +132,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 				and ${type} like '%'||#{keyword}||'%' -->
 <!-- 			</if> -->
 <!-- 		group by M.no, M.id, M.status, M.grade, M.phone, M.point, M.regist_date -->
-
+		<![CDATA[
+		select * from 
+		(select rownum rn,A.*from(
 		select 
 		    MP.member_code, sum(subtotal) point
 		    ,M.no, M.id, M.email, M.email_address, M.phone, M.post, M.basic_addr, M.detail_addr, M.grade, M.status, M.regist_date
@@ -147,6 +149,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		) MP
 		    inner join Member M on M.no = MP.member_code
 		    left outer join Review R on M.no = R.member_code
+		]]>
 <!-- 		where M.no = #{no} -->
 		where 
 			1=1
@@ -173,8 +176,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			</if>
 		group by MP.member_code
 		, M.no, M.id, M.email, M.email_address, M.phone, M.post, M.basic_addr, M.detail_addr, M.grade, M.status, M.regist_date
+		<![CDATA[
 		order by MP.member_code asc
-		
+		)A)where rn >= #{start} and rn <=#{end}
+		]]> 
+ 	</select>
+ 	
+ 	<!-- 회원숫자 -->
+ 	<select id="memberCount" parameterType="map" resultType="int">
+ 		<![CDATA[
+		select count(*) from member	
+		]]>
+		where
+		1=1
+		<if test="status != null and status != '전체'">
+			and status = #{status}
+		</if>
+		<!-- 회원 등급 -->
+		<if test="grade != null and grade != '전체'">
+			and grade = #{grade}
+		</if>
+		<!-- 기간 검색 -->
+		<if test="start_date != null and start_date != '' and end_date != null and end_date != ''">
+			and regist_date between to_date(#{start_date}, 'YYYY-MM-DD') and to_date(#{end_date}, 'YYYY-MM-DD') + 1 - 1 / 864000 
+		</if>
+		<if test="type != null and type != '전체' and keyword != null and keyword != ''">
+			and ${type} like '%'||#{keyword}||'%'
+		</if>
  	</select>
  	
  	<!-- 관리자 회원 목록 상세보기 -->
@@ -268,6 +296,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  		delete myshop where member_code = #{member_code} and shop_code = #{shop_code}
  	</delete>
  	
+ 	<!-- 최종접속일 갱신 -->
+ 	<update id="update_latest_login" parameterType="int">
+ 		update member set latest_login=sysdate where no=#{member_code}
+ 	</update>
 	
 	<!-- 회원등급 정보 -->
 	<select id="usergrade" resultType="usergradeDto">
@@ -322,15 +354,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="member_all" resultType="memberDto">
 		select * from member
 	</select>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
  </mapper>

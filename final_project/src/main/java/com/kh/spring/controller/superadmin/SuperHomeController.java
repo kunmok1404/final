@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.spring.entity.MemberDto;
 import com.kh.spring.repository.CategoryDao;
 import com.kh.spring.repository.MemberDao;
 import com.kh.spring.repository.MenuDao;
@@ -25,9 +26,6 @@ import com.kh.spring.service.MenuService;
 import com.kh.spring.service.SuperHomeService;
 import com.kh.spring.vo.MemberInfoVO;
 import com.kh.spring.vo.ShopMenuVO;
-
-
-
 
 // 슈퍼관리자
 @Controller
@@ -84,9 +82,9 @@ public class SuperHomeController {
 			}
 		}
 		
-		List<MemberInfoVO> memberall = memberService.search(status, grade, start_date, end_date, type, keyword);
-		List<MemberInfoVO> membernagam = new ArrayList<MemberInfoVO>();
-		List<MemberInfoVO> memberday = new ArrayList<MemberInfoVO>();
+		List<MemberDto> memberall = memberDao.getMemberList() ;
+		List<MemberDto> membernagam = new ArrayList<MemberDto>();
+		List<MemberDto> memberday = new ArrayList<MemberDto>();
 		for (int i = 0; i < memberall.size(); i++) {
 			if (memberall.get(i).getStatus().equals("블랙")) {
 				membernagam.add(memberall.get(i));

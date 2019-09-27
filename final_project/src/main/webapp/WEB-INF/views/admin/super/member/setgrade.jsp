@@ -1,16 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/template/admin/super/header.jsp"></jsp:include>
-<jsp:include page="/WEB-INF/views/template/admin/super/left/left_review.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/template/admin/super/left/left_member.jsp"></jsp:include>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-	<style>
-		
-		.gread {
-			margin-top:20%;
-			margin-left: 30%;
-		
-		}		
-	</style>
 	<script>
 	$(function() {
 		$(".min2").on("propertychange change keyup paste input", function() {
@@ -109,10 +101,18 @@
 		
 	
 	
-	<div class="gread">
-	<table border="1">
+	<div class="wrapper mt-3">
+	
+	<div class="top-title">
+		<div id="terms-wrapper">
+			<div class="terms-line"></div>
+		</div>
+		<span class="header-title">회원등급관리</span>
+	</div>
+	
+	<table class="table table-hamburg mt-3 grade_table">
 	<thead>
-		<tr>
+		<tr class="table-info">
 			<th>등급명</th>
 			<th>최소주문횟수</th>
 			<th >최대주문횟수</th>
@@ -122,23 +122,23 @@
 	<c:forEach var="grade" items="${grade}">
 	<tr>
 		<td>
-			<input type="text" name="name${grade.grade }" value="${grade.name }" class="name${grade.grade }">
-			<input type="hidden" name="grade" value="${grade.grade }">
+			<input type="text" class="form-control-sm" name="name${grade.grade }" value="${grade.name }" class="name${grade.grade }">
+			<input type="hidden" class="form-control-sm" name="grade" value="${grade.grade }">
 		</td>
 		<td>
 			<c:if test="${grade.grade == 2 }">
-				<input type="number" name="min_order${grade.grade }" value="${grade.min_order }" min="2" class="min${grade.grade }">이상
+				<input type="number" class="form-control-sm" name="min_order${grade.grade }" value="${grade.min_order }" min="2" class="min${grade.grade }">&nbsp이상
 			</c:if>
 			<c:if test="${grade.grade == 1 }">
-				<input type="number" name="min_order${grade.grade }" value="${grade.min_order }" min="4" class="min${grade.grade }">이상
+				<input type="number" class="form-control-sm" name="min_order${grade.grade }" value="${grade.min_order }" min="4" class="min${grade.grade }">&nbsp이상
 			</c:if>
 		</td>
 		<td>
 			<c:if test="${grade.grade == 2 }">
-				<input type="number" name="max_order${grade.grade }" value="${grade.max_order }" min="3" class="max${grade.grade }">미만
+				<input type="number" class="form-control-sm" name="max_order${grade.grade }" value="${grade.max_order }" min="3" class="max${grade.grade }">&nbsp미만
 			</c:if>
 			<c:if test="${grade.grade == 3 }">
-				<input type="number" name="max_order${grade.grade }" value="${grade.max_order }" min="1" class="max${grade.grade }">미만
+				<input type="number" class="form-control-sm" name="max_order${grade.grade }" value="${grade.max_order }" min="1" class="max${grade.grade }">&nbsp미만
 			</c:if>
 		</td>
 	</tr>
@@ -147,7 +147,7 @@
 	<tfoot>
 		<tr>
 			<td colspan="3" align="center">
-			<input type="button" value="저장" class="edit">
+			<input type="button" value="저장" class="edit btn btn-lg btn-primary">
 			</td>
 		</tr>
 	</tfoot>

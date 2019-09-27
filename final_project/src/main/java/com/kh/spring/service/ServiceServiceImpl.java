@@ -52,6 +52,7 @@ public class ServiceServiceImpl implements ServiceService {
 		return noticeDao.get(no);
 	}
 	// ono 테이블에 글정보 등록 후 시퀀스 반환
+	@Transactional
 	@Override
 	public int OnoRegist(OnoDto onoDto) {
 		
@@ -66,6 +67,7 @@ public class ServiceServiceImpl implements ServiceService {
 	}
 	
 	// 파일등록
+	@Transactional
 	@Override
 	public void fileRegist(MultipartFile file, OnoDto onoDto) throws IllegalStateException, IOException {
 		// 파일 시퀀스 생성
@@ -105,7 +107,6 @@ public class ServiceServiceImpl implements ServiceService {
 //		2. 1번에서 불러온 정보에서 해당하는 파일정보를 다시 불러온다.
 		
 		FilesDto filesDto = onoDao.getFileInfo(files_code);
-		System.out.println(filesDto);
 		
 		//만약 파일이 없다면(null) 404에러 전송(not found)
 		if(filesDto == null) {
@@ -143,7 +144,6 @@ public class ServiceServiceImpl implements ServiceService {
 	public int write(QnaDto qnaDto) {
 		int no = qnaDao.getSequenceNumber();
 		 qnaDto.setNo(no);
-//		 System.out.println("qnaDto="+qnaDto);
 		qnaDao.insert( qnaDto);
 		return no;
 	}
@@ -168,7 +168,6 @@ public class ServiceServiceImpl implements ServiceService {
 		// 하나씩 값을 꺼내서 카테고리 이름 조회 후 세팅
 		for(QnaDto qnaDto : list) {
 			CategoryDto categoryDto = categoryDao.getQnaCategoryInfo(qnaDto.getCategory());
-			System.out.println("categoryDto=" +categoryDto);
 			if(categoryDto != null) {
 			QnaCategoryVO qnaCategoryVO = QnaCategoryVO.builder()
 												.no(qnaDto.getNo())
@@ -193,7 +192,6 @@ public class ServiceServiceImpl implements ServiceService {
 		// 하나씩 값을 꺼내서 카테고리 이름 조회 후 세팅
 		for(QnaDto qnaDto : list) {
 			CategoryDto categoryDto = categoryDao.getQnaCategoryInfo(qnaDto.getCategory());
-			System.out.println("categoryDto=" +categoryDto);
 			if(categoryDto != null) {
 			QnaCategoryVO qnaCategoryVO = QnaCategoryVO.builder()
 												.no(qnaDto.getNo())

@@ -23,7 +23,7 @@ public interface ShopService {
 	void edit(ShopDto shopDto, MultipartFile img) throws IllegalStateException, IOException;
 	void deleteShop(int shop_code);
 	void apply(int shop_code);
-	List<ShopListVO> ajaxPaging(int start, int end, int cat_no);
+	List<ShopListVO> ajaxPaging(int start, int end, int cat_no, String keyword);
 	ShopListVO shopInfoVO(int no);
 	ResponseEntity<ByteArrayResource> download(int files_code) throws IOException;
 	Map<ReviewDto, List<ReviewImgDto>> reviewList(int no);

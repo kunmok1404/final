@@ -49,7 +49,7 @@ public class ShopMenuController {
 			int page,HttpSession session, Model model) {
 		int member_code = (int)session.getAttribute("member_code");
 		int shop_code = menuDao.getshopcode(member_code);
-		int pagesize = 5;
+		int pagesize = 10;
 		int start = pagesize * page - (pagesize - 1);
 		int end = pagesize * page;
 		

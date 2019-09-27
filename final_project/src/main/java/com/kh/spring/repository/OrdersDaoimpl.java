@@ -93,7 +93,6 @@ public class OrdersDaoimpl implements OrdersDao{
 
 	@Override
 	public void orderDetailInput(OrderDetailDto orderDetailDto) {
-		System.out.println(orderDetailDto);
 		sqlsession.insert("order.detail_regist",orderDetailDto);
 	}
 
@@ -235,7 +234,6 @@ public class OrdersDaoimpl implements OrdersDao{
 
 	@Override
 	public void orderSubDetailInput(OrderSubDetail ordersub) {
-		System.out.println(ordersub);
 		sqlsession.insert("order.detail_sub_regist",ordersub);
 	}
 

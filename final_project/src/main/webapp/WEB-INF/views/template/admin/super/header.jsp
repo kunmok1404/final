@@ -92,7 +92,7 @@
           <ul>
             <li ${url == '/super_admin/basic/terms' ? 'class="active"' : ''}><a href="${pageContext.request.contextPath}/super_admin/basic/terms">기본설정</a></li>
             <li ${url == '/super_admin/notice/list' ? 'class="active"' : ''}><a href="${pageContext.request.contextPath}/super_admin/notice/list?status=고객">공지사항</a></li>
-            <li ${url == '/super_admin/notice/member/search' ? 'class="active"' : ''}><a href="${pageContext.request.contextPath}/super_admin/member/search">회원관리</a></li>
+            <li ${url == '/super_admin/member/search' ? 'class="active"' : ''}><a href="${pageContext.request.contextPath}/super_admin/member/search">회원관리</a></li>
             <li ${url == '/super_admin/shop/list' ? 'class="active"' : ''}><a href="${pageContext.request.contextPath}/super_admin/shop/list">매장관리</a></li>
             <li ${url == '/super_admin/menu/list' ? 'class="active"' : ''}><a href="${pageContext.request.contextPath}/super_admin/menu/list">메뉴관리</a></li>
             <li ${url == '/super_admin/order/list' ? 'class="active"' : ''}><a href="${pageContext.request.contextPath}/super_admin/order/list">주문관리</a></li>

@@ -8,12 +8,12 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.kh.spring.entity.CategoryDto;
 import com.kh.spring.entity.FilesDto;
 import com.kh.spring.entity.FoodCategoryDto;
 import com.kh.spring.entity.MenuDto;
 import com.kh.spring.entity.ShopDto;
 import com.kh.spring.entity.SubMenuDto;
+import com.kh.spring.vo.ShopListVO;
 
 @Repository
 public class ShopDaoImpl implements ShopDao {
@@ -22,11 +22,13 @@ public class ShopDaoImpl implements ShopDao {
 	private SqlSession sqlSession;
 
 	@Override
-	public List<ShopDto> ajaxPaging(int start, int end, int cat_no) {
-		Map<String, Integer> map = new HashMap<>();
+	public List<ShopListVO> ajaxPaging(int start, int end, int cat_no, String keyword) {
+		Map<String, Object> map = new HashMap<>();
 		map.put("start", start);
 		map.put("end", end);
 		map.put("cat_no", cat_no);
+		map.put("keyword", keyword);
+		System.out.println("keyword="+keyword);
 		return sqlSession.selectList("shop.list", map);
 	}
 

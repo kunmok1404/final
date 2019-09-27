@@ -82,7 +82,6 @@ public class MemberDaoImpl implements MemberDao {
 	//회원정보 수정
 	@Override
 	public void change(MemberDto memberDto) {
-		System.out.println(memberDto);
 		sqlSession.update("member.change", memberDto);
 		
 	}
@@ -102,15 +101,16 @@ public class MemberDaoImpl implements MemberDao {
 
 	//관리자 회원 검색
 	@Override
-	public List<MemberInfoVO> search(String status, String grade, String start_date, String end_date, String type, String keyword) {
-		Map<String, String> param = new HashMap<>();
+	public List<MemberInfoVO> search(String status, String grade, String start_date, String end_date, String type, String keyword, int start, int end) {
+		Map<String, Object> param = new HashMap<>();
 		param.put("status", status);
 		param.put("grade", grade);
 		param.put("start_date", start_date);
 		param.put("end_date", end_date);
 		param.put("type", type);
 		param.put("keyword", keyword);
-		System.out.println(param);
+		param.put("start", start);
+		param.put("end", end);
 		return sqlSession.selectList("member.search", param);
 	}
 	
@@ -232,6 +232,24 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public MemberDto getShopMemberInfo(int shop_code) {
 		return sqlSession.selectOne("member.getShopMemberInfo", shop_code);
+	}
+
+	@Override
+	public int memberCount(String status, String grade, String type, String keyword, String start_date,String end_date) {
+		Map<String, String> param = new HashMap<>();
+		param.put("status", status);
+		param.put("grade", grade);
+		param.put("start_date", start_date);
+		param.put("end_date", end_date);
+		param.put("type", type);
+		param.put("keyword", keyword);
+		return sqlSession.selectOne("member.memberCount", param);
+	}
+
+	// 최종접속일 갱신
+	@Override
+	public void updateLatestLogin(int member_code) {
+		sqlSession.update("member.update_latest_login", member_code);
 	}
 
 	

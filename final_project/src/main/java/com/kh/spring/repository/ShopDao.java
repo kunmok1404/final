@@ -7,9 +7,10 @@ import com.kh.spring.entity.FoodCategoryDto;
 import com.kh.spring.entity.MenuDto;
 import com.kh.spring.entity.ShopDto;
 import com.kh.spring.entity.SubMenuDto;
+import com.kh.spring.vo.ShopListVO;
 
 public interface ShopDao {
-	List<ShopDto> ajaxPaging(int start, int end, int cat_no);
+	List<ShopListVO> ajaxPaging(int start, int end, int cat_no, String keyword);
 	List<FoodCategoryDto> catList();
 	ShopDto shopInfo(int no);
 	List<MenuDto> menuList(int no);

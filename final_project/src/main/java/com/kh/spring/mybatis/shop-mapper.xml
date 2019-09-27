@@ -6,14 +6,33 @@ PUBLIC "//mybatis.org//DTD Mapper 3.0//EN"
  <mapper namespace="shop">
  	
  	<!-- 매장목록조회-->
- 	<select id="list" parameterType="map" resultType="shopDto">
+ 	<select id="list" parameterType="map" resultType="shopListVO">
 		select * from
 	    (select rownum rn, TMP.* from 
-	        (select * from shop 
-	        where apply_status='승인완료' and contract_status='계약중'
- 			<if test="cat_no > 0">
+	        (
+	        select
+			    s.no, s.shop_name, s.min_price, s.min_time, s.shop_img, nvl(avg(r.score), 0) score, count(r.score) review 
+			from
+			shop s 
+			    left outer join orders o
+			        on s.no = o.shop_code
+			    left outer join review r
+			        on o.no=r.order_code
+			where s.apply_status='승인완료' and s.contract_status='계약중'
+			<if test="cat_no > 0">
  				and category = #{cat_no}
- 			</if>)TMP
+ 			</if>
+			group by s.no, s.shop_name, s.min_price, s.min_time, s.shop_img
+			<if test="keyword != null and keyword == '별점높은순'">
+ 			order by score desc
+ 			</if>
+ 			<if test="keyword != null and keyword == '리뷰많은순'">
+ 			order by review desc
+ 			</if>
+ 			<if test="keyword == null">
+			order by no desc
+			</if>
+ 			)TMP
 	    )
 		where rn between #{start} and #{end}
  	</select>

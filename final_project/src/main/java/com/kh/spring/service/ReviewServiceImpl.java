@@ -13,6 +13,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.spring.entity.FilesDto;
@@ -31,6 +32,7 @@ public class ReviewServiceImpl implements ReviewService {
 	private ShopDao shopDao;
 	
 	// 리뷰 테이블에 글정보 등록 후 시퀀스 반환
+	@Transactional
 	@Override
 	public int ReviewRegist(ReviewDto reviewDto) {
 		
@@ -48,6 +50,7 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 	
 	// 리뷰관련 파일등록
+	@Transactional
 	@Override
 	public void fileRegist(MultipartFile file, ReviewDto reviewDto) throws IllegalStateException, IOException {
 		

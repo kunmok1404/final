@@ -16,6 +16,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.spring.entity.CategoryDto;
@@ -124,9 +125,7 @@ public class ShopServiceImpl implements ShopService {
 //		// value 세팅
 //		for(OrdersDto orderDto : orderList) {
 //			if(reviewDto != null) {
-//				System.out.println("reviewDto="+reviewDto);
 //				List<ReviewImgDto> reviewImgList = reviewDao.reviewImg(reviewDto.getNo());
-//				System.out.println("reviewImgList="+reviewImgList);
 //				for(ReviewImgDto reviewImgDto : reviewImgList) {
 //					if(reviewImgDto != null)
 //					map.get(reviewDto).add(reviewImgDto);
@@ -164,6 +163,7 @@ public class ShopServiceImpl implements ShopService {
 	}
 	
 //	업주 입점신청 등록
+	@Transactional
 	@Override
 	public void regist(ShopDto shopDto, MultipartFile business_regist, MultipartFile sale_regist,
 			MultipartFile logo) throws IllegalStateException, IOException {
@@ -233,12 +233,12 @@ public class ShopServiceImpl implements ShopService {
 	}
 
 	//매장정보 수정
+	@Transactional
 	@Override
 	public void edit(ShopDto shopDto, MultipartFile img) throws IllegalStateException, IOException {
 		
 		// 파일이 있다면 수정
 		if(!img.isEmpty()) {
-			System.out.println("파일있다");
 			//파일정보 조회
 			FilesDto originFilesDto = filesDao.getFilesInfo(shopDto.getShop_img());
 			// 기존파일 삭제
@@ -262,11 +262,11 @@ public class ShopServiceImpl implements ShopService {
 			img.transferTo(target); //물리적 위치에 저장하는 명령
 			
 		} 
-			System.out.println("파일없다");
 			shopDao.edit(shopDto);
 	}
 
 	// 매장 삭제
+	@Transactional
 	@Override
 	public void deleteShop(int shop_code) {
 		
@@ -303,21 +303,21 @@ public class ShopServiceImpl implements ShopService {
 
 	// 매장승인시
 	@Override
+	@Transactional
 	public void apply(int shop_code) {
 		// 매장 승인상태 변경
 		shopDao.apply(shop_code);
-		
 		// 업주 회원정보 승인상태변경
 		memberDao.applyShop(shop_code);
 	}
 
 	// 매장리스트 VO
 	@Override
-	public List<ShopListVO> ajaxPaging(int start, int end, int cat_no) {
-		List<ShopDto> list = shopDao.ajaxPaging(start, end, cat_no);
+	public List<ShopListVO> ajaxPaging(int start, int end, int cat_no, String keyword) {
+		List<ShopListVO> list = shopDao.ajaxPaging(start, end, cat_no, keyword);
 		List<ShopListVO> shop_list = new ArrayList<>();
 		
-		for(ShopDto shopDto : list) {
+		for(ShopListVO shopDto : list) {
 			ShopListVO shopListVO = new ShopListVO();
 			// 리뷰 갯수 구하기
 			// orders 테이블에서 List조회(orders.no로 review조회가능)

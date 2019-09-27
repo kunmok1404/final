@@ -48,8 +48,6 @@ public class OnoController {
 		//나의 1대1 목록 불러오기
 		int member_code = (int)session.getAttribute("member_code");
 //		int member_code = 1;
-		System.out.println(member_code);
-		
 		
 		//페이징
 		int pagesize = 10;
@@ -60,7 +58,6 @@ public class OnoController {
 		int startBlock = (page - 1) / blocksize * blocksize + 1;
 		int endBlock = startBlock + (blocksize - 1);
 		int count = onoDao.count();
-//		System.out.println(count);
 		int pageCount = (count -1) / pagesize +1;
 		if(endBlock > pageCount) {
 			endBlock = pageCount;
@@ -76,7 +73,6 @@ public class OnoController {
 		
 		List<OnoDto> list = onoDao.list(start, end, member_code);
 		
-//		System.out.println(list.size());
 		model.addAttribute("list", list);
 		
 	return "client/service/ono/list";
