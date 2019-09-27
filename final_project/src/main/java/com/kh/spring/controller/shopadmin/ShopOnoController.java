@@ -46,7 +46,6 @@ public class ShopOnoController {
 			@RequestParam(required = false, defaultValue = "1") int page) {
 		//나의 1대1 목록 불러오기
 		int member_code = (int)session.getAttribute("member_code");
-//		System.out.println(member_code);
 //		int member_code = 81;
 		
 		
@@ -61,7 +60,6 @@ public class ShopOnoController {
 		int startBlock = (page - 1) / blocksize * blocksize + 1;
 		int endBlock = startBlock + (blocksize - 1);
 		int count = onoDao.count();
-//		System.out.println(count);
 		int pageCount = (count -1) / pagesize +1;
 		if(endBlock > pageCount) {
 			endBlock = pageCount;
@@ -73,7 +71,6 @@ public class ShopOnoController {
 		
 		List<OnoDto> list = onoDao.list(start, end, member_code);
 		
-//		System.out.println(list.size());
 		model.addAttribute("list", list);
 		
 	return "admin/shop/service/ono/list";

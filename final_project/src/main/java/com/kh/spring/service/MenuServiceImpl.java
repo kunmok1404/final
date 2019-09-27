@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.spring.entity.CategoryDto;
@@ -24,6 +25,7 @@ import com.kh.spring.repository.ShopDao;
 import com.kh.spring.vo.CheckMenuVO;
 import com.kh.spring.vo.CheckMenuVOList;
 import com.kh.spring.vo.MenuDetailVO;
+import com.kh.spring.vo.MenuListVO;
 import com.kh.spring.vo.MenuRegistVO;
 import com.kh.spring.vo.RadioMenuVO;
 import com.kh.spring.vo.RadioMenuVOList;
@@ -46,17 +48,20 @@ public class MenuServiceImpl implements MenuService {
 	
 	// super_admin 메뉴관리 목록
 	@Override
-	public List<ShopMenuVO> list() {
-		List<MenuDto> list = menuDao.menuList(); // 받아온거
-		List<ShopMenuVO> menu_list = new ArrayList<>(); // 새로 만든 빈그릇
+	public List<MenuListVO> list(String sale_status, String apply_status, String type, String keyword, int start, int end,String start_date, String end_date) {
+		if(type != null && !type.equals("shop_name")) {
+			type = "m."+type;
+		}
+		List<MenuListVO> list = menuDao.menulist(sale_status, apply_status, type, keyword, start, end, start_date, end_date); // 받아온거
+		List<MenuListVO> menu_list = new ArrayList<>(); // 새로 만든 빈그릇
 		// 내용 다시 세팅
-		for(MenuDto menuDto : list) {
+		for(MenuListVO menuDto : list) {
 			//메뉴 카테고리
-			CategoryDto categoryDto = menuDao.getCategoryInfo(menuDto.getMenu_category());
+			CategoryDto categoryDto = menuDao.getCategoryInfo(menuDto.getMenu_category_code());
 			// 매장이름
 			ShopDto shopDto = shopDao.shopInfo(menuDto.getShop_code());
 			String time = shopDto.getRegist_date().substring(0, 16);
-			ShopMenuVO shopVO = ShopMenuVO.builder().no(menuDto.getNo())
+			MenuListVO shopVO = MenuListVO.builder().no(menuDto.getNo())
 																					.name(menuDto.getName())
 																					.menu_category(categoryDto.getName())
 																					.shop_name(shopDto.getShop_name())
@@ -99,6 +104,7 @@ public class MenuServiceImpl implements MenuService {
 
 	// 메뉴등록
 	@Override
+	@Transactional
 	public void menuRegist(MenuRegistVO menuRegistVO, RadioMenuVOList radioMenuVOList, CheckMenuVOList checkMenuVOList) throws IllegalStateException, IOException {
 		
 		// 메뉴 시퀀스 생성
@@ -211,7 +217,6 @@ public class MenuServiceImpl implements MenuService {
 		// 메뉴카테고리 구하기
 		MenuDto menuDto = menuDao.getMenuInfo(menu_code);
 		CategoryDto categoryDto = categoryDao.getMenuCategoryInfo(menuDto.getMenu_category());
-		System.out.println("categoryDto="+categoryDto);
 		menuDetailVO.setMenu_cat(categoryDto.getName());
 		
 		// 메뉴명, 가격, 이미지코드 구하기(메뉴코드로)	
@@ -240,6 +245,7 @@ public class MenuServiceImpl implements MenuService {
 	}
 
 	// 메뉴 수정
+	@Transactional
 	@Override
 	public void menuUpdate(int menu_code, MenuRegistVO menuRegistVO, RadioMenuVOList radioMenuVOList,
 			CheckMenuVOList checkMenuVOList) throws IllegalStateException, IOException {
@@ -321,7 +327,6 @@ public class MenuServiceImpl implements MenuService {
 		// <서브메뉴 수정>
 		// 필수메뉴 수정(전체 다 지우고 새로 등록)
 		List<RadioMenuVO> radioList = radioMenuVOList.getRadioMenuList();
-		System.out.println("radioList="+radioList);
 		//서브메뉴 데이터 지우기
 		menuDao.SubMenuDelete(menu_code, menuRegistVO.getShop_code());
 		for(RadioMenuVO radioMenuVO : radioList) {
@@ -354,6 +359,7 @@ public class MenuServiceImpl implements MenuService {
 	}
 
 	// 메뉴삭제
+	@Transactional
 	@Override
 	public void deleteMenu(int menu_code) {
 		
@@ -372,5 +378,29 @@ public class MenuServiceImpl implements MenuService {
 		
 		// 메뉴삭제
 		menuDao.deleteMenu(menu_code);
+	}
+
+	@Override
+	public List<ShopMenuVO> list() {
+		List<MenuDto> list = menuDao.menulist(); // 받아온거
+		List<ShopMenuVO> menu_list = new ArrayList<>(); // 새로 만든 빈그릇
+		// 내용 다시 세팅
+		for(MenuDto menuDto : list) {
+			//메뉴 카테고리
+			CategoryDto categoryDto = menuDao.getCategoryInfo(menuDto.getMenu_category());
+			// 매장이름
+			ShopDto shopDto = shopDao.shopInfo(menuDto.getShop_code());
+			String time = shopDto.getRegist_date().substring(0, 16);
+			ShopMenuVO shopVO = ShopMenuVO.builder().no(menuDto.getNo())
+																					.name(menuDto.getName())
+																					.menu_category(categoryDto.getName())
+																					.shop_name(shopDto.getShop_name())
+																					.apply_status(menuDto.getApply_status())
+																					.sale_status(menuDto.getSale_status())
+																					.regist_date(time)
+																					.build();
+			menu_list.add(shopVO);
+		}
+		return menu_list;
 	}
 }

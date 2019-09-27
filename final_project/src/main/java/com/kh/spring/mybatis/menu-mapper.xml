@@ -146,61 +146,50 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<![CDATA[
 		select count(*) from menu_list	
 		]]>
-			<if test="sale_status =='all' or apply_status =='all'">
-			<choose>
-			<when test="type !=null and keyword != null and apply_status == '' and sale_status ==''">
-				where ${type} like '%'||#{keyword}||'%'
-			</when>
-			<when test="sale_status !=null and apply_staus = '' and type =='' and keyword == ''">
-				where sale_status = #{sale_status}
-			</when>
-			<when test="apply_status !=null and sale_staus = '' and type =='' and keyword == ''">
-				where apply_status = #{apply_status}
-			</when>
-			<when test="apply_status !=null and sale_status =='' and type !=null and keyword != null">
-				where ${type} like '%'||#{keyword}||'%' and apply_status = #{apply_status}
-			</when>
-			<when test="apply_status =='' and sale_status !=null and type !=null and keyword != null">
-				where ${type} like '%'||#{keyword}||'%' and sale_status = #{sale_status}
-			</when>
-			<when test="apply_status !=null and sale_status !=null and type !=null and keyword != null">
-				where ${type} like '%'||#{keyword}||'%' and sale_status = #{sale_status} and apply_status = #{apply_status}
-			</when>
-			<otherwise> 
-			</otherwise>
-		</choose>
-			</if>
+		where
+		1=1
+		<if test="apply_status != null and apply_status !='전체'">
+			and apply_status=#{apply_status}
+		</if>
+		<if test="sale_status != null and sale_status !='전체'">
+			and sale_status=#{sale_status}
+		</if>
+		<if test="type !=null and type != '선택' and keyword !=null and keyword != ''">
+			and ${type} like '%'||#{keyword}||'%'
+		</if>
+		<if test="start_date != null or start_date != '' and end_date != null and end_date != ''">
+			and regist_date between to_date(#{start_date}, 'YYYY-MM-DD') and to_date(#{end_date}, 'YYYY-MM-DD') + 1 - 1 / 864000 
+		</if>
 	</select>	
 	<!-- 주문 리스트를 불러오는 코드 -->
-	<select id="menuList" parameterType="map" resultType="shopMenuVo">
+	<select id="menuList" parameterType="map" resultType="menuListVO">
 		<![CDATA[
 		select * from 
 		(select rownum rn,A.*from(
-		select DISTINCT * from menu_list
+		select
+	 		m.no, m.name, c.name menu_category, s.shop_name, 
+	 		m.apply_status, m.sale_status, m.regist_date, 
+	 		m.menu_category menu_category_code, m.shop_code
+		from
+		    menu m 
+		    inner join shop s
+		        on m.shop_code = s.no
+		    inner join category c
+		        on m.menu_category = c.no
 		]]>
-		<if test="sale_status =='all' or apply_status =='all'">
-		<choose>
-			<when test="type !=null and keyword != null and apply_status == '' and sale_status ==''">
-				where ${type} like '%'||#{keyword}||'%'
-			</when>
-			<when test="sale_status !=null and apply_staus = '' and type =='' and keyword == ''">
-				where sale_status = #{sale_status}
-			</when>
-			<when test="apply_status !=null and sale_staus = '' and type =='' and keyword == ''">
-				where apply_status = #{apply_status}
-			</when>
-			<when test="apply_status !=null and sale_status =='' and type !=null and keyword != null">
-				where ${type} like '%'||#{keyword}||'%' and apply_status = #{apply_status}
-			</when>
-			<when test="apply_status =='' and sale_status !=null and type !=null and keyword != null">
-				where ${type} like '%'||#{keyword}||'%' and sale_status = #{sale_status}
-			</when>
-			<when test="apply_status !=null and sale_status !=null and type !=null and keyword != null">
-				where ${type} like '%'||#{keyword}||'%' and sale_status = #{sale_status} and apply_status = #{apply_status}
-			</when>
-			<otherwise>
-			</otherwise>
-		</choose>
+		where
+		1=1
+		<if test="apply_status != null and apply_status !='전체'">
+				and apply_status=#{apply_status}
+		</if>
+		<if test="sale_status != null and sale_status !='전체'">
+			and sale_status=#{sale_status}
+		</if>
+		<if test="type !=null and type != '선택' and keyword !=null and keyword != ''">
+			and ${type} like '%'||#{keyword}||'%'
+		</if>
+		<if test="start_date != null and start_date != '' and end_date != null and end_date != ''">
+			and m.regist_date between to_date(#{start_date}, 'YYYY-MM-DD') and to_date(#{end_date}, 'YYYY-MM-DD') + 1 - 1 / 864000 
 		</if>
 		<![CDATA[
 		order by no desc
@@ -217,31 +206,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<![CDATA[
 		select count(*) from menu_list where shop_code = #{shop_code}	
 		]]>
-			<if test="sale_status =='all' or apply_status =='all'">
-			<choose>
-			<when test="type !=null and keyword != null and apply_status == '' and sale_status ==''">
-				and ${type} like '%'||#{keyword}||'%'
-			</when>
-			<when test="sale_status !=null and apply_staus = '' and type =='' and keyword == ''">
-				and sale_status = #{sale_status}
-			</when>
-			<when test="apply_status !=null and sale_staus = '' and type =='' and keyword == ''">
-				and apply_status = #{apply_status}
-			</when>
-			<when test="apply_status !=null and sale_status =='' and type !=null and keyword != null">
-				and ${type} like '%'||#{keyword}||'%' and apply_status = #{apply_status}
-			</when>
-			<when test="apply_status =='' and sale_status !=null and type !=null and keyword != null">
-				and ${type} like '%'||#{keyword}||'%' and sale_status = #{sale_status}
-			</when>
-			<when test="apply_status !=null and sale_status !=null and type !=null and keyword != null">
-				and ${type} like '%'||#{keyword}||'%' and sale_status = #{sale_status} and apply_status = #{apply_status}
-			</when>
-			<otherwise> 
-			</otherwise>
-		</choose>
+			<if test="apply_status != null or apply_status =='전체'">
+				and apply_status=#{apply_status}
 			</if>
+			<if test="sale_status != null or sale_status =='전체'">
+				and sale_status=#{sale_status}
+			</if>
+			<if test="type !=null and type != '선택' and keyword !=null and keyword != ''">
+				and ${type} like '%'||#{keyword}||'%'
+			</if>
+			
 	</select>	
+	
 	<select id="shopmenuList" parameterType="map" resultType="shopMenuVo">
 		<![CDATA[
 		select * from 

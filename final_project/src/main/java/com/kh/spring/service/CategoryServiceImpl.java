@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.spring.entity.FilesDto;
@@ -24,6 +25,7 @@ public class CategoryServiceImpl implements CategoryService {
 	private FilesDao filesDao;
 	
 	// 음식카테고리 리스트 저장
+	@Transactional
 	@Override
 	public void updateFoodCategory(FoodCategoryList food_list) throws IllegalStateException, IOException {
 
@@ -72,9 +74,7 @@ public class CategoryServiceImpl implements CategoryService {
 			} else {
 				
 				// Image시퀀스 구하기
-				System.out.println("신규");
 				int files_seq = filesDao.getFileSeq();
-				System.out.println("files_seq="+files_seq);
 				foodDto.setImage_code(files_seq);
 				// FoodCategory에 신규정보추가
 				categoryDao.insertFoodCategryInfo(foodDto);
@@ -100,6 +100,7 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	// 메뉴카테고리 등록 및 수정
+	@Transactional
 	@Override
 	public void updateMenuCategory(FoodCategoryList food_list, int shop_code) {
 
@@ -120,6 +121,7 @@ public class CategoryServiceImpl implements CategoryService {
 	   }
 
 	// 자주하는질문 카테고리 등록/수정
+	@Transactional
 	@Override
 	public void updateQnaCategory(FoodCategoryList food_list) {
 		List<FoodCategoryVO> list = food_list.getCategory();

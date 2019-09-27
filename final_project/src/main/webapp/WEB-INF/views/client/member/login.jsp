@@ -49,10 +49,11 @@ $(function(){
                     </tr>
                     <!-- 아이디 저장 checkbox -->
 					<tr>
-						<td colspan="4" class="text-left">
+						<td colspan="2" class="text-left">
 							<input type="checkbox" name="remember" ${not empty cookie.saveID?"checked":""}>
 							<span class="save-id text-secondary">아이디 저장하기</span>					
 						</td>
+						<td><a href="testLogin">테스트 로그인</a></td>
 					</tr>
                   </tbody>
                 </table>

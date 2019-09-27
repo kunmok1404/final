@@ -5,6 +5,7 @@ import java.util.List;
 import com.kh.spring.entity.CategoryDto;
 import com.kh.spring.entity.MenuDto;
 import com.kh.spring.entity.SubMenuDto;
+import com.kh.spring.vo.MenuListVO;
 import com.kh.spring.vo.MenuRegistVO;
 import com.kh.spring.vo.ShopMenuVO;
 
@@ -28,9 +29,10 @@ public interface MenuDao {
 	void updateMenuInfo(MenuDto menuDto);
 	void SubMenuDelete(int menu_code, int shop_code);
 	int menuCount(String sale_status, String apply_status, String type, String keyword);
-	List<ShopMenuVO> menulist(String sale_status, String apply_status, String type, String keyword, int start, int end);
+	List<MenuListVO> menulist(String sale_status, String apply_status, String type, String keyword, int start, int end,String start_date, String end_date);
 	int getshopcode(int member_code);
 	int shopMenuCount(int shop_code, String sale_status, String apply_status, String type, String keyword);
 	List<MenuDto> sMenuList(int shop_code);
+	List<MenuDto> menulist();
 
 }

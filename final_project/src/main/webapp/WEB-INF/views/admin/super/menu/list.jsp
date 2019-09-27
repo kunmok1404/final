@@ -79,7 +79,7 @@ $(function(){
 		<div id="terms-wrapper">
           <div class="terms-line"></div>
         </div>
-	    <span>메뉴 목록</span>
+	    <span class="header-title text-secondary">메뉴 목록</span>
       </div>
      
 	  <!-- 검색목록창 시작 -->
@@ -92,7 +92,7 @@ $(function(){
 	  				<td width="10%" class="table-active">승인상태</td>
 	  				<td width="40%">
 	  					<select name="apply_status" class="form-control">
-	  						<option value="">전체</option>
+	  						<option>전체</option>
 	  						<option value="승인대기">승인대기</option>
 	  						<option value="승인완료">승인완료</option>
 	  					</select>
@@ -100,7 +100,7 @@ $(function(){
 	  				<td width="10%" class="table-active">판매상태</td>
 	  				<td width="40%">
 	  					<select name="sale_status" class="form-control">
-	  						<option value="">전체</option>
+	  						<option>전체</option>
 	  						<option value="판매중">판매중</option>
 	  						<option value="판매중지">판매중지</option>
 	  					</select>
@@ -121,6 +121,7 @@ $(function(){
 		  						<tr>
 					  				<td width="40%">
 					  					<select name="type" class="form-control">
+					  						<option>선택</option>
 					  						<option value="name">메뉴명</option>
 					  						<option value="no">메뉴코드</option>
 					  						<option value="shop_name">매장명</option>
@@ -146,7 +147,7 @@ $(function(){
 	  <!-- 리뷰목록 시작 -->
 	  <div class="list-wrapper table-responsive">
 	  <div class="search-number">
-	  	<p>총 ${menuCount}건</p>
+	  	<p class="font-weight-bold">조회결과 : <span style="font-size:1.2rem;"class="text-danger font-weight-bold">${menuCount}</span>&nbsp건</p>
 	  </div>
 	  	<table class="table table-hamburg table-hover">
 	  		<tbody>
@@ -195,35 +196,36 @@ $(function(){
 	  			
 	  		</tbody>
 	  	</table>
-	  		  	<div align="center">
-	  		  	<h4>
-		<c:if test="${not p.isFirstBlock()}">
-			<a href="list">&lt;&lt;</a>
-		</c:if>
-		<c:if test="${not p.isFirstPage()}">
-			<a href="list">&lt;</a>
-		</c:if>
-		<c:forEach var="i" begin="${startBlock}" end="${endBlock}">
-			<c:choose>
-				<c:when test="${param.page == i}">
-					<font color="red">${i}</font>
-				</c:when>
-				<c:otherwise>
-					<a href="#" class="navigator-no">${i}</a>
-				</c:otherwise>
-			</c:choose>
-		</c:forEach>
-		<c:if test="${not p.isLastPage()}">
-			<a href="list?${p.getNextPage()}">&gt;</a>
-		</c:if>
-		<c:if test="${not p.isLastBlock()}">
-			<a href="list?${p.getNextBlock()}">&gt;&gt;</a>
-		</c:if>
-	</h4>
+	  	
+	  	<div class="pagination text-center">
+		
+		<nav aria-label="Page navigation example text-center">
+		  <ul class="pagination">
+		  	<c:if test="${param.page ne 1}">
+		    <li class="page-item">
+		      <a class="page-link" href="list?page=${param.page-1}" aria-label="Previous">
+		        <span aria-hidden="true">&laquo;</span>
+		      </a>
+		    </li>
+		    </c:if>
+		    <c:forEach var="i" begin="${startBlock}" end="${endBlock}">
+		    <li ${param.page eq i ? 'class="page-item active"':'class="page-item"'}><a class="page-link" href="list?page=${i}">${i}</a></li>
+		    </c:forEach>
+		    <c:if test="${pageCount ne param.page}">
+		    <li class="page-item">
+		      <a class="page-link" href="list?page=${param.page+1}" aria-label="Next">
+		        <span aria-hidden="true">&raquo;</span>
+		      </a>
+		    </li>
+		    </c:if>
+		  </ul>
+		</nav>
+		
 	  	</div>
+	  	
 	  </div>
 	  <!-- 리뷰목록 끝 -->
-	</div>
+	</div><br><br><br>
 	<!-- 전체 끝 -->
 
 

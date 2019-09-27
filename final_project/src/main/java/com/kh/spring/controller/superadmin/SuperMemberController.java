@@ -31,7 +31,6 @@ public class SuperMemberController {
 	@Autowired
 	private MemberService memberService;
 	
-	
 	@GetMapping("/usergrade")
 	public String grade(Model model) {
 		model.addAttribute("grade", memberDao.grade());
@@ -78,7 +77,11 @@ public class SuperMemberController {
 				if(result.getType().equals("관리자")) {
 					session.setAttribute("member_code", result.getNo());
 					session.setAttribute("type", result.getType());
+					String time = result.getLatest_login().substring(0,16);
+					result.setLatest_login(time);
 					session.setAttribute("memberDto", result);
+					// 최종접속일자 갱신
+					memberDao.updateLatestLogin(memberDto.getNo());
 				}
 				else {
 					return "admin/login_auth";//권한 없음 페이지로 전송
@@ -106,6 +109,20 @@ public class SuperMemberController {
 		}
 	}
 	
+	// 테스트 로그인
+	@GetMapping("/testLogin")
+	 public String testLogin(HttpSession session) {
+		 MemberDto result = memberDao.get("superadmin");
+		 String time = result.getLatest_login().substring(0,16);
+		 result.setLatest_login(time);
+		 session.setAttribute("member_code", result.getNo());
+		 session.setAttribute("type", result.getType());
+		 session.setAttribute("memberDto", result);
+		 // 최종접속일자 갱신
+		 memberDao.updateLatestLogin(result.getNo());
+		 return "redirect:/super_admin";
+	 }
+	
 	//로그아웃 기능
 	@GetMapping("/logout")
 	public String logout(
@@ -128,10 +145,27 @@ public class SuperMemberController {
 			@RequestParam(required = false) String end_date,
 			@RequestParam(required = false) String type,
 			@RequestParam(required = false) String keyword,
+			@RequestParam(required = false, defaultValue = "1")int page,
 			Model model
 			) {
-//		List<MemberInfoVO> list = memberDao.search(status, grade, start_date, end_date, type, keyword);
-		List<MemberInfoVO> list = memberService.search(status, grade, start_date, end_date, type, keyword);
+		
+		int pagesize = 10;
+		int start = pagesize * page - (pagesize - 1);
+		int end = pagesize * page;
+		
+		int blocksize = 10;
+		int startBlock = (page - 1) / blocksize * blocksize + 1;
+		int endBlock = startBlock + (blocksize - 1);
+		int count = memberDao.memberCount(status,grade,type, keyword,start_date,end_date);
+		int pageCount = (count - 1) / pagesize + 1;
+		if (endBlock > pageCount) {
+			endBlock = pageCount;
+		}
+		model.addAttribute("pageCount",pageCount);
+		model.addAttribute("startBlock", startBlock);
+		model.addAttribute("endBlock", endBlock);
+		model.addAttribute("count", count);
+		List<MemberInfoVO> list = memberService.search(status, grade, start_date, end_date, type, keyword,start,end);
 		model.addAttribute("list", list);
 		return "admin/super/member/search";
 	}
@@ -144,9 +178,6 @@ public class SuperMemberController {
 				HttpSession session,
 				@RequestParam int no
 			) {
-//		int member_code = 23;
-//		System.out.println(no);
-//		List<MemberInfoVO> list = memberDao.info(no);
 		MemberInfoVO memberInfoVO = memberService.detail(no);
 		model.addAttribute("membervo", memberInfoVO);
 		return "admin/super/member/info";
@@ -158,7 +189,6 @@ public class SuperMemberController {
 				HttpSession session,
 				@RequestParam int no
 			) {
-//		System.out.println("탈퇴 : "+ no);
 		memberDao.delete(no);
 		return "redirect:search";
 	}

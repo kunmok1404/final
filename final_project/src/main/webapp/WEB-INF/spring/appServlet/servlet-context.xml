@@ -38,7 +38,7 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="com.kh.spring.controller"></context:component-scan>
-	<!-- tx 모듈의 어노테이션 활성화 -->
+	
 	<!-- 
 		파일 업로드를 처리하는 bean
 		이름을 multipartResolver로 설정해야 스프링에서 인지하고 구동 
@@ -62,18 +62,22 @@
 			<mapping path="/member/info_change"/>
 			<mapping path="/ono/list"/>
 			<mapping path="/order/mycart"/>
+			<mapping path="/order/direct_order"/>
+			<mapping path="/order/cart"/>
 			<beans:bean class="com.kh.spring.interceptor.LoginInterceptor"></beans:bean>
 		</interceptor>
 		<!-- 업주 설정 -->
 		<interceptor>
 			<mapping path="/shop_admin/**"/>
 			<exclude-mapping path="/shop_admin/member/login"/>
+			<exclude-mapping path="/shop_admin/member/testLogin"/>
 			<beans:bean class="com.kh.spring.interceptor.ShopInterceptor"></beans:bean>
 		</interceptor>
 		<!-- 관리자 설정 -->
 		<interceptor>
 			<mapping path="/super_admin/**"/>
 			<exclude-mapping path="/super_admin/member/login"/>
+			<exclude-mapping path="/super_admin/member/testLogin"/>
 			<beans:bean class="com.kh.spring.interceptor.AdminInterceptor"></beans:bean>
 		</interceptor>
 	</interceptors>

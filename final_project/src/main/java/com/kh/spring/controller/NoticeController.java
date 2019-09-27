@@ -66,7 +66,6 @@ public class NoticeController {
 		model.addAttribute("list", list);
 		
 		List<NoticeDto> list2 = noticeDao.list2();
-//		System.out.println("list2"+list2.size());
 		model.addAttribute("list2", list2);
 		
 	return "client/service/notice/list"; //뷰 파일 리턴

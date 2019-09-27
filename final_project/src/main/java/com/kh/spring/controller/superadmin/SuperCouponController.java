@@ -79,13 +79,30 @@ public class SuperCouponController {
 			@RequestParam(required = false) String type,
 			@RequestParam(required = false) String keyword,
 			@RequestParam(required = false) String coupon_code,
+			@RequestParam(required = false, defaultValue = "1")int page,
 			Model model
 			) {
-		List<MemberInfoVO> list = memberDao.search(status, grade, start_date, end_date, type, keyword);
+		int pagesize = 10;
+		int start = pagesize * page - (pagesize - 1);
+		int end = pagesize * page;
+		
+		int blocksize = 10;
+		int startBlock = (page - 1) / blocksize * blocksize + 1;
+		int endBlock = startBlock + (blocksize - 1);
+		int count = memberDao.memberCount(status,grade,type, keyword,start_date,end_date);
+		int pageCount = (count - 1) / pagesize + 1;
+		if (endBlock > pageCount) {
+			endBlock = pageCount;
+		}
+		model.addAttribute("pageCount",pageCount);
+		model.addAttribute("startBlock", startBlock);
+		model.addAttribute("endBlock", endBlock);
+		List<MemberInfoVO> list = memberDao.search(status, grade, start_date, end_date, type, keyword,start,end);
 		model.addAttribute("coupon_code", coupon_code);
 		model.addAttribute("list", list);
 		return "admin/super/promotion/search";
 	}	
+	
 	@PostMapping("/search")
 	public String search(
 			@RequestParam(required = false) int coupon_code,

@@ -31,7 +31,6 @@ public class OrderServiceImpl implements OrderService {
 		List<Map<String, Object>> list = new ArrayList<>();
 		for(int i = 0; i < order_list.size(); i++) {
 			if(order_list.get(i) != null) {
-			System.out.println("order_list.get(i)="+order_list.get(i));
 			Map<String, Object> map = new HashMap<>();
 			OrdersDto orderDto = order_list.get(i);
 			map.put("no", orderDto.getNo()); // 주문번호

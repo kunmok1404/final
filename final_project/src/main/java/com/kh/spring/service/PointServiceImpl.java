@@ -46,9 +46,7 @@ public class PointServiceImpl implements PointService {
 			// 총적립 포인트 조회 
 			int total_point = pointDao.getTotalPoint(memberDto.getNo());
 			// 총사용 포인트 조회
-			System.out.println("member_code="+memberDto.getNo());
 			int use_point = pointDao.getUsePoint(memberDto.getNo());
-			System.out.println("use_point="+use_point);
 			// VO에 세팅
 			MemberPointVO memberPointVO = MemberPointVO.builder()
 																	.member_code(memberDto.getNo())

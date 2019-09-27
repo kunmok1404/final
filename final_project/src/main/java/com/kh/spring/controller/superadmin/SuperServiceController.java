@@ -122,7 +122,6 @@ public class SuperServiceController {
 	//답변 달기
 	@PostMapping("/super_content")
 	public String edit(@ModelAttribute OnoDto onoDto, RedirectAttributes model) {
-//		System.out.println("dfsfd123");
 		onoDao.superedit(onoDto);
 		model.addAttribute("ono_code", onoDto.getNo());
 		
@@ -145,9 +144,6 @@ public class SuperServiceController {
 					@RequestParam(required = false) String type,
 					@RequestParam(required = false, defaultValue = "1")int page) {
 				
-//				System.out.println("apply_status = " + apply_status);
-//				System.out.println("keyword_type = " + keyword_type);
-//				System.out.println("keyword = " + keyword);
 				
 				//페이징
 				int pagesize = 10;
@@ -226,7 +222,6 @@ public class SuperServiceController {
 			//답변 달기
 			@PostMapping("/super_content_ceo")
 			public String edit_ceo(@ModelAttribute OnoDto onoDto, RedirectAttributes model) {
-//				System.out.println("dfsfd123");
 				onoDao.superedit(onoDto);
 				model.addAttribute("ono_code", onoDto.getNo());
 				
