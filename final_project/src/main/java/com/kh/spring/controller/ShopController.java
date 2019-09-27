@@ -132,6 +132,8 @@ public class ShopController {
 	public String order_regist(
 								@ModelAttribute ShopDto shopDto,
 								@ModelAttribute MemberDto memberDto,
+								@RequestParam String location_x,
+								@RequestParam String location_y,
 								@RequestParam MultipartFile business_regist,
 								@RequestParam MultipartFile sale_regist,
 								@RequestParam MultipartFile logo) throws IllegalStateException, IOException {
@@ -140,7 +142,17 @@ public class ShopController {
 		int shop_code = shopDao.getShopSeq();
 		memberDto.setShop_code(shop_code);
 		shopDto.setNo(shop_code);
-		
+		try {
+			String x = location_x.substring(0, 10);
+			String y = location_y.substring(0, 10);			
+		System.out.println(x);
+		System.out.println(y);
+		shopDto.setLocation_x(Double.parseDouble(x));
+		shopDto.setLocation_y(Double.parseDouble(y));
+		} catch (NumberFormatException e) {
+			shopDto.setLocation_x(0);
+			shopDto.setLocation_y(0);
+		}
 		//memberDto 안에 있는 pw를 변경(BCrypt)
 		String origin = memberDto.getPw();
 		String encrypt = BCrypt.hashpw(origin, BCrypt.gensalt());
