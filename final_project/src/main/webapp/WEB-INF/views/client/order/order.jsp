@@ -155,6 +155,7 @@ $(function(){
 			$(".discount_price").val(point);
 			$(".final_price").text(price-point+"원");
 			$(".final").val(price-point);
+			$(".poin").text(mypoint-point);
 			$(".coandpo").val(1);
 			$("#po").attr("disabled",true);
 			$("#co").attr("disabled",true);
@@ -359,7 +360,7 @@ $(function(){
 				</tr>
 				<tr>
 					<th>포인트</th>
-					<th><font color="blue">${point}</font>원사용가능</th>
+					<th><span class="poin"><font color="blue">${point}</font></span>원사용가능</th>
 					<th><button type="button" class="btn btn-sm btn-info" id="co" data-toggle="modal" data-target="#apply" data-no="${memberDto.no}">사용하기</button></th>
 				</tr>
 			</tfoot>
