@@ -18,49 +18,38 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script>
         $(function(){
-            $(".save").click(function(e){
-            	 e.preventDefault;
-                var mapContainer = document.getElementById('maps'), // 지도를 표시할 div 
+        	$("#sample6_detailAddress").on("focus , blur",function(){
+                var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
                 mapOption = {
                     center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
                     level: 3 // 지도의 확대 레벨
                 };  
+   	           var map = new kakao.maps.Map(mapContainer, mapOption); 
+   	           var geocoder = new kakao.maps.services.Geocoder();
+   	           geocoder.addressSearch(adds, function(result, status) {
+   	        	// 정상적으로 검색이 완료됐으면 
+                   if (status === kakao.maps.services.Status.OK) {
 
-            // 지도를 생성합니다    
-            var map = new kakao.maps.Map(mapContainer, mapOption); 
-
-            // 주소-좌표 변환 객체를 생성합니다
-            var geocoder = new kakao.maps.services.Geocoder();
-
-            // 주소로 좌표를 검색합니다
-            geocoder.addressSearch($("#sample6_address").val(), function(result, status) {
-
-                // 정상적으로 검색이 완료됐으면 
-                 if (status === kakao.maps.services.Status.OK) {
-
-                    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-					var ydg = result[0].y;
-					var xdg = result[0].x;
-					$(".location_y").val(ydg);
-					$(".location_x").val(xdg);
-                    // 결과값으로 받은 위치를 마커로 표시합니다
-                    var marker = new kakao.maps.Marker({
-                        map: map,
-                        position: coords
-                    });
-
-                    // 인포윈도우로 장소에 대한 설명을 표시합니다
-                    var infowindow = new kakao.maps.InfoWindow({
-                        content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
-                    });
-                    infowindow.open(map, marker);
-
-                    // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-                    map.setCenter(coords);
-                } 
-            });    
-                 
-            });
+                      var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+                    $(".location_y").val(result[0].y);
+                  	$(".location_x").val(result[0].x);
+                  	console.log(result[0].x);
+                      // 결과값으로 받은 위치를 마커로 표시합니다
+                      var marker = new kakao.maps.Marker({
+                          map: map,
+                          position: coords
+                      });
+                   }
+   	                   // 인포윈도우로 장소에 대한 설명을 표시합니다
+   	           var infowindow = new kakao.maps.InfoWindow({
+   	               content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
+   	           });
+   	           infowindow.open(map, marker);
+   	
+   	           // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+   	           map.setCenter(coords);
+               	});
+    	    	})
             
          // 이미지 미리보기
 			$("input[type=file]").change(function(e){
@@ -221,8 +210,8 @@
 					<input type="text" id="sample6_address" placeholder="주소" name="basic_addr" value="${shop.basic_addr }" class="form-control"><br>
 					<input type="text" id="sample6_detailAddress" placeholder="상세주소" name="detail_addr" value="${shop.detail_addr }" class="form-control">
 					<input type="hidden" id="sample6_extraAddress" placeholder="참고항목" class="form-control">
-<%-- 					<input class="location_y" type="hidden" name="location_y" value="${shop.location_y }" class="form-control"> --%>
-<%-- 					<input class="location_x" type="hidden" name="location_x" value="${shop.location_x }" class="form-control"> --%>
+ 					<input class="location_y" type="hidden" name="location_y" value="${shop.location_y }"> 
+ 					<input class="location_x" type="hidden" name="location_x" value="${shop.location_x }"> 
 				</td>
       		</tr>
       		<tr>
@@ -255,7 +244,7 @@
       	</tbody>
       </table>
 	</form>
-	
+	<div id="map" style="width:1px;height:1px;"></div>
 	</div><br><br><br><br>
 	
     	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>

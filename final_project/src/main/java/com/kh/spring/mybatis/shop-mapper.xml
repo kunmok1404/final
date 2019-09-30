@@ -88,7 +88,7 @@ PUBLIC "//mybatis.org//DTD Mapper 3.0//EN"
  						#{bank},#{account_number},#{account_name},#{shop_name},#{shop_phone},#{zip_code},
  						#{basic_addr},#{detail_addr},#{content},sysdate,null,null,
  						'계약종료','승인대기',#{min_price},#{min_time},#{delivery_price}
- 						,TO_DATE(#{start_time},'HH24:MI'),TO_DATE(#{finish_time},'HH24:MI'),null,0,0,#{shop_img},#{business_file},#{sale_file},0)
+ 						,TO_DATE(#{start_time},'HH24:MI'),TO_DATE(#{finish_time},'HH24:MI'),null,#{location_x},#{location_y},#{shop_img},#{business_file},#{sale_file},0)
  	</insert>
  	
  	<select id="getno" parameterType="shopDto" resultType="int">
