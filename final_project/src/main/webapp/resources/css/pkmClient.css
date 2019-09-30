@@ -26,7 +26,7 @@
 /*헤더 리스트*/
 .nav-list li{
     display: inline;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
 }
 .nav-list li a{
     text-decoration: none;
@@ -407,10 +407,9 @@ table {
     color: #646464;
 }
 .my-header .my-info{
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     color: #9C3D39;
 }
-
 /*나의정보헤더 사이 | 표시*/
 #myInfo-wrapper {
     cursor:pointer;
@@ -476,9 +475,9 @@ table {
 }
 
 /*나의정보 테이블*/
-.myInfo-table{
-	 font-size:1.2rem;
-}
+/* .myInfo-table{ */
+/* 	 font-size:1.2rem; */
+/* } */
 .myInfo-table tr{
     height:50px; 
     cursor:pointer;

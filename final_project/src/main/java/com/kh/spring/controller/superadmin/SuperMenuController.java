@@ -68,8 +68,9 @@ public class SuperMenuController {
 	
 	// 메뉴 상세화면 이동
 		@GetMapping("/detail")
-		public String detail(@RequestParam int menu_code,Model model,HttpSession session) {
-		int shop_code = (int)session.getAttribute("shop_code");
+		public String detail(@RequestParam int menu_code,Model model,
+						@RequestParam int shop_code) {
+//		int shop_code = (int)session.getAttribute("shop_code");
 		// 메뉴코드 넘기기
 		model.addAttribute("menu_code", menu_code);
 		

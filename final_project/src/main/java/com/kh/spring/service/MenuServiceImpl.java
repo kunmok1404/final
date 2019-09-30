@@ -68,6 +68,7 @@ public class MenuServiceImpl implements MenuService {
 																					.apply_status(menuDto.getApply_status())
 																					.sale_status(menuDto.getSale_status())
 																					.regist_date(time)
+																					.shop_code(menuDto.getShop_code())
 																					.build();
 			menu_list.add(shopVO);
 		}

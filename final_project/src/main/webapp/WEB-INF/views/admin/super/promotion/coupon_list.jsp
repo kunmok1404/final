@@ -137,7 +137,7 @@ $(function() {
 	  				<td class="date">${coupon.start_date } <input type="hidden" value="${coupon.start_date }" class="start">
 	  				<br>~<br>${coupon.finish_date }
 	  				<input type="hidden" value="${coupon.finish_date }" class="finish"></td>
-	  				<td>${coupon.issue_date }</td>
+	  				<td>${coupon.regist_date }</td>
 	  				<td>${coupon.issue_status }</td>
 	  				<td>
 	  					<input type="button" value="발급 중지" class="stop">

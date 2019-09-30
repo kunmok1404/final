@@ -6,7 +6,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>뭐먹지?
+    </title>
+    <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/image/pizza.png">
     <script src="https://code.jquery.com/jquery-latest.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -103,8 +105,7 @@
             
         }
         .card-body > li:hover {
-			background-color: gray;
-			
+			cursor:pointer;			
 		}
 		.explan{
 			width:70%;
