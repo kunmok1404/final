@@ -26,8 +26,8 @@
           <div class="myInfo-line"></div>
         </div>
         <div class="col-md-2">
-            <span class="my-title font-weight-bold">포인트 :  </span>
-            <span class="my-info">&nbsp${point} pt</span>
+            <span class="my-title font-weight-bold">포인트 : </span>
+            <span class="my-info">&nbsp${point}pt</span>
         </div>
       </div>
     </div>

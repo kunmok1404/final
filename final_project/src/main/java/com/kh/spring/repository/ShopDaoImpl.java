@@ -28,7 +28,6 @@ public class ShopDaoImpl implements ShopDao {
 		map.put("end", end);
 		map.put("cat_no", cat_no);
 		map.put("keyword", keyword);
-		System.out.println("keyword="+keyword);
 		return sqlSession.selectList("shop.list", map);
 	}
 
