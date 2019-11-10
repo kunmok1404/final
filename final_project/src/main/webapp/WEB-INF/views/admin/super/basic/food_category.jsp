@@ -86,7 +86,6 @@
 				var category_code = $(this).find("input").eq(2);
 				var category_img = $(this).find("input").eq(3);
 				
-				
 				cat_name.attr("name", "category["+newIndex+"].cat_name");
 				sort_no.attr("name", "category["+newIndex+"].sort_no");
 				sort_no.val(newIndex + 1);
@@ -98,7 +97,7 @@
 		});
 	}
 </script>
-
+ 
         <!-- 카테고리 관리 시작 -->
         <div class="wrapper mt-3 food-category-title">
 		   <div id="terms-wrapper">
